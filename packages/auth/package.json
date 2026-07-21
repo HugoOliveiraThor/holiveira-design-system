@@ -1,0 +1,43 @@
+{
+  "name": "@holiveira/auth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Authentication and RBAC infrastructure.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "authentication",
+    "rbac",
+    "authorization"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@better-auth/prisma-adapter": "^1.6.7",
+    "@holiveira/db": "workspace:*",
+    "better-auth": "^1.6.7"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}
