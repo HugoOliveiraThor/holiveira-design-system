@@ -1,0 +1,37 @@
+{
+  "name": "@holiveira/theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Design tokens and theme system.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "theme",
+    "design-tokens",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "next-themes": "^0.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@holiveira/types": "workspace:*",
+    "@holiveira/tokens": "workspace:*",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}

@@ -1,0 +1,89 @@
+"use client"
+
+import { forwardRef, useId, useState } from "react"
+import { cn } from "@holiveira/utils"
+import { ChevronUpIcon } from "@holiveira/icons"
+
+/** @public */
+type SelectItem = {
+  value: string
+  label: string
+}
+
+/** @public */
+type SelectProps = {
+  label: string
+  items: SelectItem[]
+  prefixIcon?: React.ReactNode
+  placeholder?: string
+  error?: string
+}
+
+/**
+ * Native select with typed items, placeholder, prefix icon, and error state.
+ * @public
+ */
+const Select = forwardRef<HTMLSelectElement, SelectProps & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "children">>(
+  ({ items, label, defaultValue, placeholder, prefixIcon, error, className, ...props }, ref) => {
+    const id = useId()
+    const [isOptionSelected, setIsOptionSelected] = useState(false)
+
+    return (
+      <div className={cn("space-y-3", className)}>
+        <label
+          htmlFor={id}
+          className="block text-body-sm font-medium text-dark dark:text-white"
+        >
+          {label}
+        </label>
+
+        <div className="relative">
+          {prefixIcon && (
+            <div className="absolute left-4 top-1/2 -translate-y-1/2">
+              {prefixIcon}
+            </div>
+          )}
+
+          <select
+            ref={ref}
+            id={id}
+            defaultValue={defaultValue ?? ""}
+            onChange={(e) => {
+              setIsOptionSelected(true)
+              props.onChange?.(e)
+            }}
+            className={cn(
+              "w-full appearance-none rounded-lg border border-stroke bg-transparent px-5.5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary [&>option]:text-dark-5 dark:[&>option]:text-dark-6",
+              isOptionSelected && "text-dark dark:text-white",
+              prefixIcon && "pl-11.5",
+              error && "border-red focus:border-red",
+            )}
+            {...props}
+          >
+            {placeholder && (
+              <option value="" disabled hidden>
+                {placeholder}
+              </option>
+            )}
+
+            {items.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </select>
+
+          <ChevronUpIcon className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 rotate-180" />
+
+          {error && (
+            <p className="mt-1 text-body-xs text-red">{error}</p>
+          )}
+        </div>
+      </div>
+    )
+  },
+)
+
+Select.displayName = "Select"
+
+export { Select, type SelectProps }

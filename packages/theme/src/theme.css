@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "@holiveira/tokens/tokens.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  *,
+  ::before,
+  ::after,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-gray-2 text-dark-5 dark:text-dark-6 dark:bg-[#020D1A];
+  }
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility custom-scrollbar {
+  @apply overflow-auto;
+
+  &::-webkit-scrollbar {
+    @apply size-2;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply dark:bg-stroke-dark relative flex-1 rounded-full bg-neutral-200/40;
+  }
+}

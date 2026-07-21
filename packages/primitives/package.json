@@ -1,0 +1,41 @@
+{
+  "name": "@holiveira/primitives",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Accessible UI primitives.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "primitives",
+    "accessible",
+    "ui"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@holiveira/hooks": "workspace:*",
+    "@holiveira/icons": "workspace:*",
+    "@holiveira/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "@holiveira/types": "workspace:*",
+    "@holiveira/theme": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}
