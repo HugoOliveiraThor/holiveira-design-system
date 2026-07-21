@@ -4,7 +4,8 @@ Internationalization utilities.
 
 ## Purpose
 
-Date, currency, and message time formatting with locale-aware patterns. Architectural role: provides i18n formatting primitives for the framework.
+Date, currency, and message time formatting with locale-aware patterns. Architectural role: provides
+i18n formatting primitives for the framework.
 
 ## Installation
 
@@ -43,7 +44,8 @@ formatCurrency(1500, { currency: 'BRL', locale: 'pt-BR' });
 
 **Owns:** Formatting utilities, locale type definitions, i18n formatting patterns.
 
-**Does not own:** Translation file management, language switching UI, message catalogs, or locale detection.
+**Does not own:** Translation file management, language switching UI, message catalogs, or locale
+detection.
 
 See `docs/architecture/contracts/i18n.md` for ownership and dependency boundaries.
 

@@ -4,7 +4,8 @@ Application layout components.
 
 ## Purpose
 
-Sidebar with toggle provider, Header with slot-based Actions and Toggle children. Architectural role: provides layout infrastructure for professional applications.
+Sidebar with toggle provider, Header with slot-based Actions and Toggle children. Architectural
+role: provides layout infrastructure for professional applications.
 
 ## Installation
 
@@ -55,7 +56,8 @@ function AppLayout() {
 
 **Owns:** Layout component implementations, sidebar state management, header composition pattern.
 
-**Does not own:** Navigation item definitions, user menu content, application-specific layout configurations, or mobile responsive behavior (delegated to consumer).
+**Does not own:** Navigation item definitions, user menu content, application-specific layout
+configurations, or mobile responsive behavior (delegated to consumer).
 
 See `docs/architecture/contracts/layouts.md` for ownership and dependency boundaries.
 

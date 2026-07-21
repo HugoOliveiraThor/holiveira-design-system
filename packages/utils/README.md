@@ -4,7 +4,9 @@ Shared utility functions.
 
 ## Purpose
 
-Class name merging (`cn`), component variants (`cva`), string formatting, object utilities, and timing functions (debounce, throttle). Architectural role: foundation utility layer for all packages.
+Class name merging (`cn`), component variants (`cva`), string formatting, object utilities, and
+timing functions (debounce, throttle). Architectural role: foundation utility layer for all
+packages.
 
 ## Installation
 
@@ -52,7 +54,8 @@ const handleSearch = debounce((query: string) => fetchResults(query), 300);
 
 **Owns:** Shared utility functions, class name composition, variant pattern infrastructure.
 
-**Does not own:** UI components, business logic, framework-specific utilities, or application-level helpers.
+**Does not own:** UI components, business logic, framework-specific utilities, or application-level
+helpers.
 
 See `docs/architecture/contracts/utils.md` for ownership and dependency boundaries.
 

@@ -4,7 +4,8 @@ Test utilities and render helpers.
 
 ## Purpose
 
-Custom render with provider wrapping, mock utilities for router, session, media queries, and custom matchers. Architectural role: testing infrastructure for framework consumers.
+Custom render with provider wrapping, mock utilities for router, session, media queries, and custom
+matchers. Architectural role: testing infrastructure for framework consumers.
 
 ## Installation
 
@@ -51,9 +52,11 @@ it('works with mocked router', () => {
 
 **Dependency Level:** 5 — Platform.
 
-**Owns:** Test infrastructure, provider composition for test renders, mock utilities, custom matchers.
+**Owns:** Test infrastructure, provider composition for test renders, mock utilities, custom
+matchers.
 
-**Does not own:** Test runner configuration, coverage thresholds, application test suites, or test data factories.
+**Does not own:** Test runner configuration, coverage thresholds, application test suites, or test
+data factories.
 
 See `docs/architecture/contracts/testing.md` for ownership and dependency boundaries.
 

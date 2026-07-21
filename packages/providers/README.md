@@ -4,7 +4,8 @@ React provider composition utilities.
 
 ## Purpose
 
-ProviderComposer for nesting multiple providers without deep nesting in component trees. Architectural role: provider composition infrastructure.
+ProviderComposer for nesting multiple providers without deep nesting in component trees.
+Architectural role: provider composition infrastructure.
 
 ## Installation
 
@@ -41,7 +42,9 @@ function AppProviders({ children }: { children: React.ReactNode }) {
 
 **Owns:** Provider composition pattern, provider nesting utility.
 
-**Does not own:** Individual provider implementations (those live in their respective packages — `@holiveira/theme`, `@holiveira/layouts`, `@holiveira/auth`), provider configuration, or provider lifecycle.
+**Does not own:** Individual provider implementations (those live in their respective packages —
+`@holiveira/theme`, `@holiveira/layouts`, `@holiveira/auth`), provider configuration, or provider
+lifecycle.
 
 See `docs/architecture/contracts/providers.md` for ownership and dependency boundaries.
 

@@ -22,5 +22,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: pnpm run all-checks
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

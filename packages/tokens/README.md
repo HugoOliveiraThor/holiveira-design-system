@@ -4,7 +4,8 @@ Raw design token definitions.
 
 ## Purpose
 
-Color palette, container dimensions, breakpoints, typography scale, and shadows. Architectural role: single source of truth for visual primitives.
+Color palette, container dimensions, breakpoints, typography scale, and shadows. Architectural role:
+single source of truth for visual primitives.
 
 ## Installation
 
@@ -36,15 +37,18 @@ import { colors, containers, breakpoints } from '@holiveira/tokens';
 | `shadows`     | const object (25) | Box-shadow token definitions                   |
 | `TokenValue`  | type              | Generic string type for design token values    |
 
-**CSS:** `@import "@holiveira/tokens/tokens.css"` provides all tokens as CSS custom properties via a Tailwind v4 `@theme` block (colors, containers, typography, shadows, animations, z-index, and more).
+**CSS:** `@import "@holiveira/tokens/tokens.css"` provides all tokens as CSS custom properties via a
+Tailwind v4 `@theme` block (colors, containers, typography, shadows, animations, z-index, and more).
 
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation.
 
-**Owns:** Raw token definitions, CSS custom property generation via `tokens.css`, design token type definitions.
+**Owns:** Raw token definitions, CSS custom property generation via `tokens.css`, design token type
+definitions.
 
-**Does not own:** Theme logic (delegated to `@holiveira/theme`), component styling, or Tailwind CSS configuration.
+**Does not own:** Theme logic (delegated to `@holiveira/theme`), component styling, or Tailwind CSS
+configuration.
 
 See `docs/architecture/contracts/tokens.md` for ownership and dependency boundaries.
 

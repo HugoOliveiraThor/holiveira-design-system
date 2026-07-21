@@ -4,7 +4,8 @@ Chart and visualization components.
 
 ## Purpose
 
-Bar, area, and pie chart components wrapping ApexCharts with typed props and theme integration. Architectural role: provides composable chart primitives with consistent theming.
+Bar, area, and pie chart components wrapping ApexCharts with typed props and theme integration.
+Architectural role: provides composable chart primitives with consistent theming.
 
 ## Installation
 
@@ -51,9 +52,11 @@ Import chart styles separately:
 
 **Dependency Level:** 3 — Composition.
 
-**Owns:** Chart component implementations, ApexCharts integration, chart theme integration, chart-specific CSS overrides.
+**Owns:** Chart component implementations, ApexCharts integration, chart theme integration,
+chart-specific CSS overrides.
 
-**Does not own:** ApexCharts type exposure to consumers (types are internal), chart theming API (theme integration is internal), or data fetching logic.
+**Does not own:** ApexCharts type exposure to consumers (types are internal), chart theming API
+(theme integration is internal), or data fetching logic.
 
 See `docs/architecture/contracts/charts.md` for ownership and dependency boundaries.
 

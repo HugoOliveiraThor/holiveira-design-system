@@ -4,7 +4,8 @@ HTTP client and API integration patterns.
 
 ## Purpose
 
-Provides a typed API client factory with error handling, request/response interceptors, and status code constants. Architectural role: abstracts HTTP transport for service-layer packages.
+Provides a typed API client factory with error handling, request/response interceptors, and status
+code constants. Architectural role: abstracts HTTP transport for service-layer packages.
 
 ## Installation
 
@@ -40,7 +41,8 @@ const response = await client.get('/users');
 
 **Owns:** HTTP client infrastructure, response types, error classes.
 
-**Does not own:** API route definitions, authentication token management, data caching, or request validation schemas.
+**Does not own:** API route definitions, authentication token management, data caching, or request
+validation schemas.
 
 See `docs/architecture/contracts/api.md` for ownership and dependency boundaries.
 

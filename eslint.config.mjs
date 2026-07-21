@@ -2,12 +2,11 @@ import importPlugin from 'eslint-plugin-import';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
-import next from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
 
 const eslintConfig = [
   {
-    ignores: ['**/dist/**', '**/storybook-static/**'],
+    ignores: ['**/dist/**', '**/storybook-static/**', '**/generated/**'],
   },
   {
     plugins: {
@@ -15,14 +14,10 @@ const eslintConfig = [
       react,
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
-      '@next/next': next,
     },
     rules: {
       ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      ...next.configs.recommended.rules,
-      '@next/next/no-html-link-for-pages': 'error',
-      '@next/next/no-sync-scripts': 'error',
       'import/no-anonymous-default-export': 'warn',
       'react/no-unknown-property': 'off',
       'react/react-in-jsx-scope': 'off',

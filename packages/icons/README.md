@@ -4,7 +4,8 @@ SVG icon components.
 
 ## Purpose
 
-37 inline SVG icon components with consistent `currentColor` styling and typed props. Architectural role: provides icon primitives for the component library.
+37 inline SVG icon components with consistent `currentColor` styling and typed props. Architectural
+role: provides icon primitives for the component library.
 
 ## Installation
 
@@ -30,7 +31,13 @@ function MyHeader() {
 
 ## Public API
 
-**Icon components (37):** `AlertErrorIcon`, `AlertSuccessIcon`, `AlertWarningIcon`, `ArrowDownIcon`, `ArrowLeftIcon`, `ArrowUpIcon`, `AuthenticationIcon`, `BellIcon`, `CalendarIcon`, `CallIcon`, `CameraIcon`, `CheckIcon`, `ChevronUpIcon`, `CloseIcon`, `DotIcon`, `DownloadIcon`, `EmailIcon`, `FourCircleIcon`, `GlobeIcon`, `HomeIcon`, `LogOutIcon`, `MenuIcon`, `MessageOutlineIcon`, `MoonIcon`, `PasswordIcon`, `PencilSquareIcon`, `PieChartIcon`, `PreviewIcon`, `SearchIcon`, `SettingsIcon`, `SunIcon`, `TableIcon`, `TrashIcon`, `TrendingUpIcon`, `UploadIcon`, `UserIcon`, `XIcon`
+**Icon components (37):** `AlertErrorIcon`, `AlertSuccessIcon`, `AlertWarningIcon`, `ArrowDownIcon`,
+`ArrowLeftIcon`, `ArrowUpIcon`, `AuthenticationIcon`, `BellIcon`, `CalendarIcon`, `CallIcon`,
+`CameraIcon`, `CheckIcon`, `ChevronUpIcon`, `CloseIcon`, `DotIcon`, `DownloadIcon`, `EmailIcon`,
+`FourCircleIcon`, `GlobeIcon`, `HomeIcon`, `LogOutIcon`, `MenuIcon`, `MessageOutlineIcon`,
+`MoonIcon`, `PasswordIcon`, `PencilSquareIcon`, `PieChartIcon`, `PreviewIcon`, `SearchIcon`,
+`SettingsIcon`, `SunIcon`, `TableIcon`, `TrashIcon`, `TrendingUpIcon`, `UploadIcon`, `UserIcon`,
+`XIcon`
 
 | Export      | Kind | Description                        |
 | ----------- | ---- | ---------------------------------- |

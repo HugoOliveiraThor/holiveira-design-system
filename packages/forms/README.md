@@ -4,7 +4,9 @@ Form components with validation integration.
 
 ## Purpose
 
-Form composition primitives (Form, Field, Label, Description, ErrorMessage, Submit) plus complex widgets (MultiSelect, DatePicker) integrated with react-hook-form and Zod. Architectural role: provides the official form composition contract for the framework.
+Form composition primitives (Form, Field, Label, Description, ErrorMessage, Submit) plus complex
+widgets (MultiSelect, DatePicker) integrated with react-hook-form and Zod. Architectural role:
+provides the official form composition contract for the framework.
 
 ## Installation
 
@@ -58,9 +60,11 @@ function MyForm() {
 
 **Dependency Level:** 3 — Composition.
 
-**Owns:** Form composition components, widget implementations (MultiSelect, DatePicker), validation integration (Zod resolver).
+**Owns:** Form composition components, widget implementations (MultiSelect, DatePicker), validation
+integration (Zod resolver).
 
-**Does not own:** Form state management (delegated to react-hook-form), business logic, validation schemas (consumer responsibility), or demo form variants.
+**Does not own:** Form state management (delegated to react-hook-form), business logic, validation
+schemas (consumer responsibility), or demo form variants.
 
 See `docs/architecture/contracts/forms.md` for ownership and dependency boundaries.
 

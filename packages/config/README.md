@@ -4,7 +4,8 @@ Application configuration utilities.
 
 ## Purpose
 
-Environment variable access, typed config objects per domain, and runtime environment helpers. Architectural role: foundation-level configuration layer with zero runtime dependencies.
+Environment variable access, typed config objects per domain, and runtime environment helpers.
+Architectural role: foundation-level configuration layer with zero runtime dependencies.
 
 ## Installation
 
@@ -71,9 +72,11 @@ const apiKey = requireEnv('API_KEY');
 
 **Dependency Level:** 0 — Core.
 
-**Owns:** Typed config contracts, environment variable access patterns, runtime environment detection.
+**Owns:** Typed config contracts, environment variable access patterns, runtime environment
+detection.
 
-**Does not own:** Environment variable values, runtime state validation beyond env access, or package-specific configuration.
+**Does not own:** Environment variable values, runtime state validation beyond env access, or
+package-specific configuration.
 
 See `docs/architecture/contracts/config.md` for ownership and dependency boundaries.
 

@@ -1,8 +1,7 @@
-import { loadEnvConfig } from '@next/env';
+import { config } from 'dotenv';
 import { defineConfig } from 'prisma/config';
 
-const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+config();
 
 export default defineConfig({
   schema: 'packages/db/prisma/schema.prisma',

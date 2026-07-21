@@ -4,7 +4,9 @@ Shared TypeScript type definitions.
 
 ## Purpose
 
-Utility types (DeepPartial, Nullable), React helpers (WithChildren, WithClassName), and domain types (IconProps). Architectural role: type-level foundation for all packages. Types-only — zero runtime code.
+Utility types (DeepPartial, Nullable), React helpers (WithChildren, WithClassName), and domain types
+(IconProps). Architectural role: type-level foundation for all packages. Types-only — zero runtime
+code.
 
 ## Installation
 

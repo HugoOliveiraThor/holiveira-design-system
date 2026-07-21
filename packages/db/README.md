@@ -4,7 +4,8 @@ Database client and adapter configuration.
 
 ## Purpose
 
-Prisma client singleton with Neon/Pg adapter for PostgreSQL. Architectural role: database access layer for the framework.
+Prisma client singleton with Neon/Pg adapter for PostgreSQL. Architectural role: database access
+layer for the framework.
 
 ## Installation
 
@@ -42,7 +43,8 @@ pnpm db:generate
 
 **Owns:** Database connection lifecycle, Prisma client singleton, adapter configuration (Neon/Pg).
 
-**Does not own:** Database schema definitions (managed via Prisma migrations), business logic, data validation, or connection pooling configuration.
+**Does not own:** Database schema definitions (managed via Prisma migrations), business logic, data
+validation, or connection pooling configuration.
 
 See `docs/architecture/contracts/db.md` for ownership and dependency boundaries.
 

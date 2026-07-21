@@ -1,3 +1,36 @@
 {
-  "indent": "  "
+  "indent": "  ",
+  "sortAz": ["dependencies", "devDependencies", "peerDependencies", "scripts"],
+  "sortFirst": [
+    "name",
+    "version",
+    "private",
+    "license",
+    "engines",
+    "packageManager",
+    "scripts",
+    "dependencies",
+    "devDependencies",
+    "peerDependencies"
+  ],
+  "versionGroups": [
+    {
+      "label": "TypeScript",
+      "dependencies": ["typescript"],
+      "packages": ["**"],
+      "pinVersion": "^5"
+    },
+    {
+      "label": "React",
+      "dependencies": ["react", "react-dom"],
+      "packages": ["**"],
+      "pinVersion": "^19.2.0"
+    },
+    {
+      "label": "Tailwind CSS",
+      "dependencies": ["tailwindcss", "@tailwindcss/postcss"],
+      "packages": ["**"],
+      "pinVersion": "^4.2.4"
+    }
+  ]
 }

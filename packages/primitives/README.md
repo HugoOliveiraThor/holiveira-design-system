@@ -4,7 +4,8 @@ Accessible UI primitives.
 
 ## Purpose
 
-Button, Alert, Skeleton, Checkbox, Radio, Switch, InputGroup, TextArea, Select, Table, and Dropdown components. Architectural role: foundational accessible component library for the design system.
+Button, Alert, Skeleton, Checkbox, Radio, Switch, InputGroup, TextArea, Select, Table, and Dropdown
+components. Architectural role: foundational accessible component library for the design system.
 
 ## Installation
 
@@ -75,9 +76,11 @@ function MyComponent() {
 
 **Dependency Level:** 2 — Primitives.
 
-**Owns:** Accessible UI primitive implementations, component variant definitions (cva), base component styling.
+**Owns:** Accessible UI primitive implementations, component variant definitions (cva), base
+component styling.
 
-**Does not own:** Application-specific UI patterns, page-level compositions, business logic, or data display logic.
+**Does not own:** Application-specific UI patterns, page-level compositions, business logic, or data
+display logic.
 
 See `docs/architecture/contracts/primitives.md` for ownership and dependency boundaries.
 

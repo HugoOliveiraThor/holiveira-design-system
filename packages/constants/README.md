@@ -4,7 +4,8 @@ Shared constants.
 
 ## Purpose
 
-Route definitions, query key factories, storage keys, and numeric constants. Architectural role: single source of truth for cross-package constant values.
+Route definitions, query key factories, storage keys, and numeric constants. Architectural role:
+single source of truth for cross-package constant values.
 
 ## Installation
 
@@ -61,7 +62,8 @@ console.log(MOBILE_BREAKPOINT); // 850
 
 **Dependency Level:** 0 — Core.
 
-**Owns:** Shared constant definitions, route path tree, query key factory pattern, storage key conventions.
+**Owns:** Shared constant definitions, route path tree, query key factory pattern, storage key
+conventions.
 
 **Does not own:** Business logic, configuration values, or environment-specific constants.
 

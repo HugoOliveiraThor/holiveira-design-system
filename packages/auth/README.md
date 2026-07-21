@@ -4,7 +4,8 @@ Authentication and RBAC infrastructure.
 
 ## Purpose
 
-Server-side BetterAuth instance with Prisma adapter, React client bindings, session management, and role-based authorization. Architectural role: provides auth primitives for the entire framework.
+Server-side BetterAuth instance with Prisma adapter, React client bindings, session management, and
+role-based authorization. Architectural role: provides auth primitives for the entire framework.
 
 ## Installation
 
@@ -51,9 +52,11 @@ export default createProxy({ auth, config: { publicRoutes: ['/sign-in'] } });
 
 **Dependency Level:** 4 — Services.
 
-**Owns:** Auth configuration, session management, RBAC plugins and role definitions, middleware proxy.
+**Owns:** Auth configuration, session management, RBAC plugins and role definitions, middleware
+proxy.
 
-**Does not own:** Auth UI components (sign-in/sign-up pages), OAuth provider credentials, user profile data, or database schema (delegated to `@holiveira/db`).
+**Does not own:** Auth UI components (sign-in/sign-up pages), OAuth provider credentials, user
+profile data, or database schema (delegated to `@holiveira/db`).
 
 See `docs/architecture/contracts/auth.md` for ownership and dependency boundaries.
 

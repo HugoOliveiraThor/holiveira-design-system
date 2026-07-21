@@ -4,7 +4,8 @@ Composed UI component library.
 
 ## Purpose
 
-Breadcrumb navigation, ShowcaseSection display, and Card component with variants. Architectural role: high-level composed components built on primitives.
+Breadcrumb navigation, ShowcaseSection display, and Card component with variants. Architectural
+role: high-level composed components built on primitives.
 
 ## Installation
 
@@ -47,7 +48,8 @@ function MyPage() {
 
 **Owns:** Composed UI component implementations, cross-primitive composition patterns.
 
-**Does not own:** Primitive components (delegated to `@holiveira/primitives`), layout components (delegated to `@holiveira/layouts`), or application-specific compositions.
+**Does not own:** Primitive components (delegated to `@holiveira/primitives`), layout components
+(delegated to `@holiveira/layouts`), or application-specific compositions.
 
 See `docs/architecture/contracts/ui.md` for ownership and dependency boundaries.
 

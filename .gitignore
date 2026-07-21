@@ -39,6 +39,7 @@ pnpm-debug.log*
 
 # typescript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 next-env.d.ts
 
 # lint & format
@@ -52,14 +53,14 @@ skills-lock.json
 # package manager
 package-lock.json
 
-/src/generated/prisma
-packages/db/src/generated/
-
 # turborepo
 .turbo/
 
 # package build output
 packages/*/dist/
+
+# prisma generated
+packages/db/src/generated/
 
 # LLMS
 .claude

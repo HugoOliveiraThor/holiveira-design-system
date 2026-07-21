@@ -4,7 +4,8 @@ Design tokens and theme system.
 
 ## Purpose
 
-ThemeProvider wrapping next-themes for dark mode support, useTheme hook for theme access. Architectural role: theme infrastructure bridging design tokens to runtime.
+ThemeProvider wrapping next-themes for dark mode support, useTheme hook for theme access.
+Architectural role: theme infrastructure bridging design tokens to runtime.
 
 ## Installation
 
@@ -45,9 +46,11 @@ function ThemeToggle() {
 
 **Dependency Level:** 3 — Composition.
 
-**Owns:** Theme provider implementation, dark mode integration, theme context, default theme configuration.
+**Owns:** Theme provider implementation, dark mode integration, theme context, default theme
+configuration.
 
-**Does not own:** Design token definitions (delegated to `@holiveira/tokens`), component-level theming, Tailwind CSS configuration, or theme switching UI.
+**Does not own:** Design token definitions (delegated to `@holiveira/tokens`), component-level
+theming, Tailwind CSS configuration, or theme switching UI.
 
 See `docs/architecture/contracts/theme.md` for ownership and dependency boundaries.
 
