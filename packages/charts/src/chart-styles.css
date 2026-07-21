@@ -1,0 +1,31 @@
+.apexcharts-yaxis-label {
+  @apply text-xs;
+}
+
+.apexcharts-xaxis-label {
+  @apply text-body-sm font-medium;
+}
+
+.apexcharts-legend-series {
+  @apply inline-flex! gap-1.5;
+}
+
+.apexcharts-xaxistooltip-bottom:after {
+  @apply border-b-gray! dark:border-b-dark!;
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+  @apply border-b-gray! dark:border-b-dark!;
+}
+
+.apexcharts-xaxistooltip-bottom {
+  @apply rounded-sm! border-none! text-sm! font-medium!;
+}
+
+.apexcharts-tooltip-series-group {
+  @apply pr-3.5! pb-px! pl-2.5!;
+}
+
+.apexcharts-tooltip-series-group .apexcharts-tooltip-text {
+  @apply text-base! font-medium!;
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@holiveira/charts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chart and visualization components.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "charts",
+    "visualization",
+    "apexcharts"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@holiveira/hooks": "workspace:*",
+    "@holiveira/theme": "workspace:*",
+    "@holiveira/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "@holiveira/types": "workspace:*",
+    "apexcharts": "^4.0.0",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-apexcharts": "^1.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}

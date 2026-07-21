@@ -1,0 +1,33 @@
+{
+  "name": "@holiveira/providers",
+  "version": "0.1.0",
+  "private": true,
+  "description": "React provider composition utilities.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "providers",
+    "composition"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "@holiveira/types": "workspace:*",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}
