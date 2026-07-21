@@ -16,7 +16,7 @@
     },
     "storybook": {
       "dependsOn": ["^build"],
-      "outputs": ["apps/storybook/storybook-static/**"]
+      "outputs": ["storybook-static/**"]
     }
   }
 }
