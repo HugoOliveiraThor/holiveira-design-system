@@ -4,19 +4,24 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "inputs": ["$TURBO_DEFAULT$", "!dist/**"]
     },
-    "lint": {},
+    "lint": {
+      "inputs": ["$TURBO_DEFAULT$", "!dist/**"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "typecheck": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!dist/**"]
     },
     "storybook": {
       "dependsOn": ["^build"],
-      "outputs": ["storybook-static/**"]
+      "outputs": ["storybook-static/**"],
+      "inputs": ["$TURBO_DEFAULT$", "!storybook-static/**"]
     }
   }
 }

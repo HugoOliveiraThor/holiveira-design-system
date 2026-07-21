@@ -18,7 +18,11 @@
     "build:storybook": "turbo run storybook",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
     "check:deps": "syncpack lint --dependency-types prod,dev",
+    "check:deps:peer": "pnpm peers check 2>&1 || true",
+    "dev": "turbo run dev",
+    "dev:storybook": "turbo run dev --filter=storybook",
     "db:generate": "prisma generate --schema=packages/db/prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --schema=packages/db/prisma/schema.prisma",
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
@@ -40,6 +44,7 @@
     "prettier-plugin-tailwindcss": "^0.7.3",
     "prisma": "^7.8.0",
     "syncpack": "^15.3.2",
+    "@vitest/coverage-v8": "^3.2.7",
     "turbo": "^2.10.5",
     "typescript": "^5"
   }
