@@ -1,0 +1,52 @@
+{
+  "name": "storybook",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
+  },
+  "dependencies": {
+    "@holiveira/charts": "workspace:*",
+    "@holiveira/config": "workspace:*",
+    "@holiveira/constants": "workspace:*",
+    "@holiveira/forms": "workspace:*",
+    "@holiveira/hooks": "workspace:*",
+    "@holiveira/i18n": "workspace:*",
+    "@holiveira/icons": "workspace:*",
+    "@holiveira/layouts": "workspace:*",
+    "@holiveira/primitives": "workspace:*",
+    "@holiveira/providers": "workspace:*",
+    "@holiveira/theme": "workspace:*",
+    "@holiveira/tokens": "workspace:*",
+    "@holiveira/types": "workspace:*",
+    "@holiveira/ui": "workspace:*",
+    "@holiveira/utils": "workspace:*",
+    "apexcharts": "^4.5.0",
+    "flatpickr": "^4.6.13",
+    "next": "^16.1.6",
+    "next-themes": "^0.4.4",
+    "react": "^19.2.0",
+    "react-apexcharts": "^1.7.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.82.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^8.6.12",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-interactions": "^8.6.12",
+    "@storybook/addon-themes": "^8.6.12",
+    "@storybook/react": "^8.6.12",
+    "@storybook/react-vite": "^8.6.12",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8",
+    "storybook": "^8.6.12",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5"
+  }
+}
