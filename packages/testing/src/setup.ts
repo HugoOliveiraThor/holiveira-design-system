@@ -17,14 +17,13 @@ export function setupTestEnvironment(options?: SetupTestEnvironmentOptions) {
       unobserve = () => {};
       disconnect = () => {};
     }
-    globalThis.ResizeObserver =
-      ResizeObserverMock as unknown as typeof ResizeObserver;
+    globalThis.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;
   }
 
   if (opts.mockIntersectionObserver) {
     class IntersectionObserverMock {
       readonly root: Element | null = null;
-      readonly rootMargin: string = "0px";
+      readonly rootMargin: string = '0px';
       readonly thresholds: ReadonlyArray<number> = [0];
       observe = () => {};
       unobserve = () => {};
@@ -36,7 +35,7 @@ export function setupTestEnvironment(options?: SetupTestEnvironmentOptions) {
   }
 
   if (opts.mockMatchMedia) {
-    Object.defineProperty(globalThis, "matchMedia", {
+    Object.defineProperty(globalThis, 'matchMedia', {
       writable: true,
       value: (query: string) => ({
         matches: false,

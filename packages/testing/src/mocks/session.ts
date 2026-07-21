@@ -1,4 +1,4 @@
-import type { MockSessionOptions } from "../types";
+import type { MockSessionOptions } from '../types';
 
 export interface MockSession {
   user: {
@@ -17,34 +17,32 @@ export interface MockSession {
 
 export const mockSession: MockSession = {
   user: {
-    id: "mock-user-id",
-    name: "Test User",
-    email: "test@example.com",
+    id: 'mock-user-id',
+    name: 'Test User',
+    email: 'test@example.com',
     image: null,
     emailVerified: null,
   },
   session: {
-    expiresAt: new Date("2099-12-31"),
-    token: "mock-session-token",
+    expiresAt: new Date('2099-12-31'),
+    token: 'mock-session-token',
     fresh: true,
   },
 };
 
-export function createMockSession(
-  options?: MockSessionOptions
-): MockSession {
+export function createMockSession(options?: MockSessionOptions): MockSession {
   return {
     user: {
-      id: "mock-user-id",
-      name: "Test User",
-      email: "test@example.com",
+      id: 'mock-user-id',
+      name: 'Test User',
+      email: 'test@example.com',
       image: null,
       emailVerified: null,
       ...options?.user,
     },
     session: {
-      expiresAt: new Date("2099-12-31"),
-      token: "mock-session-token",
+      expiresAt: new Date('2099-12-31'),
+      token: 'mock-session-token',
       fresh: true,
       ...options?.session,
     },

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { cn } from "@holiveira/utils";
-import type { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
-import type { ChartSeries } from "./types";
-import { toApexDefaults, useChartTheme } from "./chart-defaults";
+import { cn } from '@holiveira/utils';
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import type { ChartSeries } from './types';
+import { toApexDefaults, useChartTheme } from './chart-defaults';
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export interface BarChartProps {
   series: ChartSeries[];
@@ -33,16 +33,16 @@ export function BarChart({
     chart: {
       ...defaults.chart,
       ...apexOptions?.chart,
-      type: "bar",
+      type: 'bar',
       stacked,
     },
     plotOptions: {
       bar: {
         horizontal: false,
         borderRadius: 3,
-        columnWidth: "25%",
-        borderRadiusApplication: "end",
-        borderRadiusWhenStacked: "last",
+        columnWidth: '25%',
+        borderRadiusApplication: 'end',
+        borderRadiusWhenStacked: 'last',
       },
     },
     xaxis: {
@@ -50,12 +50,12 @@ export function BarChart({
       axisTicks: { show: false },
     },
     legend: {
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "inherit",
+      position: 'top',
+      horizontalAlign: 'left',
+      fontFamily: 'inherit',
       fontWeight: 500,
-      fontSize: "14px",
-      markers: { size: 9, shape: "circle" },
+      fontSize: '14px',
+      markers: { size: 9, shape: 'circle' },
     },
     fill: { opacity: 1 },
     responsive: [
@@ -65,7 +65,7 @@ export function BarChart({
           plotOptions: {
             bar: {
               borderRadius: 3,
-              columnWidth: "25%",
+              columnWidth: '25%',
             },
           },
         },
@@ -74,10 +74,10 @@ export function BarChart({
   };
 
   return (
-    <div className={cn("-ml-3.5 mt-3", className)}>
+    <div className={cn('mt-3 -ml-3.5', className)}>
       <Chart options={options} series={series} type="bar" height={height} />
     </div>
   );
 }
 
-BarChart.displayName = "BarChart";
+BarChart.displayName = 'BarChart';

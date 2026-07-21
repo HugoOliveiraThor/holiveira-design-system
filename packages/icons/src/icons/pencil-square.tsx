@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Pencil / edit / compose @public */
 export const PencilSquareIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -14,5 +14,5 @@ export const PencilSquareIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-PencilSquareIcon.displayName = "PencilSquareIcon"
+);
+PencilSquareIcon.displayName = 'PencilSquareIcon';

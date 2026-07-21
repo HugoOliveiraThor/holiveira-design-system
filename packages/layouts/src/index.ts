@@ -3,10 +3,7 @@
  * Owns layout state: expanded, collapsed, mobileOpen.
  * @public
  */
-export {
-  SidebarProvider,
-  useSidebarContext,
-} from "./sidebar-context"
+export { SidebarProvider, useSidebarContext } from './sidebar-context';
 
 /**
  * Application sidebar shell.
@@ -14,7 +11,7 @@ export {
  * Navigation rendering is a composition concern — compose inside Sidebar via children.
  * @public
  */
-export { Sidebar, type SidebarProps } from "./sidebar"
+export { Sidebar, type SidebarProps } from './sidebar';
 
 /**
  * Application header shell.
@@ -29,4 +26,4 @@ export {
   type HeaderProps,
   type HeaderToggleProps,
   type HeaderActionsProps,
-} from "./header"
+} from './header';

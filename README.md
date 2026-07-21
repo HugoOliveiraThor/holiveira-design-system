@@ -21,15 +21,15 @@ pnpm add @holiveira/ui @holiveira/theme
 ```
 
 ```tsx
-import { ThemeProvider } from "@holiveira/theme"
-import { Button } from "@holiveira/primitives"
+import { ThemeProvider } from '@holiveira/theme';
+import { Button } from '@holiveira/primitives';
 
 function App() {
   return (
     <ThemeProvider>
       <Button variant="primary">Get Started</Button>
     </ThemeProvider>
-  )
+  );
 }
 ```
 
@@ -70,18 +70,18 @@ pnpm add @holiveira/ui @holiveira/primitives @holiveira/theme
 Wrap your application with the theme provider:
 
 ```tsx
-import { ThemeProvider } from "@holiveira/theme"
+import { ThemeProvider } from '@holiveira/theme';
 
 export default function Layout({ children }) {
-  return <ThemeProvider>{children}</ThemeProvider>
+  return <ThemeProvider>{children}</ThemeProvider>;
 }
 ```
 
 Import and use components:
 
 ```tsx
-import { Button } from "@holiveira/primitives"
-import { Card } from "@holiveira/ui"
+import { Button } from '@holiveira/primitives';
+import { Card } from '@holiveira/ui';
 ```
 
 For authentication, forms, charts, and layouts, see the individual package documentation.

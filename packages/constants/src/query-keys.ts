@@ -11,11 +11,9 @@
 export function queryKeyFactory(baseKey: string) {
   return {
     all: [baseKey] as const,
-    lists: [baseKey, "list"] as const,
-    list: (filters?: Record<string, unknown>) =>
-      [baseKey, "list", filters ?? {}] as const,
-    details: [baseKey, "detail"] as const,
-    detail: (id: string | number) =>
-      [baseKey, "detail", id] as const,
-  }
+    lists: [baseKey, 'list'] as const,
+    list: (filters?: Record<string, unknown>) => [baseKey, 'list', filters ?? {}] as const,
+    details: [baseKey, 'detail'] as const,
+    detail: (id: string | number) => [baseKey, 'detail', id] as const,
+  };
 }

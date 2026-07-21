@@ -1,18 +1,16 @@
-import type { ConfigSchema } from "../schema"
+import type { ConfigSchema } from '../schema';
 
 export function _validateConfig(schema: ConfigSchema): string[] {
-  const errors: string[] = []
+  const errors: string[] = [];
 
   for (const [key, entry] of Object.entries(schema)) {
     if (entry.required) {
-      const value = process.env[key]
+      const value = process.env[key];
       if (!value) {
-        errors.push(
-          `[@holiveira/config] Missing required environment variable: "${key}"`
-        )
+        errors.push(`[@holiveira/config] Missing required environment variable: "${key}"`);
       }
     }
   }
 
-  return errors
+  return errors;
 }

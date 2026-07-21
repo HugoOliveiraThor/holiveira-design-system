@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Chevron pointing up @public */
 export const ChevronUpIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -14,5 +14,5 @@ export const ChevronUpIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-ChevronUpIcon.displayName = "ChevronUpIcon"
+);
+ChevronUpIcon.displayName = 'ChevronUpIcon';

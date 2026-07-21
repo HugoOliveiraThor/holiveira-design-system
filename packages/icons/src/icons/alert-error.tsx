@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Error alert / exclamation in circle @public */
 export const AlertErrorIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -12,5 +12,5 @@ export const AlertErrorIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-AlertErrorIcon.displayName = "AlertErrorIcon"
+);
+AlertErrorIcon.displayName = 'AlertErrorIcon';

@@ -9,13 +9,22 @@
   },
   "packageManager": "pnpm@11.3.0",
   "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint packages/ apps/",
-    "lint:deps": "syncpack lint --dependency-types prod,dev,peer",
-    "prepare": "husky",
+    "lint:fix": "eslint packages/ apps/ --fix",
+    "typecheck": "turbo run typecheck",
+    "build": "turbo run build",
+    "build:storybook": "turbo run storybook",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
+    "check:deps": "syncpack lint --dependency-types prod,dev",
     "db:generate": "prisma generate --schema=packages/db/prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --schema=packages/db/prisma/schema.prisma",
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
-    "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma"
+    "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma",
+    "prepare": "husky",
+    "all-checks": "pnpm run check:deps && pnpm run format:check && pnpm run lint && pnpm run build && pnpm run typecheck && pnpm run build:storybook && pnpm run test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",

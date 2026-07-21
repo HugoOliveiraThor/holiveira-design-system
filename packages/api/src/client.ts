@@ -1,5 +1,5 @@
-import type { ApiConfig, ApiResponse, HttpMethod } from "./types";
-import { ApiError } from "./types";
+import type { ApiConfig, ApiResponse, HttpMethod } from './types';
+import { ApiError } from './types';
 
 interface ApiClient {
   get<T>(path: string): Promise<ApiResponse<T>>;
@@ -10,8 +10,8 @@ interface ApiClient {
 }
 
 function buildUrl(baseUrl: string, path: string): string {
-  const base = baseUrl.replace(/\/+$/, "");
-  const p = path.replace(/^\/+/, "");
+  const base = baseUrl.replace(/\/+$/, '');
+  const p = path.replace(/^\/+/, '');
   return `${base}/${p}`;
 }
 
@@ -24,20 +24,16 @@ async function parseErrorBody(response: Response): Promise<ApiError> {
     };
     return new ApiError(
       response.status,
-      body.code ?? "UNKNOWN_ERROR",
+      body.code ?? 'UNKNOWN_ERROR',
       body.message ?? response.statusText,
       body.details,
     );
   } catch {
     try {
       const text = await response.text();
-      return new ApiError(
-        response.status,
-        "UNKNOWN_ERROR",
-        text || response.statusText,
-      );
+      return new ApiError(response.status, 'UNKNOWN_ERROR', text || response.statusText);
     } catch {
-      return new ApiError(response.status, "UNKNOWN_ERROR", response.statusText);
+      return new ApiError(response.status, 'UNKNOWN_ERROR', response.statusText);
     }
   }
 }
@@ -53,8 +49,8 @@ async function request<T>(
   const url = buildUrl(baseUrl, path);
   const headers: Record<string, string> = { ...defaultHeaders };
 
-  if (body !== undefined && !headers["Content-Type"]) {
-    headers["Content-Type"] = "application/json";
+  if (body !== undefined && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json';
   }
 
   const controller = new AbortController();
@@ -76,15 +72,9 @@ async function request<T>(
     try {
       const response = await doFetch();
 
-      if (
-        response.status >= 500 &&
-        config?.retry &&
-        attempts < config.retry.maxAttempts - 1
-      ) {
+      if (response.status >= 500 && config?.retry && attempts < config.retry.maxAttempts - 1) {
         const delay =
-          config.retry.backoff === "exponential"
-            ? 500 * 2 ** (attempts + 1)
-            : 500 * (attempts + 1);
+          config.retry.backoff === 'exponential' ? 500 * 2 ** (attempts + 1) : 500 * (attempts + 1);
         await new Promise((resolve) => setTimeout(resolve, delay));
         return fetchWithRetry(attempts + 1);
       }
@@ -93,20 +83,16 @@ async function request<T>(
     } catch (error) {
       if (config?.retry && attempts < config.retry.maxAttempts - 1) {
         const delay =
-          config.retry.backoff === "exponential"
-            ? 500 * 2 ** (attempts + 1)
-            : 500 * (attempts + 1);
+          config.retry.backoff === 'exponential' ? 500 * 2 ** (attempts + 1) : 500 * (attempts + 1);
         await new Promise((resolve) => setTimeout(resolve, delay));
         return fetchWithRetry(attempts + 1);
       }
 
-      if (error instanceof DOMException && error.name === "AbortError") {
-        throw new ApiError(0, "TIMEOUT", "Request timed out");
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw new ApiError(0, 'TIMEOUT', 'Request timed out');
       }
 
-      throw ApiError.networkError(
-        error instanceof Error ? error.message : String(error),
-      );
+      throw ApiError.networkError(error instanceof Error ? error.message : String(error));
     }
   };
 
@@ -153,19 +139,19 @@ export function createApiClient(config: ApiConfig): ApiClient {
 
   return {
     get<T>(path: string): Promise<ApiResponse<T>> {
-      return request<T>(config.baseUrl, path, "GET", defaultHeaders, undefined, config);
+      return request<T>(config.baseUrl, path, 'GET', defaultHeaders, undefined, config);
     },
     post<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-      return request<T>(config.baseUrl, path, "POST", defaultHeaders, body, config);
+      return request<T>(config.baseUrl, path, 'POST', defaultHeaders, body, config);
     },
     put<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-      return request<T>(config.baseUrl, path, "PUT", defaultHeaders, body, config);
+      return request<T>(config.baseUrl, path, 'PUT', defaultHeaders, body, config);
     },
     patch<T>(path: string, body?: unknown): Promise<ApiResponse<T>> {
-      return request<T>(config.baseUrl, path, "PATCH", defaultHeaders, body, config);
+      return request<T>(config.baseUrl, path, 'PATCH', defaultHeaders, body, config);
     },
     delete<T>(path: string): Promise<ApiResponse<T>> {
-      return request<T>(config.baseUrl, path, "DELETE", defaultHeaders, undefined, config);
+      return request<T>(config.baseUrl, path, 'DELETE', defaultHeaders, undefined, config);
     },
   };
 }

@@ -1,15 +1,15 @@
-import { loadEnvConfig } from "@next/env";
-import { defineConfig } from "prisma/config";
+import { loadEnvConfig } from '@next/env';
+import { defineConfig } from 'prisma/config';
 
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
 
 export default defineConfig({
-  schema: "packages/db/prisma/schema.prisma",
+  schema: 'packages/db/prisma/schema.prisma',
   migrations: {
-    path: "prisma/migrations",
+    path: 'prisma/migrations',
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: process.env['DATABASE_URL'],
   },
 });

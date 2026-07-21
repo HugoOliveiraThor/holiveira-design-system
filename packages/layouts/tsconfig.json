@@ -10,9 +10,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "references": [
-    { "path": "../types" },
-    { "path": "../hooks" },
-    { "path": "../utils" }
-  ]
+  "references": [{ "path": "../types" }, { "path": "../hooks" }, { "path": "../utils" }]
 }

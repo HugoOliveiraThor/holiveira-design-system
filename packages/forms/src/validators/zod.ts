@@ -1,27 +1,27 @@
-import { z } from "zod"
+import { z } from 'zod';
 
 type ZodResolverResult<T> =
   | { values: T; errors: Record<string, never> }
-  | { values: Record<string, never>; errors: Record<string, { message: string }> }
+  | { values: Record<string, never>; errors: Record<string, { message: string }> };
 
 function zodResolver<T>(schema: z.ZodType<T>) {
   return async (data: unknown): Promise<ZodResolverResult<T>> => {
-    const result = await schema.safeParseAsync(data)
+    const result = await schema.safeParseAsync(data);
 
     if (result.success) {
-      return { values: result.data, errors: {} }
+      return { values: result.data, errors: {} };
     }
 
-    const errors: Record<string, { message: string }> = {}
+    const errors: Record<string, { message: string }> = {};
     for (const issue of result.error.issues) {
-      const path = issue.path.join(".")
+      const path = issue.path.join('.');
       if (!errors[path]) {
-        errors[path] = { message: issue.message }
+        errors[path] = { message: issue.message };
       }
     }
 
-    return { values: {} as Record<string, never>, errors }
-  }
+    return { values: {} as Record<string, never>, errors };
+  };
 }
 
-export { zodResolver, type ZodResolverResult }
+export { zodResolver, type ZodResolverResult };

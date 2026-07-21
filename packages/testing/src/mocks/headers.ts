@@ -1,10 +1,8 @@
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 export type MockHeaders = ReturnType<typeof mockHeaders>;
 
-export function mockHeaders(
-  entries?: Record<string, string>
-): Headers {
+export function mockHeaders(entries?: Record<string, string>): Headers {
   const headers = new Headers();
   if (entries) {
     for (const [key, value] of Object.entries(entries)) {

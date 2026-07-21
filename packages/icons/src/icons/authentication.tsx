@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Authentication / lock shield @public */
 export const AuthenticationIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -16,5 +16,5 @@ export const AuthenticationIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-AuthenticationIcon.displayName = "AuthenticationIcon"
+);
+AuthenticationIcon.displayName = 'AuthenticationIcon';

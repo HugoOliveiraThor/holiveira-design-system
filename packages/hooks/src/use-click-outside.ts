@@ -1,22 +1,22 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react';
 
 /** Detects clicks outside a referenced element. Returns a ref to attach to the element. @public */
 export function useClickOutside<T extends HTMLElement>(callback: () => void) {
-  const ref = useRef<T>(null)
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     function handleEvent(event: MouseEvent) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        callback()
+        callback();
       }
     }
 
-    document.addEventListener("mousedown", handleEvent)
+    document.addEventListener('mousedown', handleEvent);
 
     return () => {
-      document.removeEventListener("mousedown", handleEvent)
-    }
-  }, [callback, ref])
+      document.removeEventListener('mousedown', handleEvent);
+    };
+  }, [callback, ref]);
 
-  return ref
+  return ref;
 }

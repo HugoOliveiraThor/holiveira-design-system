@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Download arrow @public */
 export const DownloadIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -16,5 +16,5 @@ export const DownloadIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-DownloadIcon.displayName = "DownloadIcon"
+);
+DownloadIcon.displayName = 'DownloadIcon';

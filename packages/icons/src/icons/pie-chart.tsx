@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Pie chart / analytics @public */
 export const PieChartIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -18,5 +18,5 @@ export const PieChartIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-PieChartIcon.displayName = "PieChartIcon"
+);
+PieChartIcon.displayName = 'PieChartIcon';

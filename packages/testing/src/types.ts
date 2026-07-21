@@ -1,5 +1,5 @@
-import type { ReactNode, ComponentType, ReactElement } from "react";
-import type { RenderOptions } from "@testing-library/react";
+import type { ReactNode, ComponentType, ReactElement } from 'react';
+import type { RenderOptions } from '@testing-library/react';
 
 export interface ProviderConfig {
   providers: ComponentType<{ children: ReactNode }>[];

@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { vi } from 'vitest';
 
 export interface MockRouter {
   push: ReturnType<typeof vi.fn>;
@@ -20,18 +20,16 @@ export function mockRouter(overrides?: Partial<MockRouter>): MockRouter {
     forward: vi.fn(),
     refresh: vi.fn(),
     prefetch: vi.fn(),
-    pathname: "/",
+    pathname: '/',
     query: {},
-    asPath: "/",
+    asPath: '/',
     ...overrides,
   };
 }
 
 export type MockSearchParams = ReturnType<typeof mockSearchParams>;
 
-export function mockSearchParams(
-  params?: Record<string, string>
-): URLSearchParams {
+export function mockSearchParams(params?: Record<string, string>): URLSearchParams {
   const searchParams = new URLSearchParams();
   if (params) {
     for (const [key, value] of Object.entries(params)) {

@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Arrow pointing left @public */
 export const ArrowLeftIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -12,5 +12,5 @@ export const ArrowLeftIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-ArrowLeftIcon.displayName = "ArrowLeftIcon"
+);
+ArrowLeftIcon.displayName = 'ArrowLeftIcon';

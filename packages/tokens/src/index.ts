@@ -5,15 +5,15 @@
  * CSS custom properties are available via `@import "@holiveira/tokens/tokens.css"`.
  */
 
-export { colors } from "./colors";
-export type { ColorKey } from "./colors";
+export { colors } from './colors';
+export type { ColorKey } from './colors';
 
-export { containers, breakpoints } from "./spacing";
-export type { Breakpoint } from "./spacing";
+export { containers, breakpoints } from './spacing';
+export type { Breakpoint } from './spacing';
 
-export { fontFamily, text } from "./typography";
+export { fontFamily, text } from './typography';
 
-export { shadows } from "./shadows";
+export { shadows } from './shadows';
 
 /** Generic type for design token string values. */
 export type TokenValue = string;

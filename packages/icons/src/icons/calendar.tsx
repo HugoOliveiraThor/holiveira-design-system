@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Calendar date @public */
 export const CalendarIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -18,5 +18,5 @@ export const CalendarIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-CalendarIcon.displayName = "CalendarIcon"
+);
+CalendarIcon.displayName = 'CalendarIcon';

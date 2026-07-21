@@ -11,7 +11,7 @@ pnpm add @holiveira/{name}
 ## Usage
 
 ```tsx
-import { /* ... */ } from "@holiveira/{name}"
+import {} from /* ... */ '@holiveira/{name}';
 ```
 
 ## Public API

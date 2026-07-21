@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { cn } from "@holiveira/utils";
-import { useIsMobile } from "@holiveira/hooks";
-import type { ApexOptions } from "apexcharts";
-import dynamic from "next/dynamic";
-import type { ChartSeries } from "./types";
-import { toApexDefaults, useChartTheme } from "./chart-defaults";
+import { cn } from '@holiveira/utils';
+import { useIsMobile } from '@holiveira/hooks';
+import type { ApexOptions } from 'apexcharts';
+import dynamic from 'next/dynamic';
+import type { ChartSeries } from './types';
+import { toApexDefaults, useChartTheme } from './chart-defaults';
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export interface AreaChartProps {
   series: ChartSeries[];
@@ -16,12 +16,7 @@ export interface AreaChartProps {
   apexOptions?: Partial<ApexOptions>;
 }
 
-export function AreaChart({
-  series,
-  height = 310,
-  className,
-  apexOptions,
-}: AreaChartProps) {
+export function AreaChart({ series, height = 310, className, apexOptions }: AreaChartProps) {
   const chartTheme = useChartTheme();
   const isMobile = useIsMobile();
   const defaults = toApexDefaults(chartTheme);
@@ -34,7 +29,7 @@ export function AreaChart({
       ...defaults.chart,
       ...apexOptions?.chart,
       height,
-      type: "area",
+      type: 'area',
     },
     fill: {
       gradient: {
@@ -43,7 +38,7 @@ export function AreaChart({
       },
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
       width: isMobile ? 2 : 3,
     },
     xaxis: {
@@ -67,10 +62,10 @@ export function AreaChart({
   };
 
   return (
-    <div className={cn("-ml-4 -mr-5", className)} style={{ height }}>
+    <div className={cn('-mr-5 -ml-4', className)} style={{ height }}>
       <Chart options={options} series={series} type="area" height={height} />
     </div>
   );
 }
 
-AreaChart.displayName = "AreaChart";
+AreaChart.displayName = 'AreaChart';

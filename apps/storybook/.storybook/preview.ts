@@ -1,6 +1,6 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from '@storybook/react';
 
-import "@holiveira/theme/theme.css";
+import '@holiveira/theme/theme.css';
 
 const preview: Preview = {
   parameters: {

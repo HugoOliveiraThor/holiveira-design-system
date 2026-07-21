@@ -1,23 +1,23 @@
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { db } from "@holiveira/db";
+import { betterAuth } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { db } from '@holiveira/db';
 
 if (!process.env.BETTER_AUTH_SECRET) {
-  throw new Error("BETTER_AUTH_SECRET is not set.");
+  throw new Error('BETTER_AUTH_SECRET is not set.');
 }
 
 export const auth = betterAuth({
-  appName: "Holiveira",
+  appName: 'Holiveira',
   baseURL: process.env.BETTER_AUTH_URL!,
 
   user: {
     additionalFields: {
       phoneNumber: {
-        type: "number",
+        type: 'number',
         required: false,
       },
       bio: {
-        type: "string",
+        type: 'string',
         required: false,
       },
     },
@@ -37,7 +37,7 @@ export const auth = betterAuth({
   },
 
   database: prismaAdapter(db, {
-    provider: "postgresql",
+    provider: 'postgresql',
   }),
 
   // plugins: [...authorizationPlugins],
@@ -46,15 +46,12 @@ export const auth = betterAuth({
     cookieCache: {
       enabled: true,
       maxAge: 60 * 5,
-      strategy: "compact",
+      strategy: 'compact',
     },
     deferSessionRefresh: true,
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
   },
 
-  trustedOrigins: [
-    process.env.NEXT_PUBLIC_APP_URL!,
-    process.env.BETTER_AUTH_URL!,
-  ],
+  trustedOrigins: [process.env.NEXT_PUBLIC_APP_URL!, process.env.BETTER_AUTH_URL!],
 });

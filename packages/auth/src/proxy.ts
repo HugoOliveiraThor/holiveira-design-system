@@ -1,6 +1,6 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import type { AppRole } from "./permissions";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { AppRole } from './permissions';
 
 interface AuthSession {
   session: Record<string, unknown> | null;
@@ -9,9 +9,7 @@ interface AuthSession {
 
 interface AuthAPI {
   api: {
-    getSession: (opts: {
-      headers: Headers;
-    }) => Promise<AuthSession | null>;
+    getSession: (opts: { headers: Headers }) => Promise<AuthSession | null>;
   };
 }
 
@@ -37,19 +35,19 @@ interface ProxyResult {
 }
 
 function getDefaultCookieName(): string {
-  return process.env.NODE_ENV === "development"
-    ? "better-auth.session_token"
-    : "__Secure-better-auth.session_token";
+  return process.env.NODE_ENV === 'development'
+    ? 'better-auth.session_token'
+    : '__Secure-better-auth.session_token';
 }
 
 export function createProxy(opts: CreateProxyOptions): ProxyResult {
   const {
     auth,
     signInPath,
-    authPaths = [signInPath, "/auth/sign-up"],
-    homePath = "/",
+    authPaths = [signInPath, '/auth/sign-up'],
+    homePath = '/',
     sessionCookieName = getDefaultCookieName(),
-    matcher = "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+    matcher = '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)',
     roleProtected = [],
     onError = console.error,
   } = opts;
@@ -74,9 +72,7 @@ export function createProxy(opts: CreateProxyOptions): ProxyResult {
 
       if (session?.user && roleProtected.length > 0) {
         const userRole = (session.user as { role?: string }).role;
-        const matched = roleProtected.find((r) =>
-          pathname.startsWith(r.prefix),
-        );
+        const matched = roleProtected.find((r) => pathname.startsWith(r.prefix));
         if (matched && userRole !== matched.requiredRole) {
           return NextResponse.redirect(new URL(homePath, request.url));
         }
@@ -111,7 +107,7 @@ function buildRedirect(
   callbackUrl: string,
 ): NextResponse {
   const url = request.nextUrl.clone();
-  url.searchParams.set("callbackUrl", callbackUrl);
+  url.searchParams.set('callbackUrl', callbackUrl);
   url.pathname = signInPath;
   return NextResponse.redirect(url);
 }

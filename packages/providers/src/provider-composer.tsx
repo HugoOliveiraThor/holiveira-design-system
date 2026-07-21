@@ -1,4 +1,4 @@
-import { type ComponentType, type ReactNode } from "react"
+import { type ComponentType, type ReactNode } from 'react';
 
 /**
  * Standard props interface for any provider in the @holiveira framework.
@@ -6,8 +6,8 @@ import { type ComponentType, type ReactNode } from "react"
  * @public
  */
 export type ProviderProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 /**
  * Ordered array of provider configurations.
@@ -24,24 +24,22 @@ export type ProviderProps = {
  * ```
  * @public
  */
-export type ProviderTree = Array<
-  [ComponentType<ProviderProps>, Record<string, unknown>?]
->
+export type ProviderTree = Array<[ComponentType<ProviderProps>, Record<string, unknown>?]>;
 
 /**
  * Props for the ProviderComposer component.
  * @public
  */
 export type ProviderComposerProps = {
-  tree: ProviderTree
-  children: ReactNode
-}
+  tree: ProviderTree;
+  children: ReactNode;
+};
 
 function composeProviders(tree: ProviderTree, children: ReactNode): ReactNode {
   return tree.reduceRight(
     (acc, [Provider, props]) => <Provider {...props}>{acc}</Provider>,
     children,
-  )
+  );
 }
 
 /**
@@ -62,7 +60,7 @@ function composeProviders(tree: ProviderTree, children: ReactNode): ReactNode {
  * @public
  */
 export function ProviderComposer({ tree, children }: ProviderComposerProps) {
-  return <>{composeProviders(tree, children)}</>
+  return <>{composeProviders(tree, children)}</>;
 }
 
-ProviderComposer.displayName = "ProviderComposer"
+ProviderComposer.displayName = 'ProviderComposer';

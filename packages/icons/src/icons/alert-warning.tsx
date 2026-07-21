@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Warning alert / exclamation in triangle @public */
 export const AlertWarningIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -14,5 +14,5 @@ export const AlertWarningIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-AlertWarningIcon.displayName = "AlertWarningIcon"
+);
+AlertWarningIcon.displayName = 'AlertWarningIcon';

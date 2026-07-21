@@ -1,3 +1,3 @@
 export function slugify(value: string): string {
-  return value.toLowerCase().split(" ").join("-")
+  return value.toLowerCase().split(' ').join('-');
 }

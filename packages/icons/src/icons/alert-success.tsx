@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Success alert / check in circle @public */
 export const AlertSuccessIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -12,5 +12,5 @@ export const AlertSuccessIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-AlertSuccessIcon.displayName = "AlertSuccessIcon"
+);
+AlertSuccessIcon.displayName = 'AlertSuccessIcon';

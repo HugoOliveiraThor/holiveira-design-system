@@ -1,5 +1,5 @@
-import { vi } from "vitest";
-import type { MockPointerEvent } from "../types";
+import { vi } from 'vitest';
+import type { MockPointerEvent } from '../types';
 
 export function mockResizeObserver() {
   return vi.fn().mockImplementation(() => ({
@@ -31,11 +31,9 @@ export function mockMatchMedia(matches?: boolean) {
   }));
 }
 
-export function createMockPointerEvent(
-  overrides?: Partial<MockPointerEvent>
-): MockPointerEvent {
+export function createMockPointerEvent(overrides?: Partial<MockPointerEvent>): MockPointerEvent {
   return {
-    pointerType: "mouse",
+    pointerType: 'mouse',
     clientX: 0,
     clientY: 0,
     button: 0,

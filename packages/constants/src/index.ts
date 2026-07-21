@@ -1,10 +1,10 @@
-export { ROUTES, ROUTE_PATTERNS } from "./routes"
+export { ROUTES, ROUTE_PATTERNS } from './routes';
 
-export { queryKeyFactory } from "./query-keys"
+export { queryKeyFactory } from './query-keys';
 
-export { STORAGE_KEYS } from "./storage"
+export { STORAGE_KEYS } from './storage';
 
-export { EVENTS } from "./events"
+export { EVENTS } from './events';
 
 export {
   PAGE_SIZE,
@@ -13,4 +13,4 @@ export {
   MOBILE_BREAKPOINT,
   MAX_FILE_SIZE,
   MIN_PASSWORD_LENGTH,
-} from "./numbers"
+} from './numbers';

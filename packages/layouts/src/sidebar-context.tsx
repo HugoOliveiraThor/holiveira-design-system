@@ -1,50 +1,50 @@
-"use client"
+'use client';
 
-import { useIsMobile } from "@holiveira/hooks"
-import { createContext, useContext, useEffect, useState } from "react"
+import { useIsMobile } from '@holiveira/hooks';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 type SidebarContextType = {
-  expanded: boolean
-  collapsed: boolean
-  isMobileOpen: boolean
-  isMobile: boolean
-  setCollapsed: (collapsed: boolean) => void
-  setMobileOpen: (open: boolean) => void
-  toggleMobileOpen: () => void
-}
+  expanded: boolean;
+  collapsed: boolean;
+  isMobileOpen: boolean;
+  isMobile: boolean;
+  setCollapsed: (collapsed: boolean) => void;
+  setMobileOpen: (open: boolean) => void;
+  toggleMobileOpen: () => void;
+};
 
-const SidebarContext = createContext<SidebarContextType | null>(null)
+const SidebarContext = createContext<SidebarContextType | null>(null);
 
 export function useSidebarContext() {
-  const context = useContext(SidebarContext)
+  const context = useContext(SidebarContext);
   if (!context) {
-    throw new Error("useSidebarContext must be used within a SidebarProvider")
+    throw new Error('useSidebarContext must be used within a SidebarProvider');
   }
-  return context
+  return context;
 }
 
 export function SidebarProvider({
   children,
   defaultCollapsed = false,
 }: {
-  children: React.ReactNode
-  defaultCollapsed?: boolean
+  children: React.ReactNode;
+  defaultCollapsed?: boolean;
 }) {
-  const [collapsed, setCollapsed] = useState(defaultCollapsed)
-  const [isMobileOpen, setMobileOpen] = useState(false)
-  const isMobile = useIsMobile()
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [isMobileOpen, setMobileOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isMobile) {
-      setMobileOpen(false)
-      setCollapsed(true)
+      setMobileOpen(false);
+      setCollapsed(true);
     } else {
-      setCollapsed(defaultCollapsed)
+      setCollapsed(defaultCollapsed);
     }
-  }, [isMobile])
+  }, [isMobile]);
 
   function toggleMobileOpen() {
-    setMobileOpen((prev) => !prev)
+    setMobileOpen((prev) => !prev);
   }
 
   return (
@@ -61,5 +61,5 @@ export function SidebarProvider({
     >
       {children}
     </SidebarContext.Provider>
-  )
+  );
 }

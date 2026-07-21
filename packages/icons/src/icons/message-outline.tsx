@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Message / chat outline @public */
 export const MessageOutlineIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -14,5 +14,5 @@ export const MessageOutlineIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-MessageOutlineIcon.displayName = "MessageOutlineIcon"
+);
+MessageOutlineIcon.displayName = 'MessageOutlineIcon';

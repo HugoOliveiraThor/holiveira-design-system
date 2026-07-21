@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Preview / view / eye @public */
 export const PreviewIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -16,5 +16,5 @@ export const PreviewIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-PreviewIcon.displayName = "PreviewIcon"
+);
+PreviewIcon.displayName = 'PreviewIcon';

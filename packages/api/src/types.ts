@@ -1,4 +1,4 @@
-export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export const StatusCode = {
   OK: 200,
@@ -25,40 +25,31 @@ export class ApiError extends Error {
     public readonly details?: unknown,
   ) {
     super(message);
-    this.name = "ApiError";
+    this.name = 'ApiError';
   }
 
-  static unauthorized(message = "Unauthorized"): ApiError {
-    return new ApiError(StatusCode.UNAUTHORIZED, "UNAUTHORIZED", message);
+  static unauthorized(message = 'Unauthorized'): ApiError {
+    return new ApiError(StatusCode.UNAUTHORIZED, 'UNAUTHORIZED', message);
   }
 
-  static forbidden(message = "Forbidden"): ApiError {
-    return new ApiError(StatusCode.FORBIDDEN, "FORBIDDEN", message);
+  static forbidden(message = 'Forbidden'): ApiError {
+    return new ApiError(StatusCode.FORBIDDEN, 'FORBIDDEN', message);
   }
 
-  static notFound(message = "Not Found"): ApiError {
-    return new ApiError(StatusCode.NOT_FOUND, "NOT_FOUND", message);
+  static notFound(message = 'Not Found'): ApiError {
+    return new ApiError(StatusCode.NOT_FOUND, 'NOT_FOUND', message);
   }
 
   static validation(details?: unknown): ApiError {
-    return new ApiError(
-      StatusCode.UNPROCESSABLE,
-      "VALIDATION_ERROR",
-      "Validation failed",
-      details,
-    );
+    return new ApiError(StatusCode.UNPROCESSABLE, 'VALIDATION_ERROR', 'Validation failed', details);
   }
 
-  static serverError(message = "Internal Server Error"): ApiError {
-    return new ApiError(
-      StatusCode.INTERNAL_SERVER_ERROR,
-      "INTERNAL_SERVER_ERROR",
-      message,
-    );
+  static serverError(message = 'Internal Server Error'): ApiError {
+    return new ApiError(StatusCode.INTERNAL_SERVER_ERROR, 'INTERNAL_SERVER_ERROR', message);
   }
 
-  static networkError(message = "Network Error"): ApiError {
-    return new ApiError(0, "NETWORK_ERROR", message);
+  static networkError(message = 'Network Error'): ApiError {
+    return new ApiError(0, 'NETWORK_ERROR', message);
   }
 }
 
@@ -68,10 +59,9 @@ export interface ApiConfig {
   timeout?: number;
   retry?: {
     maxAttempts: number;
-    backoff: "linear" | "exponential";
+    backoff: 'linear' | 'exponential';
   };
 }
 
 export type ApiResponse<T> =
-  | { ok: true; data: T; status: number; headers: Headers }
-  | { ok: false; error: ApiError };
+  { ok: true; data: T; status: number; headers: Headers } | { ok: false; error: ApiError };

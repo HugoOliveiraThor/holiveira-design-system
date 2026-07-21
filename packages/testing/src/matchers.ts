@@ -1,4 +1,4 @@
-import { expect } from "vitest";
+import { expect } from 'vitest';
 
 export interface ToBeWithinRangeMatcher {
   toBeWithinRange: (min: number, max: number) => void;
@@ -7,7 +7,7 @@ export interface ToBeWithinRangeMatcher {
 export function toBeWithinRange(
   received: number,
   min: number,
-  max: number
+  max: number,
 ): { pass: boolean; message: () => string } {
   const pass = received >= min && received <= max;
   return {

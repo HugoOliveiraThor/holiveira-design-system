@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Trending up / growth @public */
 export const TrendingUpIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -12,5 +12,5 @@ export const TrendingUpIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-TrendingUpIcon.displayName = "TrendingUpIcon"
+);
+TrendingUpIcon.displayName = 'TrendingUpIcon';

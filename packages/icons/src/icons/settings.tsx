@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Settings / gear / cog @public */
 export const SettingsIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -20,5 +20,5 @@ export const SettingsIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-SettingsIcon.displayName = "SettingsIcon"
+);
+SettingsIcon.displayName = 'SettingsIcon';

@@ -1,26 +1,26 @@
-"use client"
+'use client';
 
-import { forwardRef, useId, useRef, useState, useCallback, useEffect } from "react"
-import { cn } from "@holiveira/utils"
-import { useClickOutside } from "@holiveira/hooks"
-import { Label } from "../components/label"
-import { ErrorMessage } from "../components/error-message"
+import { forwardRef, useId, useRef, useState, useCallback, useEffect } from 'react';
+import { cn } from '@holiveira/utils';
+import { useClickOutside } from '@holiveira/hooks';
+import { Label } from '../components/label';
+import { ErrorMessage } from '../components/error-message';
 
 interface MultiSelectOption {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface MultiSelectProps {
-  label?: string
-  options: MultiSelectOption[]
-  defaultValue?: string[]
-  value?: string[]
-  onChange?: (value: string[]) => void
-  placeholder?: string
-  error?: string
-  disabled?: boolean
-  className?: string
+  label?: string;
+  options: MultiSelectOption[];
+  defaultValue?: string[];
+  value?: string[];
+  onChange?: (value: string[]) => void;
+  placeholder?: string;
+  error?: string;
+  disabled?: boolean;
+  className?: string;
 }
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
@@ -31,107 +31,107 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       defaultValue = [],
       value: controlledValue,
       onChange,
-      placeholder = "Select options",
+      placeholder = 'Select options',
       error,
       disabled,
       className,
     },
     ref,
   ) => {
-    const id = useId()
-    const listboxId = `${id}-listbox`
-    const isControlled = controlledValue !== undefined
+    const id = useId();
+    const listboxId = `${id}-listbox`;
+    const isControlled = controlledValue !== undefined;
 
-    const [internalValue, setInternalValue] = useState<string[]>(defaultValue)
-    const selectedValues = isControlled ? controlledValue : internalValue
+    const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
+    const selectedValues = isControlled ? controlledValue : internalValue;
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [focusIndex, setFocusIndex] = useState(-1)
+    const [isOpen, setIsOpen] = useState(false);
+    const [focusIndex, setFocusIndex] = useState(-1);
 
-    const containerRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false))
-    const comboboxRef = useRef<HTMLDivElement>(null)
-    const listboxRef = useRef<HTMLUListElement>(null)
+    const containerRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
+    const comboboxRef = useRef<HTMLDivElement>(null);
+    const listboxRef = useRef<HTMLUListElement>(null);
 
     const setValue = useCallback(
       (newValue: string[]) => {
         if (!isControlled) {
-          setInternalValue(newValue)
+          setInternalValue(newValue);
         }
-        onChange?.(newValue)
+        onChange?.(newValue);
       },
       [isControlled, onChange],
-    )
+    );
 
     const toggleOption = useCallback(
       (optionValue: string) => {
-        if (disabled) return
+        if (disabled) return;
         const next = selectedValues.includes(optionValue)
           ? selectedValues.filter((v) => v !== optionValue)
-          : [...selectedValues, optionValue]
-        setValue(next)
+          : [...selectedValues, optionValue];
+        setValue(next);
       },
       [disabled, selectedValues, setValue],
-    )
+    );
 
     const removeOption = useCallback(
       (optionValue: string) => {
-        if (disabled) return
-        setValue(selectedValues.filter((v) => v !== optionValue))
+        if (disabled) return;
+        setValue(selectedValues.filter((v) => v !== optionValue));
       },
       [disabled, selectedValues, setValue],
-    )
+    );
 
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
         if (!isOpen) {
-          if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
-            e.preventDefault()
-            setIsOpen(true)
-            setFocusIndex(0)
+          if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsOpen(true);
+            setFocusIndex(0);
           }
-          return
+          return;
         }
 
         switch (e.key) {
-          case "ArrowDown":
-            e.preventDefault()
-            setFocusIndex((prev) => (prev < options.length - 1 ? prev + 1 : 0))
-            break
-          case "ArrowUp":
-            e.preventDefault()
-            setFocusIndex((prev) => (prev > 0 ? prev - 1 : options.length - 1))
-            break
-          case "Enter":
-          case " ":
-            e.preventDefault()
+          case 'ArrowDown':
+            e.preventDefault();
+            setFocusIndex((prev) => (prev < options.length - 1 ? prev + 1 : 0));
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            setFocusIndex((prev) => (prev > 0 ? prev - 1 : options.length - 1));
+            break;
+          case 'Enter':
+          case ' ':
+            e.preventDefault();
             if (focusIndex >= 0) {
-              toggleOption(options[focusIndex].value)
+              toggleOption(options[focusIndex].value);
             }
-            break
-          case "Escape":
-            e.preventDefault()
-            setIsOpen(false)
-            comboboxRef.current?.focus()
-            break
-          case "Tab":
-            setIsOpen(false)
-            break
+            break;
+          case 'Escape':
+            e.preventDefault();
+            setIsOpen(false);
+            comboboxRef.current?.focus();
+            break;
+          case 'Tab':
+            setIsOpen(false);
+            break;
         }
       },
       [isOpen, options, focusIndex, toggleOption],
-    )
+    );
 
     useEffect(() => {
       if (isOpen && focusIndex >= 0 && listboxRef.current) {
-        const option = listboxRef.current.children[focusIndex] as HTMLElement
-        option?.scrollIntoView({ block: "nearest" })
+        const option = listboxRef.current.children[focusIndex] as HTMLElement;
+        option?.scrollIntoView({ block: 'nearest' });
       }
-    }, [isOpen, focusIndex])
+    }, [isOpen, focusIndex]);
 
-    const selectedItems = options.filter((o) => selectedValues.includes(o.value))
+    const selectedItems = options.filter((o) => selectedValues.includes(o.value));
 
     return (
-      <div className={cn("relative", className)} ref={ref}>
+      <div className={cn('relative', className)} ref={ref}>
         {label && <Label htmlFor={id}>{label}</Label>}
 
         <div ref={containerRef} className="relative">
@@ -146,35 +146,29 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             onClick={() => !disabled && setIsOpen(!isOpen)}
             onKeyDown={handleKeyDown}
             className={cn(
-              "flex min-h-[42px] w-full cursor-pointer items-center rounded-[7px] border-[1.5px] border-stroke bg-transparent px-3 py-2 transition-colors focus:border-primary dark:border-dark-3 dark:bg-dark-2",
-              error &&
-                "border-red-500 focus:border-red-500 dark:border-red-500",
-              disabled && "cursor-not-allowed opacity-50",
+              'border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 flex min-h-[42px] w-full cursor-pointer items-center rounded-[7px] border-[1.5px] bg-transparent px-3 py-2 transition-colors',
+              error && 'border-red-500 focus:border-red-500 dark:border-red-500',
+              disabled && 'cursor-not-allowed opacity-50',
             )}
           >
             <div className="flex flex-auto flex-wrap gap-1.5">
               {selectedItems.map((option) => (
                 <span
                   key={option.value}
-                  className="inline-flex items-center gap-1 rounded-[5px] border-[.5px] border-stroke bg-gray-2 px-2 py-0.5 text-sm font-medium dark:border-dark-3 dark:bg-dark"
+                  className="border-stroke bg-gray-2 dark:border-dark-3 dark:bg-dark inline-flex items-center gap-1 rounded-[5px] border-[.5px] px-2 py-0.5 text-sm font-medium"
                 >
                   {option.label}
                   <button
                     type="button"
                     onClick={(e) => {
-                      e.stopPropagation()
-                      removeOption(option.value)
+                      e.stopPropagation();
+                      removeOption(option.value);
                     }}
                     className="ml-0.5 cursor-pointer text-gray-400 hover:text-red-500"
                     aria-label={`Remove ${option.label}`}
                     tabIndex={-1}
                   >
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="currentColor"
-                    >
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
@@ -186,22 +180,17 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               ))}
 
               {selectedItems.length === 0 && (
-                <span className="px-1 text-sm text-dark-5 dark:text-dark-6">
-                  {placeholder}
-                </span>
+                <span className="text-dark-5 dark:text-dark-6 px-1 text-sm">{placeholder}</span>
               )}
             </div>
 
             <button
               type="button"
               tabIndex={-1}
-              className="ml-2 shrink-0 text-dark-4 dark:text-dark-6"
+              className="text-dark-4 dark:text-dark-6 ml-2 shrink-0"
             >
               <svg
-                className={cn(
-                  "size-5 transition-transform",
-                  isOpen && "rotate-180",
-                )}
+                className={cn('size-5 transition-transform', isOpen && 'rotate-180')}
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -220,28 +209,26 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               id={listboxId}
               role="listbox"
               aria-multiselectable="true"
-              className="absolute left-0 top-full z-40 mt-1 max-h-64 w-full overflow-y-auto rounded-md bg-white shadow-lg ring-1 ring-black/5 dark:bg-dark-2 dark:shadow-card"
+              className="dark:bg-dark-2 dark:shadow-card absolute top-full left-0 z-40 mt-1 max-h-64 w-full overflow-y-auto rounded-md bg-white shadow-lg ring-1 ring-black/5"
             >
               {options.map((option, index) => {
-                const isSelected = selectedValues.includes(option.value)
+                const isSelected = selectedValues.includes(option.value);
                 return (
                   <li
                     key={option.value}
                     role="option"
                     aria-selected={isSelected}
                     className={cn(
-                      "cursor-pointer border-b border-stroke px-4 py-2.5 text-sm transition-colors last:border-b-0 dark:border-dark-3",
-                      index === focusIndex &&
-                        "bg-primary/10 text-primary dark:bg-primary/20",
-                      isSelected &&
-                        "border-l-2 border-l-primary pl-3.5 text-primary",
+                      'border-stroke dark:border-dark-3 cursor-pointer border-b px-4 py-2.5 text-sm transition-colors last:border-b-0',
+                      index === focusIndex && 'bg-primary/10 text-primary dark:bg-primary/20',
+                      isSelected && 'border-l-primary text-primary border-l-2 pl-3.5',
                     )}
                     onClick={() => toggleOption(option.value)}
                     onMouseEnter={() => setFocusIndex(index)}
                   >
                     {option.label}
                   </li>
-                )
+                );
               })}
             </ul>
           )}
@@ -249,9 +236,9 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
 
         {error && <ErrorMessage error={error} />}
       </div>
-    )
+    );
   },
-)
-MultiSelect.displayName = "MultiSelect"
+);
+MultiSelect.displayName = 'MultiSelect';
 
-export { MultiSelect, type MultiSelectProps, type MultiSelectOption }
+export { MultiSelect, type MultiSelectProps, type MultiSelectOption };

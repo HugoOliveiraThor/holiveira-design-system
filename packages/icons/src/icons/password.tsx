@@ -1,6 +1,6 @@
-import { forwardRef } from "react"
-import { IconWrapper } from "../icon-wrapper"
-import type { IconProps } from "../types"
+import { forwardRef } from 'react';
+import { IconWrapper } from '../icon-wrapper';
+import type { IconProps } from '../types';
 
 /** Password / key lock @public */
 export const PasswordIcon = forwardRef<SVGSVGElement, IconProps>(
@@ -20,5 +20,5 @@ export const PasswordIcon = forwardRef<SVGSVGElement, IconProps>(
       />
     </IconWrapper>
   ),
-)
-PasswordIcon.displayName = "PasswordIcon"
+);
+PasswordIcon.displayName = 'PasswordIcon';

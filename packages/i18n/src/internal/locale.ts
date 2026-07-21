@@ -1,1 +1,1 @@
-export const _defaultLocale = "en-US"
+export const _defaultLocale = 'en-US';
