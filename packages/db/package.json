@@ -1,0 +1,47 @@
+{
+  "name": "@holiveira/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Database client and adapter configuration.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "database",
+    "prisma",
+    "postgresql"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "prisma": "^7.8.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  }
+}
