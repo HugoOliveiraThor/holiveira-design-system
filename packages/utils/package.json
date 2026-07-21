@@ -1,0 +1,35 @@
+{
+  "name": "@holiveira/utils",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared utility functions.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "react",
+    "utilities"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@holiveira/types": "workspace:*",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  }
+}
