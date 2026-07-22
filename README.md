@@ -11,10 +11,8 @@
 Holiveira was born from repeatedly rebuilding the same architectural foundation across multiple
 real-world professional applications. Project structure, authentication, layouts, forms, design
 tokens, themes, infrastructure, development standards, and governance were recreated from scratch
-each time.
-
-The project exists to capture those engineering decisions into a reusable platform so every new
-project starts from architecture instead of boilerplate.
+each time. The project exists to capture those engineering decisions into a reusable platform so
+every new project starts from architecture instead of boilerplate.
 
 Historically, the project's package architecture was extracted from a NextAdmin application — a
 Next.js admin dashboard template. That origin gave Holiveira its practical focus: every package,
@@ -22,8 +20,11 @@ component, and pattern comes from real-world use, not idealized demos.
 
 ## Quick Start
 
+**Note:** Holiveira is in pre-alpha. Packages are not yet published to npm. To explore components
+locally, see the Getting Started section below.
+
 ```bash
-pnpm add @holiveira/ui @holiveira/theme
+pnpm add @holiveira/primitives @holiveira/theme
 ```
 
 ```tsx
@@ -33,7 +34,7 @@ import { Button } from '@holiveira/primitives';
 function App() {
   return (
     <ThemeProvider>
-      <Button variant="primary">Get Started</Button>
+      <Button variant="primary" label="Get Started" />
     </ThemeProvider>
   );
 }
@@ -58,28 +59,42 @@ engineering investment designed for a 10+ year lifecycle.
 
 ## Ecosystem
 
-**Core** — `@holiveira/types`, `@holiveira/config`, `@holiveira/constants`
+**Core** — `@holiveira/config` (centralized configuration for all packages), `@holiveira/constants`
+(shared constants, route definitions, and magic strings), `@holiveira/types` (shared TypeScript
+types used across all framework packages)
 
-**Foundation** — `@holiveira/tokens`, `@holiveira/utils`, `@holiveira/i18n`
+**Foundation** — `@holiveira/i18n` (locale-aware formatting utilities using native `Intl` APIs),
+`@holiveira/tokens` (single source of truth for all visual primitives), `@holiveira/utils`
+(general-purpose, framework-agnostic utility functions)
 
-**Primitives** — `@holiveira/hooks`, `@holiveira/icons`, `@holiveira/primitives`
+**Primitives** — `@holiveira/hooks` (framework-agnostic React hooks for common patterns),
+`@holiveira/icons` (consistent, tree-shakeable icon system with accessible SVG icon components),
+`@holiveira/primitives` (atomic, accessible UI primitives as the building blocks for all
+higher-level components)
 
-**Composition** — `@holiveira/theme`, `@holiveira/ui`, `@holiveira/layouts`, `@holiveira/forms`,
-`@holiveira/charts`, `@holiveira/providers`
+**Composition** — `@holiveira/charts` (chart component primitives abstracting the underlying
+charting library), `@holiveira/forms` (form system integrating React Hook Form + Zod validation with
+themed form components), `@holiveira/layouts` (page-level layout components for dashboard and
+application shells), `@holiveira/providers` (provider composition utility to flatten a provider tree
+into a single React tree), `@holiveira/theme` (runtime theme system that consumes Design Tokens and
+exposes theme context to all components), `@holiveira/ui` (composite UI components that combine
+multiple primitives into ready-to-use patterns)
 
-**Services** — `@holiveira/db`, `@holiveira/api`, `@holiveira/auth`
+**Services** — `@holiveira/api` (typed fetch-based API client with error handling, timeout, and
+retry), `@holiveira/auth` (authentication and authorization using Better Auth), `@holiveira/db`
+(Prisma ORM client singleton for database access)
 
-**Platform** — `@holiveira/testing`
-
-Each package has a clear, single responsibility and documented dependency boundaries. Install only
-the packages you need.
+**Platform** — `@holiveira/testing` (shared testing infrastructure for all packages)
 
 ## Getting Started
 
-Install the packages you need:
+To explore Holiveira locally before packages are published:
 
 ```bash
-pnpm add @holiveira/ui @holiveira/primitives @holiveira/theme
+git clone https://github.com/holiveira/design-system.git
+cd design-system
+pnpm install
+pnpm turbo storybook
 ```
 
 Wrap your application with the theme provider:
@@ -92,30 +107,18 @@ export default function Layout({ children }) {
 }
 ```
 
-Import and use components:
-
-```tsx
-import { Button } from '@holiveira/primitives';
-import { Card } from '@holiveira/ui';
-```
-
-For authentication, forms, charts, and layouts, see the individual package documentation.
-
 Explore all components interactively in [Storybook](apps/storybook/).
 
 ## Architecture
 
-Holiveira follows a disciplined per-package monorepo architecture with five dependency levels. Lower
-levels never import from higher levels. Every dependency has a documented owner. Every architectural
-decision has a written rationale.
-
-See [Architecture Documentation](docs/architecture/master-blueprint.md) for the full design.
+Holiveira follows a five-level dependency hierarchy: Core, Foundation, Primitives, Composition,
+Services, and Platform. Lower levels never import from higher levels. Every dependency has a
+documented owner. Every architectural decision has a written rationale.
 
 ## Contributing
 
-Contributions are welcome. See [Engineering Standards](docs/architecture/master-blueprint.md) for
-the development workflow, architecture conventions, and quality gates.
+Contributions are welcome.
 
 ## License
 
-MIT
+[MIT](LICENSE)
