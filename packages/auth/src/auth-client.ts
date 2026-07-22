@@ -10,9 +10,9 @@ export const authClient = createAuthClient({
   plugins: [inferAdditionalFields<typeof auth>()],
 });
 
-type _Client = ReactAuthClient<any>;
-export const signIn: _Client['signIn'] = authClient.signIn;
-export const signOut: _Client['signOut'] = authClient.signOut;
-export const signUp: _Client['signUp'] = authClient.signUp;
-export const useSession: _Client['useSession'] = authClient.useSession;
-export const getSession: _Client['getSession'] = authClient.getSession;
+type AuthClient = ReactAuthClient<any>;
+export const signIn: AuthClient['signIn'] = authClient.signIn;
+export const signOut: AuthClient['signOut'] = authClient.signOut;
+export const signUp: AuthClient['signUp'] = authClient.signUp;
+export const useSession: AuthClient['useSession'] = authClient.useSession;
+export const getSession: AuthClient['getSession'] = authClient.getSession;

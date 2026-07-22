@@ -1,5 +1,6 @@
 import { AlertErrorIcon, AlertSuccessIcon, AlertWarningIcon } from '@holiveira/icons';
 import { cva, cn } from '@holiveira/utils';
+
 import type { HTMLAttributes } from 'react';
 
 const alertVariants = cva(

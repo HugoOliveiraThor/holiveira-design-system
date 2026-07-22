@@ -2,6 +2,7 @@
 
 import { ChevronUpIcon } from '@holiveira/icons';
 import { cn } from '@holiveira/utils';
+
 import { forwardRef, useId, useState } from 'react';
 
 /** @public */

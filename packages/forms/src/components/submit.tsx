@@ -1,5 +1,6 @@
 import { Button } from '@holiveira/primitives';
 import { cn } from '@holiveira/utils';
+
 import type { ComponentProps } from 'react';
 
 interface SubmitProps extends ComponentProps<typeof Button> {}

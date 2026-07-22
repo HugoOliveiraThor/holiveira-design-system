@@ -1,4 +1,5 @@
 import { useTheme } from '@holiveira/theme';
+
 import type { ApexOptions } from 'apexcharts';
 
 interface ChartTheme {

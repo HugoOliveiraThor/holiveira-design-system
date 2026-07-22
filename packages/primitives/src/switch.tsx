@@ -2,6 +2,7 @@
 
 import { CheckIcon, XIcon } from '@holiveira/icons';
 import { cn } from '@holiveira/utils';
+
 import { forwardRef, useId } from 'react';
 
 /** @public */

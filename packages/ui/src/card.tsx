@@ -1,4 +1,5 @@
 import { cva, cn, type VariantProps } from '@holiveira/utils';
+
 import type { HTMLAttributes } from 'react';
 
 const cardVariants = cva('shadow-1 dark:bg-gray-dark rounded-[10px] bg-white', {

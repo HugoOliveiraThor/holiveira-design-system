@@ -1,4 +1,5 @@
 import { cn } from '@holiveira/utils';
+
 import type { HTMLAttributes } from 'react';
 
 interface DescriptionProps extends HTMLAttributes<HTMLParagraphElement> {}

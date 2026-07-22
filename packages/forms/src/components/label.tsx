@@ -1,4 +1,5 @@
 import { cn } from '@holiveira/utils';
+
 import type { LabelHTMLAttributes } from 'react';
 
 interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {}

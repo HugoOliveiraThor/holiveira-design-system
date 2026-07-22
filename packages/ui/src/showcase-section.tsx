@@ -1,4 +1,5 @@
 import { cn } from '@holiveira/utils';
+
 import type { HTMLAttributes, ReactNode } from 'react';
 
 interface ShowcaseSectionProps extends HTMLAttributes<HTMLDivElement> {

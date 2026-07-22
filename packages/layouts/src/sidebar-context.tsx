@@ -1,6 +1,7 @@
 'use client';
 
 import { useIsMobile } from '@holiveira/hooks';
+
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type SidebarContextType = {

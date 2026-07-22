@@ -52,7 +52,7 @@ export { DatePicker, type DatePickerProps } from './widgets/date-picker';
  * @public
  */
 export { useForm, useController, useFormContext } from './hooks/use-form';
-export type { UseFormProps, UseFormReturn, FieldValues, SubmitHandler } from 'react-hook-form';
+export type { UseFormProps, UseFormReturn, FieldValues, SubmitHandler } from './hooks/use-form';
 
 /**
  * Zod resolver for react-hook-form. Calls schema.safeParse and maps issues to field errors.

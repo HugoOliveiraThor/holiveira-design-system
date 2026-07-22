@@ -3,6 +3,7 @@
 import { useClickOutside } from '@holiveira/hooks';
 import type { SetStateActionType } from '@holiveira/types';
 import { cn } from '@holiveira/utils';
+
 import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
 
 type DropdownContextType = {
