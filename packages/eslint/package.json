@@ -1,0 +1,52 @@
+{
+  "name": "@holiveira/eslint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ESLint configuration presets for Holiveira projects.",
+  "keywords": [
+    "holiveira",
+    "design-system",
+    "eslint",
+    "typescript",
+    "react"
+  ],
+  "license": "MIT",
+  "author": "Holiveira",
+  "homepage": "https://github.com/holiveira/holiveira",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holiveira/holiveira.git"
+  },
+  "bugs": {
+    "url": "https://github.com/holiveira/holiveira/issues"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.2.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}

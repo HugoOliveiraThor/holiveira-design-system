@@ -68,6 +68,7 @@ packages/db/src/generated/
 .vscode
 .idea/
 AGENTS.md
+GPT
 
 # docs 
 docs
