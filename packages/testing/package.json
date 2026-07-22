@@ -2,6 +2,7 @@
   "name": "@holiveira/testing",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Test utilities and render helpers.",
   "keywords": [
     "holiveira",

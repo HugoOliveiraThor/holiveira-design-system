@@ -2,6 +2,7 @@
   "name": "@holiveira/constants",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Shared constants.",
   "keywords": [
     "holiveira",

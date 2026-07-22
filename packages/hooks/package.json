@@ -2,6 +2,7 @@
   "name": "@holiveira/hooks",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Shared React hooks.",
   "keywords": [
     "holiveira",

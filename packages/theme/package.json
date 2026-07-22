@@ -2,6 +2,7 @@
   "name": "@holiveira/theme",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Design tokens and theme system.",
   "keywords": [
     "holiveira",

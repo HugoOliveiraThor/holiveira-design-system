@@ -16,5 +16,3 @@ export type { ApiConfig } from './config/api';
 
 export { dbConfig } from './config/db';
 export type { DbConfig } from './config/db';
-
-export { _validateConfig } from './internal/validate';

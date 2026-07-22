@@ -2,6 +2,7 @@
   "name": "@holiveira/api",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "HTTP client and API integration patterns.",
   "keywords": [
     "holiveira",

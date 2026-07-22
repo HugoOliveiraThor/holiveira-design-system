@@ -2,6 +2,7 @@
   "name": "@holiveira/providers",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "React provider composition utilities.",
   "keywords": [
     "holiveira",
