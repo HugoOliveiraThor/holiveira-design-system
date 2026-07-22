@@ -24,6 +24,9 @@
   "sideEffects": [
     "*.css"
   ],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@holiveira/hooks": "workspace:*",
     "@holiveira/theme": "workspace:*",

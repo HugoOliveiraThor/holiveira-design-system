@@ -24,6 +24,9 @@
   "sideEffects": [
     "*.css"
   ],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./src/index.ts",
     "./theme.css": "./src/theme.css"

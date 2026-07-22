@@ -20,6 +20,10 @@
   "bugs": {
     "url": "https://github.com/holiveira/holiveira/issues"
   },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

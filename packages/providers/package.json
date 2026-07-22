@@ -21,6 +21,9 @@
     "url": "https://github.com/holiveira/holiveira/issues"
   },
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
     "react": "^19.0.0",
     "@holiveira/types": "workspace:*",
