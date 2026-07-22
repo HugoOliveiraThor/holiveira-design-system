@@ -1,9 +1,9 @@
 'use client';
 
-import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
 import { useClickOutside } from '@holiveira/hooks';
-import { cn } from '@holiveira/utils';
 import type { SetStateActionType } from '@holiveira/types';
+import { cn } from '@holiveira/utils';
+import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
 
 type DropdownContextType = {
   isOpen: boolean;

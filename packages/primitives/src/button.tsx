@@ -1,8 +1,8 @@
 'use client';
 
-import { forwardRef, type HTMLAttributes } from 'react';
 import { cva, cn } from '@holiveira/utils';
 import type { VariantProps } from '@holiveira/utils';
+import { forwardRef, type HTMLAttributes } from 'react';
 
 const buttonVariants = cva(
   'hover:bg-opacity-90 inline-flex items-center justify-center gap-2.5 text-center font-medium transition focus:outline-none',

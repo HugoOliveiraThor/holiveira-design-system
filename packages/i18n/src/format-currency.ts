@@ -1,5 +1,5 @@
-import type { FormatCurrencyOptions } from './types';
 import { _defaultLocale } from './internal/locale';
+import type { FormatCurrencyOptions } from './types';
 
 export function formatCurrency(value: number, options?: FormatCurrencyOptions): string {
   const locale = options?.locale ?? _defaultLocale;

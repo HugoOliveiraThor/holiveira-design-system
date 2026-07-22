@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+
 import { IconWrapper } from '../icon-wrapper';
 import type { IconProps } from '../types';
 

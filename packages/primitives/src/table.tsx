@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import { cn } from '@holiveira/utils';
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ThHTMLAttributes, TdHTMLAttributes } from 'react';
 
 /** @public */

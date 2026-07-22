@@ -1,5 +1,5 @@
-import type { DateInput, FormatMessageTimeOptions } from './types';
 import { _defaultLocale } from './internal/locale';
+import type { DateInput, FormatMessageTimeOptions } from './types';
 
 export function formatMessageTime(
   timestamp: DateInput,

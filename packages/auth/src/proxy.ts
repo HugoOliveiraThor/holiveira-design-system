@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+
 import type { AppRole } from './permissions';
 
 interface AuthSession {

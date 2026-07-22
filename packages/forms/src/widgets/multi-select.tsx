@@ -1,10 +1,11 @@
 'use client';
 
-import { forwardRef, useId, useRef, useState, useCallback, useEffect } from 'react';
-import { cn } from '@holiveira/utils';
 import { useClickOutside } from '@holiveira/hooks';
-import { Label } from '../components/label';
+import { cn } from '@holiveira/utils';
+import { forwardRef, useId, useRef, useState, useCallback, useEffect } from 'react';
+
 import { ErrorMessage } from '../components/error-message';
+import { Label } from '../components/label';
 
 interface MultiSelectOption {
   label: string;

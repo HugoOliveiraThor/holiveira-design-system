@@ -24,7 +24,7 @@ export function setupTestEnvironment(options?: SetupTestEnvironmentOptions) {
     class IntersectionObserverMock {
       readonly root: Element | null = null;
       readonly rootMargin: string = '0px';
-      readonly thresholds: ReadonlyArray<number> = [0];
+      readonly thresholds: readonly number[] = [0];
       observe = () => {};
       unobserve = () => {};
       disconnect = () => {};

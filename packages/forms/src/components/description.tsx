@@ -1,5 +1,5 @@
-import type { HTMLAttributes } from 'react';
 import { cn } from '@holiveira/utils';
+import type { HTMLAttributes } from 'react';
 
 interface DescriptionProps extends HTMLAttributes<HTMLParagraphElement> {}
 

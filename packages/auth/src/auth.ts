@@ -1,6 +1,6 @@
+import { db } from '@holiveira/db';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { db } from '@holiveira/db';
 
 if (!process.env.BETTER_AUTH_SECRET) {
   throw new Error('BETTER_AUTH_SECRET is not set.');

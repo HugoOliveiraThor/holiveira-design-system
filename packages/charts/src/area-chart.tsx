@@ -1,11 +1,12 @@
 'use client';
 
-import { cn } from '@holiveira/utils';
 import { useIsMobile } from '@holiveira/hooks';
+import { cn } from '@holiveira/utils';
 import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
-import type { ChartSeries } from './types';
+
 import { toApexDefaults, useChartTheme } from './chart-defaults';
+import type { ChartSeries } from './types';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 

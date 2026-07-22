@@ -1,8 +1,8 @@
 'use client';
 
-import { forwardRef, useId, useState } from 'react';
-import { cn } from '@holiveira/utils';
 import { ChevronUpIcon } from '@holiveira/icons';
+import { cn } from '@holiveira/utils';
+import { forwardRef, useId, useState } from 'react';
 
 /** @public */
 type SelectItem = {

@@ -1,7 +1,7 @@
 'use client';
 
-import { forwardRef, useId } from 'react';
 import { cn } from '@holiveira/utils';
+import { forwardRef, useId } from 'react';
 import type { HTMLInputTypeAttribute } from 'react';
 
 /** @public */

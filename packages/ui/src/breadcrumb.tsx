@@ -1,6 +1,6 @@
+import { cn } from '@holiveira/utils';
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
-import { cn } from '@holiveira/utils';
 
 interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
   pageName: string;

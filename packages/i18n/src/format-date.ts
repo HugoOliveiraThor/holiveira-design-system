@@ -1,5 +1,5 @@
-import type { DateInput, FormatDateOptions } from './types';
 import { _defaultLocale } from './internal/locale';
+import type { DateInput, FormatDateOptions } from './types';
 
 export function formatDate(date: DateInput, options?: FormatDateOptions): string {
   const { locale, ...intlOptions } = options ?? {};

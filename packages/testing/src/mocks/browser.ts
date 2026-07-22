@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+
 import type { MockPointerEvent } from '../types';
 
 export function mockResizeObserver() {

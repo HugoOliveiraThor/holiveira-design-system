@@ -1,4 +1,5 @@
 import { forwardRef, useId } from 'react';
+
 import type { IconWrapperProps } from './types';
 
 export const IconWrapper = forwardRef<SVGSVGElement, IconWrapperProps>(

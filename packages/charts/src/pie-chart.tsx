@@ -3,6 +3,7 @@
 import { cn } from '@holiveira/utils';
 import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
+
 import { toApexDefaults, useChartTheme } from './chart-defaults';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
