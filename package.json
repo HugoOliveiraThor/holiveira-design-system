@@ -19,6 +19,7 @@
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage --passWithNoTests",
+    "check:exports": "pnpm exec tsx scripts/check-exports.ts",
     "check:deps": "syncpack lint --dependency-types prod,dev",
     "check:deps:peer": "pnpm peers check 2>&1 || true",
     "dev": "turbo run dev",
@@ -28,7 +29,7 @@
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
     "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma",
     "prepare": "husky",
-    "all-checks": "pnpm run check:deps && pnpm run format:check && pnpm run lint && pnpm run build && pnpm run typecheck && pnpm run build:storybook && pnpm run test"
+    "all-checks": "pnpm run format:check && turbo run lint && turbo run typecheck && turbo run build && turbo run storybook && pnpm run test && pnpm run check:exports && pnpm run check:deps"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",
@@ -48,6 +49,7 @@
     "prisma": "^7.8.0",
     "syncpack": "^15.3.2",
     "tailwindcss": "^4.2.4",
+    "tsx": "^4",
     "turbo": "^2.10.5",
     "typescript": "^5"
   }

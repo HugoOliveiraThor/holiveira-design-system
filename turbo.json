@@ -26,6 +26,13 @@
       "dependsOn": ["^build"],
       "outputs": ["storybook-static/**"],
       "inputs": ["$TURBO_DEFAULT$", "!storybook-static/**"]
+    },
+    "check:exports": {
+      "inputs": ["$TURBO_DEFAULT$", "docs/architecture/contracts/**"],
+      "outputs": []
+    },
+    "format:check": {
+      "inputs": ["$TURBO_DEFAULT$"]
     }
   }
 }
