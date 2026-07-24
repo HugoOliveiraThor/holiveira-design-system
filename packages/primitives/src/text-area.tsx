@@ -21,6 +21,7 @@ const TextArea = forwardRef<
   TextAreaProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>
 >(({ label, placeholder, required, disabled, active, className, icon, error, ...props }, ref) => {
   const id = useId();
+  const errorId = `${id}-error`;
 
   return (
     <div className={cn(className)}>
@@ -34,6 +35,7 @@ const TextArea = forwardRef<
           id={id}
           rows={6}
           placeholder={placeholder}
+          aria-describedby={error ? errorId : undefined}
           className={cn(
             'border-stroke text-dark focus:border-primary disabled:bg-gray-2 data-[active=true]:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary dark:disabled:bg-dark dark:data-[active=true]:border-primary w-full rounded-lg border-[1.5px] bg-transparent px-5.5 py-3 transition outline-none disabled:cursor-default dark:text-white',
             icon && 'py-5 pr-5 pl-13',
@@ -48,7 +50,11 @@ const TextArea = forwardRef<
         {icon}
       </div>
 
-      {error && <p className="text-body-xs text-red mt-1">{error}</p>}
+      {error && (
+        <p id={errorId} className="text-body-xs text-red mt-1">
+          {error}
+        </p>
+      )}
     </div>
   );
 });

@@ -4,7 +4,7 @@ import { useClickOutside } from '@holiveira/hooks';
 import type { SetStateActionType } from '@holiveira/types';
 import { cn } from '@holiveira/utils';
 
-import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useCallback, type ReactNode } from 'react';
 
 type DropdownContextType = {
   isOpen: boolean;
@@ -94,6 +94,45 @@ function DropdownContent({ children, align = 'center', className }: DropdownCont
     if (isOpen) handleClose();
   });
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+
+      e.preventDefault();
+      const container = contentRef.current;
+      if (!container) return;
+
+      const items = container.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])',
+      );
+
+      if (items.length === 0) return;
+
+      const currentIndex = Array.from(items).findIndex((el) => el === document.activeElement);
+      let nextIndex: number;
+
+      switch (e.key) {
+        case 'ArrowDown':
+          nextIndex = currentIndex + 1 < items.length ? currentIndex + 1 : 0;
+          break;
+        case 'ArrowUp':
+          nextIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : items.length - 1;
+          break;
+        case 'Home':
+          nextIndex = 0;
+          break;
+        case 'End':
+          nextIndex = items.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      items[nextIndex]?.focus();
+    },
+    [contentRef],
+  );
+
   if (!isOpen) return null;
 
   return (
@@ -101,6 +140,7 @@ function DropdownContent({ children, align = 'center', className }: DropdownCont
       ref={contentRef}
       role="menu"
       aria-orientation="vertical"
+      onKeyDown={handleKeyDown}
       className={cn(
         'fade-in-0 zoom-in-95 pointer-events-auto absolute z-99 mt-2 min-w-32 origin-top-right rounded-lg',
         {

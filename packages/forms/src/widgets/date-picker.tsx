@@ -48,6 +48,7 @@ const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(
     ref,
   ) => {
     const id = useId();
+    const errorId = `${id}-error`;
     const inputRef = useRef<HTMLInputElement>(null);
     const fpRef = useRef<flatpickr.Instance | null>(null);
     const isControlled = controlledValue !== undefined;
@@ -100,6 +101,7 @@ const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(
           <input
             ref={inputRef}
             id={id}
+            aria-describedby={error ? errorId : undefined}
             className={cn(
               'border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary w-full rounded-[7px] border-[1.5px] bg-transparent px-5 py-3 font-normal transition-colors outline-none',
               icon && 'pr-12',
@@ -118,7 +120,7 @@ const DatePicker = forwardRef<DatePickerRef, DatePickerProps>(
           )}
         </div>
 
-        {error && <ErrorMessage error={error} />}
+        {error && <ErrorMessage error={error} id={errorId} />}
       </div>
     );
   },

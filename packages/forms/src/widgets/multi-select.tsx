@@ -42,6 +42,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
   ) => {
     const id = useId();
     const listboxId = `${id}-listbox`;
+    const errorId = `${id}-error`;
     const isControlled = controlledValue !== undefined;
 
     const [internalValue, setInternalValue] = useState<string[]>(defaultValue);
@@ -143,6 +144,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             aria-expanded={isOpen}
             aria-haspopup="listbox"
             aria-controls={listboxId}
+            aria-describedby={error ? errorId : undefined}
             aria-disabled={disabled}
             tabIndex={0}
             onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -236,7 +238,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
           )}
         </div>
 
-        {error && <ErrorMessage error={error} />}
+        {error && <ErrorMessage error={error} id={errorId} />}
       </div>
     );
   },

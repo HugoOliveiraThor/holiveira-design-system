@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@holiveira/utils';
 
 import type { ReactNode } from 'react';

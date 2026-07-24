@@ -29,6 +29,7 @@ const Select = forwardRef<
   SelectProps & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'children'>
 >(({ items, label, defaultValue, placeholder, prefixIcon, error, className, ...props }, ref) => {
   const id = useId();
+  const errorId = `${id}-error`;
   const [isOptionSelected, setIsOptionSelected] = useState(false);
 
   return (
@@ -44,6 +45,7 @@ const Select = forwardRef<
           ref={ref}
           id={id}
           defaultValue={defaultValue ?? ''}
+          aria-describedby={error ? errorId : undefined}
           onChange={(e) => {
             setIsOptionSelected(true);
             props.onChange?.(e);
@@ -71,7 +73,11 @@ const Select = forwardRef<
 
         <ChevronUpIcon className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 rotate-180" />
 
-        {error && <p className="text-body-xs text-red mt-1">{error}</p>}
+        {error && (
+          <p id={errorId} className="text-body-xs text-red mt-1">
+            {error}
+          </p>
+        )}
       </div>
     </div>
   );

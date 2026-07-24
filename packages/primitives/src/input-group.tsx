@@ -47,6 +47,7 @@ const InputGroup = forwardRef<
     ref,
   ) => {
     const id = useId();
+    const errorId = `${id}-error`;
 
     return (
       <div className={className}>
@@ -66,6 +67,7 @@ const InputGroup = forwardRef<
             id={id}
             type={type}
             placeholder={placeholder}
+            aria-describedby={error ? errorId : undefined}
             className={cn(
               'border-stroke focus:border-primary disabled:bg-gray-2 data-[active=true]:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary dark:disabled:bg-dark dark:data-[active=true]:border-primary w-full rounded-lg border-[1.5px] bg-transparent transition outline-none disabled:cursor-default',
               type === 'file' && fileStyleVariant
@@ -84,7 +86,11 @@ const InputGroup = forwardRef<
           {icon}
         </div>
 
-        {error && <p className="text-body-xs text-red mt-1">{error}</p>}
+        {error && (
+          <p id={errorId} className="text-body-xs text-red mt-1">
+            {error}
+          </p>
+        )}
       </div>
     );
   },
