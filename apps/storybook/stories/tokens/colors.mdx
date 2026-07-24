@@ -1,0 +1,86 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design Tokens/Colors" />
+
+# Colors
+
+Holiveira uses a curated color palette for consistent theming. All colors are available as Tailwind CSS classes and CSS custom properties.
+
+## Primary
+
+<div className="flex flex-wrap gap-4">
+  <div className="flex flex-col items-center gap-2">
+    <div className="bg-primary size-16 rounded-lg shadow" />
+    <span className="text-body-xs font-mono">primary</span>
+    <span className="text-body-xs text-dark-4 font-mono">#5750F1</span>
+  </div>
+</div>
+
+## Dark
+
+<div className="flex flex-wrap gap-4">
+  {[
+    { name: 'dark-1', class: 'bg-[#111928]' },
+    { name: 'dark-2', class: 'bg-[#1A222C]' },
+    { name: 'dark-3', class: 'bg-[#333A48]' },
+    { name: 'dark-4', class: 'bg-[#4A515E]' },
+    { name: 'dark-5', class: 'bg-[#637381]' },
+    { name: 'dark-6', class: 'bg-[#8A99AF]' },
+  ].map((color) => (
+    <div key={color.name} className="flex flex-col items-center gap-2">
+      <div className={`${color.class} size-16 rounded-lg border border-neutral-300 shadow`} />
+      <span className="text-body-xs font-mono">{color.name}</span>
+    </div>
+  ))}
+</div>
+
+## Gray
+
+<div className="flex flex-wrap gap-4">
+  {[
+    { name: 'gray-1', class: 'bg-gray-1' },
+    { name: 'gray-2', class: 'bg-gray-2' },
+    { name: 'gray-3', class: 'bg-gray-3' },
+    { name: 'gray-4', class: 'bg-gray-4' },
+    { name: 'gray-5', class: 'bg-gray-5' },
+    { name: 'gray-6', class: 'bg-gray-6' },
+    { name: 'gray-7', class: 'bg-gray-7' },
+  ].map((color) => (
+    <div key={color.name} className="flex flex-col items-center gap-2">
+      <div className={`${color.class} size-16 rounded-lg border border-neutral-300 shadow`} />
+      <span className="text-body-xs font-mono">{color.name}</span>
+    </div>
+  ))}
+</div>
+
+## Semantic
+
+<div className="flex flex-wrap gap-4">
+  {[
+    { name: 'green', class: 'bg-green' },
+    { name: 'red', class: 'bg-red' },
+    { name: 'orange', class: 'bg-orange' },
+    { name: 'yellow', class: 'bg-yellow' },
+  ].map((color) => (
+    <div key={color.name} className="flex flex-col items-center gap-2">
+      <div className={`${color.class} size-16 rounded-lg shadow`} />
+      <span className="text-body-xs font-mono">{color.name}</span>
+    </div>
+  ))}
+</div>
+
+## Social
+
+<div className="flex flex-wrap gap-4">
+  {[
+    { name: 'social-google', class: 'bg-[#E94E3A]' },
+    { name: 'social-facebook', class: 'bg-[#3C579E]' },
+    { name: 'social-twitter', class: 'bg-[#1D9BF0]' },
+    { name: 'social-linkedin', class: 'bg-[#0A66C2]' },
+  ].map((color) => (
+    <div key={color.name} className="flex flex-col items-center gap-2">
+      <div className={`${color.class} size-16 rounded-lg shadow`} />
+      <span className="text-body-xs font-mono">{color.name}</span>
+    </div>
+  ))}
+</div>

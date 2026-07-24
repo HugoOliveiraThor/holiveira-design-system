@@ -165,6 +165,9 @@ importers:
       '@storybook/react-vite':
         specifier: ^8.6.12
         version: 8.6.18(@storybook/test@8.6.18(storybook@8.6.18(prettier@3.9.5)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rollup@4.62.2)(storybook@8.6.18(prettier@3.9.5))(typescript@5.9.3)(vite@7.3.6(@types/node@22.20.1)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.23.1)(yaml@2.9.0))
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
       '@tailwindcss/postcss':
         specifier: ^4.2.4
         version: 4.3.3
@@ -252,6 +255,10 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/config:
     dependencies:
@@ -350,6 +357,10 @@ importers:
       zod:
         specifier: ^3.0.0 || ^4.0.0
         version: 4.4.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/hooks:
     dependencies:
@@ -386,6 +397,10 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/layouts:
     dependencies:
@@ -410,6 +425,10 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/primitives:
     dependencies:
@@ -437,6 +456,10 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/providers:
     dependencies:
@@ -528,6 +551,10 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+    devDependencies:
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.18(storybook@8.6.18(prettier@3.9.5))
 
   packages/utils:
     dependencies:

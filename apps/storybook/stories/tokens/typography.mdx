@@ -1,0 +1,79 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design Tokens/Typography" />
+
+# Typography
+
+The design system uses the **Inter** font family by default, with specific size and weight tokens for headings, body text, and fine print.
+
+## Font Family
+
+<div className="rounded-lg border border-neutral-300 p-6">
+  <p className="font-sans text-xl">Inter — the default system font family.</p>
+</div>
+
+## Headings
+
+<div className="space-y-4">
+  {[
+    { size: 'text-[26px]', label: 'H1 — Page title', class: 'font-bold' },
+    { size: 'text-[22px]', label: 'H2 — Section title', class: 'font-bold' },
+    { size: 'text-lg', label: 'H3 — Card heading', class: 'font-semibold' },
+    { size: 'text-base', label: 'H4 — Subheading', class: 'font-medium' },
+  ].map((h) => (
+    <div key={h.label} className="flex items-baseline gap-4">
+      <span className="text-body-xs text-dark-5 w-24 shrink-0 font-mono">{h.size}</span>
+      <p className={`${h.size} ${h.class}`}>{h.label}</p>
+    </div>
+  ))}
+</div>
+
+## Body Text
+
+<div className="space-y-3">
+  {[
+    { size: 'text-body-lg', label: 'Body large — Lead paragraph' },
+    { size: 'text-body-md', label: 'Body medium — Default text' },
+    { size: 'text-body-sm', label: 'Body small — Secondary text' },
+    { size: 'text-body-xs', label: 'Body xs — Captions, metadata' },
+  ].map((b) => (
+    <div key={b.label} className="flex items-baseline gap-4">
+      <span className="text-body-xs text-dark-5 w-24 shrink-0 font-mono">{b.size}</span>
+      <p className={b.size}>{b.label}</p>
+    </div>
+  ))}
+</div>
+
+## Font Weights
+
+<div className="flex flex-wrap gap-6">
+  {[
+    { weight: 'font-normal', value: '400', label: 'Normal' },
+    { weight: 'font-medium', value: '500', label: 'Medium' },
+    { weight: 'font-semibold', value: '600', label: 'Semibold' },
+    { weight: 'font-bold', value: '700', label: 'Bold' },
+  ].map((f) => (
+    <div key={f.value} className="flex flex-col gap-1">
+      <p className={`${f.weight} text-2xl`}>{f.label}</p>
+      <span className="text-body-xs text-dark-5 font-mono">{f.value}</span>
+    </div>
+  ))}
+</div>
+
+## Line Height
+
+<div className="space-y-3">
+  {[
+    { class: 'leading-tight', label: 'Tight — 1.25' },
+    { class: 'leading-snug', label: 'Snug — 1.375' },
+    { class: 'leading-normal', label: 'Normal — 1.5' },
+    { class: 'leading-relaxed', label: 'Relaxed — 1.625' },
+  ].map((l) => (
+    <div key={l.label} className="flex items-baseline gap-4">
+      <span className="text-body-xs text-dark-5 w-24 shrink-0 font-mono">{l.class}</span>
+      <p className={`${l.class} max-w-md`}>
+        The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.
+      </p>
+    </div>
+  ))}
+</div>

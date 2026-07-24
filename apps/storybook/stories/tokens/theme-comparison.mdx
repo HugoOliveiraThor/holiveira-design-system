@@ -1,0 +1,50 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design Tokens/Theme Comparison" />
+
+# Theme Comparison
+
+The design system supports both light and dark modes. Use the toolbar theme switcher to toggle between them, or use `ThemeProvider` in your application to handle automatic switching.
+
+## Side-by-Side
+
+<div className="grid grid-cols-2 gap-6">
+  <div className="rounded-xl border border-neutral-300 bg-white p-6">
+    <h3 className="mb-2 text-base font-semibold">Light</h3>
+    <div className="space-y-3">
+      <div className="bg-primary rounded-md px-4 py-2 text-sm text-white">Primary button</div>
+      <div className="rounded-md border border-neutral-300 px-4 py-2 text-sm">Card surface</div>
+      <p className="text-body-xs text-[#64748B]">Secondary text on light background.</p>
+    </div>
+  </div>
+  <div className="rounded-xl border border-gray-700 bg-[#1A222C] p-6">
+    <h3 className="mb-2 text-base font-semibold text-white">Dark</h3>
+    <div className="space-y-3">
+      <div className="bg-primary rounded-md px-4 py-2 text-sm text-white">Primary button</div>
+      <div className="rounded-md border border-[#333A48] px-4 py-2 text-sm text-white">
+        Card surface
+      </div>
+      <p className="text-body-xs text-[#AEB7C0]">Secondary text on dark background.</p>
+    </div>
+  </div>
+</div>
+
+## CSS Custom Properties
+
+The theme system maps design tokens to Tailwind CSS classes. Toggle dark mode via the `dark` class on the `<html>` element:
+
+```html
+<html class="dark">
+  <!-- dark mode styles apply -->
+</html>
+```
+
+Use the `ThemeProvider` component from `@holiveira/theme` to manage theme state and persistence.
+
+```tsx
+import { ThemeProvider } from '@holiveira/theme';
+
+function App({ children }) {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
+```

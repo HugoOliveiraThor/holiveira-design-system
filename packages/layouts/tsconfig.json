@@ -10,5 +10,6 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
+  "exclude": ["src/**/*.stories.tsx"],
   "references": [{ "path": "../types" }, { "path": "../hooks" }, { "path": "../utils" }]
 }
