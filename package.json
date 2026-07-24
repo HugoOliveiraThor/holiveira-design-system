@@ -15,7 +15,7 @@
     "lint:fix": "eslint packages/ apps/ --fix",
     "typecheck": "turbo run typecheck",
     "build": "turbo run build",
-    "build:storybook": "turbo run storybook",
+    "build:storybook": "turbo run build:storybook",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage --passWithNoTests",
@@ -29,7 +29,7 @@
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
     "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma",
     "prepare": "husky",
-    "all-checks": "pnpm run format:check && turbo run lint && turbo run typecheck && turbo run build && turbo run storybook && pnpm run test && pnpm run check:exports && pnpm run check:deps"
+    "all-checks": "pnpm run format:check && turbo run lint && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test && pnpm run check:exports && pnpm run check:deps"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",

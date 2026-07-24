@@ -1,0 +1,86 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Getting Started" />
+
+# Getting Started
+
+Install the packages you need from the Holiveira design system.
+
+## Installation
+
+Each `@holiveira/*` package is published independently. Install only what your application needs:
+
+```bash
+# Primitives (base components)
+pnpm add @holiveira/primitives
+
+# Theme (required by all packages)
+pnpm add @holiveira/theme
+
+# UI components
+pnpm add @holiveira/ui
+
+# Forms
+pnpm add @holiveira/forms
+
+# Layout components
+pnpm add @holiveira/layouts
+
+# Charts
+pnpm add @holiveira/charts
+
+# Icons
+pnpm add @holiveira/icons
+
+# Hooks
+pnpm add @holiveira/hooks
+
+# Utilities
+pnpm add @holiveira/utils
+```
+
+## Quick Start
+
+Wrap your application with `ThemeProvider` to enable the design system's theme context, dark mode, and CSS tokens:
+
+```tsx
+import { ThemeProvider } from '@holiveira/theme';
+
+function App({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
+```
+
+Import the theme CSS for Tailwind v4 tokens and base styles:
+
+```tsx
+import '@holiveira/theme/theme.css';
+```
+
+Now you can use any Holiveira component:
+
+```tsx
+import { Button } from '@holiveira/primitives';
+import { cn } from '@holiveira/utils';
+
+export function SubmitForm() {
+  return (
+    <div className={cn('flex gap-4')}>
+      <Button variant="primary">Save Changes</Button>
+      <Button variant="outline">Cancel</Button>
+    </div>
+  );
+}
+```
+
+## Prerequisites
+
+- **React** 19+
+- **Tailwind CSS** v4
+- **Next.js** 15+ (optional — Holiveira works with any React framework)
+
+## Learn More
+
+- [README](https://github.com/hugoluisvieira/design-system) — project overview and setup guide
+- Browse components in the sidebar to see API documentation, variants, and interactive examples
+- Each component's Docs tab shows the full prop table with types and defaults

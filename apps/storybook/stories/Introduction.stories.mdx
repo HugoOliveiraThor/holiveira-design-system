@@ -1,0 +1,45 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Holiveira Design System
+
+Holiveira is an engineering-first design system for building consistent, accessible web applications. This Storybook is the official component documentation and development platform.
+
+## Package Overview
+
+| Package                 | Purpose                                                                |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `@holiveira/primitives` | Base UI components — Button, Alert, Dropdown, Select, Table, and more  |
+| `@holiveira/ui`         | Composed UI elements — Breadcrumb, Card, ShowcaseSection               |
+| `@holiveira/forms`      | Form components — Form, Field, DatePicker, MultiSelect, and validation |
+| `@holiveira/layouts`    | Layout components — Header, Sidebar, and SidebarProvider               |
+| `@holiveira/charts`     | Chart components — Area, Bar, Line, Pie (powered by ApexCharts)        |
+| `@holiveira/icons`      | Icon library — SVG icon set with gallery view                          |
+| `@holiveira/hooks`      | Utility hooks — useClickOutside, useIsMobile                           |
+| `@holiveira/theme`      | Theme system — ThemeProvider, CSS tokens, dark mode                    |
+| `@holiveira/tokens`     | Design tokens — colors, typography, spacing, breakpoints               |
+| `@holiveira/utils`      | Utilities — cn(), cva(), helpers                                       |
+
+## Sidebar Navigation
+
+The sidebar is organized by package. Expand a package to see its components:
+
+- **Primitives** — Button, Alert, Skeleton, Checkbox, Radio, Switch, InputGroup, TextArea, Select, Table, Dropdown
+- **UI** — Breadcrumb, Card, ShowcaseSection
+- **Forms** — Form, Field, DatePicker, MultiSelect
+- **Layouts** — Header, Sidebar
+- **Charts** — Area, Bar, Line, Pie
+- **Icons** — Icon Gallery
+- **Hooks** — useClickOutside, useIsMobile
+- **Tokens** — Design token explorer
+
+Use the **Docs** tab to see component API documentation, prop tables, and usage examples. Use the **Canvas** tab to interact with components and toggle variants via Controls.
+
+## Theme
+
+Toggle light and dark mode using the theme button in the toolbar. The design system uses Tailwind CSS v4 with custom color tokens configured in `@holiveira/theme`.
+
+## Accessibility
+
+Every component story includes an accessibility check via `@storybook/addon-a11y`. Open the Accessibility panel to review violations and passes.

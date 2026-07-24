@@ -22,7 +22,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "!dist/**"]
     },
-    "storybook": {
+    "build:storybook": {
       "dependsOn": ["^build"],
       "outputs": ["storybook-static/**"],
       "inputs": ["$TURBO_DEFAULT$", "!storybook-static/**"]

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "storybook build"
+    "build:storybook": "storybook build"
   },
   "dependencies": {
     "@holiveira/charts": "workspace:*",
@@ -38,6 +38,7 @@
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-themes": "^8.6.12",
+    "@storybook/addon-viewport": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
     "@tailwindcss/postcss": "^4.2.4",
