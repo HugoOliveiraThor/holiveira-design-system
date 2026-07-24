@@ -35,3 +35,10 @@ jobs:
         with:
           name: storybook-static
           path: apps/storybook/storybook-static
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: coverage
+          path: coverage/

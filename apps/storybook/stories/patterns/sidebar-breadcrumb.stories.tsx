@@ -1,4 +1,3 @@
-
 import { Sidebar, SidebarProvider } from '@holiveira/layouts';
 import { Breadcrumb } from '@holiveira/ui';
 

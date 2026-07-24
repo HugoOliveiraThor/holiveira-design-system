@@ -7,7 +7,6 @@ import { userEvent, within, expect } from '@storybook/test';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-
 function FormExample() {
   const {
     register,
