@@ -75,3 +75,5 @@ docs
 reports
 # storybook
 storybook-static
+# macOS version metadata
+--version/

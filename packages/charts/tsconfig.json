@@ -10,7 +10,12 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "exclude": ["src/**/*.stories.tsx"],
+  "exclude": [
+    "src/**/*.stories.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/test-utils.ts"
+  ],
   "references": [
     { "path": "../types" },
     { "path": "../theme" },

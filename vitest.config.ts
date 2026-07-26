@@ -40,6 +40,7 @@ export default defineConfig({
       '@holiveira/layouts': resolve(__dirname, 'packages/layouts/src/index.ts'),
       '@holiveira/charts': resolve(__dirname, 'packages/charts/src/index.ts'),
       '@holiveira/auth': resolve(__dirname, 'packages/auth/src/index.ts'),
+      '@holiveira/db': resolve(__dirname, 'packages/db/src/index.ts'),
     },
   },
   test: {
@@ -47,7 +48,6 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['packages/*/src/**/*.test.{ts,tsx}'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/*.stories.*'],
-    passWithNoTests: true,
   },
   coverage: {
     provider: 'v8',
@@ -55,10 +55,24 @@ export default defineConfig({
     include: ['packages/*/src/**'],
     exclude: coverageExclude,
     thresholds: {
-      statements: 0,
-      branches: 0,
-      functions: 0,
-      lines: 0,
+      // Utility tier (90%)
+      'packages/utils/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/tokens/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/config/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/constants/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/i18n/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/hooks/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      'packages/testing/src/**': { statements: 90, branches: 85, functions: 90, lines: 90 },
+      // Component tier (80%)
+      'packages/primitives/src/**': { statements: 80, branches: 70, functions: 80, lines: 80 },
+      'packages/ui/src/**': { statements: 80, branches: 70, functions: 80, lines: 80 },
+      'packages/forms/src/**': { statements: 80, branches: 70, functions: 80, lines: 80 },
+      'packages/layouts/src/**': { statements: 80, branches: 70, functions: 80, lines: 80 },
+      // Integration tier (60%)
+      'packages/auth/src/**': { statements: 60, branches: 50, functions: 60, lines: 60 },
+      'packages/charts/src/**': { statements: 60, branches: 50, functions: 60, lines: 60 },
+      // Icons tier (50%)
+      'packages/icons/src/**': { statements: 50, functions: 50, lines: 50 },
     },
   },
 });
