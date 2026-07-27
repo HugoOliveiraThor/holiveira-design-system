@@ -19,6 +19,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "check:size": "pnpm exec tsx scripts/check-size.ts",
     "check:exports": "pnpm exec tsx scripts/check-exports.ts",
     "check:deps": "syncpack lint --dependency-types prod,dev",
     "check:deps:peer": "pnpm peers check 2>&1 || true",
@@ -29,13 +30,14 @@
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
     "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma",
     "prepare": "husky",
-    "all-checks": "pnpm run format:check && turbo run lint && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:coverage && pnpm run check:exports && pnpm run check:deps"
+    "all-checks": "pnpm run format:check && turbo run lint && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:coverage && pnpm run check:size && pnpm run check:exports && pnpm run check:deps"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@holiveira/eslint": "workspace:*",
+    "@size-limit/preset-small-lib": "^13.0.1",
     "@tailwindcss/postcss": "^4.2.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -43,6 +45,7 @@
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
     "@vitest/coverage-v8": "^3.2.7",
+    "axe-core": "^4.12.1",
     "eslint": "^9",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
@@ -50,11 +53,13 @@
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.3",
     "prisma": "^7.8.0",
+    "size-limit": "^13.0.1",
     "syncpack": "^15.3.2",
     "tailwindcss": "^4.2.4",
     "tsx": "^4",
     "turbo": "^2.10.5",
     "typescript": "^5",
-    "vitest": "^3.2.7"
+    "vitest": "^3.2.7",
+    "vitest-axe": "^0.1.0"
   }
 }

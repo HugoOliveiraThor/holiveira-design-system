@@ -8,14 +8,9 @@ import { forwardRef, useId } from 'react';
 type RadioProps = {
   variant?: 'dot' | 'circle';
   label: string;
-  name?: string;
-  value?: string;
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   minimal?: boolean;
   className?: string;
-};
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'id' | 'className'>;
 
 /**
  * Radio button with dot and circle variants.
@@ -24,7 +19,18 @@ type RadioProps = {
  */
 const Radio = forwardRef<HTMLInputElement, RadioProps>(
   (
-    { label, variant = 'dot', name, value, checked, defaultChecked, onChange, minimal, className },
+    {
+      label,
+      variant = 'dot',
+      name,
+      value,
+      checked,
+      defaultChecked,
+      onChange,
+      minimal,
+      className,
+      ...props
+    },
     ref,
   ) => {
     const id = useId();
@@ -46,6 +52,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
               defaultChecked={defaultChecked}
               onChange={onChange}
               className="peer sr-only"
+              {...props}
             />
             <div
               className={cn(

@@ -91,7 +91,11 @@ function IconGallery() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-xs">
           <SearchIcon size={16} className="text-dark-4 absolute top-1/2 left-3 -translate-y-1/2" />
+          <label htmlFor="icon-search" className="sr-only">
+            Search icons
+          </label>
           <input
+            id="icon-search"
             type="text"
             placeholder="Search icons..."
             value={search}
@@ -106,6 +110,7 @@ function IconGallery() {
               key={s}
               type="button"
               onClick={() => setSize(s)}
+              aria-pressed={size === s}
               className={`rounded-md border px-3 py-1 text-sm transition ${
                 size === s
                   ? 'border-primary bg-primary/10 text-primary'

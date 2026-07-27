@@ -16,9 +16,18 @@ export interface AreaChartProps {
   height?: number;
   className?: string;
   apexOptions?: Partial<ApexOptions>;
+  label: string;
+  description?: string;
 }
 
-export function AreaChart({ series, height = 310, className, apexOptions }: AreaChartProps) {
+export function AreaChart({
+  series,
+  height = 310,
+  className,
+  apexOptions,
+  label,
+  description,
+}: AreaChartProps) {
   const chartTheme = useChartTheme();
   const isMobile = useIsMobile();
   const defaults = toApexDefaults(chartTheme);
@@ -64,7 +73,8 @@ export function AreaChart({ series, height = 310, className, apexOptions }: Area
   };
 
   return (
-    <div className={cn('-mr-5 -ml-4', className)} style={{ height }}>
+    <div className={cn('-mr-5 -ml-4', className)} style={{ height }} role="img" aria-label={label}>
+      {description && <span className="sr-only">{description}</span>}
       <Chart options={options} series={series} type="area" height={height} />
     </div>
   );

@@ -1,6 +1,7 @@
 import { userEvent } from '@storybook/test';
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+import { axe } from 'vitest-axe';
 
 import { render } from './test-utils';
 
@@ -36,5 +37,31 @@ describe('Checkbox', () => {
 
     await userEvent.click(getByRole('checkbox'));
     expect(onChange).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Checkbox — keyboard', () => {
+  it('toggles on Space', async () => {
+    const { getByRole } = render(<Checkbox label="Toggle" />);
+    const checkbox = getByRole('checkbox');
+    checkbox.focus();
+    await userEvent.keyboard(' ');
+    expect(checkbox).toBeChecked();
+  });
+});
+
+describe('Checkbox — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<Checkbox label="Accept" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<Checkbox label="Dark" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
   });
 });

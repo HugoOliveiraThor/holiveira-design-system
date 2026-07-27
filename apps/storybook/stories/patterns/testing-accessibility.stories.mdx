@@ -1,0 +1,134 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Patterns/Accessibility Testing" />
+
+# Accessibility Testing Patterns
+
+Holiveira uses **vitest-axe** for automated accessibility testing and **userEvent** for keyboard interaction tests. This document covers the testing patterns used across the design system.
+
+---
+
+## Axe Accessibility Tests
+
+Every interactive component has two axe test variants: **default mode** and **dark mode**.
+
+```tsx
+import { axe } from 'vitest-axe';
+
+describe('Component — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<Component />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<Component />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
+  });
+});
+```
+
+Dark mode is activated by adding the `dark` class to `<html>`. The test must clean up after itself by removing the class.
+
+---
+
+## Keyboard Interaction Tests
+
+Keyboard tests verify that components respond correctly to keyboard input per WCAG 2.1.1.
+
+```tsx
+import { userEvent } from '@storybook/test';
+
+describe('Component — keyboard', () => {
+  it('activates on Enter', async () => {
+    const onClick = vi.fn();
+    const { getByRole } = render(<Component onClick={onClick} />);
+    const element = getByRole('button');
+    element.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+```
+
+### renderKeyboard Helper
+
+Components that require provider wrappers (layouts, forms) use the `renderKeyboard` helper from their package's `test-utils.ts`. This helper simplifies keyboard interaction tests by wrapping User-Agent setup:
+
+```tsx
+// In test-utils.ts for a package
+import { userEvent } from '@storybook/test';
+import { render as baseRender } from '@testing-library/react';
+
+export async function renderKeyboard(ui: React.ReactElement) {
+  const screen = baseRender(ui);
+  const user = userEvent.setup();
+  return { ...screen, user };
+}
+```
+
+Usage in a keyboard test:
+
+```tsx
+it('toggles on Enter', async () => {
+  const { container, user } = await renderKeyboard(<LayoutComponent />);
+  const toggle = container.querySelector('[data-toggle]');
+  toggle?.focus();
+  await user.keyboard('{Enter}');
+  expect(toggle).toHaveAttribute('aria-expanded', 'true');
+});
+```
+
+---
+
+## Pre-existing Disability-Led Findings Registry
+
+Findings from the D6.9 accessibility audit that are not yet resolved are registered as `it.skip()` entries. This serves as both a **documentation registry** and a **CI gate**: if a violation is fixed, the `it.skip()` is removed and the test becomes active.
+
+```tsx
+describe('Component — pre-existing findings', () => {
+  it.skip('P2-1: Component has known issue description (D6.9)', () => {
+    const { container } = render(<Component />);
+    // The assertion that validates the fix
+    expect(container.querySelector('button')).toHaveAttribute('type', 'button');
+  });
+});
+```
+
+Each entry includes:
+
+| Element             | Purpose                                   |
+| ------------------- | ----------------------------------------- |
+| `it.skip`           | Prevents the known issue from blocking CI |
+| Finding ID (`P2-1`) | Links to the D6.9 audit report            |
+| Component name      | Identifies the affected component         |
+| Reference (`D6.9`)  | Source document for the finding           |
+
+### When a finding is resolved
+
+1. Remove the `it.skip()` wrapper — the test becomes `it(...)`.
+2. Run the full validation pipeline to confirm the test passes.
+3. The finding is no longer part of the registry.
+
+---
+
+## expectFocusTrap Helper
+
+For components with focus trapping (dropdowns, modals, multi-select), use the `expectFocusTrap` helper from `@testing-helpers`.
+
+```tsx
+import { expectFocusTrap } from '@testing-helpers/expect-focus-trap';
+import { render } from './test-utils';
+
+it('traps focus within the open menu', async () => {
+  const { container } = render(<DropdownWithFocusTrap />);
+  const content = container.querySelector('[role="menu"]')!;
+  await expectFocusTrap(content);
+});
+```
+
+The helper simulates Tab key behavior and verifies that focus stays within the container. It supports both forward (`Tab`) and reverse (`Shift+Tab`) cycling.

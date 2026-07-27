@@ -1,0 +1,158 @@
+[
+  {
+    "name": "@holiveira/icons (tree-shaken: ArrowDownIcon)",
+    "path": "packages/icons/dist/index.js",
+    "import": "{ ArrowDownIcon }",
+    "limit": "3.9 KB"
+  },
+  {
+    "name": "@holiveira/icons (full package)",
+    "path": "packages/icons/dist/index.js",
+    "import": "*",
+    "limit": "20 KB"
+  },
+  {
+    "name": "@holiveira/charts (tree-shaken: BarChart)",
+    "path": "packages/charts/dist/index.js",
+    "import": "{ BarChart }",
+    "limit": "157 KB"
+  },
+  {
+    "name": "@holiveira/charts (full package)",
+    "path": "packages/charts/dist/index.js",
+    "import": "*",
+    "limit": "158 KB"
+  },
+  {
+    "name": "@holiveira/primitives (tree-shaken: Button)",
+    "path": "packages/primitives/dist/index.js",
+    "import": "{ Button }",
+    "limit": "13 KB"
+  },
+  {
+    "name": "@holiveira/primitives (full package)",
+    "path": "packages/primitives/dist/index.js",
+    "import": "*",
+    "limit": "19 KB"
+  },
+  {
+    "name": "@holiveira/forms (tree-shaken: Form)",
+    "path": "packages/forms/dist/index.js",
+    "import": "{ Form }",
+    "limit": "10 KB"
+  },
+  {
+    "name": "@holiveira/forms (full package)",
+    "path": "packages/forms/dist/index.js",
+    "import": "*",
+    "limit": "41 KB"
+  },
+  {
+    "name": "@holiveira/layouts (tree-shaken: Sidebar)",
+    "path": "packages/layouts/dist/index.js",
+    "import": "{ Sidebar }",
+    "limit": "13 KB"
+  },
+  {
+    "name": "@holiveira/layouts (full package)",
+    "path": "packages/layouts/dist/index.js",
+    "import": "*",
+    "limit": "14 KB"
+  },
+  {
+    "name": "@holiveira/ui (tree-shaken: Card)",
+    "path": "packages/ui/dist/index.js",
+    "import": "{ Card }",
+    "limit": "10 KB"
+  },
+  {
+    "name": "@holiveira/ui (full package)",
+    "path": "packages/ui/dist/index.js",
+    "import": "*",
+    "limit": "30 KB"
+  },
+  {
+    "name": "@holiveira/theme (tree-shaken: ThemeProvider)",
+    "path": "packages/theme/dist/index.js",
+    "import": "{ ThemeProvider }",
+    "limit": "5 KB"
+  },
+  {
+    "name": "@holiveira/theme (full package)",
+    "path": "packages/theme/dist/index.js",
+    "import": "*",
+    "limit": "5 KB"
+  },
+  {
+    "name": "@holiveira/utils (tree-shaken: cn)",
+    "path": "packages/utils/dist/index.js",
+    "import": "{ cn }",
+    "limit": "9 KB"
+  },
+  {
+    "name": "@holiveira/utils (full package)",
+    "path": "packages/utils/dist/index.js",
+    "import": "*",
+    "limit": "10 KB"
+  },
+  {
+    "name": "@holiveira/hooks (tree-shaken: useClickOutside)",
+    "path": "packages/hooks/dist/index.js",
+    "import": "{ useClickOutside }",
+    "limit": "4 KB"
+  },
+  {
+    "name": "@holiveira/hooks (full package)",
+    "path": "packages/hooks/dist/index.js",
+    "import": "*",
+    "limit": "4 KB"
+  },
+  {
+    "name": "@holiveira/i18n (tree-shaken: formatDate)",
+    "path": "packages/i18n/dist/index.js",
+    "import": "{ formatDate }",
+    "limit": "360 B"
+  },
+  {
+    "name": "@holiveira/i18n (full package)",
+    "path": "packages/i18n/dist/index.js",
+    "import": "*",
+    "limit": "720 B"
+  },
+  {
+    "name": "@holiveira/providers (tree-shaken: ProviderComposer)",
+    "path": "packages/providers/dist/index.js",
+    "import": "{ ProviderComposer }",
+    "limit": "800 B"
+  },
+  {
+    "name": "@holiveira/providers (full package)",
+    "path": "packages/providers/dist/index.js",
+    "import": "*",
+    "limit": "840 B"
+  },
+  {
+    "name": "@holiveira/tokens (tree-shaken: colors)",
+    "path": "packages/tokens/dist/index.js",
+    "import": "{ colors }",
+    "limit": "450 B"
+  },
+  {
+    "name": "@holiveira/tokens (full package)",
+    "path": "packages/tokens/dist/index.js",
+    "import": "*",
+    "limit": "1.2 KB"
+  },
+  {
+    "name": "@holiveira/constants (tree-shaken: ROUTES)",
+    "path": "packages/constants/dist/index.js",
+    "import": "{ ROUTES }",
+    "limit": "230 B"
+  },
+  {
+    "name": "@holiveira/constants (full package)",
+    "path": "packages/constants/dist/index.js",
+    "import": "*",
+    "limit": "540 B"
+  }
+]

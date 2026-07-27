@@ -1,6 +1,7 @@
 import { userEvent } from '@storybook/test';
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+import { axe } from 'vitest-axe';
 
 import { render } from './test-utils';
 
@@ -31,5 +32,39 @@ describe('Switch', () => {
 
     await userEvent.click(checkbox);
     expect(checkbox).toBeChecked();
+  });
+});
+
+describe('Switch — keyboard', () => {
+  it('toggles on Space', async () => {
+    const { getByRole } = render(<Switch />);
+    const checkbox = getByRole('checkbox');
+    checkbox.focus();
+    await userEvent.keyboard(' ');
+    expect(checkbox).toBeChecked();
+  });
+});
+
+describe('Switch — pre-existing findings', () => {
+  it.skip('P2-2: Switch has no label prop — accessible name via explicit prop (D6.9)', () => {
+    const { container } = render(<Switch label="Enable notifications" />);
+    const input = container.querySelector('input');
+    expect(input).toHaveAccessibleName('Enable notifications');
+  });
+});
+
+describe('Switch — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<Switch />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<Switch />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
   });
 });

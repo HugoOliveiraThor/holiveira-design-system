@@ -1,6 +1,7 @@
 import { userEvent } from '@storybook/test';
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+import { axe } from 'vitest-axe';
 
 import { render } from './test-utils';
 
@@ -60,5 +61,49 @@ describe('Button', () => {
 
     await userEvent.click(getByRole('button', { name: /click/i }));
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Button — keyboard', () => {
+  it('activates on Enter', async () => {
+    const onClick = vi.fn();
+    const { getByRole } = render(<Button label="Press" onClick={onClick} />);
+    const button = getByRole('button', { name: /press/i });
+    button.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('activates on Space', async () => {
+    const onClick = vi.fn();
+    const { getByRole } = render(<Button label="Press" onClick={onClick} />);
+    const button = getByRole('button', { name: /press/i });
+    button.focus();
+    await userEvent.keyboard(' ');
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Button — pre-existing findings', () => {
+  it.skip('P2-1: Button does not default type="button" — form submit risk (D6.9)', () => {
+    const { container } = render(<Button label="Test" />);
+    const button = container.querySelector('button');
+    expect(button?.getAttribute('type')).toBe('button');
+  });
+});
+
+describe('Button — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<Button label="Accessible" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<Button label="Dark" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
   });
 });

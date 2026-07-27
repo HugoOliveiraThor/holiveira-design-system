@@ -1,6 +1,6 @@
 'use client';
 
-import { useClickOutside } from '@holiveira/hooks';
+import { useClickOutside, useFocusTrap, useFocusRestore } from '@holiveira/hooks';
 import type { SetStateActionType } from '@holiveira/types';
 import { cn } from '@holiveira/utils';
 
@@ -36,19 +36,17 @@ type DropdownProps = {
  * @public
  */
 function Dropdown({ children, isOpen, setIsOpen }: DropdownProps) {
-  const triggerRef = useRef<HTMLElement>(null);
   const wasOpen = useRef(isOpen);
+  const { save, restore } = useFocusRestore();
 
   useEffect(() => {
     if (isOpen) {
-      triggerRef.current = document.activeElement as HTMLElement;
+      save();
     } else if (wasOpen.current) {
-      requestAnimationFrame(() => {
-        triggerRef.current?.focus();
-      });
+      restore();
     }
     wasOpen.current = isOpen;
-  }, [isOpen]);
+  }, [isOpen, save, restore]);
 
   function handleClose() {
     setIsOpen(false);
@@ -93,6 +91,7 @@ function DropdownContent({ children, align = 'center', className }: DropdownCont
   const contentRef = useClickOutside<HTMLDivElement>(() => {
     if (isOpen) handleClose();
   });
+  useFocusTrap(isOpen, contentRef);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {

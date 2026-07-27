@@ -1,0 +1,138 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Patterns/Building Accessible Apps with Holiveira" />
+
+# Building Accessible Apps with Holiveira
+
+This guide explains how to use Holiveira components to build WCAG 2.2 AA compliant applications.
+
+---
+
+## What Holiveira Guarantees
+
+When you use Holiveira components as designed, the following are guaranteed at the **component level**:
+
+- **Keyboard accessibility** — every interactive component responds to Tab, Enter, Space, Escape, and Arrow keys
+- **ARIA attributes** — required ARIA is self-declared by each component
+- **Focus management** — focus traps, restoration, and error focus are handled automatically
+- **Dark mode** — all components pass axe-core contrast checks in both light and dark modes
+- **Reduced motion** — animations respect `prefers-reduced-motion`
+
+---
+
+## What You Must Guarantee
+
+Page-level accessibility is the consumer's responsibility:
+
+- **Landmark structure** — use `<header>`, `<nav>`, `<main>`, `<aside>`, `<footer>` at the page level
+- **Heading hierarchy** — `<h1>` → `<h2>` → `<h3>` without skipping levels
+- **Page title** — every page has a unique `<title>`
+- **Focus order** — layout composition must follow a logical DOM order
+- **Skip links** — provide "Skip to main content" for keyboard users
+- **Form validation** — use `Field` + `Submit` with proper error messaging
+
+---
+
+## Using ARIA with Holiveira Components
+
+Components that extend native HTML attributes accept custom ARIA:
+
+```tsx
+// Custom accessible label on a Checkbox
+<Checkbox aria-label="Accept terms and conditions" />
+
+// Custom description on a Button
+<Button
+  label="Delete"
+  aria-describedby="delete-desc"
+/>
+<div id="delete-desc">This action cannot be undone</div>
+```
+
+Components that do NOT extend native HTML attributes have all required ARIA built in. You do not need to add ARIA to:
+
+- Dropdown (`aria-expanded`, `aria-haspopup`, `role="menu"`)
+- Breadcrumb (`aria-label="Breadcrumb"`, `aria-current="page"`)
+- Sidebar (`aria-label="Main navigation"`, `inert`)
+- ErrorMessage (`role="alert"`, `aria-live="polite"`)
+
+---
+
+## Keyboard Interaction Reference
+
+| Key          | What it does                     | Where                                 |
+| ------------ | -------------------------------- | ------------------------------------- |
+| Tab          | Move focus forward               | All components                        |
+| Shift+Tab    | Move focus backward              | All components                        |
+| Enter        | Activate, open menu, submit form | Button, Submit, Dropdown, MultiSelect |
+| Space        | Activate, toggle checkbox/switch | Button, Checkbox, Switch, Dropdown    |
+| Escape       | Close menu, dismiss              | Dropdown, MultiSelect                 |
+| ArrowUp/Down | Navigate menu, change selection  | Dropdown, MultiSelect, Select, Radio  |
+| Home/End     | First/last item                  | Dropdown, MultiSelect                 |
+
+---
+
+## Focus Management
+
+- **Dropdown menus** — focus is trapped within the open menu. Tab cycles through menu items. Escape closes and returns focus to the trigger.
+- **Form errors** — when validation fails, focus moves to the first field with an error. Error messages are announced via `aria-live`.
+- **Focus indicators** — Holiveira uses browser default `:focus-visible`. Customize via CSS:
+
+```css
+/* Custom focus ring */
+button:focus-visible {
+  outline: 2px solid #5750f1;
+  outline-offset: 2px;
+}
+```
+
+---
+
+## Reduced Motion
+
+All Holiveira animations respect `prefers-reduced-motion`. Users who set this preference in their operating system will not see animations. This applies to:
+
+- Skeleton pulse animation
+- Sidebar slide transitions
+- Dropdown open/close transitions
+
+---
+
+## Color and Contrast
+
+Holiveira design tokens pass WCAG AA contrast ratios:
+
+- Normal text (< 18px): minimum 4.5:1
+- Large text (>= 18px): minimum 3:1
+- UI components (borders, icons): minimum 3:1
+- Dark mode: all tokens verified
+
+Color is never the sole differentiator — components use icons, text labels, and patterns alongside color.
+
+---
+
+## Accessibility Testing
+
+Holiveira's testing infrastructure includes:
+
+- **axe-core** — automated WCAG compliance checks in vitest (CI-blocking)
+- **Keyboard tests** — every interactive component has keyboard interaction tests (CI-blocking)
+- **Dark mode tests** — every interactive component passes axe in dark mode (CI-blocking)
+- **Storybook a11y addon** — visual inspection tool in Storybook (non-blocking)
+
+When adding new components, follow the testing patterns documented in the **Accessibility Testing** pattern.
+
+---
+
+## Known Limitations
+
+These M8-resolved issues are documented for consumer awareness:
+
+| Issue                        | Component        | Workaround                                               |
+| ---------------------------- | ---------------- | -------------------------------------------------------- |
+| No focus trap on MultiSelect | MultiSelect      | Consumer can implement custom focus management if needed |
+| No `label` prop on Switch    | Switch           | Use the existing `aria-label` (set from `name` prop)     |
+| Icons naming convention      | Icons (36 icons) | Ensure `title` prop is passed for informative icons      |
+| Button type default          | Button           | Pass `type="submit"` explicitly when used inside a form  |
+
+For the full resolution status, see `docs/accessibility/p2-p3-resolution.md`.

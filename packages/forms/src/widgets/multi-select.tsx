@@ -140,11 +140,13 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
         <div ref={containerRef} className="relative">
           <div
             ref={comboboxRef}
+            id={id}
             role="combobox"
             aria-expanded={isOpen}
             aria-haspopup="listbox"
             aria-controls={listboxId}
             aria-describedby={error ? errorId : undefined}
+            aria-label={label || 'Multi-select'}
             aria-disabled={disabled}
             tabIndex={0}
             onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -191,6 +193,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             <button
               type="button"
               tabIndex={-1}
+              aria-label="Toggle options"
               className="text-dark-4 dark:text-dark-6 ml-2 shrink-0"
             >
               <svg

@@ -6,13 +6,13 @@ import type { ReactNode } from 'react';
 
 import { useSidebarContext } from './sidebar-context';
 
-interface SidebarProps {
+interface SidebarProps extends Omit<React.HTMLAttributes<HTMLElement>, 'className' | 'children'> {
   logo?: ReactNode;
   children?: ReactNode;
   className?: string;
 }
 
-const Sidebar = ({ logo, children, className }: SidebarProps) => {
+const Sidebar = ({ logo, children, className, ...props }: SidebarProps) => {
   const { expanded, isMobileOpen, isMobile, setMobileOpen } = useSidebarContext();
 
   const isVisible = isMobile ? isMobileOpen : expanded;
@@ -38,6 +38,7 @@ const Sidebar = ({ logo, children, className }: SidebarProps) => {
         aria-label="Main navigation"
         aria-hidden={!isVisible}
         inert={!isVisible}
+        {...props}
       >
         <div className="flex h-full flex-col py-10 pr-[7px] pl-[25px]">
           {logo && <div className="relative pr-4.5">{logo}</div>}

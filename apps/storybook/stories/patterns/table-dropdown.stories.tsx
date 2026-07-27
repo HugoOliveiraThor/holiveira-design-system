@@ -25,7 +25,7 @@ function TableWithActions() {
         <TableHeader>
           <TableRow>
             <TableHead>
-              <input type="checkbox" className="size-4" />
+              <input type="checkbox" className="size-4" aria-label="Select all rows" />
             </TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
@@ -37,7 +37,7 @@ function TableWithActions() {
           {sampleData.map((row) => (
             <TableRow key={row.id}>
               <TableCell>
-                <input type="checkbox" className="size-4" />
+                <input type="checkbox" className="size-4" aria-label={`Select ${row.name}`} />
               </TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.email}</TableCell>

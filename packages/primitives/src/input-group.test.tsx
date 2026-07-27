@@ -1,6 +1,7 @@
 import { userEvent } from '@storybook/test';
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+import { axe } from 'vitest-axe';
 
 import { render } from './test-utils';
 
@@ -49,5 +50,37 @@ describe('InputGroup', () => {
 
     await userEvent.type(input, 'hello');
     expect(input).toHaveValue('hello');
+  });
+});
+
+describe('InputGroup — keyboard', () => {
+  it('focuses on Tab', async () => {
+    const { getByRole } = render(<InputGroup label="Name" placeholder="Enter" />);
+    const input = getByRole('textbox');
+    input.focus();
+    expect(input).toHaveFocus();
+  });
+
+  it('accepts text input', async () => {
+    const { getByRole } = render(<InputGroup label="Name" placeholder="Enter" />);
+    const input = getByRole('textbox') as HTMLInputElement;
+    await userEvent.type(input, 'test');
+    expect(input).toHaveValue('test');
+  });
+});
+
+describe('InputGroup — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<InputGroup label="Name" placeholder="Enter" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<InputGroup label="Name" placeholder="Enter" />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
   });
 });

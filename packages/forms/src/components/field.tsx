@@ -1,7 +1,7 @@
 import { cn } from '@holiveira/utils';
 
 import type { ReactNode } from 'react';
-import { useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 import { Description } from './description';
 import { ErrorMessage } from './error-message';
@@ -18,6 +18,18 @@ interface FieldProps {
 const Field = ({ label, description, error, children, className }: FieldProps) => {
   const descriptionId = useId();
   const errorId = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const prevError = useRef(error);
+
+  useEffect(() => {
+    if (error && !prevError.current && containerRef.current) {
+      const focusable = containerRef.current.querySelector<HTMLElement>(
+        'input, textarea, select, button, [tabindex]:not([tabindex="-1"])',
+      );
+      focusable?.focus();
+    }
+    prevError.current = error;
+  }, [error]);
 
   const describedBy = [description && `${descriptionId}`, error && `${errorId}`]
     .filter(Boolean)
@@ -26,7 +38,7 @@ const Field = ({ label, description, error, children, className }: FieldProps) =
   const childrenWithAria = 'type' in (children as object) || describedBy ? children : children;
 
   return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
+    <div ref={containerRef} className={cn('flex flex-col gap-1.5', className)}>
       {label && <Label>{label}</Label>}
 
       {describedBy ? (

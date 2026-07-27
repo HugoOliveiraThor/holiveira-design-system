@@ -8,16 +8,12 @@ import { forwardRef, useId } from 'react';
 /** @public */
 type CheckboxProps = {
   label: string;
-  name?: string;
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   withIcon?: 'check' | 'x';
   withBg?: boolean;
   minimal?: boolean;
   radius?: 'default' | 'md';
   className?: string;
-};
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'id' | 'className'>;
 
 /**
  * Checkbox input with label, icon, and background variants.
@@ -37,6 +33,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       minimal,
       radius,
       className,
+      ...props
     },
     ref,
   ) => {
@@ -61,6 +58,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               checked={checked}
               defaultChecked={defaultChecked}
               className="peer sr-only"
+              {...props}
             />
 
             <div

@@ -7,15 +7,11 @@ import { forwardRef, useId } from 'react';
 
 /** @public */
 type SwitchProps = {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   withIcon?: boolean;
   background?: 'dark' | 'light';
   backgroundSize?: 'sm' | 'default';
-  name?: string;
   className?: string;
-};
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'id' | 'className'>;
 
 /**
  * Toggle switch with icon and background variants.
@@ -24,7 +20,17 @@ type SwitchProps = {
  */
 const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   (
-    { checked, defaultChecked, onChange, background, withIcon, backgroundSize, name, className },
+    {
+      checked,
+      defaultChecked,
+      onChange,
+      background,
+      withIcon,
+      backgroundSize,
+      name,
+      className,
+      ...props
+    },
     ref,
   ) => {
     const id = useId();
@@ -44,6 +50,8 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             defaultChecked={defaultChecked}
             onChange={onChange}
             className="peer sr-only"
+            aria-label={name || 'Toggle'}
+            {...props}
           />
           <div
             className={cn('bg-gray-3 h-8 w-14 rounded-full dark:bg-[#5A616B]', {

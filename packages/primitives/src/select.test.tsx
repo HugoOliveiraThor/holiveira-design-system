@@ -1,5 +1,7 @@
+import { userEvent } from '@storybook/test';
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+import { axe } from 'vitest-axe';
 
 import { render } from './test-utils';
 
@@ -34,5 +36,32 @@ describe('Select', () => {
   it('renders with error', () => {
     const { getByText } = render(<Select label="Pick" items={items} error="Selection required" />);
     expect(getByText('Selection required')).toBeVisible();
+  });
+});
+
+describe('Select — keyboard', () => {
+  it('changes selection with arrow keys', async () => {
+    const onChange = vi.fn();
+    const { container } = render(<Select label="Pick" items={items} onChange={onChange} />);
+    const select = container.querySelector('select') as HTMLSelectElement;
+    select.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    expect(select.selectedIndex).toBe(0);
+  });
+});
+
+describe('Select — accessibility', () => {
+  it('has no axe violations', async () => {
+    const { container } = render(<Select label="Pick" items={items} />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark');
+    const { container } = render(<Select label="Pick" items={items} />);
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+    document.documentElement.classList.remove('dark');
   });
 });

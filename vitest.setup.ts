@@ -1,4 +1,6 @@
 import '@testing-library/jest-dom/vitest';
+import { axe } from 'vitest-axe';
+
 import { setupTestEnvironment } from '@holiveira/testing';
 
 process.env.NEXT_PUBLIC_APP_URL = 'http://localhost:3000';

@@ -41,6 +41,7 @@ export default defineConfig({
       '@holiveira/charts': resolve(__dirname, 'packages/charts/src/index.ts'),
       '@holiveira/auth': resolve(__dirname, 'packages/auth/src/index.ts'),
       '@holiveira/db': resolve(__dirname, 'packages/db/src/index.ts'),
+      '@testing-helpers': resolve(__dirname, 'tests/helpers'),
     },
   },
   test: {

@@ -8,6 +8,21 @@ vi.mock('next/dynamic', () => ({
   },
 }));
 
+vi.mock('./lazy-bar-chart', async () => {
+  const m = await import('./bar-chart');
+  return { BarChart: m.BarChart };
+});
+
+vi.mock('./lazy-area-chart', async () => {
+  const m = await import('./area-chart');
+  return { AreaChart: m.AreaChart };
+});
+
+vi.mock('./lazy-pie-chart', async () => {
+  const m = await import('./pie-chart');
+  return { PieChart: m.PieChart };
+});
+
 import { render } from './test-utils';
 
 import { BarChart, AreaChart, PieChart } from './index';

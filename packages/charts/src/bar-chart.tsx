@@ -16,6 +16,8 @@ export interface BarChartProps {
   stacked?: boolean;
   className?: string;
   apexOptions?: Partial<ApexOptions>;
+  label: string;
+  description?: string;
 }
 
 export function BarChart({
@@ -24,6 +26,8 @@ export function BarChart({
   stacked = false,
   className,
   apexOptions,
+  label,
+  description,
 }: BarChartProps) {
   const chartTheme = useChartTheme();
   const defaults = toApexDefaults(chartTheme);
@@ -76,7 +80,8 @@ export function BarChart({
   };
 
   return (
-    <div className={cn('mt-3 -ml-3.5', className)}>
+    <div className={cn('mt-3 -ml-3.5', className)} role="img" aria-label={label}>
+      {description && <span className="sr-only">{description}</span>}
       <Chart options={options} series={series} type="bar" height={height} />
     </div>
   );

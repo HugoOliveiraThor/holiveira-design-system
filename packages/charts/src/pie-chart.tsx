@@ -15,9 +15,19 @@ export interface PieChartProps {
   height?: number;
   className?: string;
   apexOptions?: Partial<ApexOptions>;
+  label: string;
+  description?: string;
 }
 
-export function PieChart({ series, labels, height = 305, className, apexOptions }: PieChartProps) {
+export function PieChart({
+  series,
+  labels,
+  height = 305,
+  className,
+  apexOptions,
+  label,
+  description,
+}: PieChartProps) {
   const chartTheme = useChartTheme();
   const defaults = toApexDefaults(chartTheme);
 
@@ -80,7 +90,8 @@ export function PieChart({ series, labels, height = 305, className, apexOptions 
   };
 
   return (
-    <div className={cn('grid place-items-center', className)}>
+    <div className={cn('grid place-items-center', className)} role="img" aria-label={label}>
+      {description && <span className="sr-only">{description}</span>}
       <Chart options={options} series={series} type="donut" height={height} />
     </div>
   );

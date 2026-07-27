@@ -8,7 +8,12 @@ interface ShowcaseSectionProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const ShowcaseSection = ({ title, children, className, ...props }: ShowcaseSectionProps) => {
-  const headingId = title.toLowerCase().replace(/\s+/g, '-');
+  const headingId = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 
   return (
     <section aria-labelledby={headingId}>
