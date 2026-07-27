@@ -70,9 +70,14 @@ packages/db/src/generated/
 .idea/
 AGENTS.md
 GPT
+_rules
 
-# docs 
-docs
+# docs (contracts in docs/architecture/contracts/ needed by check:exports CI gate)
+/docs/*
+!/docs/architecture/
+/docs/architecture/*
+!/docs/architecture/contracts/
+!/docs/architecture/contracts/**
 reports
 # storybook
 storybook-static
