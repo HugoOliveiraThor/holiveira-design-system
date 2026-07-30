@@ -18,12 +18,32 @@ const meta: Meta<typeof Header> = {
   component: Header,
   tags: ['autodocs'],
   decorators: [SidebarDecorator],
+  argTypes: {
+    children: {
+      description:
+        'Content rendered inside the header. Compose with HeaderToggle and HeaderActions.',
+      control: false,
+    },
+    className: {
+      description: 'Additional CSS classes for the header element.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const CompoundComposition: Story = {
+export const Default: Story = {
+  render: () => (
+    <Header>
+      <HeaderToggle />
+    </Header>
+  ),
+};
+
+export const WithActions: Story = {
   render: () => (
     <Header>
       <HeaderToggle />

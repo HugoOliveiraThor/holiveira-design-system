@@ -48,6 +48,21 @@ const meta: Meta<typeof Sidebar> = {
     logo: <div className="text-lg font-bold">Holiveira</div>,
     children: <NavItems />,
   },
+  argTypes: {
+    logo: {
+      description: 'Logo or branding element rendered at the top of the sidebar.',
+      control: false,
+    },
+    children: {
+      description: 'Navigation items and content within the sidebar.',
+      control: false,
+    },
+    className: {
+      description: 'Additional CSS classes for the sidebar container.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+  },
 };
 
 export default meta;
@@ -84,7 +99,6 @@ function ToggleStory({ children }: { children: React.ReactNode }) {
       {children}
       <button
         type="button"
-        data-testid="toggle-btn"
         onClick={() => setCollapsed(!collapsed)}
         className="absolute top-2 right-2 z-50 rounded-md border px-2 py-1 text-sm"
       >
@@ -115,7 +129,7 @@ export const Interactive: Story = {
     });
 
     await step('Click expand button', async () => {
-      const toggle = canvas.getByTestId('toggle-btn');
+      const toggle = canvas.getByRole('button', { name: /expand|collapse/i });
       await userEvent.click(toggle);
       const sidebar = canvas.getByRole('complementary');
       await expect(sidebar).toHaveAttribute('aria-hidden', 'false');
