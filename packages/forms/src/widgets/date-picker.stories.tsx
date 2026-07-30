@@ -28,6 +28,11 @@ const meta: Meta<typeof DatePicker> = {
       control: 'boolean',
       table: { defaultValue: { summary: 'false' } },
     },
+    enableTime: {
+      description: 'Allows time selection alongside date.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
     dateFormat: {
       description: 'Flatpickr date format string.',
       control: 'text',

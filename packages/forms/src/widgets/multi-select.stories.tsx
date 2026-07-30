@@ -46,6 +46,11 @@ const meta: Meta<typeof MultiSelect> = {
       control: 'boolean',
       table: { defaultValue: { summary: 'false' } },
     },
+    searchable: {
+      description: 'Enables search/filter within the dropdown.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
     label: {
       description: 'Label text displayed above the multi-select.',
       control: 'text',
