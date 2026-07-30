@@ -8,17 +8,78 @@ const meta: Meta<typeof DatePicker> = {
   title: 'Forms/DatePicker',
   component: DatePicker,
   tags: ['autodocs'],
-  args: {
-    label: 'Select date',
-    placeholder: 'mm/dd/yyyy',
+  argTypes: {
+    value: {
+      description: 'Controlled value of the date picker.',
+      control: 'date',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    onChange: {
+      description: 'Callback fired when the date changes.',
+      control: false,
+    },
+    placeholder: {
+      description: 'Placeholder text for the input.',
+      control: 'text',
+      table: { defaultValue: { summary: 'mm/dd/yyyy' } },
+    },
+    disabled: {
+      description: 'Disables the date picker input.',
+      control: 'boolean',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    dateFormat: {
+      description: 'Flatpickr date format string.',
+      control: 'text',
+      table: { defaultValue: { summary: 'M j, Y' } },
+    },
+    label: {
+      description: 'Label text displayed above the date picker.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    error: {
+      description: 'Error message displayed below the date picker.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    icon: {
+      description: 'Icon displayed inside the input.',
+      control: false,
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+  args: {
+    label: 'Select date',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Select date',
+    disabled: true,
+  },
+};
+
+export const WithPlaceholder: Story = {
+  args: {
+    label: 'Date of birth',
+    placeholder: 'Select a date',
+  },
+};
+
 export const Uncontrolled: Story = {
   args: {
+    label: 'Select date',
     defaultValue: new Date(2026, 6, 15),
   },
 };
@@ -49,17 +110,18 @@ export const WithIcon: Story = {
 export const Interactive: Story = {
   args: {
     label: 'Pick a date',
+    placeholder: 'Select a date',
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await step('Date input is visible', async () => {
-      const input = canvas.getByPlaceholderText('mm/dd/yyyy');
+      const input = canvas.getByPlaceholderText('Select a date');
       await expect(input).toBeVisible();
     });
 
     await step('Click triggers flatpickr calendar', async () => {
-      const input = canvas.getByPlaceholderText('mm/dd/yyyy');
+      const input = canvas.getByPlaceholderText('Select a date');
       await userEvent.click(input);
     });
   },

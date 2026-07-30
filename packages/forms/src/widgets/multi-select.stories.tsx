@@ -21,10 +21,64 @@ const meta: Meta<typeof MultiSelect> = {
     options,
     placeholder: 'Select frameworks...',
   },
+  argTypes: {
+    options: {
+      description: 'Array of selectable options.',
+      control: 'object',
+      table: { defaultValue: { summary: '[]' } },
+    },
+    value: {
+      description: 'Controlled selected values.',
+      control: 'object',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    onChange: {
+      description: 'Callback fired when selection changes.',
+      control: false,
+    },
+    placeholder: {
+      description: 'Placeholder text when no options are selected.',
+      control: 'text',
+      table: { defaultValue: { summary: 'Select options' } },
+    },
+    disabled: {
+      description: 'Disables the multi-select.',
+      control: 'boolean',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    label: {
+      description: 'Label text displayed above the multi-select.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    error: {
+      description: 'Error message displayed below the multi-select.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const WithSelection: Story = {
+  args: {
+    value: ['react', 'vue'],
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
 
 export const Uncontrolled: Story = {
   args: {
