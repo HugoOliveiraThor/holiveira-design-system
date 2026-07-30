@@ -1,7 +1,7 @@
 {
   "name": "@holiveira/charts",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
   "description": "Chart and visualization components.",
   "keywords": [
@@ -14,19 +14,22 @@
   ],
   "license": "MIT",
   "author": "Holiveira",
-  "homepage": "https://github.com/holiveira/holiveira",
+  "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holiveira/holiveira.git"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system.git",
+    "directory": "packages/charts"
   },
   "bugs": {
-    "url": "https://github.com/holiveira/holiveira/issues"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
   },
   "sideEffects": [
     "*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "dependencies": {
     "@holiveira/hooks": "workspace:*",
@@ -47,15 +50,23 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "tsc && cp src/chart-styles.css dist/"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "./chart-styles.css": "./src/chart-styles.css"
-  }
+    "./chart-styles.css": {
+      "import": "./dist/chart-styles.css",
+      "default": "./dist/chart-styles.css"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "module": "./dist/index.js"
 }

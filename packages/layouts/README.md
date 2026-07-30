@@ -1,6 +1,6 @@
 # @holiveira/layouts
 
-Application layout components.
+Application shell components for dashboard and page-level layout.
 
 ## Purpose
 
@@ -40,15 +40,24 @@ function AppLayout() {
 | Export               | Kind      | Description                      |
 | -------------------- | --------- | -------------------------------- |
 | `SidebarProvider`    | component | Sidebar collapsed state provider |
-| `useSidebarContext`  | hook      | Access sidebar state             |
+| `useSidebarContext`  | hook      | Consumer hook for sidebar state  |
 | `Sidebar`            | component | Sidebar navigation container     |
+| `SidebarProps`       | type      | Sidebar component props          |
 | `Header`             | component | Application header               |
 | `HeaderToggle`       | component | Sidebar toggle trigger (slot)    |
 | `HeaderActions`      | component | Header action slot               |
-| `SidebarProps`       | type      | Sidebar component props          |
 | `HeaderProps`        | type      | Header component props           |
 | `HeaderToggleProps`  | type      | HeaderToggle component props     |
 | `HeaderActionsProps` | type      | HeaderActions component props    |
+
+## Peer Dependencies
+
+| Package      | Version |
+| ------------ | ------- |
+| `next`       | ^16     |
+| `react`      | ^19     |
+| `react-dom`  | ^19     |
+| `typescript` | ^5      |
 
 ## Architecture Contract
 
@@ -59,9 +68,23 @@ function AppLayout() {
 **Does not own:** Navigation item definitions, user menu content, application-specific layout
 configurations, or mobile responsive behavior (delegated to consumer).
 
-See `docs/architecture/contracts/layouts.md` for ownership and dependency boundaries.
+Contract: `docs/architecture/contracts/layouts.md`
+
+## Documentation
+
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/layouts-sidebar--docs)
+  — Sidebar
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/layouts-header--docs)
+  — Header
+- [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- Contract: `docs/architecture/contracts/layouts.md`
+
+## License
+
+MIT
 
 ## References
 
-- `@holiveira/hooks` — responsive hooks dependency
-- `@holiveira/utils` — utility functions
+- `@holiveira/hooks` — `useIsMobile` for responsive behavior
+- `@holiveira/ui` — composite UI components
+- `@holiveira/utils` — `cn()` utility

@@ -14,14 +14,7 @@ tokens, themes, infrastructure, development standards, and governance were recre
 each time. The project exists to capture those engineering decisions into a reusable platform so
 every new project starts from architecture instead of boilerplate.
 
-Historically, the project's package architecture was extracted from a NextAdmin application — a
-Next.js admin dashboard template. That origin gave Holiveira its practical focus: every package,
-component, and pattern comes from real-world use, not idealized demos.
-
 ## Quick Start
-
-**Note:** Holiveira is in pre-alpha. Packages are not yet published to npm. To explore components
-locally, see the Getting Started section below.
 
 ```bash
 pnpm add @holiveira/primitives @holiveira/theme
@@ -34,7 +27,7 @@ import { Button } from '@holiveira/primitives';
 function App() {
   return (
     <ThemeProvider>
-      <Button variant="primary" label="Get Started" />
+      <Button variant="primary">Get Started</Button>
     </ThemeProvider>
   );
 }
@@ -59,65 +52,125 @@ engineering investment designed for a 10+ year lifecycle.
 
 ## Ecosystem
 
-**Core** — `@holiveira/config` (centralized configuration for all packages), `@holiveira/constants`
-(shared constants, route definitions, and magic strings), `@holiveira/types` (shared TypeScript
-types used across all framework packages)
+### Public Packages
 
-**Foundation** — `@holiveira/i18n` (locale-aware formatting utilities using native `Intl` APIs),
-`@holiveira/tokens` (single source of truth for all visual primitives), `@holiveira/utils`
-(general-purpose, framework-agnostic utility functions)
+| Package                 | Description                                              | Category    |
+| ----------------------- | -------------------------------------------------------- | ----------- |
+| `@holiveira/types`      | Shared TypeScript type definitions                       | Core        |
+| `@holiveira/config`     | Application configuration utilities                      | Core        |
+| `@holiveira/constants`  | Shared constants and route definitions                   | Core        |
+| `@holiveira/tokens`     | Design token definitions and raw values                  | Foundation  |
+| `@holiveira/utils`      | Utility functions (cn, cva, format, guards)              | Foundation  |
+| `@holiveira/i18n`       | Locale-aware formatting using native Intl APIs           | Foundation  |
+| `@holiveira/eslint`     | ESLint configuration presets                             | Foundation  |
+| `@holiveira/providers`  | Provider composition utility                             | Foundation  |
+| `@holiveira/hooks`      | React hooks (clickOutside, isMobile, focusTrap)          | Primitives  |
+| `@holiveira/icons`      | Tree-shakeable SVG icon components                       | Primitives  |
+| `@holiveira/primitives` | Accessible UI primitives (Button, Table, Dropdown, etc.) | Primitives  |
+| `@holiveira/theme`      | Theme provider with dark mode support                    | Composition |
+| `@holiveira/forms`      | Form system with react-hook-form + Zod validation        | Composition |
+| `@holiveira/charts`     | Chart components wrapping ApexCharts                     | Composition |
+| `@holiveira/layouts`    | Application shell components (Sidebar, Header)           | Composition |
+| `@holiveira/ui`         | Composite UI components (Breadcrumb, Card)               | Composition |
 
-**Primitives** — `@holiveira/hooks` (framework-agnostic React hooks for common patterns),
-`@holiveira/icons` (consistent, tree-shakeable icon system with accessible SVG icon components),
-`@holiveira/primitives` (atomic, accessible UI primitives as the building blocks for all
-higher-level components)
+### Private Packages
 
-**Composition** — `@holiveira/charts` (chart component primitives abstracting the underlying
-charting library), `@holiveira/forms` (form system integrating React Hook Form + Zod validation with
-themed form components), `@holiveira/layouts` (page-level layout components for dashboard and
-application shells), `@holiveira/providers` (provider composition utility to flatten a provider tree
-into a single React tree), `@holiveira/theme` (runtime theme system that consumes Design Tokens and
-exposes theme context to all components), `@holiveira/ui` (composite UI components that combine
-multiple primitives into ready-to-use patterns)
-
-**Services** — `@holiveira/api` (typed fetch-based API client with error handling, timeout, and
-retry), `@holiveira/auth` (authentication and authorization using Better Auth), `@holiveira/db`
-(Prisma ORM client singleton for database access)
-
-**Platform** — `@holiveira/testing` (shared testing infrastructure for all packages)
-
-## Getting Started
-
-To explore Holiveira locally before packages are published:
-
-```bash
-git clone https://github.com/holiveira/design-system.git
-cd design-system
-pnpm install
-pnpm turbo storybook
-```
-
-Wrap your application with the theme provider:
-
-```tsx
-import { ThemeProvider } from '@holiveira/theme';
-
-export default function Layout({ children }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
-}
-```
-
-Explore all components interactively in [Storybook](apps/storybook/).
+| Package              | Description                                   |
+| -------------------- | --------------------------------------------- |
+| `@holiveira/auth`    | Authentication and authorization (BetterAuth) |
+| `@holiveira/api`     | Typed fetch-based API client                  |
+| `@holiveira/db`      | Prisma ORM client singleton                   |
+| `@holiveira/testing` | Shared testing infrastructure                 |
 
 ## Architecture
 
-Holiveira follows a five-level dependency hierarchy: Core, Foundation, Primitives, Composition,
-Services, and Platform. Lower levels never import from higher levels. Every dependency has a
-documented owner. Every architectural decision has a written rationale.
+Holiveira follows a five-level dependency hierarchy. Lower levels never import from higher levels.
+Every dependency has a documented owner. Every architectural decision has a written rationale.
+
+```
+Core (Level 0)
+  └── Foundation (Level 1)
+        └── Primitives (Level 2)
+              └── Composition (Level 3)
+                    └── Services (Level 4)
+```
+
+- **Core** — Type definitions and configuration. Zero runtime dependencies.
+- **Foundation** — Utility packages, design tokens, ESLint presets, i18n formatters.
+- **Primitives** — Atomic components (Button, Table) and hooks. Building blocks for all higher-level
+  components.
+- **Composition** — Composite components and application shells (Forms, Charts, Layouts, Theme).
+- **Services** — Backend infrastructure (Auth, API client, Database). Private packages.
+
+See [docs/architecture/](docs/architecture/) for specifications, ADRs, and package contracts.
+
+## Development
+
+### Requirements
+
+- **Node.js** 22+
+- **pnpm** 11+
+- **PostgreSQL** (for Prisma-generated code; `DATABASE_URL` env var required)
+
+### Setup
+
+```bash
+git clone https://github.com/HugoOliveiraThor/holiveira-design-system.git
+cd holiveira-design-system
+pnpm install
+cp .env.example .env
+pnpm run db:generate
+```
+
+### Commands
+
+| Command                  | Purpose                                            |
+| ------------------------ | -------------------------------------------------- |
+| `pnpm run all-checks`    | Complete repository validation (all quality gates) |
+| `pnpm run dev:storybook` | Start Storybook development server                 |
+| `pnpm run build`         | Build all packages                                 |
+| `pnpm run test`          | Run test suite                                     |
+| `pnpm run typecheck`     | TypeScript compilation check                       |
+| `pnpm run format:check`  | Prettier compliance check                          |
+| `pnpm run lint`          | ESLint check                                       |
+
+### Toolchain
+
+- **Turbo** — Orchestrates builds with dependency-aware caching. All packages compile via `tsc`.
+- **pnpm** — Workspace management with `workspace:*` protocol for inter-package dependencies.
+- **Storybook** — Interactive component development and documentation at
+  [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system).
+- **Changesets** — Independent per-package versioning. Run `pnpm changeset` to record changes.
+- **Vitest** — Test runner with jsdom environment and Testing Library integration.
+
+## Releases
+
+Holiveira uses [Changesets](https://github.com/changesets/changesets) for independent per-package
+semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
+`@holiveira/charts` does not force a major bump in `@holiveira/types`.
+
+The release pipeline is fully automated:
+
+1. Contributors run `pnpm changeset` to record changes
+2. A Version PR is automatically created when changesets accumulate on `main`
+3. Merging the PR triggers quality gates → consumer validation → npm publish
+4. All packages carry npm provenance attestation
+
+Releases follow a graduated path: `beta` → `rc` → `latest` (GA).
 
 ## Contributing
 
-Contributions are welcome.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, coding standards, and the changeset
+workflow.
+
+## Community
+
+- [Issues](https://github.com/HugoOliveiraThor/holiveira-design-system/issues) — Bug reports and
+  feature requests
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system) — Interactive component
+  documentation
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md) — Reporting vulnerabilities
 
 ## License
 

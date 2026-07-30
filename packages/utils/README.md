@@ -1,6 +1,6 @@
 # @holiveira/utils
 
-Shared utility functions.
+Foundation utility library for class name composition, object manipulation, and timing functions.
 
 ## Purpose
 
@@ -16,14 +16,16 @@ pnpm add @holiveira/utils
 
 ## Usage
 
-```ts
+```tsx
 import { cn, cva, debounce } from '@holiveira/utils';
 
 // Class name merging
-cn('px-4 py-2', isActive && 'bg-primary'); // "px-4 py-2 bg-primary"
+cn('px-4 py-2', isActive && 'bg-primary');
 
 // Component variants
-const button = cva(['px-4', 'py-2'], { variants: { size: { sm: 'text-sm', lg: 'text-lg' } } });
+const button = cva(['px-4 py-2'], {
+  variants: { size: { sm: 'text-sm', lg: 'text-lg' } },
+});
 
 // Debounced handler
 const handleSearch = debounce((query: string) => fetchResults(query), 300);
@@ -37,28 +39,47 @@ const handleSearch = debounce((query: string) => fetchResults(query), 300);
 | `cva`            | function | Class-variance-authority re-export                 |
 | `VariantProps`   | type     | CVA variant props type                             |
 | `slugify`        | function | String to URL-safe slug                            |
-| `compactFormat`  | function | Compact number formatting                          |
-| `standardFormat` | function | Standard number formatting                         |
+| `compactFormat`  | function | Compact number formatting (e.g. 1.2K)              |
+| `standardFormat` | function | Standard number formatting with separators         |
 | `pick`           | function | Pick keys from object                              |
 | `omit`           | function | Omit keys from object                              |
 | `merge`          | function | Deep object merge                                  |
-| `isDefined`      | function | Non-nullish check                                  |
-| `isPlainObject`  | function | Plain object check                                 |
+| `isDefined`      | function | Non-nullish type guard                             |
+| `isPlainObject`  | function | Plain object type guard                            |
 | `assertDefined`  | function | Runtime assertion for defined values               |
 | `debounce`       | function | Debounced function wrapper                         |
 | `throttle`       | function | Throttled function wrapper                         |
+
+## Peer Dependencies
+
+| Package      | Version |
+| ------------ | ------- |
+| `typescript` | ^5      |
 
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation.
 
-**Owns:** Shared utility functions, class name composition, variant pattern infrastructure.
+**Owns:** Shared utility functions, class name composition (`cn`), variant pattern infrastructure
+(`cva`), object manipulation, timing utilities.
 
-**Does not own:** UI components, business logic, framework-specific utilities, or application-level
+**Does not own:** UI components, business logic, framework-specific utilities, locale-aware
+formatting (`formatDate`, `formatCurrency` — owned by `@holiveira/i18n`), or application-level
 helpers.
 
-See `docs/architecture/contracts/utils.md` for ownership and dependency boundaries.
+Contract: `docs/architecture/contracts/utils.md`
+
+## Documentation
+
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system)
+- [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- Contract: `docs/architecture/contracts/utils.md`
+
+## License
+
+MIT
 
 ## References
 
 - `@holiveira/types` — shared type definitions
+- `@holiveira/i18n` — locale-aware formatting (moved from utils)

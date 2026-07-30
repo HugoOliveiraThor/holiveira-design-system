@@ -19,9 +19,9 @@ Requires `react-hook-form`, `zod`, and `flatpickr`.
 ## Usage
 
 ```tsx
-import { Form, Field, Label, ErrorMessage, Submit } from '@holiveira/forms';
 import { z } from 'zod';
-import { zodResolver } from '@holiveira/forms';
+
+import { Form, Field, Label, ErrorMessage, Submit, zodResolver } from '@holiveira/forms';
 
 const schema = z.object({ email: z.string().email() });
 
@@ -39,22 +39,61 @@ function MyForm() {
 }
 ```
 
+Import DatePicker styles:
+
+```css
+@import '@holiveira/forms/date-picker-styles.css';
+```
+
 ## Public API
 
-| Export         | Kind      | Description                         |
-| -------------- | --------- | ----------------------------------- |
-| `Form`         | component | Form container with validation      |
-| `Field`        | component | Field context provider              |
-| `Label`        | component | Accessible label                    |
-| `Description`  | component | Field description text              |
-| `ErrorMessage` | component | Validation error display            |
-| `Submit`       | component | Submit button                       |
-| `MultiSelect`  | component | Multi-select widget                 |
-| `DatePicker`   | component | Date picker widget (flatpickr)      |
-| `useForm`      | hook      | react-hook-form `useForm` re-export |
-| `zodResolver`  | function  | Zod resolver for react-hook-form    |
+| Export              | Kind      | Description                                |
+| ------------------- | --------- | ------------------------------------------ |
+| `Form`              | component | Form wrapper with RHF integration          |
+| `FormProps`         | type      | Form component props                       |
+| `Field`             | component | Field context provider                     |
+| `FieldProps`        | type      | Field component props                      |
+| `Label`             | component | Accessible label                           |
+| `LabelProps`        | type      | Label component props                      |
+| `Description`       | component | Field description text                     |
+| `DescriptionProps`  | type      | Description component props                |
+| `ErrorMessage`      | component | Validation error display                   |
+| `ErrorMessageProps` | type      | ErrorMessage component props               |
+| `Submit`            | component | Submit button                              |
+| `SubmitProps`       | type      | Submit component props                     |
+| `MultiSelect`       | component | Multi-select widget                        |
+| `MultiSelectProps`  | type      | MultiSelect component props                |
+| `MultiSelectOption` | type      | MultiSelect option type                    |
+| `DatePicker`        | component | Date picker widget (flatpickr)             |
+| `DatePickerProps`   | type      | DatePicker component props                 |
+| `useForm`           | hook      | React Hook Form `useForm` re-export        |
+| `useController`     | hook      | React Hook Form `useController` re-export  |
+| `useFormContext`    | hook      | React Hook Form `useFormContext` re-export |
+| `UseFormProps`      | type      | `useForm` options type                     |
+| `UseFormReturn`     | type      | `useForm` return type                      |
+| `FieldValues`       | type      | Field values generic type                  |
+| `SubmitHandler`     | type      | Submit handler function type               |
+| `zodResolver`       | function  | Zod resolver for react-hook-form           |
 
 **CSS:** `@holiveira/forms/date-picker-styles.css` — DatePicker flatpickr theme overrides.
+
+## Peer Dependencies
+
+| Package           | Version            |
+| ----------------- | ------------------ |
+| `flatpickr`       | ^4.0.0             |
+| `react`           | ^19.0.0            |
+| `react-dom`       | ^19.0.0            |
+| `react-hook-form` | ^7.0.0             |
+| `typescript`      | ^5.0.0             |
+| `zod`             | ^3.0.0 \|\| ^4.0.0 |
+
+## Bundle Size
+
+| Budget             | Limit | Enforcement |
+| ------------------ | ----- | ----------- |
+| Tree-shaken (Form) | 10 KB | Warn        |
+| Full package       | 41 KB | Warn        |
 
 ## Architecture Contract
 
@@ -67,6 +106,17 @@ integration (Zod resolver).
 schemas (consumer responsibility), or demo form variants.
 
 See `docs/architecture/contracts/forms.md` for ownership and dependency boundaries.
+
+## Documentation
+
+- **Storybook:**
+  https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/components-forms
+- [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- **Contract:** `docs/architecture/contracts/forms.md`
+
+## License
+
+MIT — see [LICENSE](../../LICENSE).
 
 ## References
 

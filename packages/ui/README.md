@@ -1,11 +1,11 @@
 # @holiveira/ui
 
-Composed UI component library.
+Composite UI components built on primitives for ready-to-use patterns.
 
 ## Purpose
 
 Breadcrumb navigation, ShowcaseSection display, and Card component with variants. Architectural
-role: high-level composed components built on primitives.
+role: high-level composed components built on `@holiveira/primitives`.
 
 ## Installation
 
@@ -42,6 +42,15 @@ function MyPage() {
 | `cardVariants`         | function  | CVA variant definitions for Card       |
 | `CardProps`            | type      | Card component props                   |
 
+## Peer Dependencies
+
+| Package      | Version |
+| ------------ | ------- |
+| `next`       | ^15     |
+| `react`      | ^19     |
+| `react-dom`  | ^19     |
+| `typescript` | ^5      |
+
 ## Architecture Contract
 
 **Dependency Level:** 3 — Composition.
@@ -51,7 +60,22 @@ function MyPage() {
 **Does not own:** Primitive components (delegated to `@holiveira/primitives`), layout components
 (delegated to `@holiveira/layouts`), or application-specific compositions.
 
-See `docs/architecture/contracts/ui.md` for ownership and dependency boundaries.
+Contract: `docs/architecture/contracts/ui.md`
+
+## Documentation
+
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-breadcrumb--docs)
+  — Breadcrumb
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-card--docs)
+  — Card
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-showcasesection--docs)
+  — ShowcaseSection
+- [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- Contract: `docs/architecture/contracts/ui.md`
+
+## License
+
+MIT
 
 ## References
 

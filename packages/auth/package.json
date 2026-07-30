@@ -17,7 +17,8 @@
   "homepage": "https://github.com/holiveira/holiveira",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holiveira/holiveira.git"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system.git",
+    "directory": "packages/auth"
   },
   "bugs": {
     "url": "https://github.com/holiveira/holiveira/issues"

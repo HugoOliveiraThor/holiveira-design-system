@@ -1,11 +1,12 @@
 # @holiveira/providers
 
-React provider composition utilities.
+Provider composition utilities for flattening nested React context trees.
 
 ## Purpose
 
-ProviderComposer for nesting multiple providers without deep nesting in component trees.
-Architectural role: provider composition infrastructure.
+`ProviderComposer` nests an array of providers without deep tree wrapping, enabling applications to
+define their provider stack as declarative data. Architectural role: provider composition
+infrastructure.
 
 ## Installation
 
@@ -32,9 +33,16 @@ function AppProviders({ children }: { children: React.ReactNode }) {
 | Export                  | Kind      | Description                                            |
 | ----------------------- | --------- | ------------------------------------------------------ |
 | `ProviderComposer`      | component | Nests an array of providers without deep tree wrapping |
-| `ProviderComposerProps` | type      | Props for ProviderComposer                             |
-| `ProviderProps`         | type      | Provider element type                                  |
-| `ProviderTree`          | type      | Provider tree structure type                           |
+| `ProviderComposerProps` | type      | Props for ProviderComposer (`{ providers, children }`) |
+| `ProviderProps`         | type      | Standard `{ children }` interface for any provider     |
+| `ProviderTree`          | type      | Ordered configuration array type                       |
+
+## Peer Dependencies
+
+| Package      | Version |
+| ------------ | ------- |
+| `react`      | ^19     |
+| `typescript` | ^5      |
 
 ## Architecture Contract
 
@@ -46,8 +54,19 @@ function AppProviders({ children }: { children: React.ReactNode }) {
 `@holiveira/theme`, `@holiveira/layouts`, `@holiveira/auth`), provider configuration, or provider
 lifecycle.
 
-See `docs/architecture/contracts/providers.md` for ownership and dependency boundaries.
+Contract: `docs/architecture/contracts/providers.md`
+
+## Documentation
+
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system)
+- [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- Contract: `docs/architecture/contracts/providers.md`
+
+## License
+
+MIT
 
 ## References
 
 - `@holiveira/types` — shared type foundation
+- `docs/architecture/provider-composition-pattern.md` — composition pattern documentation

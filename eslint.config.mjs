@@ -4,7 +4,7 @@ const withFiles = (preset, files) => preset.map((c) => ({ ...c, files }));
 
 const eslintConfig = [
   {
-    ignores: ['**/dist/**', '**/storybook-static/**', '**/generated/**'],
+    ignores: ['**/dist/**', '**/storybook-static/**', '**/.next/**', '**/generated/**'],
   },
   ...withFiles(configReact, [
     '**/*.tsx',

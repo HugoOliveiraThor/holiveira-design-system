@@ -29,6 +29,9 @@
     "db:migrate": "prisma migrate dev --schema=packages/db/prisma/schema.prisma",
     "db:studio": "prisma studio --schema=packages/db/prisma/schema.prisma",
     "auth:generate": "npx @better-auth/cli generate --config ./packages/auth/src/auth.ts --output ./packages/db/prisma/schema.prisma",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release:publish": "turbo run build --filter='./packages/*' && changeset publish",
     "prepare": "husky",
     "all-checks": "pnpm run format:check && turbo run lint && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:coverage && pnpm run check:size && pnpm run check:exports && pnpm run check:deps"
   },

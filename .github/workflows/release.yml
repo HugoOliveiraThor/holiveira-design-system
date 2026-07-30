@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+  packages: read
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Quality Gates
+        run: pnpm run all-checks
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Consumer Validation
+        if: hashFiles('apps/consumer-test/package.json') != ''
+        run: pnpm run --filter=consumer-test validate
+        continue-on-error: false
+
+      - name: Consumer Validation Skipped
+        if: hashFiles('apps/consumer-test/package.json') == ''
+        run: echo "::warning title=consumer-validation::Consumer test app not yet built — skipping validation gate. (D10b.1)"
+
+      - name: Create Release PR or Publish
+        id: changesets
+        uses: changesets/action@v2
+        with:
+          publish-script: pnpm release:publish
+          commit-message: "chore(release): version packages"
+          pr-title: "chore(release): version packages"
+          create-github-releases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
