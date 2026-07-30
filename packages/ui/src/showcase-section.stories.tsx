@@ -9,12 +9,25 @@ const meta: Meta<typeof ShowcaseSection> = {
   args: {
     title: 'Section Title',
   },
+  argTypes: {
+    title: {
+      description: 'Section heading text.',
+      control: { type: 'text' },
+    },
+    children: {
+      description: 'Content inside the section.',
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithTitle: Story = {
+export const Default: Story = {
   args: {
     title: 'Features Overview',
     children: 'Section content goes here.',

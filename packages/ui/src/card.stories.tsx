@@ -10,6 +10,22 @@ const meta: Meta<typeof Card> = {
     children: 'Card content goes here.',
     className: 'p-6',
   },
+  argTypes: {
+    variant: {
+      description: 'Card visual variant.',
+      control: { type: 'select' },
+      options: ['default', 'bordered', 'ghost'],
+      table: { defaultValue: { summary: 'default' } },
+    },
+    children: {
+      description: 'Content inside the card.',
+      control: false,
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
@@ -33,6 +49,27 @@ export const Ghost: Story = {
   args: {
     variant: 'ghost',
     children: 'This card has no background or shadow (ghost variant).',
+  },
+};
+
+export const WithImage: Story = {
+  render: (args) => (
+    <Card {...args}>
+      <div className="space-y-4">
+        <div className="dark:bg-dark-3 flex h-40 items-center justify-center rounded-lg bg-neutral-100">
+          <span className="text-neutral-400">Image placeholder</span>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-lg font-semibold">Card with Image</h3>
+          <p className="text-neutral-500">
+            A card layout that includes an image placeholder at the top.
+          </p>
+        </div>
+      </div>
+    </Card>
+  ),
+  args: {
+    variant: 'default',
   },
 };
 

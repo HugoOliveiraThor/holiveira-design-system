@@ -10,6 +10,16 @@ const meta: Meta<typeof Breadcrumb> = {
   args: {
     pageName: 'Default Page',
   },
+  argTypes: {
+    pageName: {
+      description: 'Current page name displayed as the last (active) breadcrumb item.',
+      control: { type: 'text' },
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
