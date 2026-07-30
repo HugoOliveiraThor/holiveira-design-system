@@ -79,12 +79,52 @@ const ICONS = [
   { name: 'X', component: XIcon },
 ] as const;
 
-function IconGallery() {
-  const [search, setSearch] = React.useState('');
-  const [size, setSize] = React.useState(24);
+interface IconGalleryProps {
+  defaultSearch?: string;
+  defaultSize?: number;
+  layout?: 'grid' | 'list';
+}
+
+function IconGallery({ defaultSearch = '', defaultSize = 24, layout = 'grid' }: IconGalleryProps) {
+  const [search, setSearch] = React.useState(defaultSearch);
+  const [size, setSize] = React.useState(defaultSize);
   const sizes = [16, 20, 24, 32];
 
   const filtered = ICONS.filter((icon) => icon.name.toLowerCase().includes(search.toLowerCase()));
+
+  const iconGrid = (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      {filtered.map((icon) => {
+        const Icon = icon.component;
+        return (
+          <div
+            key={icon.name}
+            className="border-stroke dark:border-dark-3 flex flex-col items-center gap-3 rounded-lg border p-4 transition hover:shadow-md"
+          >
+            <Icon size={size} />
+            <span className="text-body-xs text-dark-4 text-center">{icon.name}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  const iconList = (
+    <div className="space-y-2">
+      {filtered.map((icon) => {
+        const Icon = icon.component;
+        return (
+          <div
+            key={icon.name}
+            className="border-stroke dark:border-dark-3 flex items-center gap-4 rounded-lg border p-3 transition hover:shadow-md"
+          >
+            <Icon size={size} />
+            <span className="text-body-sm text-dark-4 font-medium">{icon.name}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="space-y-6">
@@ -127,20 +167,7 @@ function IconGallery() {
         {filtered.length} of {ICONS.length} icons
       </p>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {filtered.map((icon) => {
-          const Icon = icon.component;
-          return (
-            <div
-              key={icon.name}
-              className="border-stroke dark:border-dark-3 flex flex-col items-center gap-3 rounded-lg border p-4 transition hover:shadow-md"
-            >
-              <Icon size={size} />
-              <span className="text-body-xs text-dark-4 text-center">{icon.name}</span>
-            </div>
-          );
-        })}
-      </div>
+      {layout === 'list' ? iconList : iconGrid}
 
       {filtered.length === 0 && (
         <p className="text-dark-4 py-12 text-center">No icons match your search.</p>
@@ -149,16 +176,140 @@ function IconGallery() {
   );
 }
 
-const meta: Meta = {
+const meta: Meta<typeof IconGallery> = {
   title: 'Icons/Icon Gallery',
+  component: IconGallery,
   tags: ['autodocs'],
+  argTypes: {
+    defaultSearch: {
+      description: 'Initial search term to filter icons.',
+      control: { type: 'text' },
+    },
+    defaultSize: {
+      description: 'Initial icon size in pixels.',
+      control: { type: 'number', min: 8, max: 64, step: 4 },
+      table: { defaultValue: { summary: '24' } },
+    },
+    layout: {
+      description: 'Icon display layout.',
+      control: { type: 'radio' },
+      options: ['grid', 'list'],
+      table: { defaultValue: { summary: 'grid' } },
+    },
+  },
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof meta>;
 
-export const Gallery: Story = {
-  render: () => <IconGallery />,
+export const Grid: Story = {
+  args: {
+    layout: 'grid',
+    defaultSearch: '',
+    defaultSize: 24,
+  },
+};
+
+export const List: Story = {
+  args: {
+    layout: 'list',
+    defaultSearch: '',
+    defaultSize: 24,
+  },
+};
+
+export const SearchFiltered: Story = {
+  args: {
+    layout: 'grid',
+    defaultSearch: 'alert',
+    defaultSize: 24,
+  },
+};
+
+export const CustomSize: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <p className="text-body-sm mb-3 font-medium">16px</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={16} />
+          <BellIcon size={16} />
+          <SettingsIcon size={16} />
+          <HomeIcon size={16} />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">24px (default)</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={24} />
+          <BellIcon size={24} />
+          <SettingsIcon size={24} />
+          <HomeIcon size={24} />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">32px</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={32} />
+          <BellIcon size={32} />
+          <SettingsIcon size={32} />
+          <HomeIcon size={32} />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">48px</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={48} />
+          <BellIcon size={48} />
+          <SettingsIcon size={48} />
+          <HomeIcon size={48} />
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const CustomColor: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <p className="text-body-sm mb-3 font-medium">Default (currentColor)</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={32} />
+          <BellIcon size={32} />
+          <SettingsIcon size={32} />
+          <HomeIcon size={32} />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">Primary</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={32} className="text-primary" />
+          <BellIcon size={32} className="text-primary" />
+          <SettingsIcon size={32} className="text-primary" />
+          <HomeIcon size={32} className="text-primary" />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">Success (green)</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={32} className="text-green-500" />
+          <BellIcon size={32} className="text-green-500" />
+          <SettingsIcon size={32} className="text-green-500" />
+          <HomeIcon size={32} className="text-green-500" />
+        </div>
+      </div>
+      <div>
+        <p className="text-body-sm mb-3 font-medium">Error (red)</p>
+        <div className="flex items-center gap-4">
+          <UserIcon size={32} className="text-red-500" />
+          <BellIcon size={32} className="text-red-500" />
+          <SettingsIcon size={32} className="text-red-500" />
+          <HomeIcon size={32} className="text-red-500" />
+        </div>
+      </div>
+    </div>
+  ),
 };
 
 function TitleExample() {
