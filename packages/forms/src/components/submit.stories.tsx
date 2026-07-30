@@ -10,12 +10,28 @@ const meta: Meta<typeof Submit> = {
   args: {
     children: 'Submit',
   },
+  argTypes: {
+    children: {
+      description: 'Button label or content.',
+      control: 'text',
+      table: { defaultValue: { summary: 'undefined' } },
+    },
+    disabled: {
+      description: 'Disables the submit button.',
+      control: 'boolean',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Enabled: Story = {
+export const Default: Story = {
   args: {
     children: 'Save Changes',
   },
@@ -28,7 +44,7 @@ export const Disabled: Story = {
   },
 };
 
-export const LoadingSpinner: Story = {
+export const Loading: Story = {
   render: (args) => (
     <Submit {...args}>
       <span className="inline-flex items-center gap-2">
