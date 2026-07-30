@@ -7,6 +7,43 @@ const meta: Meta<typeof Switch> = {
   title: 'Primitives/Switch',
   component: Switch,
   tags: ['autodocs'],
+  argTypes: {
+    defaultChecked: {
+      description: 'Initial checked state (uncontrolled).',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    checked: {
+      description: 'Controlled checked state.',
+      control: { type: 'boolean' },
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    withIcon: {
+      description: 'Shows check/x icons inside the toggle.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    background: {
+      description: 'Background color variant of the track.',
+      control: { type: 'select' },
+      options: ['dark', 'light'],
+    },
+    backgroundSize: {
+      description: 'Size variant of the switch track.',
+      control: { type: 'select' },
+      options: ['sm', 'default'],
+      table: { defaultValue: { summary: 'default' } },
+    },
+    onChange: {
+      description:
+        'Callback fired when the switch is toggled. Receives `React.ChangeEvent<HTMLInputElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;

@@ -10,6 +10,49 @@ const meta: Meta<typeof Checkbox> = {
   args: {
     label: 'Checkbox label',
   },
+  argTypes: {
+    label: {
+      description: 'Text displayed next to the checkbox.',
+      control: { type: 'text' },
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    defaultChecked: {
+      description: 'Initial checked state (uncontrolled).',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    checked: {
+      description: 'Controlled checked state.',
+      control: { type: 'boolean' },
+    },
+    withIcon: {
+      description: 'Icon style to show when checked.',
+      control: { type: 'select' },
+      options: ['check', 'x'],
+    },
+    withBg: {
+      description: 'Toggles background fill style.',
+      control: { type: 'boolean' },
+    },
+    minimal: {
+      description: 'Compact minimal style.',
+      control: { type: 'boolean' },
+    },
+    radius: {
+      description: 'Border radius variant.',
+      control: { type: 'select' },
+      options: ['default', 'md'],
+    },
+    onChange: {
+      description:
+        'Callback fired when checked state changes. Receives `React.ChangeEvent<HTMLInputElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;

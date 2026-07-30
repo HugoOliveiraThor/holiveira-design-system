@@ -10,6 +10,43 @@ const meta: Meta<typeof Button> = {
   args: {
     label: 'Button',
   },
+  argTypes: {
+    variant: {
+      description: 'Visual style of the button.',
+      control: { type: 'select' },
+      options: ['primary', 'green', 'dark', 'outlinePrimary', 'outlineGreen', 'outlineDark'],
+      table: { defaultValue: { summary: 'primary' } },
+    },
+    size: {
+      description: 'Predefined size of the button.',
+      control: { type: 'select' },
+      options: ['default', 'small'],
+      table: { defaultValue: { summary: 'default' } },
+    },
+    shape: {
+      description: 'Shape modifier for the button corners.',
+      control: { type: 'select' },
+      options: ['default', 'rounded', 'full'],
+      table: { defaultValue: { summary: 'default' } },
+    },
+    disabled: {
+      description: 'Prevents user interaction. Sets `aria-disabled`.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    label: {
+      description: 'Text content displayed inside the button.',
+      control: { type: 'text' },
+    },
+    icon: {
+      description: 'Optional icon element rendered before the label.',
+      control: false,
+    },
+    onClick: {
+      description: 'Callback fired when the button is clicked.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
@@ -94,6 +131,15 @@ export const IconOnly: Story = {
     variant: 'primary',
     label: '',
     icon: <span>&#9881;</span>,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'primary',
+    label: 'Loading',
+    disabled: true,
+    icon: <span className="animate-spin">&#9696;</span>,
   },
 };
 

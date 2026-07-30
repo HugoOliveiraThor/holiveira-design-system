@@ -7,14 +7,38 @@ const meta: Meta<typeof Alert> = {
   title: 'Primitives/Alert',
   component: Alert,
   tags: ['autodocs'],
-  args: {
-    title: 'Alert Title',
-    description: 'This is the alert description providing more context about the situation.',
+  argTypes: {
+    variant: {
+      description: 'Visual style determining color and icon.',
+      control: { type: 'select' },
+      options: ['error', 'success', 'warning'],
+      table: { defaultValue: { summary: 'error' } },
+    },
+    title: {
+      description: 'Bold heading displayed above the message.',
+      control: { type: 'text' },
+    },
+    description: {
+      description: 'Content of the alert message.',
+      control: { type: 'text' },
+    },
+    className: {
+      description: 'Additional CSS classes for custom styling.',
+      control: false,
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Info: Story = {
+  args: {
+    variant: 'success',
+    title: 'Information',
+    description: 'Here is some useful information for you.',
+  },
+};
 
 export const Success: Story = {
   args: {
@@ -37,6 +61,31 @@ export const Error: Story = {
     variant: 'error',
     title: 'Something went wrong',
     description: 'An unexpected error occurred. Please try again.',
+  },
+};
+
+export const WithTitle: Story = {
+  args: {
+    variant: 'success',
+    title: 'Account Created',
+    description: 'Your account has been successfully created and is ready to use.',
+  },
+};
+
+export const WithoutTitle: Story = {
+  args: {
+    variant: 'warning',
+    title: '',
+    description: 'This is an alert without a title heading.',
+  },
+};
+
+export const LongMessage: Story = {
+  args: {
+    variant: 'success',
+    title: 'Terms of Service Update',
+    description:
+      'We have updated our terms of service effective immediately. Please review the changes carefully. The updated terms include new data processing policies, revised liability clauses, and additional user rights protections. Continued use of our services constitutes acceptance of these updated terms. If you do not agree with the changes, you may cancel your account within 30 days.',
   },
 };
 
