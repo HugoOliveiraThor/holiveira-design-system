@@ -11,10 +11,70 @@ const meta: Meta<typeof InputGroup> = {
     label: 'Input',
     placeholder: 'Enter value...',
   },
+  argTypes: {
+    type: {
+      description: 'HTML input type attribute.',
+      control: { type: 'select' },
+      options: ['text', 'email', 'password', 'number', 'tel', 'url', 'file'],
+      table: { defaultValue: { summary: 'text' } },
+    },
+    label: {
+      description: 'Text label displayed above the input.',
+      control: { type: 'text' },
+    },
+    placeholder: {
+      description: 'Placeholder text inside the input.',
+      control: { type: 'text' },
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    required: {
+      description: 'Marks the input as required.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    error: {
+      description: 'Error message displayed below the input.',
+      control: { type: 'text' },
+    },
+    icon: {
+      description: 'Optional icon rendered inside the input.',
+      control: false,
+    },
+    iconPosition: {
+      description: 'Position of the icon relative to the input.',
+      control: { type: 'select' },
+      options: ['left', 'right'],
+      table: { defaultValue: { summary: 'left' } },
+    },
+    height: {
+      description: 'Height variant of the input.',
+      control: { type: 'select' },
+      options: ['sm', 'default'],
+      table: { defaultValue: { summary: 'default' } },
+    },
+    onChange: {
+      description:
+        'Callback fired when the input value changes. Receives `React.ChangeEvent<HTMLInputElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Disabled: Story = {
+  args: {
+    type: 'text',
+    label: 'Full name',
+    placeholder: 'John Doe',
+    disabled: true,
+  },
+};
 
 export const Text: Story = {
   args: {

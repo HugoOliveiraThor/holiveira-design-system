@@ -11,6 +11,43 @@ const meta: Meta<typeof TextArea> = {
     label: 'Message',
     placeholder: 'Write your message here...',
   },
+  argTypes: {
+    label: {
+      description: 'Text label displayed above the textarea.',
+      control: { type: 'text' },
+    },
+    placeholder: {
+      description: 'Placeholder text inside the textarea.',
+      control: { type: 'text' },
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    rows: {
+      description: 'Number of visible text rows.',
+      control: { type: 'number' },
+      table: { defaultValue: { summary: '4' } },
+    },
+    maxLength: {
+      description: 'Maximum character count allowed.',
+      control: { type: 'number' },
+    },
+    error: {
+      description: 'Error message displayed below the textarea.',
+      control: { type: 'text' },
+    },
+    icon: {
+      description: 'Optional icon rendered inside the textarea.',
+      control: false,
+    },
+    onChange: {
+      description:
+        'Callback fired when the textarea value changes. Receives `React.ChangeEvent<HTMLTextAreaElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
@@ -18,6 +55,21 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const Disabled: Story = {
+  args: {
+    label: 'Feedback',
+    placeholder: 'Write your message here...',
+    disabled: true,
+  },
+};
+
+export const WithPlaceholder: Story = {
+  args: {
+    label: 'Comment',
+    placeholder: 'Type your comment here...',
+  },
 };
 
 export const WithLabel: Story = {

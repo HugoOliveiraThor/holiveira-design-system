@@ -11,6 +11,49 @@ const meta: Meta<typeof Radio> = {
     label: 'Radio option',
     name: 'radio-group',
   },
+  argTypes: {
+    label: {
+      description: 'Text displayed next to the radio button.',
+      control: { type: 'text' },
+    },
+    value: {
+      description: 'Value submitted with the form data.',
+      control: { type: 'text' },
+    },
+    name: {
+      description: 'Group name that links radio buttons together.',
+      control: { type: 'text' },
+    },
+    variant: {
+      description: 'Visual style of the radio indicator.',
+      control: { type: 'select' },
+      options: ['dot', 'circle'],
+      table: { defaultValue: { summary: 'dot' } },
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    defaultChecked: {
+      description: 'Initial checked state (uncontrolled).',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    checked: {
+      description: 'Controlled checked state.',
+      control: { type: 'boolean' },
+    },
+    minimal: {
+      description: 'Compact minimal style.',
+      control: { type: 'boolean' },
+    },
+    onChange: {
+      description:
+        'Callback fired when the selected option changes. Receives `React.ChangeEvent<HTMLInputElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;

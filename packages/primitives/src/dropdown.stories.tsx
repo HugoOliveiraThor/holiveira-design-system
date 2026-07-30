@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { userEvent, within, expect, waitFor } from '@storybook/test';
 import React from 'react';
+import { useState } from 'react';
 
 import { Dropdown, DropdownContent, DropdownTrigger, DropdownClose } from './dropdown';
 
@@ -8,13 +9,17 @@ type DropdownStoryProps = {
   triggerLabel: string;
   items: { label: string }[];
   hint?: string;
+  disabled?: boolean;
 };
 
-function DropdownStory({ triggerLabel, items, hint }: DropdownStoryProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
+function DropdownStory({ triggerLabel, items, hint, disabled }: DropdownStoryProps) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
-      <DropdownTrigger className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2">
+      <DropdownTrigger
+        className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2"
+        disabled={disabled}
+      >
         {triggerLabel}
       </DropdownTrigger>
       <DropdownContent className="border-stroke dark:border-dark-3 dark:bg-dark-2 min-w-40 rounded-lg border bg-white p-2 shadow-lg">
@@ -35,10 +40,82 @@ const meta: Meta<typeof Dropdown> = {
   title: 'Primitives/Dropdown',
   component: Dropdown,
   tags: ['autodocs'],
+  argTypes: {
+    isOpen: {
+      description: 'Controlled open state of the dropdown.',
+      control: { type: 'boolean' },
+    },
+    children: {
+      description: 'Content composed with DropdownTrigger and DropdownContent.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => (
+    <DropdownStory
+      triggerLabel="Menu"
+      items={[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }]}
+    />
+  ),
+};
+
+export const Open: Story = {
+  render: () => {
+    function OpenDropdown() {
+      const [isOpen, setIsOpen] = useState(true);
+      return (
+        <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
+          <DropdownTrigger className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2">
+            Menu
+          </DropdownTrigger>
+          <DropdownContent className="border-stroke dark:border-dark-3 dark:bg-dark-2 min-w-40 rounded-lg border bg-white p-2 shadow-lg">
+            {[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }].map((item) => (
+              <DropdownClose key={item.label}>
+                <button className="dark:hover:bg-dark-3 w-full rounded px-3 py-2 text-left hover:bg-neutral-100">
+                  {item.label}
+                </button>
+              </DropdownClose>
+            ))}
+          </DropdownContent>
+        </Dropdown>
+      );
+    }
+    return <OpenDropdown />;
+  },
+};
+
+export const Disabled: Story = {
+  render: () => (
+    <DropdownStory
+      triggerLabel="Menu"
+      items={[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }]}
+      disabled
+    />
+  ),
+};
+
+export const WithDivider: Story = {
+  render: () => (
+    <DropdownStory
+      triggerLabel="Menu"
+      items={[{ label: 'Edit' }, { label: 'Duplicate' }, { label: 'Delete' }]}
+    />
+  ),
+};
+
+export const WithIcons: Story = {
+  render: () => (
+    <DropdownStory
+      triggerLabel="Actions"
+      items={[{ label: 'Edit' }, { label: 'Duplicate' }, { label: 'Delete' }]}
+    />
+  ),
+};
 
 export const TriggerAndContent: Story = {
   render: () => (

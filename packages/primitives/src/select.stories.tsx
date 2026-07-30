@@ -17,6 +17,38 @@ const meta: Meta<typeof Select> = {
     label: 'Select an option',
     items,
   },
+  argTypes: {
+    label: {
+      description: 'Text label displayed above the select.',
+      control: { type: 'text' },
+    },
+    items: {
+      description: 'Array of options with `value` and `label` properties.',
+      control: false,
+    },
+    placeholder: {
+      description: 'Placeholder text shown when no option is selected.',
+      control: { type: 'text' },
+    },
+    prefixIcon: {
+      description: 'Optional icon rendered before the select.',
+      control: false,
+    },
+    disabled: {
+      description: 'Prevents user interaction.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    error: {
+      description: 'Error message displayed below the select.',
+      control: { type: 'text' },
+    },
+    onChange: {
+      description:
+        'Callback fired when the selected option changes. Receives `React.ChangeEvent<HTMLSelectElement>`.',
+      control: false,
+    },
+  },
 };
 
 export default meta;
@@ -24,6 +56,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const Disabled: Story = {
+  args: {
+    placeholder: 'Choose one...',
+    disabled: true,
+  },
 };
 
 export const WithPlaceholder: Story = {
@@ -63,13 +102,14 @@ export const Interactive: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const select = canvas.getByRole('combobox');
 
     await step('Select is visible', async () => {
+      const select = canvas.getByRole('combobox');
       await expect(select).toBeVisible();
     });
 
     await step('Select an option', async () => {
+      const select = canvas.getByRole('combobox');
       await userEvent.selectOptions(select, 'a');
       await expect(select).toHaveValue('a');
     });
