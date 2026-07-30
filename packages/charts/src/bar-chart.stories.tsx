@@ -40,10 +40,49 @@ const meta: Meta<typeof BarChart> = {
   title: 'Charts/BarChart',
   component: BarChart,
   tags: ['autodocs'],
+  argTypes: {
+    series: {
+      description:
+        'Array of data series. Each series has a `name` and `data` array of `{ x, y }` points.',
+      control: false,
+    },
+    apexOptions: {
+      description: 'Overrides for ApexCharts options object. Merged with defaults.',
+      control: false,
+    },
+    height: {
+      description: 'Chart height in pixels.',
+      control: { type: 'number' },
+      table: { defaultValue: { summary: '370' } },
+    },
+    stacked: {
+      description: 'Whether to stack bars.',
+      control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
+    },
+    className: {
+      description: 'Additional CSS classes.',
+      control: false,
+    },
+    label: {
+      description: 'Accessible label for the chart (aria-label).',
+      control: { type: 'text' },
+    },
+    description: {
+      description: 'Additional accessible description (sr-only span).',
+      control: { type: 'text' },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    series: singleSeries,
+  },
+};
 
 export const SingleSeries: Story = {
   args: {
@@ -54,6 +93,13 @@ export const SingleSeries: Story = {
 export const MultiSeries: Story = {
   args: {
     series: multiSeries,
+  },
+};
+
+export const Stacked: Story = {
+  args: {
+    series: multiSeries,
+    stacked: true,
   },
 };
 
