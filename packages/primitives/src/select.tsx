@@ -3,7 +3,7 @@
 import { ChevronUpIcon } from '@holiveira/icons';
 import { cn } from '@holiveira/utils';
 
-import { forwardRef, useId, useState } from 'react';
+import { forwardRef, useId } from 'react';
 
 /** @public */
 type SelectItem = {
@@ -30,7 +30,6 @@ const Select = forwardRef<
 >(({ items, label, defaultValue, placeholder, prefixIcon, error, className, ...props }, ref) => {
   const id = useId();
   const errorId = `${id}-error`;
-  const [isOptionSelected, setIsOptionSelected] = useState(false);
 
   return (
     <div className={cn('space-y-3', className)}>
@@ -46,13 +45,9 @@ const Select = forwardRef<
           id={id}
           defaultValue={defaultValue ?? ''}
           aria-describedby={error ? errorId : undefined}
-          onChange={(e) => {
-            setIsOptionSelected(true);
-            props.onChange?.(e);
-          }}
           className={cn(
             'border-stroke focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary [&>option]:text-dark-5 dark:[&>option]:text-dark-6 w-full appearance-none rounded-lg border bg-transparent px-5.5 py-3 transition outline-none',
-            isOptionSelected && 'text-dark dark:text-white',
+            'has-[option:checked]:text-dark dark:has-[option:checked]:text-white',
             prefixIcon && 'pl-11.5',
             error && 'border-red focus:border-red',
           )}
