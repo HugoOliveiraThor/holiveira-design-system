@@ -83,6 +83,13 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled multi-select cannot be interacted with', async () => {
+      const combobox = canvas.getByRole('combobox');
+      await expect(combobox).toBeDisabled();
+    });
+  },
 };
 
 export const Uncontrolled: Story = {
@@ -149,7 +156,7 @@ export const Interactive: Story = {
     });
 
     await step('Select an option', async () => {
-      const option = canvas.getByText('React');
+      const option = canvas.getByRole('option', { name: 'React' });
       await userEvent.click(option);
       await expect(option).toHaveAttribute('aria-selected', 'true');
     });

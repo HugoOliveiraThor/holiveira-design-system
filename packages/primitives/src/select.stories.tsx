@@ -21,6 +21,7 @@ const meta: Meta<typeof Select> = {
     label: {
       description: 'Text label displayed above the select.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     items: {
       description: 'Array of options with `value` and `label` properties.',
@@ -29,6 +30,7 @@ const meta: Meta<typeof Select> = {
     placeholder: {
       description: 'Placeholder text shown when no option is selected.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     prefixIcon: {
       description: 'Optional icon rendered before the select.',
@@ -42,6 +44,7 @@ const meta: Meta<typeof Select> = {
     error: {
       description: 'Error message displayed below the select.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     onChange: {
       description:
@@ -62,6 +65,13 @@ export const Disabled: Story = {
   args: {
     placeholder: 'Choose one...',
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled select cannot be interacted with', async () => {
+      const select = canvas.getByRole('combobox');
+      await expect(select).toBeDisabled();
+    });
   },
 };
 

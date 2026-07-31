@@ -21,9 +21,8 @@ const navItems = [
   { label: 'Settings', icon: '&#9679;' },
 ];
 
-const meta: Meta<typeof Header> = {
+const meta: Meta = {
   title: 'Layouts/Application Shell',
-  component: Header,
   tags: ['autodocs'],
   decorators: [SidebarDecorator],
   argTypes: {

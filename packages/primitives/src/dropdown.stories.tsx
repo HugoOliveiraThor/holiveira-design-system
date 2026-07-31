@@ -10,9 +10,10 @@ type DropdownStoryProps = {
   items: { label: string }[];
   hint?: string;
   disabled?: boolean;
+  dividerAfter?: number;
 };
 
-function DropdownStory({ triggerLabel, items, hint, disabled }: DropdownStoryProps) {
+function DropdownStory({ triggerLabel, items, hint, disabled, dividerAfter }: DropdownStoryProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -24,12 +25,17 @@ function DropdownStory({ triggerLabel, items, hint, disabled }: DropdownStoryPro
       </DropdownTrigger>
       <DropdownContent className="border-stroke dark:border-dark-3 dark:bg-dark-2 min-w-40 rounded-lg border bg-white p-2 shadow-lg">
         {hint && <p className="px-3 py-2 text-sm text-neutral-500">{hint}</p>}
-        {items.map((item) => (
-          <DropdownClose key={item.label}>
-            <button className="dark:hover:bg-dark-3 w-full rounded px-3 py-2 text-left hover:bg-neutral-100">
-              {item.label}
-            </button>
-          </DropdownClose>
+        {items.map((item, i) => (
+          <React.Fragment key={item.label}>
+            {dividerAfter !== undefined && i === dividerAfter && (
+              <hr className="border-stroke dark:border-dark-3 my-1 border-t" />
+            )}
+            <DropdownClose>
+              <button className="dark:hover:bg-dark-3 w-full rounded px-3 py-2 text-left hover:bg-neutral-100">
+                {item.label}
+              </button>
+            </DropdownClose>
+          </React.Fragment>
         ))}
       </DropdownContent>
     </Dropdown>
@@ -97,13 +103,26 @@ export const Disabled: Story = {
       disabled
     />
   ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled dropdown trigger cannot be clicked', async () => {
+      const trigger = canvas.getByRole('button', { name: /menu/i });
+      await expect(trigger).toBeDisabled();
+    });
+  },
 };
 
 export const WithDivider: Story = {
   render: () => (
     <DropdownStory
       triggerLabel="Menu"
-      items={[{ label: 'Edit' }, { label: 'Duplicate' }, { label: 'Delete' }]}
+      items={[
+        { label: 'Edit' },
+        { label: 'Duplicate' },
+        { label: 'Delete' },
+        { label: 'Separated action' },
+      ]}
+      dividerAfter={2}
     />
   ),
 };
@@ -112,16 +131,11 @@ export const WithIcons: Story = {
   render: () => (
     <DropdownStory
       triggerLabel="Actions"
-      items={[{ label: 'Edit' }, { label: 'Duplicate' }, { label: 'Delete' }]}
-    />
-  ),
-};
-
-export const TriggerAndContent: Story = {
-  render: () => (
-    <DropdownStory
-      triggerLabel="Menu"
-      items={[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }]}
+      items={[
+        { label: '\u270F\uFE0F Edit' },
+        { label: '\uD83D\uDCCB Duplicate' },
+        { label: '\uD83D\uDDD1\uFE0F Delete' },
+      ]}
     />
   ),
 };
