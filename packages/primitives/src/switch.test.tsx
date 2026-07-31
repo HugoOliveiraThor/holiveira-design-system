@@ -10,14 +10,19 @@ import { Switch } from './index';
 afterEach(cleanup);
 
 describe('Switch', () => {
+  it('renders with role="switch"', () => {
+    const { getByRole } = render(<Switch />);
+    expect(getByRole('switch')).toBeInTheDocument();
+  });
+
   it('renders unchecked by default', () => {
     const { getByRole } = render(<Switch />);
-    expect(getByRole('checkbox')).not.toBeChecked();
+    expect(getByRole('switch')).not.toBeChecked();
   });
 
   it('renders checked when defaultChecked', () => {
     const { getByRole } = render(<Switch defaultChecked />);
-    expect(getByRole('checkbox')).toBeChecked();
+    expect(getByRole('switch')).toBeChecked();
   });
 
   it('renders disabled state', () => {
@@ -28,7 +33,7 @@ describe('Switch', () => {
 
   it('toggles on click', async () => {
     const { getByRole } = render(<Switch />);
-    const checkbox = getByRole('checkbox');
+    const checkbox = getByRole('switch');
 
     await userEvent.click(checkbox);
     expect(checkbox).toBeChecked();
@@ -38,7 +43,7 @@ describe('Switch', () => {
 describe('Switch — keyboard', () => {
   it('toggles on Space', async () => {
     const { getByRole } = render(<Switch />);
-    const checkbox = getByRole('checkbox');
+    const checkbox = getByRole('switch');
     checkbox.focus();
     await userEvent.keyboard(' ');
     expect(checkbox).toBeChecked();

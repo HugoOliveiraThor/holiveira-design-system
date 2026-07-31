@@ -43,6 +43,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         <div className="relative">
           <input
             type="checkbox"
+            role="switch"
             ref={ref}
             name={name}
             id={id}
