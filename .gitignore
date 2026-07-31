@@ -84,4 +84,7 @@ storybook-static
 # macOS version metadata
 --version/
 
+# AppleDouble resource-fork forks (macOS copies to non-HFS volumes)
+._*
+
 .ai-memory.toml
