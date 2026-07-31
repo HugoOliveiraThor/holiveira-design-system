@@ -17,6 +17,8 @@ type InputGroupProps = {
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   height?: 'sm' | 'default';
+  value?: string;
+  defaultValue?: string;
   error?: string;
 };
 

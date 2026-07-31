@@ -53,6 +53,14 @@ describe('InputGroup', () => {
   });
 });
 
+describe('InputGroup — value', () => {
+  it('renders controlled value', () => {
+    const { container } = render(<InputGroup label="Name" value="Hugo" onChange={() => {}} />);
+    const input = container.querySelector('input') as HTMLInputElement;
+    expect(input.value).toBe('Hugo');
+  });
+});
+
 describe('InputGroup — keyboard', () => {
   it('focuses on Tab', async () => {
     const { getByRole } = render(<InputGroup label="Name" placeholder="Enter" />);
