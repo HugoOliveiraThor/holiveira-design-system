@@ -9,3 +9,4 @@ package-lock.json
 storybook-static
 prisma/migrations
 CHANGELOG.md
+.superpowers
