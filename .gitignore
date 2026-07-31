@@ -10,8 +10,8 @@ node_modules/
 /coverage
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
 /build
@@ -83,3 +83,5 @@ reports
 storybook-static
 # macOS version metadata
 --version/
+
+.ai-memory.toml
