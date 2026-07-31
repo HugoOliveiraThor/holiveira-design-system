@@ -37,6 +37,15 @@ describe('Select', () => {
     const { getByText } = render(<Select label="Pick" items={items} error="Selection required" />);
     expect(getByText('Selection required')).toBeVisible();
   });
+
+  it('fires onChange with the selected value', async () => {
+    const onChange = vi.fn();
+    const { container } = render(<Select label="Pick" items={items} onChange={onChange} />);
+    const select = container.querySelector('select') as HTMLSelectElement;
+    await userEvent.selectOptions(select, 'b');
+    expect(onChange).toHaveBeenCalled();
+    expect(select.value).toBe('b');
+  });
 });
 
 describe('Select — keyboard', () => {
