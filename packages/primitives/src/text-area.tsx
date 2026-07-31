@@ -10,6 +10,8 @@ type TextAreaProps = {
   active?: boolean;
   icon?: React.ReactNode;
   error?: string;
+  value?: string;
+  defaultValue?: string;
 };
 
 /**

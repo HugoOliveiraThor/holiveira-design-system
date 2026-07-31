@@ -29,6 +29,14 @@ describe('TextArea', () => {
   });
 });
 
+describe('TextArea — value', () => {
+  it('renders defaultValue', () => {
+    const { container } = render(<TextArea label="Bio" defaultValue="Hello" />);
+    const textarea = container.querySelector('textarea') as HTMLTextAreaElement;
+    expect(textarea.value).toBe('Hello');
+  });
+});
+
 describe('TextArea — keyboard', () => {
   it('focuses on Tab', async () => {
     const { getByRole } = render(<TextArea label="Message" placeholder="..." />);
