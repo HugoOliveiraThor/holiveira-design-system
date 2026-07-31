@@ -37,6 +37,7 @@ const meta: Meta<typeof Button> = {
     label: {
       description: 'Text content displayed inside the button.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     icon: {
       description: 'Optional icon element rendered before the label.',
@@ -148,6 +149,13 @@ export const Disabled: Story = {
     variant: 'primary',
     label: 'Disabled',
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled button cannot be clicked', async () => {
+      const button = canvas.getByRole('button', { name: /disabled/i });
+      await expect(button).toBeDisabled();
+    });
   },
 };
 

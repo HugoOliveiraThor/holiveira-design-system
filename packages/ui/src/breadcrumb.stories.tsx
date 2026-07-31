@@ -14,6 +14,7 @@ const meta: Meta<typeof Breadcrumb> = {
     pageName: {
       description: 'Current page name displayed as the last (active) breadcrumb item.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     className: {
       description: 'Additional CSS classes.',
@@ -63,7 +64,7 @@ export const Interactive: Story = {
     const canvas = within(canvasElement);
 
     await step('Breadcrumb is visible with page name', async () => {
-      const heading = canvas.getByText('Interactive');
+      const heading = canvas.getByRole('heading', { name: /interactive/i });
       await expect(heading).toBeVisible();
     });
 
@@ -73,7 +74,7 @@ export const Interactive: Story = {
     });
 
     await step('Current page is marked with aria-current', async () => {
-      const current = canvas.getByText('Interactive');
+      const current = canvas.getByRole('heading', { name: /interactive/i });
       const listItem = current.closest('li');
       await expect(listItem).toHaveAttribute('aria-current', 'page');
     });

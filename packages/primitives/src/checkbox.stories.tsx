@@ -28,24 +28,29 @@ const meta: Meta<typeof Checkbox> = {
     checked: {
       description: 'Controlled checked state.',
       control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     withIcon: {
       description: 'Icon style to show when checked.',
       control: { type: 'select' },
       options: ['check', 'x'],
+      table: { defaultValue: { summary: 'undefined' } },
     },
     withBg: {
       description: 'Toggles background fill style.',
       control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
     },
     minimal: {
       description: 'Compact minimal style.',
       control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
     },
     radius: {
       description: 'Border radius variant.',
       control: { type: 'select' },
       options: ['default', 'md'],
+      table: { defaultValue: { summary: 'default' } },
     },
     onChange: {
       description:
@@ -58,7 +63,7 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Unchecked: Story = {
+export const Default: Story = {
   args: {
     label: 'Unchecked checkbox',
   },
@@ -81,6 +86,13 @@ export const Disabled: Story = {
   args: {
     label: 'Disabled checkbox',
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled checkbox cannot be checked', async () => {
+      const checkbox = canvas.getByRole('checkbox');
+      await expect(checkbox).toBeDisabled();
+    });
   },
 };
 

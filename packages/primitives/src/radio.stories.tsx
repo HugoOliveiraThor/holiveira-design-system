@@ -15,14 +15,17 @@ const meta: Meta<typeof Radio> = {
     label: {
       description: 'Text displayed next to the radio button.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     value: {
       description: 'Value submitted with the form data.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     name: {
       description: 'Group name that links radio buttons together.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     variant: {
       description: 'Visual style of the radio indicator.',
@@ -43,10 +46,12 @@ const meta: Meta<typeof Radio> = {
     checked: {
       description: 'Controlled checked state.',
       control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     minimal: {
       description: 'Compact minimal style.',
       control: { type: 'boolean' },
+      table: { defaultValue: { summary: 'false' } },
     },
     onChange: {
       description:
@@ -66,7 +71,7 @@ export const Selected: Story = {
   },
 };
 
-export const Unselected: Story = {
+export const Default: Story = {
   args: {
     label: 'Unselected option',
   },
@@ -76,6 +81,13 @@ export const Disabled: Story = {
   args: {
     label: 'Disabled option',
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled radio cannot be selected', async () => {
+      const radio = canvas.getByRole('radio');
+      await expect(radio).toBeDisabled();
+    });
   },
 };
 

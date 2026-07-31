@@ -31,6 +31,7 @@ const meta: Meta<typeof Switch> = {
       description: 'Background color variant of the track.',
       control: { type: 'select' },
       options: ['dark', 'light'],
+      table: { defaultValue: { summary: 'dark' } },
     },
     backgroundSize: {
       description: 'Size variant of the switch track.',
@@ -49,7 +50,7 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Off: Story = {
+export const Default: Story = {
   args: {},
 };
 
@@ -62,6 +63,13 @@ export const On: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await step('Disabled switch cannot be toggled', async () => {
+      const toggle = canvas.getByRole('checkbox');
+      await expect(toggle).toBeDisabled();
+    });
   },
 };
 

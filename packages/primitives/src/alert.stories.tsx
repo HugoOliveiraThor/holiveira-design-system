@@ -17,10 +17,12 @@ const meta: Meta<typeof Alert> = {
     title: {
       description: 'Bold heading displayed above the message.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     description: {
       description: 'Content of the alert message.',
       control: { type: 'text' },
+      table: { defaultValue: { summary: 'undefined' } },
     },
     className: {
       description: 'Additional CSS classes for custom styling.',
@@ -32,10 +34,10 @@ const meta: Meta<typeof Alert> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Info: Story = {
+export const Notice: Story = {
   args: {
     variant: 'success',
-    title: 'Information',
+    title: 'Notice',
     description: 'Here is some useful information for you.',
   },
 };
