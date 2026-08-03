@@ -22,6 +22,7 @@
     "check:size": "pnpm exec tsx scripts/check-size.ts",
     "check:exports": "pnpm exec tsx scripts/check-exports.ts",
     "check:publish": "pnpm exec tsx scripts/check-publish.ts",
+    "check:license": "pnpm exec tsx scripts/check-license.ts",
     "check:deps": "syncpack lint --dependency-types prod,dev",
     "check:deps:peer": "pnpm peers check 2>&1 || true",
     "dev": "turbo run dev",
