@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      patch-updates:
+        applies-to: version-updates
+        update-types:
+          - "patch"
+      types:
+        patterns:
+          - "@types/*"
+    ignore:
+      - dependency-name: "@holiveira/*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
