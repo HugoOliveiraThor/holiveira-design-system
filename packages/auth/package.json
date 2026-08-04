@@ -36,9 +36,9 @@
     }
   },
   "dependencies": {
-    "@better-auth/prisma-adapter": "^1.6.7",
+    "@better-auth/prisma-adapter": "^1.6.25",
     "@holiveira/db": "workspace:*",
-    "better-auth": "^1.6.7"
+    "better-auth": "^1.6.25"
   },
   "peerDependencies": {
     "next": "^16.0.0",
