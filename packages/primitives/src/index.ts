@@ -1,5 +1,5 @@
 /**
- * Button component with 6 variants, 3 shapes, and 2 sizes.
+ * Button component with 6 variants, 2 shapes, and 2 sizes.
  * @public
  */
 export { Button, type ButtonProps } from './button';
