@@ -20,13 +20,13 @@ const meta: Meta<typeof Button> = {
     size: {
       description: 'Predefined size of the button.',
       control: { type: 'select' },
-      options: ['default', 'small'],
-      table: { defaultValue: { summary: 'default' } },
+      options: ['md', 'lg'],
+      table: { defaultValue: { summary: 'md' } },
     },
     shape: {
       description: 'Shape modifier for the button corners.',
       control: { type: 'select' },
-      options: ['default', 'rounded', 'full'],
+      options: ['default', 'rounded'],
       table: { defaultValue: { summary: 'default' } },
     },
     disabled: {
@@ -95,27 +95,27 @@ export const OutlineDark: Story = {
   },
 };
 
-export const Rounded: Story = {
+export const Pill: Story = {
   args: {
     variant: 'primary',
     shape: 'rounded',
-    label: 'Rounded',
+    label: 'Pill',
   },
 };
 
-export const Full: Story = {
+export const Lg: Story = {
   args: {
     variant: 'primary',
-    shape: 'full',
-    label: 'Full',
+    size: 'lg',
+    label: 'Large',
   },
 };
 
-export const Small: Story = {
+export const TailAdminStyle: Story = {
   args: {
     variant: 'primary',
-    size: 'small',
-    label: 'Small',
+    size: 'lg',
+    label: 'Button Text',
   },
 };
 
