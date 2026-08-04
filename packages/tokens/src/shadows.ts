@@ -10,6 +10,7 @@ export const shadows = {
   '5': '0px 10px 30px 0px rgba(85, 106, 235, 0.12), 0px 4px 10px 0px rgba(85, 106, 235, 0.04), 0px -18px 38px 0px rgba(85, 106, 235, 0.04)',
   '6': '0px 12px 34px 0px rgba(13, 10, 44, 0.08), 0px 34px 26px 0px rgba(13, 10, 44, 0.05)',
   '7': '0px 18px 25px 0px rgba(113, 116, 152, 0.05)',
+  'theme-xs': '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
   default: '0px 4px 7px 0px rgba(0, 0, 0, 0.14)',
   error: '0px 12px 34px 0px rgba(13, 10, 44, 0.05)',
   card: '0px 1px 2px 0px rgba(0, 0, 0, 0.12)',
