@@ -14,13 +14,13 @@ const meta: Meta<typeof Button> = {
     variant: {
       description: 'Visual style of the button.',
       control: { type: 'select' },
-      options: ['primary', 'green', 'dark', 'outlinePrimary', 'outlineGreen', 'outlineDark'],
+      options: ['primary', 'green', 'dark', 'outlinePrimary', 'outlineGreen', 'outline'],
       table: { defaultValue: { summary: 'primary' } },
     },
     size: {
       description: 'Predefined size of the button.',
       control: { type: 'select' },
-      options: ['md', 'lg'],
+      options: ['sm', 'md'],
       table: { defaultValue: { summary: 'md' } },
     },
     shape: {
@@ -88,10 +88,10 @@ export const OutlineGreen: Story = {
   },
 };
 
-export const OutlineDark: Story = {
+export const Outline: Story = {
   args: {
-    variant: 'outlineDark',
-    label: 'Outline Dark',
+    variant: 'outline',
+    label: 'Outline',
   },
 };
 
@@ -103,18 +103,26 @@ export const Pill: Story = {
   },
 };
 
-export const Lg: Story = {
+export const Md: Story = {
   args: {
     variant: 'primary',
-    size: 'lg',
-    label: 'Large',
+    size: 'md',
+    label: 'Medium',
+  },
+};
+
+export const Sm: Story = {
+  args: {
+    variant: 'primary',
+    size: 'sm',
+    label: 'Small',
   },
 };
 
 export const TailAdminStyle: Story = {
   args: {
     variant: 'primary',
-    size: 'lg',
+    size: 'md',
     label: 'Button Text',
   },
 };

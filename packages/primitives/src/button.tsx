@@ -6,26 +6,26 @@ import type { VariantProps } from '@holiveira/utils';
 import { forwardRef, type HTMLAttributes } from 'react';
 
 const buttonVariants = cva(
-  'shadow-theme-xs inline-flex items-center justify-center gap-2 text-center text-sm font-medium transition focus:outline-none',
+  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'bg-primary hover:bg-primary/90 text-white',
-        green: 'bg-green hover:bg-green-dark text-white',
-        dark: 'bg-dark hover:bg-dark-2 text-white dark:bg-white/10 dark:hover:bg-white/20',
+        primary: 'bg-primary shadow-theme-xs hover:bg-primary/90 disabled:bg-primary/50 text-white',
+        green: 'bg-green shadow-theme-xs hover:bg-green-dark disabled:bg-green/50 text-white',
+        dark: 'bg-dark shadow-theme-xs hover:bg-dark-2 disabled:bg-dark/50 text-white dark:bg-white/10 dark:hover:bg-white/20',
         outlinePrimary:
           'text-primary ring-primary/40 hover:bg-primary/10 bg-white ring-1 ring-inset',
         outlineGreen: 'text-green ring-green/40 hover:bg-green/10 bg-white ring-1 ring-inset',
-        outlineDark:
-          'text-dark bg-white ring-1 ring-gray-300 ring-inset hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03]',
+        outline:
+          'bg-white text-gray-700 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300',
       },
       shape: {
         default: 'rounded-lg',
         rounded: 'rounded-full',
       },
       size: {
-        md: 'px-4 py-3',
-        lg: 'px-5 py-3.5',
+        sm: 'px-4 py-3 text-sm',
+        md: 'px-5 py-3.5 text-sm',
       },
     },
     defaultVariants: {

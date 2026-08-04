@@ -22,7 +22,7 @@ describe('Button', () => {
       'dark',
       'outlinePrimary',
       'outlineGreen',
-      'outlineDark',
+      'outline',
     ] as const;
     for (const variant of variants) {
       const { getByRole } = render(<Button variant={variant} label={variant} />);
@@ -38,11 +38,11 @@ describe('Button', () => {
     }
   });
 
-  it('renders md and lg sizes', () => {
+  it('renders sm and md sizes', () => {
+    const { getByRole: getSm } = render(<Button size="sm" label="Sm" />);
+    expect(getSm('button', { name: /sm/i })).toBeVisible();
     const { getByRole: getMd } = render(<Button size="md" label="Md" />);
     expect(getMd('button', { name: /md/i })).toBeVisible();
-    const { getByRole: getLg } = render(<Button size="lg" label="Lg" />);
-    expect(getLg('button', { name: /lg/i })).toBeVisible();
   });
 
   it('renders with icon', () => {
@@ -111,7 +111,7 @@ describe('Button — accessibility', () => {
 });
 
 describe('Button — TailAdmin style', () => {
-  it('applies shadow-theme-xs to all variants', () => {
+  it('primary applies shadow-theme-xs', () => {
     const { getByRole } = render(<Button label="Primary" />);
     expect(getByRole('button')).toHaveClass('shadow-theme-xs');
   });
@@ -131,14 +131,23 @@ describe('Button — TailAdmin style', () => {
     expect(getByRole('button')).toHaveClass('rounded-full');
   });
 
-  it('md size uses px-4 py-3', () => {
-    const { getByRole } = render(<Button size="md" label="Md" />);
+  it('sm size uses px-4 py-3', () => {
+    const { getByRole } = render(<Button size="sm" label="Sm" />);
     expect(getByRole('button')).toHaveClass('px-4', 'py-3');
   });
 
-  it('lg size uses px-5 py-3.5', () => {
-    const { getByRole } = render(<Button size="lg" label="Lg" />);
+  it('md size uses px-5 py-3.5', () => {
+    const { getByRole } = render(<Button size="md" label="Md" />);
     expect(getByRole('button')).toHaveClass('px-5', 'py-3.5');
+  });
+
+  it('applies disabled styling', () => {
+    const { getByRole } = render(<Button label="Disabled" disabled />);
+    expect(getByRole('button')).toHaveClass(
+      'disabled:cursor-not-allowed',
+      'disabled:opacity-50',
+      'disabled:bg-primary/50',
+    );
   });
 
   it('renders children in place of label', () => {
