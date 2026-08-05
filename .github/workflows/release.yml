@@ -49,7 +49,7 @@ jobs:
 
       - name: Create Release PR or Publish
         id: changesets
-        uses: changesets/action@v2
+        uses: changesets/action@v1
         with:
           publish-script: pnpm release:publish
           commit-message: "chore(release): version packages"
