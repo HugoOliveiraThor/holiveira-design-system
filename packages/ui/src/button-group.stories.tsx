@@ -2,7 +2,6 @@ import { Button } from '@holiveira/primitives';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-
 import { ButtonGroup } from './button-group';
 
 const meta: Meta<typeof ButtonGroup> = {

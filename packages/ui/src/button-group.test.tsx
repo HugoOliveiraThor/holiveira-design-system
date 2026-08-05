@@ -4,7 +4,6 @@ import { cleanup } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';
 import { axe } from 'vitest-axe';
 
-
 import { render } from './test-utils';
 
 import { ButtonGroup } from './index';
