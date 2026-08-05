@@ -55,6 +55,7 @@ Components extracted from the following monolith files:
 ### Components
 
 - `Button`, `ButtonProps`
+- `buttonVariants`
 - `Alert`, `AlertProps`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
