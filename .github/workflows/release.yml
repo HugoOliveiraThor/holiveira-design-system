@@ -51,10 +51,10 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish-script: pnpm release:publish
-          commit-message: "chore(release): version packages"
-          pr-title: "chore(release): version packages"
-          create-github-releases: true
+          publish: pnpm release:publish
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
