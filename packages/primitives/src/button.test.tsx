@@ -22,7 +22,7 @@ describe('Button', () => {
       'dark',
       'outlinePrimary',
       'outlineGreen',
-      'outlineDark',
+      'outline',
     ] as const;
     for (const variant of variants) {
       const { getByRole } = render(<Button variant={variant} label={variant} />);
@@ -31,16 +31,18 @@ describe('Button', () => {
   });
 
   it('renders all shapes', () => {
-    const shapes = ['default', 'rounded', 'full'] as const;
+    const shapes = ['default', 'rounded'] as const;
     for (const shape of shapes) {
       const { getByRole } = render(<Button shape={shape} label={shape} />);
       expect(getByRole('button', { name: shape })).toBeVisible();
     }
   });
 
-  it('renders small size', () => {
-    const { getByRole } = render(<Button size="small" label="Small" />);
-    expect(getByRole('button', { name: /small/i })).toBeVisible();
+  it('renders sm and md sizes', () => {
+    const { getByRole: getSm } = render(<Button size="sm" label="Sm" />);
+    expect(getSm('button', { name: /sm/i })).toBeVisible();
+    const { getByRole: getMd } = render(<Button size="md" label="Md" />);
+    expect(getMd('button', { name: /md/i })).toBeVisible();
   });
 
   it('renders with icon', () => {
@@ -85,7 +87,7 @@ describe('Button — keyboard', () => {
 });
 
 describe('Button — pre-existing findings', () => {
-  it.skip('P2-1: Button does not default type="button" — form submit risk (D6.9)', () => {
+  it('P2-1: defaults to type="button" (form submit safety)', () => {
     const { container } = render(<Button label="Test" />);
     const button = container.querySelector('button');
     expect(button?.getAttribute('type')).toBe('button');
@@ -105,5 +107,51 @@ describe('Button — accessibility', () => {
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
     document.documentElement.classList.remove('dark');
+  });
+});
+
+describe('Button — TailAdmin style', () => {
+  it('primary applies shadow-theme-xs', () => {
+    const { getByRole } = render(<Button label="Primary" />);
+    expect(getByRole('button')).toHaveClass('shadow-theme-xs');
+  });
+
+  it('primary uses solid hover with opacity', () => {
+    const { getByRole } = render(<Button label="Primary" />);
+    expect(getByRole('button')).toHaveClass('bg-primary', 'hover:bg-primary/90');
+  });
+
+  it('default shape is rounded-lg', () => {
+    const { getByRole } = render(<Button label="Default" />);
+    expect(getByRole('button')).toHaveClass('rounded-lg');
+  });
+
+  it('rounded shape is rounded-full', () => {
+    const { getByRole } = render(<Button shape="rounded" label="Pill" />);
+    expect(getByRole('button')).toHaveClass('rounded-full');
+  });
+
+  it('sm size uses px-4 py-3', () => {
+    const { getByRole } = render(<Button size="sm" label="Sm" />);
+    expect(getByRole('button')).toHaveClass('px-4', 'py-3');
+  });
+
+  it('md size uses px-5 py-3.5', () => {
+    const { getByRole } = render(<Button size="md" label="Md" />);
+    expect(getByRole('button')).toHaveClass('px-5', 'py-3.5');
+  });
+
+  it('applies disabled styling', () => {
+    const { getByRole } = render(<Button label="Disabled" disabled />);
+    expect(getByRole('button')).toHaveClass(
+      'disabled:cursor-not-allowed',
+      'disabled:opacity-50',
+      'disabled:bg-primary/50',
+    );
+  });
+
+  it('renders children in place of label', () => {
+    const { getByRole } = render(<Button>Children</Button>);
+    expect(getByRole('button', { name: /children/i })).toBeVisible();
   });
 });

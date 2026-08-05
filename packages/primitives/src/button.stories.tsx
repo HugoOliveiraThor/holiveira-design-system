@@ -14,19 +14,19 @@ const meta: Meta<typeof Button> = {
     variant: {
       description: 'Visual style of the button.',
       control: { type: 'select' },
-      options: ['primary', 'green', 'dark', 'outlinePrimary', 'outlineGreen', 'outlineDark'],
+      options: ['primary', 'green', 'dark', 'outlinePrimary', 'outlineGreen', 'outline'],
       table: { defaultValue: { summary: 'primary' } },
     },
     size: {
       description: 'Predefined size of the button.',
       control: { type: 'select' },
-      options: ['default', 'small'],
-      table: { defaultValue: { summary: 'default' } },
+      options: ['sm', 'md'],
+      table: { defaultValue: { summary: 'md' } },
     },
     shape: {
       description: 'Shape modifier for the button corners.',
       control: { type: 'select' },
-      options: ['default', 'rounded', 'full'],
+      options: ['default', 'rounded'],
       table: { defaultValue: { summary: 'default' } },
     },
     disabled: {
@@ -88,34 +88,42 @@ export const OutlineGreen: Story = {
   },
 };
 
-export const OutlineDark: Story = {
+export const Outline: Story = {
   args: {
-    variant: 'outlineDark',
-    label: 'Outline Dark',
+    variant: 'outline',
+    label: 'Outline',
   },
 };
 
-export const Rounded: Story = {
+export const Pill: Story = {
   args: {
     variant: 'primary',
     shape: 'rounded',
-    label: 'Rounded',
+    label: 'Pill',
   },
 };
 
-export const Full: Story = {
+export const Md: Story = {
   args: {
     variant: 'primary',
-    shape: 'full',
-    label: 'Full',
+    size: 'md',
+    label: 'Medium',
   },
 };
 
-export const Small: Story = {
+export const Sm: Story = {
   args: {
     variant: 'primary',
-    size: 'small',
+    size: 'sm',
     label: 'Small',
+  },
+};
+
+export const TailAdminStyle: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    label: 'Button Text',
   },
 };
 

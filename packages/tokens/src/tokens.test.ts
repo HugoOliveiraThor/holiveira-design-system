@@ -45,6 +45,10 @@ describe('tokens', () => {
     expect(typeof shadows.default).toBe('string');
   });
 
+  it('exports the theme-xs shadow token', () => {
+    expect(shadows['theme-xs']).toBe('0px 1px 2px 0px rgba(16, 24, 40, 0.05)');
+  });
+
   it('uses TypeScript const assertion for type safety', () => {
     expect(typeof colors.primary).toBe('string');
   });

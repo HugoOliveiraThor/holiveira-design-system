@@ -18,6 +18,12 @@ describe('Submit', () => {
     const { getByRole } = render(<Submit disabled>Disabled</Submit>);
     expect(getByRole('button', { name: /disabled/i })).toBeDisabled();
   });
+
+  it('renders type="submit"', () => {
+    const { container } = render(<Submit>Save</Submit>);
+    const button = container.querySelector('button');
+    expect(button).toHaveAttribute('type', 'submit');
+  });
 });
 
 describe('Submit — keyboard', () => {
