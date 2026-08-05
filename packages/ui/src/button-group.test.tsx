@@ -47,10 +47,12 @@ describe('ButtonGroup', () => {
         <Button label="Três" />
       </ButtonGroup>,
     );
-    const [first, , last] = getAllByRole('button');
+    const [first, middle, last] = getAllByRole('button');
     expect(first).toHaveClass('rounded-l-lg');
-    expect(first).not.toHaveClass('rounded-r-lg');
+    expect(first).not.toHaveClass('rounded-lg');
     expect(last).toHaveClass('rounded-r-lg');
+    expect(last).not.toHaveClass('rounded-lg');
+    expect(middle).not.toHaveClass('rounded-lg');
   });
 
   it('overlaps middle buttons with -ml-px in horizontal mode', () => {
@@ -63,6 +65,7 @@ describe('ButtonGroup', () => {
     );
     const [, middle] = getAllByRole('button');
     expect(middle).toHaveClass('-ml-px');
+    expect(middle).toHaveClass('rounded-none');
     expect(middle).not.toHaveClass('rounded-l-lg');
     expect(middle).not.toHaveClass('rounded-r-lg');
   });
@@ -77,10 +80,26 @@ describe('ButtonGroup', () => {
     );
     const [first, , last] = getAllByRole('button');
     expect(first).toHaveClass('rounded-t-lg');
+    expect(first).not.toHaveClass('rounded-lg');
     expect(last).toHaveClass('rounded-b-lg');
+    expect(last).not.toHaveClass('rounded-lg');
   });
 
-  it('propagates variant to children', () => {
+  it('renders primary group with first button active and rest inactive', () => {
+    const { getAllByRole } = render(
+      <ButtonGroup variant="primary" aria-label="Ações">
+        <Button label="Um" />
+        <Button label="Dois" />
+        <Button label="Três" />
+      </ButtonGroup>,
+    );
+    const [first, middle, last] = getAllByRole('button');
+    expect(first).toHaveClass('bg-primary', 'text-white');
+    expect(middle).toHaveClass('bg-transparent', 'text-primary');
+    expect(last).toHaveClass('bg-transparent', 'text-primary');
+  });
+
+  it('renders outline group with segment classes', () => {
     const { getAllByRole } = render(
       <ButtonGroup variant="outline" aria-label="Ações">
         <Button label="Um" />
@@ -88,8 +107,8 @@ describe('ButtonGroup', () => {
       </ButtonGroup>,
     );
     const [first, second] = getAllByRole('button');
-    expect(first).toHaveClass('bg-white', 'ring-1');
-    expect(second).toHaveClass('bg-white', 'ring-1');
+    expect(first).toHaveClass('ring-1', 'ring-inset', 'ring-gray-300', 'text-gray-800');
+    expect(second).toHaveClass('ring-1', 'ring-inset', 'ring-gray-300', 'text-gray-700');
   });
 
   it('propagates size to children', () => {
