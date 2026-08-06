@@ -4,10 +4,10 @@
  */
 export { Button, buttonVariants, type ButtonProps } from './button';
 /**
- * Alert banner with 3 severity variants (success, warning, error).
+ * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
-export { Alert, type AlertProps } from './alert';
+export { Alert, alertVariants, type AlertProps } from './alert';
 /**
  * Loading placeholder with pulse animation.
  * @public
