@@ -57,6 +57,7 @@ Components extracted from the following monolith files:
 - `Button`, `ButtonProps`
 - `buttonVariants`
 - `Alert`, `AlertProps`
+- `alertVariants`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`
