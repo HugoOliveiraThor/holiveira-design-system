@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within, expect } from '@storybook/test';
 
 import { Alert } from './alert';
 
@@ -9,20 +8,22 @@ const meta: Meta<typeof Alert> = {
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      description: 'Visual style determining color and icon.',
+      description: 'Severity variant controlling border, background, and icon color.',
       control: { type: 'select' },
-      options: ['error', 'success', 'warning'],
-      table: { defaultValue: { summary: 'error' } },
+      options: ['success', 'warning', 'error', 'info'],
+      table: { defaultValue: { summary: 'info' } },
     },
     title: {
       description: 'Bold heading displayed above the message.',
       control: { type: 'text' },
-      table: { defaultValue: { summary: 'undefined' } },
     },
     description: {
       description: 'Content of the alert message.',
       control: { type: 'text' },
-      table: { defaultValue: { summary: 'undefined' } },
+    },
+    link: {
+      description: 'Optional "Learn more" link rendered below the description.',
+      control: { type: 'object' },
     },
     className: {
       description: 'Additional CSS classes for custom styling.',
@@ -34,83 +35,86 @@ const meta: Meta<typeof Alert> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Notice: Story = {
+export const Default: Story = {
+  args: {
+    variant: 'info',
+    title: 'Informational notice',
+    description: 'Here is some useful information for you.',
+  },
+};
+
+export const WithLink: Story = {
   args: {
     variant: 'success',
-    title: 'Notice',
-    description: 'Here is some useful information for you.',
+    title: 'Success Message',
+    description: 'You can insert a description for the message here.',
+    link: { label: 'Learn more', href: '#' },
   },
 };
 
 export const Success: Story = {
   args: {
     variant: 'success',
-    title: 'Operation completed successfully',
-    description: 'Your changes have been saved and applied.',
+    title: 'Success Message',
+    description: 'You can insert a description for the message here.',
+    link: { label: 'Learn more', href: '#' },
   },
 };
 
 export const Warning: Story = {
   args: {
     variant: 'warning',
-    title: 'Review required',
-    description: 'Some fields need your attention before proceeding.',
+    title: 'Warning Message',
+    description: 'You can insert a description for the message here.',
+    link: { label: 'Learn more', href: '#' },
   },
 };
 
 export const Error: Story = {
   args: {
     variant: 'error',
-    title: 'Something went wrong',
-    description: 'An unexpected error occurred. Please try again.',
+    title: 'Error Message',
+    description: 'You can insert a description for the message here.',
+    link: { label: 'Learn more', href: '#' },
   },
 };
 
-export const WithTitle: Story = {
+export const Info: Story = {
   args: {
-    variant: 'success',
-    title: 'Account Created',
-    description: 'Your account has been successfully created and is ready to use.',
+    variant: 'info',
+    title: 'Info Message',
+    description: 'You can insert a description for the message here.',
+    link: { label: 'Learn more', href: '#' },
   },
 };
 
-export const WithoutTitle: Story = {
-  args: {
-    variant: 'warning',
-    title: '',
-    description: 'This is an alert without a title heading.',
-  },
-};
-
-export const LongMessage: Story = {
-  args: {
-    variant: 'success',
-    title: 'Terms of Service Update',
-    description:
-      'We have updated our terms of service effective immediately. Please review the changes carefully. The updated terms include new data processing policies, revised liability clauses, and additional user rights protections. Continued use of our services constitutes acceptance of these updated terms. If you do not agree with the changes, you may cancel your account within 30 days.',
-  },
-};
-
-export const WithoutDismiss: Story = {
-  args: {
-    variant: 'success',
-    title: 'No dismiss available',
-    description: 'This alert cannot be dismissed. It will remain visible.',
-  },
-};
-
-export const Interactive: Story = {
-  args: {
-    variant: 'warning',
-    title: 'Dismissible alert',
-    description: 'This alert demonstrates a dismiss interaction.',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-    const alert = canvas.getByRole('alert');
-
-    await step('Alert is visible', async () => {
-      await expect(alert).toBeVisible();
-    });
-  },
+export const AllVariants: Story = {
+  render: () => (
+    <div className="space-y-6">
+      {(
+        [
+          { variant: 'success', title: 'Success Message' },
+          { variant: 'warning', title: 'Warning Message' },
+          { variant: 'error', title: 'Error Message' },
+          { variant: 'info', title: 'Info Message' },
+        ] as const
+      ).map(({ variant, title }) => (
+        <div key={variant}>
+          <Alert
+            variant={variant}
+            title={title}
+            description="You can insert a description for the message here. The text relates to the action that has been performed."
+          />
+          <div className="mt-4">
+            <Alert
+              variant={variant}
+              title={title}
+              description="You can insert a description for the message here."
+              link={{ label: 'Learn more', href: '#' }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  ),
 };
