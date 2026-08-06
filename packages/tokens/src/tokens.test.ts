@@ -18,6 +18,15 @@ describe('tokens', () => {
     expect(colors.red).toBe('#f23030');
   });
 
+  it('exports TailAdmin v2 semantic color tokens', () => {
+    expect(colors['success-50']).toBe('#ecfdf3');
+    expect(colors['success-500']).toBe('#12b76a');
+    expect(colors['warning-500']).toBe('#f79009');
+    expect(colors['error-500']).toBe('#f04438');
+    expect(colors['blue-light-50']).toBe('#f0f9ff');
+    expect(colors['blue-light-500']).toBe('#0ba5ec');
+  });
+
   it('exports breakpoints in px', () => {
     expect(breakpoints['2xsm']).toBe('375px');
     expect(breakpoints.xsm).toBe('425px');
