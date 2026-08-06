@@ -29,6 +29,7 @@
     "LICENSE"
   ],
   "dependencies": {
+    "@holiveira/primitives": "workspace:*",
     "@holiveira/utils": "workspace:*"
   },
   "peerDependencies": {

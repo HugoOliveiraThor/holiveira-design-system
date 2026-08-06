@@ -15,3 +15,9 @@ export { ShowcaseSection, type ShowcaseSectionProps } from './showcase-section';
  * @public
  */
 export { Card, cardVariants, type CardProps } from './card';
+
+/**
+ * Joined button group composing primitives Button children.
+ * @public
+ */
+export { ButtonGroup, type ButtonGroupProps } from './button-group';

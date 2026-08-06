@@ -2,7 +2,7 @@
  * Button component with 6 variants, 2 shapes, and 2 sizes.
  * @public
  */
-export { Button, type ButtonProps } from './button';
+export { Button, buttonVariants, type ButtonProps } from './button';
 /**
  * Alert banner with 3 severity variants (success, warning, error).
  * @public

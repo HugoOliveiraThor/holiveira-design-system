@@ -726,6 +726,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@holiveira/primitives':
+        specifier: workspace:*
+        version: link:../primitives
       '@holiveira/types':
         specifier: workspace:*
         version: link:../types
