@@ -1,4 +1,5 @@
 export { AlertErrorIcon } from './icons/alert-error';
+export { AlertInfoIcon } from './icons/alert-info';
 export { AlertSuccessIcon } from './icons/alert-success';
 export { AlertWarningIcon } from './icons/alert-warning';
 export { ArrowDownIcon } from './icons/arrow-down';

@@ -7,6 +7,7 @@ afterEach(cleanup);
 
 import {
   AlertErrorIcon,
+  AlertInfoIcon,
   AlertSuccessIcon,
   AlertWarningIcon,
   ArrowDownIcon,
@@ -47,6 +48,7 @@ import {
 
 const ALL_ICONS = [
   { name: 'AlertError', Icon: AlertErrorIcon },
+  { name: 'AlertInfo', Icon: AlertInfoIcon },
   { name: 'AlertSuccess', Icon: AlertSuccessIcon },
   { name: 'AlertWarning', Icon: AlertWarningIcon },
   { name: 'ArrowDown', Icon: ArrowDownIcon },
