@@ -1,11 +1,11 @@
-# Package Contract: @holiveira/eslint
+# Package Contract: @ho-dev/eslint
 
 Level: 5 Category: Platform
 
 ## Purpose
 
-Provide shared ESLint configuration presets for all @holiveira/\* packages and external consumers.
-Owns the ESLint dependency domain — every ESLint plugin and parser required by its public presets is
+Provide shared ESLint configuration presets for all @ho-dev/\* packages and external consumers. Owns
+the ESLint dependency domain — every ESLint plugin and parser required by its public presets is
 declared and versioned by this package.
 
 ## Public API
@@ -35,7 +35,7 @@ are never exported.
 - Does not own the ESLint engine (CLI) — consumers provide `eslint` themselves
 - Does not define file selection, ignore patterns, or orchestration — these belong to the consumer's
   root config
-- No dependency on any other @holiveira/\* package in either direction
+- No dependency on any other @ho-dev/\* package in either direction
 - No per-package ESLint configuration — the repository has exactly one config at root
 
 ## Non-Responsibilities (eslint-plugin-n / eslint-plugin-vitest)
@@ -59,11 +59,11 @@ public API when a future ADS amendment authorizes them.
 - Storybook
 - Testing frameworks (Vitest, Jest, etc.)
 - Build framework coupling (Vite, webpack, turbopack)
-- Any other @holiveira/\* package
+- Any other @ho-dev/\* package
 
 ## Entry Point
 
-Single entry: `@holiveira/eslint`
+Single entry: `@ho-dev/eslint`
 
 - No sub-path exports (`/rules`, `/configs`) are created
 - Sub-paths may be added later as non-breaking additive changes when justified
@@ -119,7 +119,7 @@ configReact (extends configBase)
 - **Does not own**: ESLint engine (CLI), file selection, ignore patterns, orchestration
 - **Repository role**: all ESLint-related dependencies that would otherwise be phantom
 - **Consumer role**: provides ready-to-use configurations that work after
-  `npm install @holiveira/eslint`
+  `npm install @ho-dev/eslint`
 
 ## Publishing Contract
 
@@ -140,19 +140,19 @@ configReact (extends configBase)
 | Removing or renaming a preset                         | Major                                       |
 | Disabling or weakening an existing rule               | Major                                       |
 
-Breaking changes follow the same Changesets + semver process as all @holiveira/\* packages.
+Breaking changes follow the same Changesets + semver process as all @ho-dev/\* packages.
 
 ## Repository Integration
 
 Root `eslint.config.mjs`:
 
-- Imports presets from `@holiveira/eslint` public API
+- Imports presets from `@ho-dev/eslint` public API
 - Defines file selection (which files receive which preset)
 - Defines ignore patterns
 - Exports the final flat configuration array
 - Never owns lint rules
 
-**Monorepo integration note:** The repository root declares `@holiveira/eslint` in `devDependencies`
+**Monorepo integration note:** The repository root declares `@ho-dev/eslint` in `devDependencies`
 (`workspace:*`). This is required for the root `eslint.config.mjs` to import the package via Node.js
 module resolution (pnpm requires explicit workspace dependency declarations). This is an
 ARB-approved exception to ADS-003 §8.5. It does not violate the domain ownership principle — the

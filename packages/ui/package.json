@@ -1,5 +1,5 @@
 {
-  "name": "@holiveira/ui",
+  "name": "@ho-dev/ui",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -29,11 +29,11 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@holiveira/primitives": "workspace:*",
-    "@holiveira/utils": "workspace:*"
+    "@ho-dev/primitives": "workspace:*",
+    "@ho-dev/utils": "workspace:*"
   },
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

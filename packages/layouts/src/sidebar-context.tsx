@@ -1,6 +1,6 @@
 'use client';
 
-import { useIsMobile } from '@holiveira/hooks';
+import { useIsMobile } from '@ho-dev/hooks';
 
 import { createContext, useContext, useEffect, useState } from 'react';
 

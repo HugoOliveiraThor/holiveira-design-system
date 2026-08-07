@@ -1,4 +1,4 @@
-# @holiveira/api
+# @ho-dev/api
 
 HTTP client and API integration patterns.
 
@@ -10,13 +10,13 @@ code constants. Architectural role: abstracts HTTP transport for service-layer p
 ## Installation
 
 ```bash
-pnpm add @holiveira/api
+pnpm add @ho-dev/api
 ```
 
 ## Usage
 
 ```ts
-import { createApiClient } from '@holiveira/api';
+import { createApiClient } from '@ho-dev/api';
 
 const client = createApiClient({ baseUrl: 'https://api.example.com' });
 
@@ -48,5 +48,5 @@ See `docs/architecture/contracts/api.md` for ownership and dependency boundaries
 
 ## References
 
-- `@holiveira/config` — `ApiConfig` type integration
-- `@holiveira/types` — shared type foundation
+- `@ho-dev/config` — `ApiConfig` type integration
+- `@ho-dev/types` — shared type foundation

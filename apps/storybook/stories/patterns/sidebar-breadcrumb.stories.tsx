@@ -1,5 +1,5 @@
-import { Sidebar, SidebarProvider } from '@holiveira/layouts';
-import { Breadcrumb } from '@holiveira/ui';
+import { Sidebar, SidebarProvider } from '@ho-dev/layouts';
+import { Breadcrumb } from '@ho-dev/ui';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';

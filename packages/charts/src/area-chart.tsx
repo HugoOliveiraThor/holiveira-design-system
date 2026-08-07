@@ -1,7 +1,7 @@
 'use client';
 
-import { useIsMobile } from '@holiveira/hooks';
-import { cn } from '@holiveira/utils';
+import { useIsMobile } from '@ho-dev/hooks';
+import { cn } from '@ho-dev/utils';
 
 import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';

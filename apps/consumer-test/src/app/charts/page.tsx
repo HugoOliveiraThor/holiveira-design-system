@@ -1,11 +1,11 @@
 'use client';
 
-import { ChartSkeleton } from '@holiveira/charts';
+import { ChartSkeleton } from '@ho-dev/charts';
 
 import { lazy, Suspense } from 'react';
 
 const LazyAreaChart = lazy(() =>
-  import('@holiveira/charts').then((mod) => ({ default: mod.AreaChart })),
+  import('@ho-dev/charts').then((mod) => ({ default: mod.AreaChart })),
 );
 
 export default function ChartsPage() {

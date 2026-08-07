@@ -1,4 +1,4 @@
-import { cva, cn, type VariantProps } from '@holiveira/utils';
+import { cva, cn, type VariantProps } from '@ho-dev/utils';
 
 import type { HTMLAttributes } from 'react';
 

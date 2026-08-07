@@ -1,4 +1,4 @@
-import { useTheme } from '@holiveira/theme';
+import { useTheme } from '@ho-dev/theme';
 
 import type { ApexOptions } from 'apexcharts';
 

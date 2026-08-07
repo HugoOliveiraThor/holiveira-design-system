@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an addition to a @holiveira/* package
+about: Suggest an addition to a @ho-dev/* package
 title: '[package] Brief description'
 labels: enhancement
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 
 ## Package
 
-Which `@holiveira/*` package does this affect?
+Which `@ho-dev/*` package does this affect?
 
 ## Problem
 

@@ -1,4 +1,4 @@
-# @holiveira/hooks
+# @ho-dev/hooks
 
 Shared React hooks for interaction detection and focus management.
 
@@ -10,13 +10,13 @@ foundational hook layer for interactive components.
 ## Installation
 
 ```bash
-pnpm add @holiveira/hooks
+pnpm add @ho-dev/hooks
 ```
 
 ## Usage
 
 ```tsx
-import { useClickOutside, useFocusTrap, useIsMobile } from '@holiveira/hooks';
+import { useClickOutside, useFocusTrap, useIsMobile } from '@ho-dev/hooks';
 
 function MyComponent() {
   const ref = useClickOutside<HTMLDivElement>(() => console.log('clicked outside'));
@@ -67,5 +67,5 @@ MIT
 
 ## References
 
-- `@holiveira/types` — shared type definitions
-- `@holiveira/utils` — utility functions (optional hook internals)
+- `@ho-dev/types` — shared type definitions
+- `@ho-dev/utils` — utility functions (optional hook internals)

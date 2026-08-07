@@ -1,4 +1,4 @@
-import { Button } from '@holiveira/primitives';
+import { Button } from '@ho-dev/primitives';
 
 import { forwardRef, type ComponentProps } from 'react';
 

@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/hooks
+# Package Contract: @ho-dev/hooks
 
 Level: 2 Category: Primitives
 
@@ -15,13 +15,13 @@ Provide framework-agnostic React hooks for common patterns.
 
 ## Allowed Dependencies
 
-- `@holiveira/types` (L0) — shared types
-- `@holiveira/utils` (L1) — utility functions (optional, for hook internals)
+- `@ho-dev/types` (L0) — shared types
+- `@ho-dev/utils` (L1) — utility functions (optional, for hook internals)
 
 ## Forbidden Dependencies
 
-- `@holiveira/primitives` (L2) — hooks are dependency-free by design
-- `@holiveira/theme` (L3) — hooks must not depend on theme
+- `@ho-dev/primitives` (L2) — hooks are dependency-free by design
+- `@ho-dev/theme` (L3) — hooks must not depend on theme
 - Any application
 
 ## Public API

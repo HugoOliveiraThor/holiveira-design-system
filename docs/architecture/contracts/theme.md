@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/theme
+# Package Contract: @ho-dev/theme
 
 Level: 3 Category: Composition
 
@@ -17,20 +17,20 @@ context to all components.
 
 ## Excluded Responsibilities
 
-- `cn()` — belongs in @holiveira/utils
+- `cn()` — belongs in @ho-dev/utils
 - `cva`/`VariantProps` — belongs in the component layer (Step 10 decision)
-- Theme toggle UI — belongs in @holiveira/layouts (Step 13)
+- Theme toggle UI — belongs in @ho-dev/layouts (Step 13)
 
 ## Allowed Dependencies
 
-- `@holiveira/tokens` (L1) — token consumption via `tokens.css`
-- `@holiveira/types` (L0) — shared types
+- `@ho-dev/tokens` (L1) — token consumption via `tokens.css`
+- `@ho-dev/types` (L0) — shared types
 
 ## Forbidden Dependencies
 
-- `@holiveira/utils` (L1) — theme has no need for JS utilities
-- `@holiveira/primitives` (L2) — theme engine precedes primitives
-- `@holiveira/ui` (L3) — must not depend on UI it themifies
+- `@ho-dev/utils` (L1) — theme has no need for JS utilities
+- `@ho-dev/primitives` (L2) — theme engine precedes primitives
+- `@ho-dev/ui` (L3) — must not depend on UI it themifies
 
 ## Public API
 

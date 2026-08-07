@@ -1,5 +1,5 @@
 {
-  "name": "@holiveira/i18n",
+  "name": "@ho-dev/i18n",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -38,7 +38,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {

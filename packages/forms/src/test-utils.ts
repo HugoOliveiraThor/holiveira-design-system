@@ -1,5 +1,5 @@
-import { renderWithProviders } from '@holiveira/testing';
-import { ThemeProvider } from '@holiveira/theme';
+import { renderWithProviders } from '@ho-dev/testing';
+import { ThemeProvider } from '@ho-dev/theme';
 
 import { userEvent } from '@storybook/test';
 import type { RenderOptions } from '@testing-library/react';

@@ -1,4 +1,4 @@
-import { Card } from '@holiveira/ui';
+import { Card } from '@ho-dev/ui';
 
 export default function RSCPage() {
   return (

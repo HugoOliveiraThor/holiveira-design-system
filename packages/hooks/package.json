@@ -1,5 +1,5 @@
 {
-  "name": "@holiveira/hooks",
+  "name": "@ho-dev/hooks",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -29,7 +29,7 @@
   ],
   "peerDependencies": {
     "react": "^19.0.0",
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {

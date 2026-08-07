@@ -1,4 +1,4 @@
-import { Button } from '@holiveira/primitives';
+import { Button } from '@ho-dev/primitives';
 
 export default function SSRPage() {
   return (

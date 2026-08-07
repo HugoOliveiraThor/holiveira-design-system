@@ -12,8 +12,8 @@ export const importsConfig: Config = {
       'error',
       {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        pathGroups: [{ pattern: '@holiveira/**', group: 'external', position: 'before' }],
-        pathGroupsExcludedImportTypes: ['@holiveira'],
+        pathGroups: [{ pattern: '@ho-dev/**', group: 'external', position: 'before' }],
+        pathGroupsExcludedImportTypes: ['@ho-dev'],
         'newlines-between': 'always',
         alphabetize: { order: 'asc', caseInsensitive: true },
       },

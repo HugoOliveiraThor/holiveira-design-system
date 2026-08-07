@@ -1,4 +1,4 @@
-# @holiveira/providers
+# @ho-dev/providers
 
 Provider composition utilities for flattening nested React context trees.
 
@@ -11,13 +11,13 @@ infrastructure.
 ## Installation
 
 ```bash
-pnpm add @holiveira/providers
+pnpm add @ho-dev/providers
 ```
 
 ## Usage
 
 ```tsx
-import { ProviderComposer } from '@holiveira/providers';
+import { ProviderComposer } from '@ho-dev/providers';
 
 function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -51,8 +51,7 @@ function AppProviders({ children }: { children: React.ReactNode }) {
 **Owns:** Provider composition pattern, provider nesting utility.
 
 **Does not own:** Individual provider implementations (those live in their respective packages —
-`@holiveira/theme`, `@holiveira/layouts`, `@holiveira/auth`), provider configuration, or provider
-lifecycle.
+`@ho-dev/theme`, `@ho-dev/layouts`, `@ho-dev/auth`), provider configuration, or provider lifecycle.
 
 Contract: `docs/architecture/contracts/providers.md`
 
@@ -68,5 +67,5 @@ MIT
 
 ## References
 
-- `@holiveira/types` — shared type foundation
+- `@ho-dev/types` — shared type foundation
 - `docs/architecture/provider-composition-pattern.md` — composition pattern documentation

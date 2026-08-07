@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/config
+# Package Contract: @ho-dev/config
 
 Level: 0 Category: Core
 

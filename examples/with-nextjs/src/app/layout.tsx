@@ -1,15 +1,15 @@
-import { ThemeProvider } from '@holiveira/theme';
+import { ThemeProvider } from '@ho-dev/theme';
 
 import type { Metadata } from 'next';
 
-import '@holiveira/theme/theme.css';
-import '@holiveira/tokens/tokens.css';
-import '@holiveira/charts/chart-styles.css';
-import '@holiveira/forms/date-picker-styles.css';
+import '@ho-dev/theme/theme.css';
+import '@ho-dev/tokens/tokens.css';
+import '@ho-dev/charts/chart-styles.css';
+import '@ho-dev/forms/date-picker-styles.css';
 
 export const metadata: Metadata = {
   title: 'Holiveira — Next.js Example',
-  description: 'Reference application using @holiveira packages.',
+  description: 'Reference application using @ho-dev packages.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,4 +1,4 @@
-# @holiveira/tokens
+# @ho-dev/tokens
 
 Design tokens.
 
@@ -6,19 +6,19 @@ Design tokens.
 
 Color palette, container dimensions, breakpoints, font family, typography scale, and shadows.
 Architectural role: single source of truth for visual primitives. CSS tokens available via
-`@holiveira/tokens/tokens.css`.
+`@ho-dev/tokens/tokens.css`.
 
 ## Installation
 
 ```bash
-pnpm add @holiveira/tokens
+pnpm add @ho-dev/tokens
 ```
 
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation. **Owns:** Raw token definitions, CSS custom property
 generation via tokens.css, design token type definitions. **Does not own:** Theme logic (delegated
-to @holiveira/theme), component styling, Tailwind CSS configuration. Contract:
+to @ho-dev/theme), component styling, Tailwind CSS configuration. Contract:
 `docs/architecture/contracts/tokens.md`
 
 ## Documentation

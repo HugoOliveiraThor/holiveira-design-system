@@ -1,17 +1,17 @@
-# @holiveira/{name}
+# @ho-dev/{name}
 
 {pkg.description}
 
 ## Installation
 
 ```bash
-pnpm add @holiveira/{name}
+pnpm add @ho-dev/{name}
 ```
 
 ## Usage
 
 ```tsx
-import {} from /* ... */ '@holiveira/{name}';
+import {} from /* ... */ '@ho-dev/{name}';
 ```
 
 ## Public API

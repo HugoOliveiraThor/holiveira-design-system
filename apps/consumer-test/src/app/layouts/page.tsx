@@ -1,5 +1,5 @@
-import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@holiveira/layouts';
-import { Breadcrumb } from '@holiveira/ui';
+import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@ho-dev/layouts';
+import { Breadcrumb } from '@ho-dev/ui';
 
 export default function LayoutsPage() {
   return (

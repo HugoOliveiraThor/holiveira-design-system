@@ -29,7 +29,7 @@ Email vulnerability reports to the repository maintainers. Include:
 
 ## Scope
 
-The security policy covers all packages under the `@holiveira/*` namespace:
+The security policy covers all packages under the `@ho-dev/*` namespace:
 
 - All 16 public packages published to npm
 - The repository infrastructure (CI workflows, build pipeline)

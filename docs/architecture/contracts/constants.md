@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/constants
+# Package Contract: @ho-dev/constants
 
 Level: 0 Category: Core
 

@@ -1,4 +1,4 @@
-# @holiveira/i18n
+# @ho-dev/i18n
 
 Locale-aware formatting utilities using native Intl APIs.
 
@@ -11,13 +11,13 @@ primitives for the framework.
 ## Installation
 
 ```bash
-pnpm add @holiveira/i18n
+pnpm add @ho-dev/i18n
 ```
 
 ## Usage
 
 ```ts
-import { formatDate, formatCurrency } from '@holiveira/i18n';
+import { formatDate, formatCurrency } from '@ho-dev/i18n';
 
 formatDate('2026-07-21', { locale: 'pt-BR' });
 // "21/07/2026"
@@ -68,5 +68,5 @@ MIT
 
 ## References
 
-- `@holiveira/types` — shared type foundation
-- `@holiveira/utils` — numeric formatting moved from utils to i18n
+- `@ho-dev/types` — shared type foundation
+- `@ho-dev/utils` — numeric formatting moved from utils to i18n

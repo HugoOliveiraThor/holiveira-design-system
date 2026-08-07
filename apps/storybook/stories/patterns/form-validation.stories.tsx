@@ -1,6 +1,6 @@
-import { Button } from '@holiveira/primitives';
-import { InputGroup } from '@holiveira/primitives';
-import { TextArea } from '@holiveira/primitives';
+import { Button } from '@ho-dev/primitives';
+import { InputGroup } from '@ho-dev/primitives';
+import { TextArea } from '@ho-dev/primitives';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import { userEvent, within, expect } from '@storybook/test';

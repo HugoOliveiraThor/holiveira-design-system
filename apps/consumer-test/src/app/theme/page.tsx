@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@holiveira/primitives';
-import { useTheme } from '@holiveira/theme';
-import { colors } from '@holiveira/tokens';
+import { Button } from '@ho-dev/primitives';
+import { useTheme } from '@ho-dev/theme';
+import { colors } from '@ho-dev/tokens';
 
 export default function ThemePage() {
   const { theme, setTheme } = useTheme();

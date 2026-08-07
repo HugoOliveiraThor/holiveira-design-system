@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@holiveira/tokens/tokens.css';
+@import '@ho-dev/tokens/tokens.css';
 
 @source '../../../packages/**/src/**/*.{ts,tsx,css}';
 @source '../../../apps/storybook/stories/**/*.{ts,tsx,mdx}';

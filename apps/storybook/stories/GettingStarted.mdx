@@ -8,35 +8,35 @@ Install the packages you need from the Holiveira design system.
 
 ## Installation
 
-Each `@holiveira/*` package is published independently. Install only what your application needs:
+Each `@ho-dev/*` package is published independently. Install only what your application needs:
 
 ```bash
 # Primitives (base components)
-pnpm add @holiveira/primitives
+pnpm add @ho-dev/primitives
 
 # Theme (required by all packages)
-pnpm add @holiveira/theme
+pnpm add @ho-dev/theme
 
 # UI components
-pnpm add @holiveira/ui
+pnpm add @ho-dev/ui
 
 # Forms
-pnpm add @holiveira/forms
+pnpm add @ho-dev/forms
 
 # Layout components
-pnpm add @holiveira/layouts
+pnpm add @ho-dev/layouts
 
 # Charts
-pnpm add @holiveira/charts
+pnpm add @ho-dev/charts
 
 # Icons
-pnpm add @holiveira/icons
+pnpm add @ho-dev/icons
 
 # Hooks
-pnpm add @holiveira/hooks
+pnpm add @ho-dev/hooks
 
 # Utilities
-pnpm add @holiveira/utils
+pnpm add @ho-dev/utils
 ```
 
 ## Quick Start
@@ -44,7 +44,7 @@ pnpm add @holiveira/utils
 Wrap your application with `ThemeProvider` to enable the design system's theme context, dark mode, and CSS tokens:
 
 ```tsx
-import { ThemeProvider } from '@holiveira/theme';
+import { ThemeProvider } from '@ho-dev/theme';
 
 function App({ children }: { children: React.ReactNode }) {
   return <ThemeProvider>{children}</ThemeProvider>;
@@ -54,14 +54,14 @@ function App({ children }: { children: React.ReactNode }) {
 Import the theme CSS for Tailwind v4 tokens and base styles:
 
 ```tsx
-import '@holiveira/theme/theme.css';
+import '@ho-dev/theme/theme.css';
 ```
 
 Now you can use any Holiveira component:
 
 ```tsx
-import { Button } from '@holiveira/primitives';
-import { cn } from '@holiveira/utils';
+import { Button } from '@ho-dev/primitives';
+import { cn } from '@ho-dev/utils';
 
 export function SubmitForm() {
   return (

@@ -1,4 +1,4 @@
-# @holiveira/testing
+# @ho-dev/testing
 
 Test utilities and render helpers.
 
@@ -10,13 +10,13 @@ matchers. Architectural role: testing infrastructure for framework consumers.
 ## Installation
 
 ```bash
-pnpm add @holiveira/testing
+pnpm add @ho-dev/testing
 ```
 
 ## Usage
 
 ```tsx
-import { renderWithProviders, mockRouter } from '@holiveira/testing';
+import { renderWithProviders, mockRouter } from '@ho-dev/testing';
 import { MyComponent } from './MyComponent';
 
 it('renders with providers', () => {
@@ -62,5 +62,5 @@ See `docs/architecture/contracts/testing.md` for ownership and dependency bounda
 
 ## References
 
-- `@holiveira/providers` — provider composition patterns
-- `@holiveira/theme` — theme provider for test renders
+- `@ho-dev/providers` — provider composition patterns
+- `@ho-dev/theme` — theme provider for test renders

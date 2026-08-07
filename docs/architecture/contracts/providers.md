@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/providers
+# Package Contract: @ho-dev/providers
 
 Level: 3 Category: Composition
 
@@ -18,7 +18,7 @@ This principle guarantees:
 
 ## Provider Definition
 
-A **provider** in the @holiveira framework is a React component that:
+A **provider** in the @ho-dev framework is a React component that:
 
 1. Accepts `{ children: ReactNode }` as its only required prop
 2. Provides context or behavior to its entire descendant tree
@@ -32,21 +32,21 @@ rather than deeply nested JSX.
 
 ## Provider Ownership Table
 
-Every concrete provider belongs to the package that owns its underlying domain. @holiveira/providers
+Every concrete provider belongs to the package that owns its underlying domain. @ho-dev/providers
 owns **none** of them.
 
-| Provider              | Owner Package        | Step | Domain                                | Status       |
-| --------------------- | -------------------- | ---- | ------------------------------------- | ------------ |
-| `ThemeProvider`       | `@holiveira/theme`   | 9    | Theme switching (dark/light mode)     | ✅ Extracted |
-| `SidebarProvider`     | `@holiveira/layouts` | 13   | Sidebar open/close state              | ✅ Extracted |
-| `useSidebarContext`   | `@holiveira/layouts` | 13   | Sidebar context consumer              | ✅ Extracted |
-| `AuthProvider`        | `@holiveira/auth`    | 18   | Authentication session + user state   | ⏳ Pending   |
-| `ApiProvider`         | `@holiveira/api`     | 17   | API client configuration + caching    | ⏳ Pending   |
-| `I18nProvider`        | `@holiveira/i18n`    | 6\*  | Translation scope / locale            | ⏳ Future    |
-| `QueryClientProvider` | Application layer    | —    | Third-party (TanStack Query)          | App-owned    |
-| `AppProviders`        | Application layer    | —    | App-specific provider composition     | App-owned    |
-| `Toaster`             | Application layer    | —    | Toast notifications (sonner)          | App-owned    |
-| `ErrorBoundary`       | Application layer    | —    | Error boundary (react-error-boundary) | App-owned    |
+| Provider              | Owner Package     | Step | Domain                                | Status       |
+| --------------------- | ----------------- | ---- | ------------------------------------- | ------------ |
+| `ThemeProvider`       | `@ho-dev/theme`   | 9    | Theme switching (dark/light mode)     | ✅ Extracted |
+| `SidebarProvider`     | `@ho-dev/layouts` | 13   | Sidebar open/close state              | ✅ Extracted |
+| `useSidebarContext`   | `@ho-dev/layouts` | 13   | Sidebar context consumer              | ✅ Extracted |
+| `AuthProvider`        | `@ho-dev/auth`    | 18   | Authentication session + user state   | ⏳ Pending   |
+| `ApiProvider`         | `@ho-dev/api`     | 17   | API client configuration + caching    | ⏳ Pending   |
+| `I18nProvider`        | `@ho-dev/i18n`    | 6\*  | Translation scope / locale            | ⏳ Future    |
+| `QueryClientProvider` | Application layer | —    | Third-party (TanStack Query)          | App-owned    |
+| `AppProviders`        | Application layer | —    | App-specific provider composition     | App-owned    |
+| `Toaster`             | Application layer | —    | Toast notifications (sonner)          | App-owned    |
+| `ErrorBoundary`       | Application layer | —    | Error boundary (react-error-boundary) | App-owned    |
 
 \* i18n currently formatting-only; provider deferred until translation support is added.
 
@@ -87,16 +87,16 @@ and api packages exist.
 
 ## Allowed Dependencies
 
-- `@holiveira/types` (L0) — shared contract types
+- `@ho-dev/types` (L0) — shared contract types
 
 ## Forbidden Dependencies
 
-- `@holiveira/theme` (L3) — owns ThemeProvider, not providers
-- `@holiveira/hooks` (L2) — owns hooks, not providers
-- `@holiveira/layouts` (L3) — owns SidebarProvider, not providers
-- `@holiveira/auth` (L4) — owns AuthProvider, not providers
-- `@holiveira/api` (L4) — owns ApiProvider, not providers
-- `@holiveira/data` (L4) — data layer, not a provider concern
+- `@ho-dev/theme` (L3) — owns ThemeProvider, not providers
+- `@ho-dev/hooks` (L2) — owns hooks, not providers
+- `@ho-dev/layouts` (L3) — owns SidebarProvider, not providers
+- `@ho-dev/auth` (L4) — owns AuthProvider, not providers
+- `@ho-dev/api` (L4) — owns ApiProvider, not providers
+- `@ho-dev/data` (L4) — data layer, not a provider concern
 - Any application — apps compose providers; framework doesn't depend on apps
 
 ## Migration Sources
@@ -105,10 +105,10 @@ None — new utility. The monolith's `src/app/providers.tsx` stays in the applic
 
 ## Migration Note
 
-`ThemeProvider` has been consolidated into `@holiveira/theme`. Applications must import it from
-`@holiveira/theme`, not `@holiveira/providers`.
+`ThemeProvider` has been consolidated into `@ho-dev/theme`. Applications must import it from
+`@ho-dev/theme`, not `@ho-dev/providers`.
 
-`SidebarProvider` and `useSidebarContext` have been extracted to `@holiveira/layouts` (Step 13).
+`SidebarProvider` and `useSidebarContext` have been extracted to `@ho-dev/layouts` (Step 13).
 
 ## See Also
 

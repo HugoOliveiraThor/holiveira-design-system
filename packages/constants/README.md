@@ -1,4 +1,4 @@
-# @holiveira/constants
+# @ho-dev/constants
 
 Application constants.
 
@@ -10,7 +10,7 @@ single source of truth for cross-package constant values.
 ## Installation
 
 ```bash
-pnpm add @holiveira/constants
+pnpm add @ho-dev/constants
 ```
 
 ## Architecture Contract

@@ -4,7 +4,7 @@
 
 ## Package
 
-Which `@holiveira/*` package(s) does this change affect?
+Which `@ho-dev/*` package(s) does this change affect?
 
 ## Type of Change
 

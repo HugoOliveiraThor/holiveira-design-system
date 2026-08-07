@@ -1,4 +1,4 @@
-# @holiveira/auth
+# @ho-dev/auth
 
 Authentication and RBAC infrastructure.
 
@@ -10,24 +10,24 @@ role-based authorization. Architectural role: provides auth primitives for the e
 ## Installation
 
 ```bash
-pnpm add @holiveira/auth
+pnpm add @ho-dev/auth
 ```
 
-Requires `next`, `react`, and a configured `@holiveira/db` instance.
+Requires `next`, `react`, and a configured `@ho-dev/db` instance.
 
 ## Usage
 
 ```ts
 // Server-side
-import { auth } from '@holiveira/auth';
+import { auth } from '@ho-dev/auth';
 const session = await auth.api.getSession({ headers });
 
 // Client-side
-import { authClient, useSession } from '@holiveira/auth';
+import { authClient, useSession } from '@ho-dev/auth';
 const { data: session } = useSession();
 
 // Middleware protection
-import { createProxy } from '@holiveira/auth';
+import { createProxy } from '@ho-dev/auth';
 export default createProxy({ auth, config: { publicRoutes: ['/sign-in'] } });
 ```
 
@@ -56,12 +56,12 @@ export default createProxy({ auth, config: { publicRoutes: ['/sign-in'] } });
 proxy.
 
 **Does not own:** Auth UI components (sign-in/sign-up pages), OAuth provider credentials, user
-profile data, or database schema (delegated to `@holiveira/db`).
+profile data, or database schema (delegated to `@ho-dev/db`).
 
 See `docs/architecture/contracts/auth.md` for ownership and dependency boundaries.
 
 ## References
 
-- `@holiveira/db` — Prisma adapter dependency
-- `@holiveira/config` — auth configuration
-- `@holiveira/types` — shared type foundation
+- `@ho-dev/db` — Prisma adapter dependency
+- `@ho-dev/config` — auth configuration
+- `@ho-dev/types` — shared type foundation

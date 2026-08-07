@@ -7,23 +7,23 @@
     "build:next": "next build"
   },
   "dependencies": {
-    "@holiveira/charts": "workspace:*",
-    "@holiveira/constants": "workspace:*",
-    "@holiveira/forms": "workspace:*",
-    "@holiveira/hooks": "workspace:*",
-    "@holiveira/i18n": "workspace:*",
-    "@holiveira/icons": "workspace:*",
-    "@holiveira/layouts": "workspace:*",
-    "@holiveira/primitives": "workspace:*",
-    "@holiveira/providers": "workspace:*",
-    "@holiveira/theme": "workspace:*",
-    "@holiveira/tokens": "workspace:*",
-    "@holiveira/types": "workspace:*",
-    "@holiveira/ui": "workspace:*",
-    "@holiveira/utils": "workspace:*"
+    "@ho-dev/charts": "workspace:*",
+    "@ho-dev/constants": "workspace:*",
+    "@ho-dev/forms": "workspace:*",
+    "@ho-dev/hooks": "workspace:*",
+    "@ho-dev/i18n": "workspace:*",
+    "@ho-dev/icons": "workspace:*",
+    "@ho-dev/layouts": "workspace:*",
+    "@ho-dev/primitives": "workspace:*",
+    "@ho-dev/providers": "workspace:*",
+    "@ho-dev/theme": "workspace:*",
+    "@ho-dev/tokens": "workspace:*",
+    "@ho-dev/types": "workspace:*",
+    "@ho-dev/ui": "workspace:*",
+    "@ho-dev/utils": "workspace:*"
   },
   "devDependencies": {
-    "@holiveira/eslint": "workspace:*"
+    "@ho-dev/eslint": "workspace:*"
   },
   "peerDependencies": {
     "next": "^16.1.6",

@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/forms
+# Package Contract: @ho-dev/forms
 
 Level: 3 Category: Composition
 
@@ -16,16 +16,16 @@ Provide a form system integrating React Hook Form + Zod validation with themed f
 
 ## Allowed Dependencies
 
-- `@holiveira/ui` (L3) — composite UI components
-- `@holiveira/primitives` (L2) — base field components
-- `@holiveira/hooks` (L2) — form-related hooks
-- `@holiveira/utils` (L1) — shared utilities
-- `@holiveira/types` (L0) — shared types
+- `@ho-dev/ui` (L3) — composite UI components
+- `@ho-dev/primitives` (L2) — base field components
+- `@ho-dev/hooks` (L2) — form-related hooks
+- `@ho-dev/utils` (L1) — shared utilities
+- `@ho-dev/types` (L0) — shared types
 
 ## Forbidden Dependencies
 
-- `@holiveira/auth` (L4) — forms are presentation, not auth
-- `@holiveira/charts` (L3) — unrelated concern
+- `@ho-dev/auth` (L4) — forms are presentation, not auth
+- `@ho-dev/charts` (L3) — unrelated concern
 - Any application
 
 ## Public API
@@ -37,7 +37,7 @@ Provide a form system integrating React Hook Form + Zod validation with themed f
 - `Label`, `LabelProps` — Accessible label associated with a form input
 - `Description`, `DescriptionProps` — Descriptive text for a form field
 - `ErrorMessage`, `ErrorMessageProps` — Error message announcer with role="alert"
-- `Submit`, `SubmitProps` — Submit button wrapping @holiveira/primitives Button
+- `Submit`, `SubmitProps` — Submit button wrapping @ho-dev/primitives Button
 
 ### Widgets
 

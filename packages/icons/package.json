@@ -1,5 +1,5 @@
 {
-  "name": "@holiveira/icons",
+  "name": "@ho-dev/icons",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -30,7 +30,7 @@
   ],
   "dependencies": {},
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.0.0"

@@ -1,4 +1,4 @@
-# @holiveira/utils
+# @ho-dev/utils
 
 Foundation utility library for class name composition, object manipulation, and timing functions.
 
@@ -11,13 +11,13 @@ packages.
 ## Installation
 
 ```bash
-pnpm add @holiveira/utils
+pnpm add @ho-dev/utils
 ```
 
 ## Usage
 
 ```tsx
-import { cn, cva, debounce } from '@holiveira/utils';
+import { cn, cva, debounce } from '@ho-dev/utils';
 
 // Class name merging
 cn('px-4 py-2', isActive && 'bg-primary');
@@ -64,8 +64,7 @@ const handleSearch = debounce((query: string) => fetchResults(query), 300);
 (`cva`), object manipulation, timing utilities.
 
 **Does not own:** UI components, business logic, framework-specific utilities, locale-aware
-formatting (`formatDate`, `formatCurrency` — owned by `@holiveira/i18n`), or application-level
-helpers.
+formatting (`formatDate`, `formatCurrency` — owned by `@ho-dev/i18n`), or application-level helpers.
 
 Contract: `docs/architecture/contracts/utils.md`
 
@@ -81,5 +80,5 @@ MIT
 
 ## References
 
-- `@holiveira/types` — shared type definitions
-- `@holiveira/i18n` — locale-aware formatting (moved from utils)
+- `@ho-dev/types` — shared type definitions
+- `@ho-dev/i18n` — locale-aware formatting (moved from utils)

@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart } from '@holiveira/charts';
+import { BarChart } from '@ho-dev/charts';
 
 const series = [
   {

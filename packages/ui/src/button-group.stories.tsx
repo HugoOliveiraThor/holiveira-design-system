@@ -1,4 +1,4 @@
-import { Button } from '@holiveira/primitives';
+import { Button } from '@ho-dev/primitives';
 
 import type { Meta, StoryObj } from '@storybook/react';
 

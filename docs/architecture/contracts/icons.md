@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/icons
+# Package Contract: @ho-dev/icons
 
 Level: 2 Category: Primitives
 
@@ -26,12 +26,12 @@ Provide a consistent, tree-shakeable icon system with accessible SVG icon compon
 
 - `react` (peer) — JSX, forwardRef
 - `react-dom` (peer) — forwardRef DOM access
-- `@holiveira/types` (L0 peer) — type compatibility
+- `@ho-dev/types` (L0 peer) — type compatibility
 
 ## Forbidden Dependencies
 
-- `@holiveira/theme` (L3) — icons must be theme-agnostic
-- `@holiveira/primitives` (L2) — icons are dependencies of primitives, not vice versa
+- `@ho-dev/theme` (L3) — icons must be theme-agnostic
+- `@ho-dev/primitives` (L2) — icons are dependencies of primitives, not vice versa
 - Any icon library (lucide-react, react-icons, etc.)
 
 ## Public API

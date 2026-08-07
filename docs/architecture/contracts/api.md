@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/api
+# Package Contract: @ho-dev/api
 
 Level: 4 Category: Services
 
@@ -22,7 +22,7 @@ business endpoints.
 
 ## Forbidden Dependencies
 
-- Any @holiveira/\* package — api is a standalone HTTP client
+- Any @ho-dev/\* package — api is a standalone HTTP client
 - Any database package
 - Any auth package
 - Any UI package

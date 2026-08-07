@@ -1,10 +1,10 @@
-# Package Contract: @holiveira/testing
+# Package Contract: @ho-dev/testing
 
 Level: 5 Category: Platform
 
 ## Purpose
 
-Provide shared testing infrastructure for all @holiveira/\* packages and the monolith application:
+Provide shared testing infrastructure for all @ho-dev/\* packages and the monolith application:
 Vitest environment setup, generic React Testing Library render wrapper, custom matchers, Next.js
 mocks, browser API mocks, and test utilities.
 
@@ -28,8 +28,8 @@ mocks, browser API mocks, and test utilities.
 ## Non-Responsibilities
 
 - Test files / test suites — live in consumer packages
-- Database fixtures / seeds — cannot depend on @holiveira/db
-- API mocks — cannot depend on @holiveira/api
+- Database fixtures / seeds — cannot depend on @ho-dev/db
+- API mocks — cannot depend on @ho-dev/api
 - Playwright fixtures — deferred until first real E2E test exists
 - `toHaveNoA11yViolations` — deferred until first real a11y test exists
 - Jest configuration — Vitest is the standard, no Jest ever
@@ -40,17 +40,17 @@ mocks, browser API mocks, and test utilities.
 
 ## Allowed Dependencies
 
-- `@holiveira/types` (L0) — shared types (optional, likely unused)
-- `@holiveira/utils` (L1) — test helpers (optional, likely unused)
+- `@ho-dev/types` (L0) — shared types (optional, likely unused)
+- `@ho-dev/utils` (L1) — test helpers (optional, likely unused)
 
 ## Forbidden Dependencies
 
-All other @holiveira/\* packages (theme, layouts, auth, api, db, primitives, ui, forms, charts,
+All other @ho-dev/\* packages (theme, layouts, auth, api, db, primitives, ui, forms, charts,
 providers, hooks, icons, i18n, tokens, config, constants).
 
 ## Entry Point
 
-Single entry: `@holiveira/testing`
+Single entry: `@ho-dev/testing`
 
 - No sub-path exports (`/jest`, `/playwright`, `/shared` are NOT created)
 - Sub-paths may be added later as non-breaking additive changes when justified

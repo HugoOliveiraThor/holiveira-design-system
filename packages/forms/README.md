@@ -1,4 +1,4 @@
-# @holiveira/forms
+# @ho-dev/forms
 
 Form components with validation integration.
 
@@ -11,7 +11,7 @@ provides the official form composition contract for the framework.
 ## Installation
 
 ```bash
-pnpm add @holiveira/forms
+pnpm add @ho-dev/forms
 ```
 
 Requires `react-hook-form`, `zod`, and `flatpickr`.
@@ -21,7 +21,7 @@ Requires `react-hook-form`, `zod`, and `flatpickr`.
 ```tsx
 import { z } from 'zod';
 
-import { Form, Field, Label, ErrorMessage, Submit, zodResolver } from '@holiveira/forms';
+import { Form, Field, Label, ErrorMessage, Submit, zodResolver } from '@ho-dev/forms';
 
 const schema = z.object({ email: z.string().email() });
 
@@ -42,7 +42,7 @@ function MyForm() {
 Import DatePicker styles:
 
 ```css
-@import '@holiveira/forms/date-picker-styles.css';
+@import '@ho-dev/forms/date-picker-styles.css';
 ```
 
 ## Public API
@@ -75,7 +75,7 @@ Import DatePicker styles:
 | `SubmitHandler`     | type      | Submit handler function type               |
 | `zodResolver`       | function  | Zod resolver for react-hook-form           |
 
-**CSS:** `@holiveira/forms/date-picker-styles.css` — DatePicker flatpickr theme overrides.
+**CSS:** `@ho-dev/forms/date-picker-styles.css` — DatePicker flatpickr theme overrides.
 
 ## Peer Dependencies
 
@@ -120,6 +120,6 @@ MIT — see [LICENSE](../../LICENSE).
 
 ## References
 
-- `@holiveira/primitives` — base component dependencies
-- `@holiveira/hooks` — interaction hooks
-- `@holiveira/utils` — utility functions
+- `@ho-dev/primitives` — base component dependencies
+- `@ho-dev/hooks` — interaction hooks
+- `@ho-dev/utils` — utility functions

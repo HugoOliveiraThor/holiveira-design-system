@@ -1,4 +1,4 @@
-import { cn } from '@holiveira/utils';
+import { cn } from '@ho-dev/utils';
 
 import Link from 'next/link';
 import type { HTMLAttributes } from 'react';

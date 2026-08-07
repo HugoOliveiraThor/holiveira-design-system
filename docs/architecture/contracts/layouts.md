@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/layouts
+# Package Contract: @ho-dev/layouts
 
 Level: 3 Category: Composition
 
@@ -15,16 +15,16 @@ Provide page-level layout components (Sidebar, Header) for dashboard and applica
 
 ## Allowed Dependencies
 
-- `@holiveira/ui` (L3) — composite UI components
-- `@holiveira/primitives` (L2) — atomic components
-- `@holiveira/theme` (L3) — theme context
-- `@holiveira/hooks` (L2) — useIsMobile for responsive behavior
-- `@holiveira/types` (L0) — shared types
+- `@ho-dev/ui` (L3) — composite UI components
+- `@ho-dev/primitives` (L2) — atomic components
+- `@ho-dev/theme` (L3) — theme context
+- `@ho-dev/hooks` (L2) — useIsMobile for responsive behavior
+- `@ho-dev/types` (L0) — shared types
 
 ## Forbidden Dependencies
 
-- `@holiveira/forms` (L3) — layout has no concern with forms
-- `@holiveira/charts` (L3) — charts are page content, not layout
+- `@ho-dev/forms` (L3) — layout has no concern with forms
+- `@ho-dev/charts` (L3) — charts are page content, not layout
 
 ## Public API
 

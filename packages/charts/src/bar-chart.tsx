@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@holiveira/utils';
+import { cn } from '@ho-dev/utils';
 
 import type { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';

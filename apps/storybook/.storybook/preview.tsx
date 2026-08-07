@@ -1,10 +1,10 @@
-import { ThemeProvider } from '@holiveira/theme';
+import { ThemeProvider } from '@ho-dev/theme';
 
 import { withThemeByClassName } from '@storybook/addon-themes';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
 
-import '@holiveira/theme/theme.css';
+import '@ho-dev/theme/theme.css';
 
 const preview: Preview = {
   decorators: [

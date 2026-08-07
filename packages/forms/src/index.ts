@@ -30,7 +30,7 @@ export { Description, type DescriptionProps } from './components/description';
 export { ErrorMessage, type ErrorMessageProps } from './components/error-message';
 
 /**
- * Submit button wrapping @holiveira/primitives Button with type="submit".
+ * Submit button wrapping @ho-dev/primitives Button with type="submit".
  * @public
  */
 export { Submit, type SubmitProps } from './components/submit';

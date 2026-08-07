@@ -1,4 +1,4 @@
-import { Button } from '@holiveira/primitives';
+import { Button } from '@ho-dev/primitives';
 
 import { cleanup } from '@testing-library/react';
 import { describe, it, expect, afterEach } from 'vitest';

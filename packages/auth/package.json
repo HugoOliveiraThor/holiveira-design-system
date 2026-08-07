@@ -1,5 +1,5 @@
 {
-  "name": "@holiveira/auth",
+  "name": "@ho-dev/auth",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.7",
-    "@holiveira/db": "workspace:*",
+    "@ho-dev/db": "workspace:*",
     "better-auth": "^1.6.7"
   },
   "peerDependencies": {
