@@ -1,6 +1,6 @@
 # HO Design System
 
-> Build professional applications on a foundation designed to last.
+> Start from architecture, not boilerplate.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -8,11 +8,18 @@
 
 ## Why HO Exists
 
-HO Design System was born from repeatedly rebuilding the same architectural foundation across
-multiple real-world professional applications. Project structure, authentication, layouts, forms,
-design tokens, themes, infrastructure, development standards, and governance were recreated from
-scratch each time. The project exists to capture those engineering decisions into a reusable
-platform so every new project starts from architecture instead of boilerplate.
+HO Design System was born from my own need. Across multiple real-world professional applications, I
+kept rebuilding the same architectural foundation from scratch — project structure, authentication,
+layouts, forms, design tokens, themes, infrastructure, development standards, and governance. None
+of that was the product; all of it was the prerequisite. HO exists to stop paying that tax on every
+project.
+
+The market is full of excellent designs. Rather than start from zero, I studied what the best
+existing design systems do well and shaped HO around the scenarios I actually face in production —
+more specific, more opinionated, tailored to how I build.
+
+I did not build this for an audience. I built it for myself, so every new project starts from
+**architecture instead of boilerplate**. If it helps other developers do the same, even better.
 
 ## Quick Start
 
