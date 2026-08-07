@@ -8,7 +8,7 @@ if (!process.env.BETTER_AUTH_SECRET) {
 }
 
 export const auth = betterAuth({
-  appName: 'Holiveira',
+  appName: 'HO Design System',
   baseURL: process.env.BETTER_AUTH_URL!,
 
   user: {

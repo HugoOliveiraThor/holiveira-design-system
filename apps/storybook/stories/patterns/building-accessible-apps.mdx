@@ -1,16 +1,16 @@
 import { Meta } from '@storybook/blocks';
 
-<Meta title="Patterns/Building Accessible Apps with Holiveira" />
+<Meta title="Patterns/Building Accessible Apps with HO Design System" />
 
-# Building Accessible Apps with Holiveira
+# Building Accessible Apps with HO Design System
 
-This guide explains how to use Holiveira components to build WCAG 2.2 AA compliant applications.
+This guide explains how to use HO Design System components to build WCAG 2.2 AA compliant applications.
 
 ---
 
-## What Holiveira Guarantees
+## What HO Design System Guarantees
 
-When you use Holiveira components as designed, the following are guaranteed at the **component level**:
+When you use HO Design System components as designed, the following are guaranteed at the **component level**:
 
 - **Keyboard accessibility** — every interactive component responds to Tab, Enter, Space, Escape, and Arrow keys
 - **ARIA attributes** — required ARIA is self-declared by each component
@@ -33,7 +33,7 @@ Page-level accessibility is the consumer's responsibility:
 
 ---
 
-## Using ARIA with Holiveira Components
+## Using ARIA with HO Design System Components
 
 Components that extend native HTML attributes accept custom ARIA:
 
@@ -76,7 +76,7 @@ Components that do NOT extend native HTML attributes have all required ARIA buil
 
 - **Dropdown menus** — focus is trapped within the open menu. Tab cycles through menu items. Escape closes and returns focus to the trigger.
 - **Form errors** — when validation fails, focus moves to the first field with an error. Error messages are announced via `aria-live`.
-- **Focus indicators** — Holiveira uses browser default `:focus-visible`. Customize via CSS:
+- **Focus indicators** — HO Design System uses browser default `:focus-visible`. Customize via CSS:
 
 ```css
 /* Custom focus ring */
@@ -90,7 +90,7 @@ button:focus-visible {
 
 ## Reduced Motion
 
-All Holiveira animations respect `prefers-reduced-motion`. Users who set this preference in their operating system will not see animations. This applies to:
+All HO Design System animations respect `prefers-reduced-motion`. Users who set this preference in their operating system will not see animations. This applies to:
 
 - Skeleton pulse animation
 - Sidebar slide transitions
@@ -100,7 +100,7 @@ All Holiveira animations respect `prefers-reduced-motion`. Users who set this pr
 
 ## Color and Contrast
 
-Holiveira design tokens pass WCAG AA contrast ratios:
+HO Design System design tokens pass WCAG AA contrast ratios:
 
 - Normal text (< 18px): minimum 4.5:1
 - Large text (>= 18px): minimum 3:1
@@ -113,7 +113,7 @@ Color is never the sole differentiator — components use icons, text labels, an
 
 ## Accessibility Testing
 
-Holiveira's testing infrastructure includes:
+HO Design System's testing infrastructure includes:
 
 - **axe-core** — automated WCAG compliance checks in vitest (CI-blocking)
 - **Keyboard tests** — every interactive component has keyboard interaction tests (CI-blocking)

@@ -1,4 +1,4 @@
-# Holiveira
+# HO Design System
 
 > Build professional applications on a foundation designed to last.
 
@@ -6,13 +6,13 @@
 
 ---
 
-## Why Holiveira Exists
+## Why HO Exists
 
-Holiveira was born from repeatedly rebuilding the same architectural foundation across multiple
-real-world professional applications. Project structure, authentication, layouts, forms, design
-tokens, themes, infrastructure, development standards, and governance were recreated from scratch
-each time. The project exists to capture those engineering decisions into a reusable platform so
-every new project starts from architecture instead of boilerplate.
+HO Design System was born from repeatedly rebuilding the same architectural foundation across
+multiple real-world professional applications. Project structure, authentication, layouts, forms,
+design tokens, themes, infrastructure, development standards, and governance were recreated from
+scratch each time. The project exists to capture those engineering decisions into a reusable
+platform so every new project starts from architecture instead of boilerplate.
 
 ## Quick Start
 
@@ -33,22 +33,22 @@ function App() {
 }
 ```
 
-## What is Holiveira
+## What is HO Design System
 
-Holiveira is a composable, engineering-first Design System for professional web applications. It is
-a monorepo of independent npm packages under the `@ho-dev/*` namespace — install only what you use,
-nothing more.
+HO Design System is a composable, engineering-first Design System for professional web applications.
+It is a monorepo of independent npm packages under the `@ho-dev/*` namespace — install only what you
+use, nothing more.
 
 The project is React-first and Next.js-optimized, with built-in professional application
 infrastructure: authentication, authorization with RBAC, forms with validation, charting, theming
 with dark mode, and application layouts.
 
 Every decision is documented in specifications, ADRs, and contracts. Public APIs are governed by
-explicit rules. Standards are intentional, not accidental. Holiveira is not defined by feature count
-— it is defined by engineering quality.
+explicit rules. Standards are intentional, not accidental. HO Design System is not defined by
+feature count — it is defined by engineering quality.
 
-Holiveira is not a template, a starter kit, or a copy-paste component library. It is a long-term
-engineering investment designed for a 10+ year lifecycle.
+HO Design System is not a template, a starter kit, or a copy-paste component library. It is a
+long-term engineering investment designed for a 10+ year lifecycle.
 
 ## Ecosystem
 
@@ -84,8 +84,9 @@ engineering investment designed for a 10+ year lifecycle.
 
 ## Architecture
 
-Holiveira follows a five-level dependency hierarchy. Lower levels never import from higher levels.
-Every dependency has a documented owner. Every architectural decision has a written rationale.
+HO Design System follows a five-level dependency hierarchy. Lower levels never import from higher
+levels. Every dependency has a documented owner. Every architectural decision has a written
+rationale.
 
 ```
 Core (Level 0)
@@ -145,8 +146,8 @@ pnpm run db:generate
 
 ## Releases
 
-Holiveira uses [Changesets](https://github.com/changesets/changesets) for independent per-package
-semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
+HO Design System uses [Changesets](https://github.com/changesets/changesets) for independent
+per-package semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
 `@ho-dev/charts` does not force a major bump in `@ho-dev/types`.
 
 The release pipeline is fully automated:

@@ -4,7 +4,7 @@ import { Card } from '@ho-dev/ui';
 export default function Page() {
   return (
     <main style={{ padding: 24 }}>
-      <h1>Holiveira with Next.js</h1>
+      <h1>HO Design System with Next.js</h1>
       <p>Reference application for the @ho-dev design system.</p>
 
       <Card>
@@ -14,7 +14,7 @@ export default function Page() {
 
       <Alert
         variant="success"
-        title="Holiveira"
+        title="HO Design System"
         description="A composable, engineering-first design system."
       />
 

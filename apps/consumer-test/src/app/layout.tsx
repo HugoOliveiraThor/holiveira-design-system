@@ -8,7 +8,7 @@ import '@ho-dev/charts/chart-styles.css';
 import '@ho-dev/forms/date-picker-styles.css';
 
 export const metadata: Metadata = {
-  title: 'Consumer Test — Holiveira',
+  title: 'Consumer Test — HO Design System',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

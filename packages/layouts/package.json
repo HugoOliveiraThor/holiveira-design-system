@@ -6,6 +6,7 @@
   "description": "Application layout components.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "layouts",
@@ -13,7 +14,7 @@
     "header"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",

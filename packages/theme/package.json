@@ -6,6 +6,7 @@
   "description": "Design tokens and theme system.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "theme",
@@ -13,7 +14,7 @@
     "dark-mode"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",

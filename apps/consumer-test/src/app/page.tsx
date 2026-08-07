@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <main style={{ padding: 24 }}>
-      <h1>Consumer Test — Holiveira Design System</h1>
+      <h1>Consumer Test — HO Design System</h1>
       <p>Validation harness for published packages. Not a demo.</p>
       <nav>
         <ul>

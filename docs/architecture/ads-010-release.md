@@ -11,7 +11,7 @@
 
 ## Section 1 — Purpose
 
-This specification defines the release architecture for the Holiveira Design System. It establishes versioning strategy, publishing infrastructure, consumer validation, package metadata standards, documentation architecture, and CI/CD release automation.
+This specification defines the release architecture for the HO Design System. It establishes versioning strategy, publishing infrastructure, consumer validation, package metadata standards, documentation architecture, and CI/CD release automation.
 
 **Why:** The repository is architecturally ready for release (M1-M9 complete, 31/31 AC pass) but has zero release infrastructure: all 20 packages are `"private": true`, exports maps point to source files, no CI/CD release automation exists, and no package has ever been published to npm. This specification closes that gap.
 
@@ -180,7 +180,7 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 2. **Independent versioning respects asymmetric maturity.** `@ho-dev/types` MUST NOT bump to `2.0.0` because `@ho-dev/charts` has a breaking change. Each package evolves at its own velocity.
 
-3. **Every package pays its own bundle cost.** The published tarball contains only `dist/`, `README.md`, and `LICENSE`. Source files, tests, and stories are excluded. The consumer's bundler is responsible for tree-shaking — Holiveira's responsibility is to ensure tree-shaking is *possible*.
+3. **Every package pays its own bundle cost.** The published tarball contains only `dist/`, `README.md`, and `LICENSE`. Source files, tests, and stories are excluded. The consumer's bundler is responsible for tree-shaking — HO Design System's responsibility is to ensure tree-shaking is *possible*.
 
 4. **CSS is compiled at build time, copied at publish time.** Tailwind v4 produces build-time CSS. Packages that export CSS files MUST copy them to dist/ during the build step. `tsc` does not copy non-TS files — the build script is responsible.
 
@@ -190,7 +190,7 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 7. **Documentation is tiered by complexity.** A package with 5 type exports does not need the same documentation surface as a package with 11 interactive components. Documentation effort is proportional to API surface.
 
-8. **Trust is built from zero.** As a first-time publisher, Holiveira MUST signal trust through: npm provenance, comprehensive documentation, consumer-verified quality, clean package metadata, and transparent versioning.
+8. **Trust is built from zero.** As a first-time publisher, HO Design System MUST signal trust through: npm provenance, comprehensive documentation, consumer-verified quality, clean package metadata, and transparent versioning.
 
 ### 5.2 Anti-Patterns
 
@@ -730,7 +730,7 @@ jobs:
   "sideEffects": false,
   "files": ["dist", "README.md", "LICENSE"],
   "keywords": ["holiveira", "design-system", "react", "typescript", "utilities"],
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "bugs": {
     "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
@@ -775,7 +775,7 @@ jobs:
     "build": "tsc && cp src/theme.css dist/"
   },
   "keywords": ["holiveira", "design-system", "react", "typescript", "theme"],
-  "author": "Holiveira"
+  "author": "HO Design System"
 }
 ```
 

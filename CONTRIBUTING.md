@@ -1,4 +1,4 @@
-# Contributing to Holiveira
+# Contributing to HO Design System
 
 ## Development Setup
 
@@ -60,8 +60,9 @@ docs/        — Architecture documentation, specifications, contracts
 
 ### Architecture Governance
 
-Holiveira follows [SPEC-GOVERNANCE-001](docs/superpowers/specs/architecture-governance-workflow.md).
-All changes must follow the mandatory workflow:
+HO Design System follows
+[SPEC-GOVERNANCE-001](docs/superpowers/specs/architecture-governance-workflow.md). All changes must
+follow the mandatory workflow:
 
 ```
 Implementation → Reports → Architecture Audit → ARB Approval → Next Stage
@@ -95,8 +96,8 @@ Changesets are version-controlled and accumulate until a Version PR is created a
 
 ## Dependency Ownership
 
-Every third-party dependency has exactly one Holiveira owner package. Consumer packages depend on
-the Holiveira package, never on the third-party library directly.
+Every third-party dependency has exactly one HO Design System owner package. Consumer packages
+depend on the HO Design System package, never on the third-party library directly.
 
 | Third-party              | Owner            |
 | ------------------------ | ---------------- |

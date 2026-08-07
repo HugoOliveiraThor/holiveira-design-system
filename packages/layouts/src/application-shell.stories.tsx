@@ -44,7 +44,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <>
-      <Sidebar logo={<div className="text-lg font-bold">Holiveira</div>}>
+      <Sidebar logo={<div className="text-lg font-bold">HO Design System</div>}>
         <nav className="space-y-1">
           {navItems.map((item) => (
             <a
@@ -78,7 +78,7 @@ export const Default: Story = {
 export const MobileView: Story = {
   render: () => (
     <>
-      <Sidebar logo={<div className="text-lg font-bold">Holiveira</div>}>
+      <Sidebar logo={<div className="text-lg font-bold">HO Design System</div>}>
         <nav className="space-y-1">
           {navItems.map((item) => (
             <a

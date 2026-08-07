@@ -8,7 +8,7 @@ import '@ho-dev/charts/chart-styles.css';
 import '@ho-dev/forms/date-picker-styles.css';
 
 export const metadata: Metadata = {
-  title: 'Holiveira — Next.js Example',
+  title: 'HO Design System — Next.js Example',
   description: 'Reference application using @ho-dev packages.',
 };
 

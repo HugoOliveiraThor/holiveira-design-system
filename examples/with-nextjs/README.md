@@ -1,6 +1,6 @@
 # with-nextjs
 
-Reference Next.js application for the Holiveira design system.
+Reference Next.js application for the HO Design System.
 
     pnpm install
     pnpm dev
