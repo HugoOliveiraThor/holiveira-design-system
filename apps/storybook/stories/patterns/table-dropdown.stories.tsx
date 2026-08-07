@@ -1,11 +1,4 @@
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from '@holiveira/primitives';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@ho-dev/primitives';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';

@@ -1,7 +1,7 @@
 'use client';
 
-import { cva, cn } from '@holiveira/utils';
-import type { VariantProps } from '@holiveira/utils';
+import { cva, cn } from '@ho-dev/utils';
+import type { VariantProps } from '@ho-dev/utils';
 
 import { forwardRef, type HTMLAttributes } from 'react';
 

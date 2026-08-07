@@ -1,4 +1,4 @@
-# @holiveira/primitives
+# @ho-dev/primitives
 
 Accessible UI primitives.
 
@@ -10,7 +10,7 @@ components. Architectural role: foundational accessible component library for th
 ## Installation
 
 ```bash
-pnpm add @holiveira/primitives
+pnpm add @ho-dev/primitives
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import {
   Dropdown,
   DropdownContent,
   DropdownTrigger,
-} from '@holiveira/primitives';
+} from '@ho-dev/primitives';
 
 function MyComponent() {
   return (
@@ -121,8 +121,8 @@ MIT — see [LICENSE](../../LICENSE).
 
 ## References
 
-- `@holiveira/hooks` — interaction hooks
-- `@holiveira/icons` — icon components
-- `@holiveira/utils` — `cn()` and `cva()` utilities
-- `@holiveira/theme` — theme tokens
-- `@holiveira/types` — shared type definitions
+- `@ho-dev/hooks` — interaction hooks
+- `@ho-dev/icons` — icon components
+- `@ho-dev/utils` — `cn()` and `cva()` utilities
+- `@ho-dev/theme` — theme tokens
+- `@ho-dev/types` — shared type definitions

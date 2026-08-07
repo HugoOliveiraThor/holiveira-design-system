@@ -1,12 +1,11 @@
-# Package Contract: @holiveira/utils
+# Package Contract: @ho-dev/utils
 
 Level: 1 Category: Foundation
 
 ## Purpose
 
-Provide general-purpose, framework-agnostic utility functions reusable across all @holiveira
-packages and consuming applications. Foundation-level "standard library" with zero framework
-coupling.
+Provide general-purpose, framework-agnostic utility functions reusable across all @ho-dev packages
+and consuming applications. Foundation-level "standard library" with zero framework coupling.
 
 ## Responsibilities
 
@@ -17,7 +16,7 @@ coupling.
 - Type guards and runtime assertions (isDefined, isPlainObject, assertDefined)
 - Timing utilities (debounce, throttle)
 
-## Excluded Responsibilities (moved to @holiveira/i18n)
+## Excluded Responsibilities (moved to @ho-dev/i18n)
 
 The following are locale-aware and belong in the i18n package, not utils:
 
@@ -26,7 +25,7 @@ The following are locale-aware and belong in the i18n package, not utils:
 
 ## Allowed Dependencies
 
-- `@holiveira/types` (L0) — shared types
+- `@ho-dev/types` (L0) — shared types
 - `clsx` — class name construction
 - `tailwind-merge` — Tailwind class merging
 - `class-variance-authority` — component variant definitions
@@ -64,4 +63,4 @@ The following APIs are organized under a dedicated CSS/Class Composition module:
 
 ## Internal API
 
-None. All locale-aware helpers moved to @holiveira/i18n.
+None. All locale-aware helpers moved to @ho-dev/i18n.

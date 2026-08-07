@@ -1,11 +1,12 @@
 {
-  "name": "@holiveira/auth",
+  "name": "@ho-dev/auth",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "Authentication and RBAC infrastructure.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "authentication",
@@ -13,7 +14,7 @@
     "authorization"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/holiveira/holiveira",
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.7",
-    "@holiveira/db": "workspace:*",
+    "@ho-dev/db": "workspace:*",
     "better-auth": "^1.6.7"
   },
   "peerDependencies": {

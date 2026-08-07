@@ -1,4 +1,4 @@
-# @holiveira/db
+# @ho-dev/db
 
 Database client and adapter configuration.
 
@@ -10,7 +10,7 @@ layer for the framework.
 ## Installation
 
 ```bash
-pnpm add @holiveira/db
+pnpm add @ho-dev/db
 ```
 
 Requires a configured `DATABASE_URL` environment variable and PostgreSQL instance.
@@ -18,7 +18,7 @@ Requires a configured `DATABASE_URL` environment variable and PostgreSQL instanc
 ## Usage
 
 ```ts
-import { db } from '@holiveira/db';
+import { db } from '@ho-dev/db';
 
 const users = await db.user.findMany();
 const user = await db.user.findUnique({ where: { id } });
@@ -50,5 +50,5 @@ See `docs/architecture/contracts/db.md` for ownership and dependency boundaries.
 
 ## References
 
-- `@holiveira/config` — database configuration
-- `@holiveira/auth` — consumer of db client
+- `@ho-dev/config` — database configuration
+- `@ho-dev/auth` — consumer of db client

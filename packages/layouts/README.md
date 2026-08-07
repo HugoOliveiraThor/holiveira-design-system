@@ -1,4 +1,4 @@
-# @holiveira/layouts
+# @ho-dev/layouts
 
 Application shell components for dashboard and page-level layout.
 
@@ -10,13 +10,13 @@ role: provides layout infrastructure for professional applications.
 ## Installation
 
 ```bash
-pnpm add @holiveira/layouts
+pnpm add @ho-dev/layouts
 ```
 
 ## Usage
 
 ```tsx
-import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@holiveira/layouts';
+import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@ho-dev/layouts';
 
 function AppLayout() {
   return (
@@ -85,6 +85,6 @@ MIT
 
 ## References
 
-- `@holiveira/hooks` — `useIsMobile` for responsive behavior
-- `@holiveira/ui` — composite UI components
-- `@holiveira/utils` — `cn()` utility
+- `@ho-dev/hooks` — `useIsMobile` for responsive behavior
+- `@ho-dev/ui` — composite UI components
+- `@ho-dev/utils` — `cn()` utility

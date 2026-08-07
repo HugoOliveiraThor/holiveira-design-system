@@ -2,8 +2,8 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in Holiveira, please report it privately. Do not open a
-public issue.
+If you discover a security vulnerability in HO Design System, please report it privately. Do not
+open a public issue.
 
 Email vulnerability reports to the repository maintainers. Include:
 
@@ -29,7 +29,7 @@ Email vulnerability reports to the repository maintainers. Include:
 
 ## Scope
 
-The security policy covers all packages under the `@holiveira/*` namespace:
+The security policy covers all packages under the `@ho-dev/*` namespace:
 
 - All 16 public packages published to npm
 - The repository infrastructure (CI workflows, build pipeline)
@@ -43,7 +43,7 @@ Out of scope:
 
 ## Dependency Security
 
-Holiveira uses npm provenance for all published packages. Dependencies are locked via
+HO Design System uses npm provenance for all published packages. Dependencies are locked via
 `pnpm-lock.yaml`. Supply chain integrity is verified through:
 
 - `--frozen-lockfile` installation in CI

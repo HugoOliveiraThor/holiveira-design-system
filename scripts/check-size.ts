@@ -32,7 +32,7 @@ const BLOCK_PACKAGES = new Set(['icons', 'charts']);
 const WARN_PACKAGES = new Set(['primitives', 'forms', 'layouts', 'ui', 'theme']);
 
 function extractPackageName(entryName: string): string | null {
-  const m = entryName.match(/^@holiveira\/(\w+)/);
+  const m = entryName.match(/^@ho-dev\/(\w+)/);
   return m ? m[1] : null;
 }
 

@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/db
+# Package Contract: @ho-dev/db
 
 Level: 4 Category: Services
 
@@ -16,11 +16,11 @@ environment natively.
 
 ## Allowed Dependencies
 
-- None (Prisma runtime deps are external, not @holiveira/\*)
+- None (Prisma runtime deps are external, not @ho-dev/\*)
 
 ## Forbidden Dependencies
 
-- Any @holiveira/\* package — db is a leaf service with zero framework dependencies
+- Any @ho-dev/\* package — db is a leaf service with zero framework dependencies
 - Any UI package
 - Any application
 

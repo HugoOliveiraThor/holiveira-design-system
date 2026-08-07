@@ -1,4 +1,4 @@
-# @holiveira/types
+# @ho-dev/types
 
 Shared TypeScript type definitions.
 
@@ -11,7 +11,7 @@ role: type-level foundation for all packages. Types-only — zero runtime code.
 ## Installation
 
 ```bash
-pnpm add @holiveira/types
+pnpm add @ho-dev/types
 ```
 
 ## Architecture Contract

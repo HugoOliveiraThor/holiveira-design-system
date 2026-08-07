@@ -1,6 +1,6 @@
 'use client';
 
-import { Field, Form, Submit, useForm } from '@holiveira/forms';
+import { Field, Form, Submit, useForm } from '@ho-dev/forms';
 
 import { FormProvider } from 'react-hook-form';
 

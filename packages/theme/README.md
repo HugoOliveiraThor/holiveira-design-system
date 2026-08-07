@@ -1,4 +1,4 @@
-# @holiveira/theme
+# @ho-dev/theme
 
 Design tokens and theme system.
 
@@ -11,15 +11,15 @@ design tokens to runtime — the single source of truth for light/dark mode acro
 ## Installation
 
 ```bash
-pnpm add @holiveira/theme
+pnpm add @ho-dev/theme
 ```
 
-Requires `next-themes` and `@holiveira/tokens`.
+Requires `next-themes` and `@ho-dev/tokens`.
 
 ## Usage
 
 ```tsx
-import { ThemeProvider, useTheme } from '@holiveira/theme';
+import { ThemeProvider, useTheme } from '@ho-dev/theme';
 
 function App() {
   return (
@@ -42,7 +42,7 @@ function ThemeToggle() {
 Import theme CSS in your app root:
 
 ```css
-@import '@holiveira/theme/theme.css';
+@import '@ho-dev/theme/theme.css';
 ```
 
 ## Public API
@@ -53,7 +53,7 @@ Import theme CSS in your app root:
 | `ThemeProviderProps` | type      | ThemeProvider configuration props                                     |
 | `useTheme`           | hook      | Re-exported from next-themes for theme state access                   |
 
-**CSS:** `@holiveira/theme/theme.css` — base styles, border compatibility, and custom utilities.
+**CSS:** `@ho-dev/theme/theme.css` — base styles, border compatibility, and custom utilities.
 
 ## Peer Dependencies
 
@@ -78,8 +78,8 @@ Import theme CSS in your app root:
 **Owns:** Theme provider implementation, dark mode integration, theme context, default theme
 configuration.
 
-**Does not own:** Design token definitions (delegated to `@holiveira/tokens`), component-level
-theming, Tailwind CSS configuration, or theme switching UI (consumed by `@holiveira/layouts`).
+**Does not own:** Design token definitions (delegated to `@ho-dev/tokens`), component-level theming,
+Tailwind CSS configuration, or theme switching UI (consumed by `@ho-dev/layouts`).
 
 See `docs/architecture/contracts/theme.md` for ownership and dependency boundaries.
 
@@ -96,5 +96,5 @@ MIT — see [LICENSE](../../LICENSE).
 
 ## References
 
-- `@holiveira/tokens` — design token source
-- `@holiveira/types` — shared type definitions
+- `@ho-dev/tokens` — design token source
+- `@ho-dev/types` — shared type definitions

@@ -1,5 +1,5 @@
-import { Sidebar, SidebarProvider } from '@holiveira/layouts';
-import { Breadcrumb } from '@holiveira/ui';
+import { Sidebar, SidebarProvider } from '@ho-dev/layouts';
+import { Breadcrumb } from '@ho-dev/ui';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
@@ -14,7 +14,7 @@ function SidebarBreadcrumbLayout() {
   return (
     <SidebarProvider>
       <div className="flex min-h-[400px]">
-        <Sidebar logo={<div className="text-lg font-bold">Holiveira</div>}>
+        <Sidebar logo={<div className="text-lg font-bold">HO Design System</div>}>
           <nav className="space-y-1">
             {navItems.map((item) => (
               <a

@@ -1,4 +1,4 @@
-# @holiveira/config
+# @ho-dev/config
 
 Application configuration utilities.
 
@@ -10,7 +10,7 @@ Architectural role: foundation-level configuration layer with zero runtime depen
 ## Installation
 
 ```bash
-pnpm add @holiveira/config
+pnpm add @ho-dev/config
 ```
 
 ## Architecture Contract

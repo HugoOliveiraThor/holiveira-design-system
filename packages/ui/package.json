@@ -1,18 +1,19 @@
 {
-  "name": "@holiveira/ui",
+  "name": "@ho-dev/ui",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Composed UI component library.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "ui",
     "components"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
@@ -29,11 +30,11 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@holiveira/primitives": "workspace:*",
-    "@holiveira/utils": "workspace:*"
+    "@ho-dev/primitives": "workspace:*",
+    "@ho-dev/utils": "workspace:*"
   },
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

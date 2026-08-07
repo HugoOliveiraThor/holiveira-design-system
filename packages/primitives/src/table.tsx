@@ -1,4 +1,4 @@
-import { cn } from '@holiveira/utils';
+import { cn } from '@ho-dev/utils';
 
 import { forwardRef } from 'react';
 import type { HTMLAttributes, ThHTMLAttributes, TdHTMLAttributes } from 'react';

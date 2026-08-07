@@ -1,8 +1,8 @@
 /**
- * @holiveira/tokens — Design Tokens
+ * @ho-dev/tokens — Design Tokens
  *
  * The single source of truth for all visual primitives.
- * CSS custom properties are available via `@import "@holiveira/tokens/tokens.css"`.
+ * CSS custom properties are available via `@import "@ho-dev/tokens/tokens.css"`.
  */
 
 export { colors } from './colors';

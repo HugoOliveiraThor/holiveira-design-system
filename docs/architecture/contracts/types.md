@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/types
+# Package Contract: @ho-dev/types
 
 Level: 0 Category: Core
 
@@ -56,12 +56,12 @@ Provide shared TypeScript types used across all framework packages.
 The following types were specified in the original architecture but are **deferred** until their
 consuming packages (Data, API) are extracted in Steps 16-17:
 
-| Type              | Status   | Consumer        |
-| ----------------- | -------- | --------------- |
-| `Pagination`      | Deferred | @holiveira/data |
-| `Sort`            | Deferred | @holiveira/data |
-| `Filter`          | Deferred | @holiveira/data |
-| `PageResponse<T>` | Deferred | @holiveira/api  |
-| `DataStatus`      | Deferred | @holiveira/data |
-| `OrderDirection`  | Deferred | @holiveira/data |
-| `ViewMode`        | Deferred | @holiveira/ui   |
+| Type              | Status   | Consumer     |
+| ----------------- | -------- | ------------ |
+| `Pagination`      | Deferred | @ho-dev/data |
+| `Sort`            | Deferred | @ho-dev/data |
+| `Filter`          | Deferred | @ho-dev/data |
+| `PageResponse<T>` | Deferred | @ho-dev/api  |
+| `DataStatus`      | Deferred | @ho-dev/data |
+| `OrderDirection`  | Deferred | @ho-dev/data |
+| `ViewMode`        | Deferred | @ho-dev/ui   |

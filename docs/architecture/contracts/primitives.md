@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/primitives
+# Package Contract: @ho-dev/primitives
 
 Level: 2 Category: Primitives
 
@@ -9,7 +9,7 @@ Provide atomic, accessible UI primitives as the building blocks for all higher-l
 ## Responsibilities
 
 - Expose low-level components (Button, Input, Select, etc.) extracted from the monolith
-- Define component variants using `cva` from `@holiveira/utils`
+- Define component variants using `cva` from `@ho-dev/utils`
 - Ensure keyboard accessibility by default
 - Support controlled and uncontrolled usage
 - Use `forwardRef` and `displayName` on all components
@@ -36,19 +36,19 @@ Components extracted from the following monolith files:
 
 ## Allowed Dependencies
 
-- `@holiveira/hooks` (L2) — `useClickOutside` (used by Dropdown for click-away close)
-- `@holiveira/icons` (L2) — icon components used by Alert, Checkbox, Select, Switch
-- `@holiveira/theme` (L3) — `theme.css` peer dep (tailwind classes resolve)
-- `@holiveira/tokens` (L1) — design token values
-- `@holiveira/utils` (L1) — `cn()`, `cva`, `VariantProps`
-- `@holiveira/types` (L0) — `SetStateActionType`
+- `@ho-dev/hooks` (L2) — `useClickOutside` (used by Dropdown for click-away close)
+- `@ho-dev/icons` (L2) — icon components used by Alert, Checkbox, Select, Switch
+- `@ho-dev/theme` (L3) — `theme.css` peer dep (tailwind classes resolve)
+- `@ho-dev/tokens` (L1) — design token values
+- `@ho-dev/utils` (L1) — `cn()`, `cva`, `VariantProps`
+- `@ho-dev/types` (L0) — `SetStateActionType`
 
 ## Forbidden Dependencies
 
-- `@holiveira/ui` (L3) — primitives are lower-level than UI
-- `@holiveira/forms` (L3) — forms compose primitives, not the reverse
-- `@holiveira/layouts` (L3) — layouts consume primitives
-- `@holiveira/charts` (L3) — charts are a separate concern
+- `@ho-dev/ui` (L3) — primitives are lower-level than UI
+- `@ho-dev/forms` (L3) — forms compose primitives, not the reverse
+- `@ho-dev/layouts` (L3) — layouts consume primitives
+- `@ho-dev/charts` (L3) — charts are a separate concern
 
 ## Public API
 

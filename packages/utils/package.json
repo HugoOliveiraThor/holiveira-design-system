@@ -1,17 +1,18 @@
 {
-  "name": "@holiveira/utils",
+  "name": "@ho-dev/utils",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Shared utility functions.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "utilities"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
     "tailwind-merge": "^3.0.0"
   },
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {

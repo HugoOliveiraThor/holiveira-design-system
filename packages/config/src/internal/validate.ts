@@ -7,7 +7,7 @@ export function _validateConfig(schema: ConfigSchema): string[] {
     if (entry.required) {
       const value = process.env[key];
       if (!value) {
-        errors.push(`[@holiveira/config] Missing required environment variable: "${key}"`);
+        errors.push(`[@ho-dev/config] Missing required environment variable: "${key}"`);
       }
     }
   }

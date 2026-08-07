@@ -1,11 +1,12 @@
 {
-  "name": "@holiveira/primitives",
+  "name": "@ho-dev/primitives",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Accessible UI primitives.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "primitives",
@@ -13,7 +14,7 @@
     "ui"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
@@ -30,13 +31,13 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@holiveira/hooks": "workspace:*",
-    "@holiveira/icons": "workspace:*",
-    "@holiveira/utils": "workspace:*"
+    "@ho-dev/hooks": "workspace:*",
+    "@ho-dev/icons": "workspace:*",
+    "@ho-dev/utils": "workspace:*"
   },
   "peerDependencies": {
-    "@holiveira/types": "workspace:*",
-    "@holiveira/theme": "workspace:*",
+    "@ho-dev/types": "workspace:*",
+    "@ho-dev/theme": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.0.0"

@@ -1,7 +1,7 @@
 /**
- * @holiveira/types — Shared TypeScript types
+ * @ho-dev/types — Shared TypeScript types
  *
- * Universal, reusable types for the @holiveira framework.
+ * Universal, reusable types for the @ho-dev framework.
  * Types-only — zero runtime code, zero dependencies.
  */
 

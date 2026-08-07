@@ -1,7 +1,7 @@
 'use client';
 
-import { CheckIcon, XIcon } from '@holiveira/icons';
-import { cn } from '@holiveira/utils';
+import { CheckIcon, XIcon } from '@ho-dev/icons';
+import { cn } from '@ho-dev/utils';
 
 import { forwardRef, useId } from 'react';
 

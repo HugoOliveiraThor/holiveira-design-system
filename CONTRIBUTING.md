@@ -1,4 +1,4 @@
-# Contributing to Holiveira
+# Contributing to HO Design System
 
 ## Development Setup
 
@@ -46,22 +46,23 @@ docs/        — Architecture documentation, specifications, contracts
 - **Components**: PascalCase, matching file name (`Button` in `button.tsx`)
 - **Hooks**: `use` prefix (`useClickOutside`)
 - **Exports**: Named exports only — no `export default`
-- **Imports**: `@holiveira/*` first, then external, then relative
+- **Imports**: `@ho-dev/*` first, then external, then relative
 
 ### Conventions by Domain
 
-| Package                 | Convention                                |
-| ----------------------- | ----------------------------------------- |
-| `@holiveira/primitives` | cva variants, forwardRef, a11y attributes |
-| `@holiveira/forms`      | react-hook-form integration, Zod schemas  |
-| `@holiveira/hooks`      | Return ref + callback pattern             |
+| Package              | Convention                                |
+| -------------------- | ----------------------------------------- |
+| `@ho-dev/primitives` | cva variants, forwardRef, a11y attributes |
+| `@ho-dev/forms`      | react-hook-form integration, Zod schemas  |
+| `@ho-dev/hooks`      | Return ref + callback pattern             |
 
 ## Making Changes
 
 ### Architecture Governance
 
-Holiveira follows [SPEC-GOVERNANCE-001](docs/superpowers/specs/architecture-governance-workflow.md).
-All changes must follow the mandatory workflow:
+HO Design System follows
+[SPEC-GOVERNANCE-001](docs/superpowers/specs/architecture-governance-workflow.md). All changes must
+follow the mandatory workflow:
 
 ```
 Implementation → Reports → Architecture Audit → ARB Approval → Next Stage
@@ -95,15 +96,15 @@ Changesets are version-controlled and accumulate until a Version PR is created a
 
 ## Dependency Ownership
 
-Every third-party dependency has exactly one Holiveira owner package. Consumer packages depend on
-the Holiveira package, never on the third-party library directly.
+Every third-party dependency has exactly one HO Design System owner package. Consumer packages
+depend on the HO Design System package, never on the third-party library directly.
 
-| Third-party              | Owner               |
-| ------------------------ | ------------------- |
-| next-themes              | `@holiveira/theme`  |
-| class-variance-authority | `@holiveira/utils`  |
-| react-hook-form          | `@holiveira/forms`  |
-| apexcharts               | `@holiveira/charts` |
+| Third-party              | Owner            |
+| ------------------------ | ---------------- |
+| next-themes              | `@ho-dev/theme`  |
+| class-variance-authority | `@ho-dev/utils`  |
+| react-hook-form          | `@ho-dev/forms`  |
+| apexcharts               | `@ho-dev/charts` |
 
 See [ADS-003b](docs/superpowers/specs/dependency-ownership-architecture.md) for the full
 architecture.

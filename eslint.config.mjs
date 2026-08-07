@@ -1,4 +1,4 @@
-import { configBase, configReact } from '@holiveira/eslint';
+import { configBase, configReact } from '@ho-dev/eslint';
 
 const withFiles = (preset, files) => preset.map((c) => ({ ...c, files }));
 

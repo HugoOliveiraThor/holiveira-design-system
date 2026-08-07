@@ -1,8 +1,8 @@
 'use client';
 
-import { useClickOutside, useFocusTrap, useFocusRestore } from '@holiveira/hooks';
-import type { SetStateActionType } from '@holiveira/types';
-import { cn } from '@holiveira/utils';
+import { useClickOutside, useFocusTrap, useFocusRestore } from '@ho-dev/hooks';
+import type { SetStateActionType } from '@ho-dev/types';
+import { cn } from '@ho-dev/utils';
 
 import { createContext, useContext, useEffect, useRef, useCallback, type ReactNode } from 'react';
 

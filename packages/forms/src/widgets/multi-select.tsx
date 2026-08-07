@@ -1,7 +1,7 @@
 'use client';
 
-import { useClickOutside } from '@holiveira/hooks';
-import { cn } from '@holiveira/utils';
+import { useClickOutside } from '@ho-dev/hooks';
+import { cn } from '@ho-dev/utils';
 
 import { forwardRef, useId, useRef, useState, useCallback, useEffect } from 'react';
 

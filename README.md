@@ -1,4 +1,4 @@
-# Holiveira
+# HO Design System
 
 > Build professional applications on a foundation designed to last.
 
@@ -6,23 +6,23 @@
 
 ---
 
-## Why Holiveira Exists
+## Why HO Exists
 
-Holiveira was born from repeatedly rebuilding the same architectural foundation across multiple
-real-world professional applications. Project structure, authentication, layouts, forms, design
-tokens, themes, infrastructure, development standards, and governance were recreated from scratch
-each time. The project exists to capture those engineering decisions into a reusable platform so
-every new project starts from architecture instead of boilerplate.
+HO Design System was born from repeatedly rebuilding the same architectural foundation across
+multiple real-world professional applications. Project structure, authentication, layouts, forms,
+design tokens, themes, infrastructure, development standards, and governance were recreated from
+scratch each time. The project exists to capture those engineering decisions into a reusable
+platform so every new project starts from architecture instead of boilerplate.
 
 ## Quick Start
 
 ```bash
-pnpm add @holiveira/primitives @holiveira/theme
+pnpm add @ho-dev/primitives @ho-dev/theme
 ```
 
 ```tsx
-import { ThemeProvider } from '@holiveira/theme';
-import { Button } from '@holiveira/primitives';
+import { ThemeProvider } from '@ho-dev/theme';
+import { Button } from '@ho-dev/primitives';
 
 function App() {
   return (
@@ -33,10 +33,10 @@ function App() {
 }
 ```
 
-## What is Holiveira
+## What is HO Design System
 
-Holiveira is a composable, engineering-first Design System for professional web applications. It is
-a monorepo of independent npm packages under the `@holiveira/*` namespace — install only what you
+HO Design System is a composable, engineering-first Design System for professional web applications.
+It is a monorepo of independent npm packages under the `@ho-dev/*` namespace — install only what you
 use, nothing more.
 
 The project is React-first and Next.js-optimized, with built-in professional application
@@ -44,48 +44,49 @@ infrastructure: authentication, authorization with RBAC, forms with validation, 
 with dark mode, and application layouts.
 
 Every decision is documented in specifications, ADRs, and contracts. Public APIs are governed by
-explicit rules. Standards are intentional, not accidental. Holiveira is not defined by feature count
-— it is defined by engineering quality.
+explicit rules. Standards are intentional, not accidental. HO Design System is not defined by
+feature count — it is defined by engineering quality.
 
-Holiveira is not a template, a starter kit, or a copy-paste component library. It is a long-term
-engineering investment designed for a 10+ year lifecycle.
+HO Design System is not a template, a starter kit, or a copy-paste component library. It is a
+long-term engineering investment designed for a 10+ year lifecycle.
 
 ## Ecosystem
 
 ### Public Packages
 
-| Package                 | Description                                              | Category    |
-| ----------------------- | -------------------------------------------------------- | ----------- |
-| `@holiveira/types`      | Shared TypeScript type definitions                       | Core        |
-| `@holiveira/config`     | Application configuration utilities                      | Core        |
-| `@holiveira/constants`  | Shared constants and route definitions                   | Core        |
-| `@holiveira/tokens`     | Design token definitions and raw values                  | Foundation  |
-| `@holiveira/utils`      | Utility functions (cn, cva, format, guards)              | Foundation  |
-| `@holiveira/i18n`       | Locale-aware formatting using native Intl APIs           | Foundation  |
-| `@holiveira/eslint`     | ESLint configuration presets                             | Foundation  |
-| `@holiveira/providers`  | Provider composition utility                             | Foundation  |
-| `@holiveira/hooks`      | React hooks (clickOutside, isMobile, focusTrap)          | Primitives  |
-| `@holiveira/icons`      | Tree-shakeable SVG icon components                       | Primitives  |
-| `@holiveira/primitives` | Accessible UI primitives (Button, Table, Dropdown, etc.) | Primitives  |
-| `@holiveira/theme`      | Theme provider with dark mode support                    | Composition |
-| `@holiveira/forms`      | Form system with react-hook-form + Zod validation        | Composition |
-| `@holiveira/charts`     | Chart components wrapping ApexCharts                     | Composition |
-| `@holiveira/layouts`    | Application shell components (Sidebar, Header)           | Composition |
-| `@holiveira/ui`         | Composite UI components (Breadcrumb, Card)               | Composition |
+| Package              | Description                                              | Category    |
+| -------------------- | -------------------------------------------------------- | ----------- |
+| `@ho-dev/types`      | Shared TypeScript type definitions                       | Core        |
+| `@ho-dev/config`     | Application configuration utilities                      | Core        |
+| `@ho-dev/constants`  | Shared constants and route definitions                   | Core        |
+| `@ho-dev/tokens`     | Design token definitions and raw values                  | Foundation  |
+| `@ho-dev/utils`      | Utility functions (cn, cva, format, guards)              | Foundation  |
+| `@ho-dev/i18n`       | Locale-aware formatting using native Intl APIs           | Foundation  |
+| `@ho-dev/eslint`     | ESLint configuration presets                             | Foundation  |
+| `@ho-dev/providers`  | Provider composition utility                             | Foundation  |
+| `@ho-dev/hooks`      | React hooks (clickOutside, isMobile, focusTrap)          | Primitives  |
+| `@ho-dev/icons`      | Tree-shakeable SVG icon components                       | Primitives  |
+| `@ho-dev/primitives` | Accessible UI primitives (Button, Table, Dropdown, etc.) | Primitives  |
+| `@ho-dev/theme`      | Theme provider with dark mode support                    | Composition |
+| `@ho-dev/forms`      | Form system with react-hook-form + Zod validation        | Composition |
+| `@ho-dev/charts`     | Chart components wrapping ApexCharts                     | Composition |
+| `@ho-dev/layouts`    | Application shell components (Sidebar, Header)           | Composition |
+| `@ho-dev/ui`         | Composite UI components (Breadcrumb, Card)               | Composition |
 
 ### Private Packages
 
-| Package              | Description                                   |
-| -------------------- | --------------------------------------------- |
-| `@holiveira/auth`    | Authentication and authorization (BetterAuth) |
-| `@holiveira/api`     | Typed fetch-based API client                  |
-| `@holiveira/db`      | Prisma ORM client singleton                   |
-| `@holiveira/testing` | Shared testing infrastructure                 |
+| Package           | Description                                   |
+| ----------------- | --------------------------------------------- |
+| `@ho-dev/auth`    | Authentication and authorization (BetterAuth) |
+| `@ho-dev/api`     | Typed fetch-based API client                  |
+| `@ho-dev/db`      | Prisma ORM client singleton                   |
+| `@ho-dev/testing` | Shared testing infrastructure                 |
 
 ## Architecture
 
-Holiveira follows a five-level dependency hierarchy. Lower levels never import from higher levels.
-Every dependency has a documented owner. Every architectural decision has a written rationale.
+HO Design System follows a five-level dependency hierarchy. Lower levels never import from higher
+levels. Every dependency has a documented owner. Every architectural decision has a written
+rationale.
 
 ```
 Core (Level 0)
@@ -145,9 +146,9 @@ pnpm run db:generate
 
 ## Releases
 
-Holiveira uses [Changesets](https://github.com/changesets/changesets) for independent per-package
-semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
-`@holiveira/charts` does not force a major bump in `@holiveira/types`.
+HO Design System uses [Changesets](https://github.com/changesets/changesets) for independent
+per-package semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
+`@ho-dev/charts` does not force a major bump in `@ho-dev/types`.
 
 The release pipeline is fully automated:
 

@@ -45,7 +45,7 @@ const meta: Meta<typeof Sidebar> = {
   tags: ['autodocs'],
   decorators: [SidebarDecorator],
   args: {
-    logo: <div className="text-lg font-bold">Holiveira</div>,
+    logo: <div className="text-lg font-bold">HO Design System</div>,
     children: <NavItems />,
   },
   argTypes: {

@@ -1,7 +1,7 @@
 'use client';
 
-import type { ButtonProps } from '@holiveira/primitives';
-import { cn } from '@holiveira/utils';
+import type { ButtonProps } from '@ho-dev/primitives';
+import { cn } from '@ho-dev/utils';
 
 import {
   Children,

@@ -1,22 +1,22 @@
-# @holiveira/ui
+# @ho-dev/ui
 
 Composite UI components built on primitives for ready-to-use patterns.
 
 ## Purpose
 
 Breadcrumb navigation, ShowcaseSection display, and Card component with variants. Architectural
-role: high-level composed components built on `@holiveira/primitives`.
+role: high-level composed components built on `@ho-dev/primitives`.
 
 ## Installation
 
 ```bash
-pnpm add @holiveira/ui
+pnpm add @ho-dev/ui
 ```
 
 ## Usage
 
 ```tsx
-import { Breadcrumb, Card } from '@holiveira/ui';
+import { Breadcrumb, Card } from '@ho-dev/ui';
 
 function MyPage() {
   return (
@@ -57,8 +57,8 @@ function MyPage() {
 
 **Owns:** Composed UI component implementations, cross-primitive composition patterns.
 
-**Does not own:** Primitive components (delegated to `@holiveira/primitives`), layout components
-(delegated to `@holiveira/layouts`), or application-specific compositions.
+**Does not own:** Primitive components (delegated to `@ho-dev/primitives`), layout components
+(delegated to `@ho-dev/layouts`), or application-specific compositions.
 
 Contract: `docs/architecture/contracts/ui.md`
 
@@ -79,6 +79,6 @@ MIT
 
 ## References
 
-- `@holiveira/primitives` — base component dependencies
-- `@holiveira/utils` — `cn()` and `cva()` utilities
-- `@holiveira/types` — shared type definitions
+- `@ho-dev/primitives` — base component dependencies
+- `@ho-dev/utils` — `cn()` and `cva()` utilities
+- `@ho-dev/types` — shared type definitions

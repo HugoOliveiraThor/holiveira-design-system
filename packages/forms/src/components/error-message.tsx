@@ -1,4 +1,4 @@
-import { cn } from '@holiveira/utils';
+import { cn } from '@ho-dev/utils';
 
 interface ErrorMessageProps {
   error?: string;

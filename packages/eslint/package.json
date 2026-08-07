@@ -1,18 +1,19 @@
 {
-  "name": "@holiveira/eslint",
+  "name": "@ho-dev/eslint",
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "description": "ESLint configuration presets for Holiveira projects.",
+  "description": "ESLint configuration presets for HO Design System projects.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "eslint",
     "typescript",
     "react"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",

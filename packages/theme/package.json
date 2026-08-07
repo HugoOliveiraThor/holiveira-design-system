@@ -1,11 +1,12 @@
 {
-  "name": "@holiveira/theme",
+  "name": "@ho-dev/theme",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Design tokens and theme system.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "theme",
@@ -13,7 +14,7 @@
     "dark-mode"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
@@ -48,8 +49,8 @@
     "next-themes": "^0.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@holiveira/types": "workspace:*",
-    "@holiveira/tokens": "workspace:*",
+    "@ho-dev/types": "workspace:*",
+    "@ho-dev/tokens": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {

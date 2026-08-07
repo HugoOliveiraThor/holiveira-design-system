@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug in a @holiveira/* package
+about: Report a reproducible bug in a @ho-dev/* package
 title: '[package] Brief description'
 labels: bug
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 
 ## Package
 
-Which `@holiveira/*` package does this affect?
+Which `@ho-dev/*` package does this affect?
 
 ## Description
 

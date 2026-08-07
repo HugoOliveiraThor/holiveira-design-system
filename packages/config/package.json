@@ -1,17 +1,18 @@
 {
-  "name": "@holiveira/config",
+  "name": "@ho-dev/config",
   "version": "0.1.0",
   "private": false,
   "type": "module",
   "description": "Application configuration utilities.",
   "keywords": [
     "holiveira",
+    "ho-dev",
     "design-system",
     "react",
     "configuration"
   ],
   "license": "MIT",
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",

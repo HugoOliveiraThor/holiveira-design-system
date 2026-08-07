@@ -1,4 +1,4 @@
-# @holiveira/charts
+# @ho-dev/charts
 
 Chart and visualization components.
 
@@ -11,18 +11,18 @@ consistent theming, isolating ApexCharts internals from consumers.
 ## Installation
 
 ```bash
-pnpm add @holiveira/charts
+pnpm add @ho-dev/charts
 ```
 
-Requires `apexcharts`, `react-apexcharts`, and `@holiveira/theme`.
+Requires `apexcharts`, `react-apexcharts`, and `@ho-dev/theme`.
 
 ## Usage
 
 ```tsx
-import { AreaChart, ChartSkeleton } from '@holiveira/charts';
+import { AreaChart, ChartSkeleton } from '@ho-dev/charts';
 import dynamic from 'next/dynamic';
 
-const LazyChart = dynamic(() => import('@holiveira/charts').then((m) => m.AreaChart), {
+const LazyChart = dynamic(() => import('@ho-dev/charts').then((m) => m.AreaChart), {
   loading: () => <ChartSkeleton />,
   ssr: false,
 });
@@ -48,7 +48,7 @@ function MyChart() {
 Import chart styles:
 
 ```css
-@import '@holiveira/charts/chart-styles.css';
+@import '@ho-dev/charts/chart-styles.css';
 ```
 
 ## Public API
@@ -66,7 +66,7 @@ Import chart styles:
 | `ChartSeries`        | type      | Series data type (`{ name; data: ChartDataPoint[] }`) |
 | `ChartDataPoint`     | type      | Data point type (`{ x; y }`)                          |
 
-**CSS:** `@holiveira/charts/chart-styles.css` — ApexCharts CSS overrides.
+**CSS:** `@ho-dev/charts/chart-styles.css` — ApexCharts CSS overrides.
 
 ## Peer Dependencies
 
@@ -94,7 +94,7 @@ Import chart styles:
 chart-specific CSS overrides.
 
 **Does not own:** ApexCharts type exposure to consumers (types are internal), data fetching logic,
-chart container composition (delegated to consumers via `@holiveira/ui` Card).
+chart container composition (delegated to consumers via `@ho-dev/ui` Card).
 
 See `docs/architecture/contracts/charts.md` for ownership and dependency boundaries.
 
@@ -111,6 +111,6 @@ MIT — see [LICENSE](../../LICENSE).
 
 ## References
 
-- `@holiveira/theme` — chart theme integration
-- `@holiveira/hooks` — responsive hooks
-- `@holiveira/utils` — utility functions
+- `@ho-dev/theme` — chart theme integration
+- `@ho-dev/hooks` — responsive hooks
+- `@ho-dev/utils` — utility functions

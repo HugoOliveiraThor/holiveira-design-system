@@ -1,4 +1,4 @@
-import { db } from '@holiveira/db';
+import { db } from '@ho-dev/db';
 
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
@@ -8,7 +8,7 @@ if (!process.env.BETTER_AUTH_SECRET) {
 }
 
 export const auth = betterAuth({
-  appName: 'Holiveira',
+  appName: 'HO Design System',
   baseURL: process.env.BETTER_AUTH_URL!,
 
   user: {

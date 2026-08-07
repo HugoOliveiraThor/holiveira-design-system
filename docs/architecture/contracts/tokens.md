@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/tokens
+# Package Contract: @ho-dev/tokens
 
 Level: 1 Category: Foundation
 

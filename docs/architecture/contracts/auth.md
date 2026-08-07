@@ -1,10 +1,10 @@
-# Package Contract: @holiveira/auth
+# Package Contract: @ho-dev/auth
 
 Level: 4 Category: Services
 
 ## Purpose
 
-Authentication and authorization using Better Auth. Integrates with the database via `@holiveira/db`
+Authentication and authorization using Better Auth. Integrates with the database via `@ho-dev/db`
 (BetterAuth PrismaAdapter) and the Next.js application via middleware.
 
 ## Responsibilities
@@ -18,13 +18,13 @@ Authentication and authorization using Better Auth. Integrates with the database
 
 ## Allowed Dependencies
 
-- `@holiveira/db` (L4) — PrismaAdapter for BetterAuth user/session storage
+- `@ho-dev/db` (L4) — PrismaAdapter for BetterAuth user/session storage
 
 ## Forbidden Dependencies
 
-- `@holiveira/api` (L4) — auth is lower-level than API; API may depend on auth, not the reverse
-- `@holiveira/config` (L0) — auth reads env vars natively via BETTER_AUTH_* / GOOGLE_* / GITHUB_*
-- `@holiveira/primitives` (L2) — auth is server-side, not UI
+- `@ho-dev/api` (L4) — auth is lower-level than API; API may depend on auth, not the reverse
+- `@ho-dev/config` (L0) — auth reads env vars natively via BETTER_AUTH_* / GOOGLE_* / GITHUB_*
+- `@ho-dev/primitives` (L2) — auth is server-side, not UI
 - Any UI package
 - Any application
 

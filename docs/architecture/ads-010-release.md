@@ -11,7 +11,7 @@
 
 ## Section 1 — Purpose
 
-This specification defines the release architecture for the Holiveira Design System. It establishes versioning strategy, publishing infrastructure, consumer validation, package metadata standards, documentation architecture, and CI/CD release automation.
+This specification defines the release architecture for the HO Design System. It establishes versioning strategy, publishing infrastructure, consumer validation, package metadata standards, documentation architecture, and CI/CD release automation.
 
 **Why:** The repository is architecturally ready for release (M1-M9 complete, 31/31 AC pass) but has zero release infrastructure: all 20 packages are `"private": true`, exports maps point to source files, no CI/CD release automation exists, and no package has ever been published to npm. This specification closes that gap.
 
@@ -93,10 +93,10 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 | Rule | Decision | Resolution | Rationale |
 |------|----------|-----------|-----------|
-| VER-1 | Versioning strategy | **Independent semver per package.** Each package has its own MAJOR.MINOR.PATCH. A breaking change in `@holiveira/charts` MUST NOT force a major bump in `@holiveira/types`. | Design system packages have asymmetric maturity. Forcing synchronized versioning falsely signals stability in stable packages. Industry standard for React design systems. |
+| VER-1 | Versioning strategy | **Independent semver per package.** Each package has its own MAJOR.MINOR.PATCH. A breaking change in `@ho-dev/charts` MUST NOT force a major bump in `@ho-dev/types`. | Design system packages have asymmetric maturity. Forcing synchronized versioning falsely signals stability in stable packages. Industry standard for React design systems. |
 | VER-2 | Versioning tool | **Changesets.** `@changesets/cli` is already installed and configured. No alternative tool justifies migration cost. | Industry standard for monorepo publishing. Native pnpm `workspace:*` support. Built-in prerelease, changelog, and GitHub Release support. |
-| VER-3 | Changesets access mode | **`"public"`** in `.changeset/config.json`. Scoped npm packages default to restricted. All `@holiveira/*` packages MUST be public. | Setting in changesets config cascades to all publishable packages via `publishConfig.access`. |
-| VER-4 | Internal dependency update policy | **`"updateInternalDependencies": "patch"`.** When a dependency bumps minor, dependent packages get a patch bump. The `^X.Y.Z` range already accepts the new version. | Minimizes consumer churn. A new hook in `@holiveira/hooks` (minor) SHOULD NOT force `@holiveira/primitives` to also bump minor. |
+| VER-3 | Changesets access mode | **`"public"`** in `.changeset/config.json`. Scoped npm packages default to restricted. All `@ho-dev/*` packages MUST be public. | Setting in changesets config cascades to all publishable packages via `publishConfig.access`. |
+| VER-4 | Internal dependency update policy | **`"updateInternalDependencies": "patch"`.** When a dependency bumps minor, dependent packages get a patch bump. The `^X.Y.Z` range already accepts the new version. | Minimizes consumer churn. A new hook in `@ho-dev/hooks` (minor) SHOULD NOT force `@ho-dev/primitives` to also bump minor. |
 
 ### 4.2 Publishing (PUB-1 through PUB-5)
 
@@ -115,7 +115,7 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 | REL-1 | Pipeline architecture | **Fully automated via `changesets/action@v2`.** The action opens a Version PR when changesets accumulate on `main`. Merging the PR triggers quality gates + consumer validation + publish. | Industry standard. Version PR provides human review gate. Publish is automatic after merge — prevents forgotten publishes. |
 | REL-2 | Concurrency control | **`concurrency: ${{ github.workflow }}-${{ github.ref }}`** in `release.yml`. Only one release workflow MAY run per branch at a time. | Prevents race conditions on version bumps when multiple pushes land on main in quick succession. |
 | REL-3 | Commit convention | **`chore(release): version packages`** for changeset version commits. MUST follow existing commitlint conventional commit config. | Scope `release` is already defined in `commitlint.config.mjs`. Consistent with repository conventions. |
-| REL-4 | Git tag convention | **`@holiveira/<pkg>@<version>`** per package. Created automatically by changesets on publish. | Required for independent versioning. Consumers can track individual package versions. `git tag -l '@holiveira/*'` lists all release tags. |
+| REL-4 | Git tag convention | **`@ho-dev/<pkg>@<version>`** per package. Created automatically by changesets on publish. | Required for independent versioning. Consumers can track individual package versions. `git tag -l '@ho-dev/*'` lists all release tags. |
 | REL-5 | GitHub Release strategy | **One GitHub Release per publish containing all changed packages.** `create-github-releases: true` in changesets action configuration. | Per-package releases for 16 packages would flood the releases page. One release per publish is the pragmatic choice. Consumers tracking a single package SHOULD use per-package CHANGELOG.md or git tags. |
 
 > **Partial publish failure:** changesets publishes packages sequentially. If the publish fails mid-stream (e.g., package 6 of 10 fails), packages 1-5 are already on npm at their new versions. The release workflow MUST be re-triggered after fixing the failure. Published packages remain unaffected at their new versions. Unreleased packages remain at their previous versions. Common causes are npm registry downtime or token expiration; the `timeout-minutes: 15` limit in release.yml handles the first case. This scenario is rare and requires no architectural change — retry is the correct response.
@@ -126,21 +126,21 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 |------|----------|-----------|-----------|
 | VAL-1 | Validation architecture | **Permanent consumer test application in `apps/consumer-test/`.** Next.js 16 App Router. Uses `workspace:*` during development, validates against `dist/` during release. | External test projects drift out of sync. In-repo app guarantees validation matches current code. Maintenance scope: validates *public API surface stability*, not feature coverage. |
 | VAL-2 | Validation dimensions | **6 dimensions, ordered by criticality:** (1) TypeScript compilation with consumer tsconfig, (2) SSR rendering (no `window` errors), (3) RSC boundary (`"use client"`), (4) Tree-shaking efficacy (one component ≠ entire package), (5) CSS loading (all CSS files load without errors), (6) Install isolation (each package installs + compiles with only its declared peer deps). | Types are the #1 consumer-facing issue. SSR is critical for Next.js consumers. Install isolation catches missing dependency declarations that monolithic validation masks. |
-| VAL-3 | Validation gate | **All 6 dimensions MUST pass before publish.** Any failure blocks the release. The validation script MUST exit non-zero on any failure. CI MUST run consumer validation after quality gates and before publish. | No package reaches npm without being validated from a real consumer's perspective. This is the architectural guarantee that `npm install @holiveira/primitives` works for target consumers. |
+| VAL-3 | Validation gate | **All 6 dimensions MUST pass before publish.** Any failure blocks the release. The validation script MUST exit non-zero on any failure. CI MUST run consumer validation after quality gates and before publish. | No package reaches npm without being validated from a real consumer's perspective. This is the architectural guarantee that `npm install @ho-dev/primitives` works for target consumers. |
 
 ### 4.5 Prerelease Strategy (PRE-1 through PRE-3)
 
 | Rule | Decision | Resolution | Rationale |
 |------|----------|-----------|-----------|
 | PRE-1 | First release path | **Graduated: `beta` → `rc` → `1.0.0`.** Each stage validates against increasingly realistic consumer environments before promotion. | Risk management for first-time publisher. Dev preview validates infrastructure. Beta validates with design partners. RC validates with public. 1.0.0 signals production readiness. |
-| PRE-2 | dist-tags | **`beta` → `rc` → `latest`.** Consumers opt-in explicitly: `pnpm add @holiveira/primitives@beta`. `npm install @holiveira/primitives` resolves to `latest` (GA). | Standard npm convention. Clear opt-in for prerelease channels. `latest` is the default resolution target. |
+| PRE-2 | dist-tags | **`beta` → `rc` → `latest`.** Consumers opt-in explicitly: `pnpm add @ho-dev/primitives@beta`. `npm install @ho-dev/primitives` resolves to `latest` (GA). | Standard npm convention. Clear opt-in for prerelease channels. `latest` is the default resolution target. |
 | PRE-3 | `next` dist-tag | **Deferred to post-v1.0.** The `next` tag is useful for ongoing canary/nightly releases during active development cycles. Before v1.0, every prerelease is effectively a canary — `next` adds ceremony without benefit. MUST be added as part of post-v1.0 release strategy. | Pre-v1.0 there is no `latest` to distinguish from. Adding `next` post-v1.0 is a documentation change, not an architectural change. |
 
 ### 4.6 Documentation (DOC-1 through DOC-3)
 
 | Rule | Decision | Resolution | Rationale |
 |------|----------|-----------|-----------|
-| DOC-1 | Package README tiers | **Tiered scope: Full, Compact, Minimal.** Full tier (primitives, forms, charts, theme, icons): description, install, usage, API reference, bundle size, peer deps. Compact tier (hooks, utils, i18n, layouts, ui, providers): description, install, usage, link to Storybook. Minimal tier (types, tokens, constants, config, eslint): one-liner description, install command, link to docs. | Packages with zero public API complexity SHOULD NOT carry full READMEs. Consumers of `@holiveira/types` don't need usage examples — they need the type definitions. |
+| DOC-1 | Package README tiers | **Tiered scope: Full, Compact, Minimal.** Full tier (primitives, forms, charts, theme, icons): description, install, usage, API reference, bundle size, peer deps. Compact tier (hooks, utils, i18n, layouts, ui, providers): description, install, usage, link to Storybook. Minimal tier (types, tokens, constants, config, eslint): one-liner description, install command, link to docs. | Packages with zero public API complexity SHOULD NOT carry full READMEs. Consumers of `@ho-dev/types` don't need usage examples — they need the type definitions. |
 | DOC-2 | Root README | **MUST match SPEC-IDENTITY-001.** Hero section, installation, quick example (5-10 lines), package directory table, documentation links, status, community, license. | Root README is the landing page for npm and GitHub. It is the first impression for potential consumers. |
 | DOC-3 | Storybook as primary docs | **Storybook is the interactive API reference.** MUST be deployed to GitHub Pages for v1.0. Package READMEs MUST link to individual Storybook pages. | Storybook is already built and tested. GitHub Pages deployment is free. Chromatic/Vercel MAY be evaluated in v1.1. |
 
@@ -178,9 +178,9 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 1. **Consumer validation is mandatory.** No package reaches npm without passing all 6 validation dimensions from a real Next.js 16 consumer application. Internal quality gates (format, lint, typecheck, test) are necessary but not sufficient.
 
-2. **Independent versioning respects asymmetric maturity.** `@holiveira/types` MUST NOT bump to `2.0.0` because `@holiveira/charts` has a breaking change. Each package evolves at its own velocity.
+2. **Independent versioning respects asymmetric maturity.** `@ho-dev/types` MUST NOT bump to `2.0.0` because `@ho-dev/charts` has a breaking change. Each package evolves at its own velocity.
 
-3. **Every package pays its own bundle cost.** The published tarball contains only `dist/`, `README.md`, and `LICENSE`. Source files, tests, and stories are excluded. The consumer's bundler is responsible for tree-shaking — Holiveira's responsibility is to ensure tree-shaking is *possible*.
+3. **Every package pays its own bundle cost.** The published tarball contains only `dist/`, `README.md`, and `LICENSE`. Source files, tests, and stories are excluded. The consumer's bundler is responsible for tree-shaking — HO Design System's responsibility is to ensure tree-shaking is *possible*.
 
 4. **CSS is compiled at build time, copied at publish time.** Tailwind v4 produces build-time CSS. Packages that export CSS files MUST copy them to dist/ during the build step. `tsc` does not copy non-TS files — the build script is responsible.
 
@@ -190,7 +190,7 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 7. **Documentation is tiered by complexity.** A package with 5 type exports does not need the same documentation surface as a package with 11 interactive components. Documentation effort is proportional to API surface.
 
-8. **Trust is built from zero.** As a first-time publisher, Holiveira MUST signal trust through: npm provenance, comprehensive documentation, consumer-verified quality, clean package metadata, and transparent versioning.
+8. **Trust is built from zero.** As a first-time publisher, HO Design System MUST signal trust through: npm provenance, comprehensive documentation, consumer-verified quality, clean package metadata, and transparent versioning.
 
 ### 5.2 Anti-Patterns
 
@@ -198,11 +198,11 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 |-------------|----------------|-----------------|
 | Publishing with `./src/` in exports maps | npm consumers cannot resolve source files. The published tarball excludes `src/`. | Exports maps point to `./dist/`. Dev convenience uses tsconfig paths. |
 | Assuming `tsc` copies CSS | `tsc` compiles TypeScript. It does not copy `.css` files. CSS exports resolve to non-existent paths. | Build script copies CSS files to `dist/` after compilation. |
-| Validating all packages as a monolith | Masks missing dependency declarations. Consumer installing `@holiveira/primitives` must not need `@holiveira/charts` as a transitive. | Per-package install isolation testing. |
-| Fixed versioning across asymmetric packages | Forces unnecessary major bumps in stable packages. `@holiveira/tokens` at `2.0.0` because `@holiveira/charts` broke — consumer confusion. | Independent semver per package. |
+| Validating all packages as a monolith | Masks missing dependency declarations. Consumer installing `@ho-dev/primitives` must not need `@ho-dev/charts` as a transitive. | Per-package install isolation testing. |
+| Fixed versioning across asymmetric packages | Forces unnecessary major bumps in stable packages. `@ho-dev/tokens` at `2.0.0` because `@ho-dev/charts` broke — consumer confusion. | Independent semver per package. |
 | Publishing without consumer validation | Internal quality gates validate the *author's* perspective. They do not validate SSR rendering, RSC boundaries, or real consumer bundler behavior. | Consumer test app with 6 validation dimensions. |
 | Manual release process | Humans forget to publish. Builds drift. `latest` tag points to stale version. | Fully automated via changesets/action. Version PR reviewed by humans, publish automatic. |
-| 16 separate READMEs with identical structure | `@holiveira/types` does not need a usage example. `@holiveira/primitives` does. Uniform templates create noise. | Tiered README scope: Full, Compact, Minimal. |
+| 16 separate READMEs with identical structure | `@ho-dev/types` does not need a usage example. `@ho-dev/primitives` does. Uniform templates create noise. | Tiered README scope: Full, Compact, Minimal. |
 | Premature `next` dist-tag before v1.0 | No `latest` exists to distinguish from. Every prerelease is effectively `next`. Ceremony without benefit. | `beta → rc → 1.0.0`. Add `next` post-v1.0 for canary releases. |
 
 ---
@@ -221,10 +221,10 @@ All decisions from the M10 Architectural Exploration are resolved here. Each dec
 
 | Package | CSS files | Copy mechanism required? |
 |---------|----------|:---:|
-| `@holiveira/theme` | `theme.css` | ✅ Yes — build script copies to dist/ |
-| `@holiveira/tokens` | `tokens.css` | ✅ Yes — build script copies to dist/ |
-| `@holiveira/charts` | `chart-styles.css` | ✅ Yes — build script copies to dist/ |
-| `@holiveira/forms` | `date-picker-styles.css` | ✅ Yes — build script copies to dist/ |
+| `@ho-dev/theme` | `theme.css` | ✅ Yes — build script copies to dist/ |
+| `@ho-dev/tokens` | `tokens.css` | ✅ Yes — build script copies to dist/ |
+| `@ho-dev/charts` | `chart-styles.css` | ✅ Yes — build script copies to dist/ |
+| `@ho-dev/forms` | `date-picker-styles.css` | ✅ Yes — build script copies to dist/ |
 
 ### 6.3 Inter-Package Dependencies
 
@@ -430,7 +430,7 @@ Each CSS-exporting package MUST include the CSS copy in its build script. The co
 2. Chart example: AreaChart + React.lazy + ChartSkeleton
 3. Theme example: ThemeProvider + dark mode toggle + custom color tokens
 4. Layout example: Sidebar + Header + Breadcrumb
-5. All examples import from `@holiveira/*` packages (named imports, not relative paths)
+5. All examples import from `@ho-dev/*` packages (named imports, not relative paths)
 
 #### D10b.5 — Technical Debt Resolution
 
@@ -442,8 +442,8 @@ Each CSS-exporting package MUST include the CSS copy in its build script. The co
 | **Verification** | TypeScript compilation + updated debt registry |
 
 **Acceptance Criteria:**
-1. TS2742 errors in `@holiveira/testing` resolved OR documented in technical debt registry with rationale
-2. TS2742 errors in `@holiveira/auth` resolved OR documented in technical debt registry with rationale
+1. TS2742 errors in `@ho-dev/testing` resolved OR documented in technical debt registry with rationale
+2. TS2742 errors in `@ho-dev/auth` resolved OR documented in technical debt registry with rationale
 3. `check:deps` passes (zero dependency violations)
 4. `docs/architecture/technical-debt-registry.md` updated with current status
 5. No new technical debt introduced by M10 work
@@ -700,11 +700,11 @@ jobs:
 
 ## Appendix C — Package Metadata Reference
 
-### C.1 Pure-JS Package (e.g., `@holiveira/utils`)
+### C.1 Pure-JS Package (e.g., `@ho-dev/utils`)
 
 ```json
 {
-  "name": "@holiveira/utils",
+  "name": "@ho-dev/utils",
   "version": "1.0.0",
   "private": false,
   "type": "module",
@@ -730,7 +730,7 @@ jobs:
   "sideEffects": false,
   "files": ["dist", "README.md", "LICENSE"],
   "keywords": ["holiveira", "design-system", "react", "typescript", "utilities"],
-  "author": "Holiveira",
+  "author": "HO Design System",
   "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "bugs": {
     "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
@@ -738,11 +738,11 @@ jobs:
 }
 ```
 
-### C.2 CSS-Exporting Package (e.g., `@holiveira/theme`)
+### C.2 CSS-Exporting Package (e.g., `@ho-dev/theme`)
 
 ```json
 {
-  "name": "@holiveira/theme",
+  "name": "@ho-dev/theme",
   "version": "1.0.0",
   "private": false,
   "type": "module",
@@ -775,7 +775,7 @@ jobs:
     "build": "tsc && cp src/theme.css dist/"
   },
   "keywords": ["holiveira", "design-system", "react", "typescript", "theme"],
-  "author": "Holiveira"
+  "author": "HO Design System"
 }
 ```
 

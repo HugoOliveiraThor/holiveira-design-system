@@ -1,4 +1,4 @@
-# Package Contract: @holiveira/charts
+# Package Contract: @ho-dev/charts
 
 Level: 3 Category: Composition
 
@@ -15,16 +15,16 @@ Provide chart component primitives abstracting the underlying charting library (
 
 ## Allowed Dependencies
 
-- `@holiveira/hooks` (L2) — responsive chart sizing
-- `@holiveira/theme` (L3) — theme context for dark mode
-- `@holiveira/types` (L0) — shared types (peer)
+- `@ho-dev/hooks` (L2) — responsive chart sizing
+- `@ho-dev/theme` (L3) — theme context for dark mode
+- `@ho-dev/types` (L0) — shared types (peer)
 
 ## Forbidden Dependencies
 
-- `@holiveira/ui` (L3) — no ChartContainer; Card is composed by consumers
-- `@holiveira/primitives` (L2) — charts use chart primitives, not UI primitives
-- `@holiveira/auth` (L4) — unrelated
-- `@holiveira/data` (L4) — data is consumed by the app, not by chart components
+- `@ho-dev/ui` (L3) — no ChartContainer; Card is composed by consumers
+- `@ho-dev/primitives` (L2) — charts use chart primitives, not UI primitives
+- `@ho-dev/auth` (L4) — unrelated
+- `@ho-dev/data` (L4) — data is consumed by the app, not by chart components
 
 ## Public API
 
@@ -51,7 +51,7 @@ LineChart, RadarChart. No consumers yet.
 
 ### Removed from original contract
 
-- `ChartContainer` — YAGNI. Card from @holiveira/ui + manual composition.
+- `ChartContainer` — YAGNI. Card from @ho-dev/ui + manual composition.
 - `useChartTheme` — Internal. Components handle theme automatically.
 - `ChartConfig`, `ChartOptions` — Replaced by ChartSeries + ChartDataPoint.
 - `_ChartContext`, `_ApexChartWrapper`, `_defaultChartOptions` — Internal implementation.
@@ -62,7 +62,7 @@ LineChart, RadarChart. No consumers yet.
 
 ## Package Boundaries
 
-@holiveira/charts provides:
+@ho-dev/charts provides:
 
 - BarChart, AreaChart, PieChart (chart rendering only)
 - ChartSeries, ChartDataPoint (data contract types)
@@ -70,7 +70,7 @@ LineChart, RadarChart. No consumers yet.
 
 App layer provides:
 
-- Card/container (from @holiveira/ui)
+- Card/container (from @ho-dev/ui)
 - Data fetching (services)
 - Business widgets (WeeksProfit, CampaignVisitors, etc.)
 - PeriodPicker, timeframe extraction

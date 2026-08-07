@@ -1,4 +1,4 @@
-# @holiveira/eslint
+# @ho-dev/eslint
 
 ESLint configuration presets.
 
@@ -12,7 +12,7 @@ versioned by this package.
 ## Installation
 
 ```bash
-pnpm add @holiveira/eslint
+pnpm add @ho-dev/eslint
 ```
 
 ## Architecture Contract

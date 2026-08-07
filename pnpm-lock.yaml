@@ -20,7 +20,7 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^21.2.0
         version: 21.2.0
-      '@holiveira/eslint':
+      '@ho-dev/eslint':
         specifier: workspace:*
         version: link:packages/eslint
       '@size-limit/preset-small-lib':
@@ -107,52 +107,52 @@ importers:
 
   apps/consumer-test:
     dependencies:
-      '@holiveira/charts':
+      '@ho-dev/charts':
         specifier: workspace:*
         version: link:../../packages/charts
-      '@holiveira/config':
+      '@ho-dev/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@holiveira/constants':
+      '@ho-dev/constants':
         specifier: workspace:*
         version: link:../../packages/constants
-      '@holiveira/eslint':
+      '@ho-dev/eslint':
         specifier: workspace:*
         version: link:../../packages/eslint
-      '@holiveira/forms':
+      '@ho-dev/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
-      '@holiveira/i18n':
+      '@ho-dev/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@holiveira/icons':
+      '@ho-dev/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@holiveira/layouts':
+      '@ho-dev/layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
-      '@holiveira/primitives':
+      '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../../packages/primitives
-      '@holiveira/providers':
+      '@ho-dev/providers':
         specifier: workspace:*
         version: link:../../packages/providers
-      '@holiveira/theme':
+      '@ho-dev/theme':
         specifier: workspace:*
         version: link:../../packages/theme
-      '@holiveira/tokens':
+      '@ho-dev/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@holiveira/ui':
+      '@ho-dev/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       apexcharts:
@@ -185,49 +185,49 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@holiveira/charts':
+      '@ho-dev/charts':
         specifier: workspace:*
         version: link:../../packages/charts
-      '@holiveira/config':
+      '@ho-dev/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@holiveira/constants':
+      '@ho-dev/constants':
         specifier: workspace:*
         version: link:../../packages/constants
-      '@holiveira/forms':
+      '@ho-dev/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
-      '@holiveira/i18n':
+      '@ho-dev/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@holiveira/icons':
+      '@ho-dev/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@holiveira/layouts':
+      '@ho-dev/layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
-      '@holiveira/primitives':
+      '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../../packages/primitives
-      '@holiveira/providers':
+      '@ho-dev/providers':
         specifier: workspace:*
         version: link:../../packages/providers
-      '@holiveira/theme':
+      '@ho-dev/theme':
         specifier: workspace:*
         version: link:../../packages/theme
-      '@holiveira/tokens':
+      '@ho-dev/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@holiveira/ui':
+      '@ho-dev/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       apexcharts:
@@ -312,46 +312,46 @@ importers:
 
   examples/with-nextjs:
     dependencies:
-      '@holiveira/charts':
+      '@ho-dev/charts':
         specifier: workspace:*
         version: link:../../packages/charts
-      '@holiveira/constants':
+      '@ho-dev/constants':
         specifier: workspace:*
         version: link:../../packages/constants
-      '@holiveira/forms':
+      '@ho-dev/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
-      '@holiveira/i18n':
+      '@ho-dev/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@holiveira/icons':
+      '@ho-dev/icons':
         specifier: workspace:*
         version: link:../../packages/icons
-      '@holiveira/layouts':
+      '@ho-dev/layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
-      '@holiveira/primitives':
+      '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../../packages/primitives
-      '@holiveira/providers':
+      '@ho-dev/providers':
         specifier: workspace:*
         version: link:../../packages/providers
-      '@holiveira/theme':
+      '@ho-dev/theme':
         specifier: workspace:*
         version: link:../../packages/theme
-      '@holiveira/tokens':
+      '@ho-dev/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@holiveira/ui':
+      '@ho-dev/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       apexcharts:
@@ -382,7 +382,7 @@ importers:
         specifier: ^4.3.6
         version: 4.4.3
     devDependencies:
-      '@holiveira/eslint':
+      '@ho-dev/eslint':
         specifier: workspace:*
         version: link:../../packages/eslint
 
@@ -397,7 +397,7 @@ importers:
       '@better-auth/prisma-adapter':
         specifier: ^1.6.7
         version: 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.4)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(magicast@0.3.5)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))(typescript@5.9.3))(prisma@7.8.0(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(magicast@0.3.5)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3))
-      '@holiveira/db':
+      '@ho-dev/db':
         specifier: workspace:*
         version: link:../db
       better-auth:
@@ -415,16 +415,16 @@ importers:
 
   packages/charts:
     dependencies:
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
-      '@holiveira/theme':
+      '@ho-dev/theme':
         specifier: workspace:*
         version: link:../theme
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../utils
       apexcharts:
@@ -517,16 +517,16 @@ importers:
 
   packages/forms:
     dependencies:
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
-      '@holiveira/primitives':
+      '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../primitives
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../utils
       flatpickr:
@@ -554,7 +554,7 @@ importers:
 
   packages/hooks:
     dependencies:
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       react:
@@ -566,7 +566,7 @@ importers:
 
   packages/i18n:
     dependencies:
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       typescript:
@@ -575,7 +575,7 @@ importers:
 
   packages/icons:
     dependencies:
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       react:
@@ -594,13 +594,13 @@ importers:
 
   packages/layouts:
     dependencies:
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../utils
       next:
@@ -622,19 +622,19 @@ importers:
 
   packages/primitives:
     dependencies:
-      '@holiveira/hooks':
+      '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
-      '@holiveira/icons':
+      '@ho-dev/icons':
         specifier: workspace:*
         version: link:../icons
-      '@holiveira/theme':
+      '@ho-dev/theme':
         specifier: workspace:*
         version: link:../theme
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../utils
       react:
@@ -653,7 +653,7 @@ importers:
 
   packages/providers:
     dependencies:
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       react:
@@ -693,10 +693,10 @@ importers:
 
   packages/theme:
     dependencies:
-      '@holiveira/tokens':
+      '@ho-dev/tokens':
         specifier: workspace:*
         version: link:../tokens
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       next-themes:
@@ -726,13 +726,13 @@ importers:
 
   packages/ui:
     dependencies:
-      '@holiveira/primitives':
+      '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../primitives
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
-      '@holiveira/utils':
+      '@ho-dev/utils':
         specifier: workspace:*
         version: link:../utils
       next:
@@ -754,7 +754,7 @@ importers:
 
   packages/utils:
     dependencies:
-      '@holiveira/types':
+      '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
       class-variance-authority:

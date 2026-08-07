@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@holiveira/utils';
+import { cn } from '@ho-dev/utils';
 
 import { forwardRef, useId } from 'react';
 

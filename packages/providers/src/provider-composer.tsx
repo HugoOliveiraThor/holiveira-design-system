@@ -1,7 +1,7 @@
 import { type ComponentType, type ReactNode } from 'react';
 
 /**
- * Standard props interface for any provider in the @holiveira framework.
+ * Standard props interface for any provider in the @ho-dev framework.
  * Every provider must accept `children` as its only required prop.
  * @public
  */

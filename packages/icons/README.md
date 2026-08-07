@@ -1,4 +1,4 @@
-# @holiveira/icons
+# @ho-dev/icons
 
 SVG icon components.
 
@@ -11,13 +11,13 @@ Architectural role: provides icon primitives for the component library — every
 ## Installation
 
 ```bash
-pnpm add @holiveira/icons
+pnpm add @ho-dev/icons
 ```
 
 ## Usage
 
 ```tsx
-import { BellIcon, SearchIcon, SettingsIcon } from '@holiveira/icons';
+import { BellIcon, SearchIcon, SettingsIcon } from '@ho-dev/icons';
 
 function MyHeader() {
   return (
@@ -98,4 +98,4 @@ MIT — see [LICENSE](../../LICENSE).
 
 ## References
 
-- `@holiveira/types` — shared type definitions
+- `@ho-dev/types` — shared type definitions

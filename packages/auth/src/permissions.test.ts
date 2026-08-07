@@ -1,6 +1,6 @@
 import { vi, describe, it, expect } from 'vitest';
 
-vi.mock('@holiveira/db', () => ({ db: {} }));
+vi.mock('@ho-dev/db', () => ({ db: {} }));
 
 import { roles } from './index';
 

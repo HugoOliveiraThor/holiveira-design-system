@@ -1,12 +1,7 @@
 'use client';
 
-import {
-  AlertErrorIcon,
-  AlertInfoIcon,
-  AlertSuccessIcon,
-  AlertWarningIcon,
-} from '@holiveira/icons';
-import { cva, cn } from '@holiveira/utils';
+import { AlertErrorIcon, AlertInfoIcon, AlertSuccessIcon, AlertWarningIcon } from '@ho-dev/icons';
+import { cva, cn } from '@ho-dev/utils';
 
 import { forwardRef, type HTMLAttributes } from 'react';
 
