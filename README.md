@@ -40,6 +40,27 @@ function App() {
 }
 ```
 
+## Components
+
+| Button                                                             | Alert                                                            | ButtonGroup                                                                   |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| <img src="assets/screenshots/button.png" width="300" alt="Button"> | <img src="assets/screenshots/alert.png" width="300" alt="Alert"> | <img src="assets/screenshots/button-group.png" width="300" alt="ButtonGroup"> |
+
+| Card                                                           | InputGroup                                                                  | Table                                                            |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| <img src="assets/screenshots/card.png" width="300" alt="Card"> | <img src="assets/screenshots/input-group.png" width="300" alt="InputGroup"> | <img src="assets/screenshots/table.png" width="300" alt="Table"> |
+
+| Dropdown                                                               | AreaChart                                                                 | PieChart                                                                |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| <img src="assets/screenshots/dropdown.png" width="300" alt="Dropdown"> | <img src="assets/screenshots/area-chart.png" width="300" alt="AreaChart"> | <img src="assets/screenshots/pie-chart.png" width="300" alt="PieChart"> |
+
+| Sidebar                                                              | Form                                                           |
+| -------------------------------------------------------------------- | -------------------------------------------------------------- |
+| <img src="assets/screenshots/sidebar.png" width="300" alt="Sidebar"> | <img src="assets/screenshots/form.png" width="300" alt="Form"> |
+
+> Explore all components interactively in
+> [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system).
+
 ## What is HO Design System
 
 HO Design System is a composable, engineering-first Design System for professional web applications.
