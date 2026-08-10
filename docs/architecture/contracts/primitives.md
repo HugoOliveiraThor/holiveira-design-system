@@ -36,6 +36,8 @@ Components extracted from the following monolith files:
 - TailAdmin `/spinners` page → Spinner (TailAdmin port)
 - TailAdmin `/pagination` page → Pagination (TailAdmin port)
 - TailAdmin `/notifications` page → NotificationBar (TailAdmin port)
+- TailAdmin `/breadcrumb` page → Breadcrumb (TailAdmin port)
+- TailAdmin `/modals` page → Modal, ModalCloseButton, ModalAlert (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -75,6 +77,9 @@ Components extracted from the following monolith files:
 - `Spinner`, `SpinnerProps`, `spinnerVariants`
 - `Pagination`, `PaginationProps`, `getPageItems`
 - `NotificationBar`, `NotificationBarProps`, `notificationBarVariants`, `iconBoxVariants`
+- `Breadcrumb`, `BreadcrumbProps`, `BreadcrumbItem`
+- `Modal`, `ModalProps`, `modalVariants`, `ModalCloseButton`, `ModalCloseButtonProps`
+- `ModalAlert`, `ModalAlertProps`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`

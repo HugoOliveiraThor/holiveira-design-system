@@ -55,6 +55,28 @@ export {
   type NotificationBarProps,
 } from './notification-bar';
 /**
+ * Content breadcrumb trail (nav > ol > li) with slash/chevron/dot dividers
+ * and optional per-item icons. The last item without `href` is the current page.
+ * @public
+ */
+export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './breadcrumb';
+/**
+ * Controlled modal overlay + panel with size/centered/fullScreen variants.
+ * @public
+ */
+export {
+  Modal,
+  ModalCloseButton,
+  modalVariants,
+  type ModalProps,
+  type ModalCloseButtonProps,
+} from './modal';
+/**
+ * Centered modal alert with large status icon, title, description, and action children.
+ * @public
+ */
+export { ModalAlert, type ModalAlertProps } from './modal-alert';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
