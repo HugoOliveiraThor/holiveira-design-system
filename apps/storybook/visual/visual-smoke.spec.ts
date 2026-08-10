@@ -30,9 +30,11 @@ async function assertStoryRenders(page: Page, id: string, theme: string) {
   await page.waitForSelector('#storybook-root', { state: 'attached', timeout: 15_000 });
   await page.waitForTimeout(500);
 
-  expect(await page.locator('#sb-errordisplay').count(), `error display for ${id} [${theme}]`).toBe(
-    0,
-  );
+  const errorDisplay = page.locator('#sb-errordisplay, .sb-errordisplay');
+  expect(
+    await errorDisplay.filter({ visible: true }).count(),
+    `error display for ${id} [${theme}]`,
+  ).toBe(0);
   expect(
     await page.locator('#storybook-root').isVisible(),
     `story root not visible for ${id} [${theme}]`,
