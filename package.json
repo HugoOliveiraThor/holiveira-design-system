@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:visual": "pnpm run build:storybook && pnpm --filter storybook run test:visual",
+    "screenshots": "pnpm run build:storybook && node apps/storybook/scripts/capture-screenshots.mjs",
     "check:size": "pnpm exec tsx scripts/check-size.ts",
     "check:exports": "pnpm exec tsx scripts/check-exports.ts",
     "check:publish": "pnpm exec tsx scripts/check-publish.ts",
