@@ -4,6 +4,16 @@
  */
 export { Button, buttonVariants, type ButtonProps } from './button';
 /**
+ * Circular avatar with optional status indicator and initials fallback.
+ * @public
+ */
+export { Avatar, avatarVariants, avatarStatusVariants, type AvatarProps } from './avatar';
+/**
+ * Stacked avatars with overlap and +N overflow.
+ * @public
+ */
+export { AvatarGroup, type AvatarGroupProps } from './avatar-group';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
