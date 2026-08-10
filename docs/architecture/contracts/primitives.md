@@ -29,6 +29,7 @@ Components extracted from the following monolith files:
 - `src/components/ui/table.tsx` → Table (+ sub-components)
 - `src/components/ui/dropdown.tsx` → Dropdown (+ sub-components)
 - TailAdmin `/avatars` page → Avatar, AvatarGroup (TailAdmin port)
+- TailAdmin `/badge` page → Badge (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -61,6 +62,7 @@ Components extracted from the following monolith files:
 - `alertVariants`
 - `Avatar`, `AvatarProps`, `avatarVariants`, `avatarStatusVariants`
 - `AvatarGroup`, `AvatarGroupProps`
+- `Badge`, `BadgeProps`, `badgeVariants`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`

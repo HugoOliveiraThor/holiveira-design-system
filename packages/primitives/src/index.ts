@@ -14,6 +14,11 @@ export { Avatar, avatarVariants, avatarStatusVariants, type AvatarProps } from '
  */
 export { AvatarGroup, type AvatarGroupProps } from './avatar-group';
 /**
+ * Badge with 7 color variants, light/solid fills, and optional icon.
+ * @public
+ */
+export { Badge, badgeVariants, type BadgeProps } from './badge';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
