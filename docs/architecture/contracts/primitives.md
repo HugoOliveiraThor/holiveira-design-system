@@ -38,6 +38,8 @@ Components extracted from the following monolith files:
 - TailAdmin `/notifications` page → NotificationBar (TailAdmin port)
 - TailAdmin `/breadcrumb` page → Breadcrumb (TailAdmin port)
 - TailAdmin `/modals` page → Modal, ModalCloseButton, ModalAlert (TailAdmin port)
+- TailAdmin `/tabs` page → Tabs family (TailAdmin port)
+- TailAdmin `/tooltips` page → Tooltip (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -80,6 +82,9 @@ Components extracted from the following monolith files:
 - `Breadcrumb`, `BreadcrumbProps`, `BreadcrumbItem`
 - `Modal`, `ModalProps`, `modalVariants`, `ModalCloseButton`, `ModalCloseButtonProps`
 - `ModalAlert`, `ModalAlertProps`
+- `Tabs`, `TabsProps`, `TabsList`, `TabsListProps`, `TabsTrigger`, `TabsTriggerProps`,
+  `TabsContent`, `TabsContentProps`
+- `Tooltip`, `TooltipProps`, `tooltipVariants`, `tooltipArrow`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`

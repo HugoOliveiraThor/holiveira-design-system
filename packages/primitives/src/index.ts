@@ -77,6 +77,25 @@ export {
  */
 export { ModalAlert, type ModalAlertProps } from './modal-alert';
 /**
+ * Tabs family: Tabs (controlled container), TabsList, TabsTrigger, TabsContent.
+ * @public
+ */
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  type TabsProps,
+  type TabsListProps,
+  type TabsTriggerProps,
+  type TabsContentProps,
+} from './tabs';
+/**
+ * Self-managed tooltip shown on hover/focus, with placement, variant, and arrow.
+ * @public
+ */
+export { Tooltip, tooltipVariants, tooltipArrow, type TooltipProps } from './tooltip';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
