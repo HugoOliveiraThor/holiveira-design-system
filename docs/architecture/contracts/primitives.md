@@ -28,6 +28,7 @@ Components extracted from the following monolith files:
 - `src/components/ui/skeleton.tsx` → Skeleton
 - `src/components/ui/table.tsx` → Table (+ sub-components)
 - `src/components/ui/dropdown.tsx` → Dropdown (+ sub-components)
+- TailAdmin `/avatars` page → Avatar, AvatarGroup (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -58,6 +59,8 @@ Components extracted from the following monolith files:
 - `buttonVariants`
 - `Alert`, `AlertProps`
 - `alertVariants`
+- `Avatar`, `AvatarProps`, `avatarVariants`, `avatarStatusVariants`
+- `AvatarGroup`, `AvatarGroupProps`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`

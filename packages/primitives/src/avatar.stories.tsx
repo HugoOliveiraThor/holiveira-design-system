@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Avatar as AvatarBase } from './avatar';
-import { Avatar, AvatarGroup } from './avatar-group';
+import { Avatar } from './avatar';
+import { AvatarGroup } from './avatar-group';
 
-const meta: Meta<typeof AvatarBase> = {
+const meta: Meta<typeof Avatar> = {
   title: 'Primitives/Avatar',
-  component: AvatarBase,
+  component: Avatar,
   tags: ['autodocs'],
   argTypes: {
     src: {

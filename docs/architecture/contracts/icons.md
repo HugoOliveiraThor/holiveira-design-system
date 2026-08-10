@@ -53,15 +53,15 @@ interface IconWrapperProps extends React.SVGProps<SVGSVGElement> {
 
 All icons follow the naming convention `PascalCaseIconName`:
 
-`IconWrapper`, `SearchIcon`, `CloseIcon`, `ArrowLeftIcon`, `ChevronUpIcon`, `ArrowUpIcon`,
-`ArrowDownIcon`, `DotIcon`, `TrendingUpIcon`, `CheckIcon`, `XIcon`, `GlobeIcon`, `TrashIcon`,
-`MessageOutlineIcon`, `EmailIcon`, `PasswordIcon`, `UserIcon`, `CallIcon`, `PencilSquareIcon`,
-`MenuIcon`, `BellIcon`, `SunIcon`, `MoonIcon`, `SettingsIcon`, `LogOutIcon`, `HomeIcon`,
-`CalendarIcon`, `TableIcon`, `PieChartIcon`, `PreviewIcon`, `DownloadIcon`, `CameraIcon`,
-`AlertWarningIcon`, `AlertSuccessIcon`, `AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`,
-`AuthenticationIcon`, `UploadIcon`
+`IconWrapper`, `SearchIcon`, `CloseIcon`, `ArrowLeftIcon`, `ArrowRightIcon`, `ChevronUpIcon`,
+`ChevronDownIcon`, `ChevronRightIcon`, `ArrowUpIcon`, `ArrowDownIcon`, `DotIcon`, `TrendingUpIcon`,
+`CheckIcon`, `XIcon`, `GlobeIcon`, `TrashIcon`, `MessageOutlineIcon`, `EmailIcon`, `PasswordIcon`,
+`UserIcon`, `CallIcon`, `PencilSquareIcon`, `MenuIcon`, `BellIcon`, `SunIcon`, `MoonIcon`,
+`SettingsIcon`, `LogOutIcon`, `HomeIcon`, `CalendarIcon`, `TableIcon`, `PieChartIcon`,
+`PreviewIcon`, `DownloadIcon`, `CameraIcon`, `AlertWarningIcon`, `AlertSuccessIcon`,
+`AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`, `AuthenticationIcon`, `UploadIcon`
 
-(39 components total at v0.1.0)
+(42 components total at v0.1.0)
 
 ## Internal API
 
