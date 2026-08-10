@@ -30,6 +30,10 @@ Components extracted from the following monolith files:
 - `src/components/ui/dropdown.tsx` → Dropdown (+ sub-components)
 - TailAdmin `/avatars` page → Avatar, AvatarGroup (TailAdmin port)
 - TailAdmin `/badge` page → Badge (TailAdmin port)
+- TailAdmin `/links` page → Link (TailAdmin port)
+- TailAdmin `/list` page → List, ListItem (TailAdmin port)
+- TailAdmin `/progress-bar` page → Progress (TailAdmin port)
+- TailAdmin `/spinners` page → Spinner (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -63,6 +67,10 @@ Components extracted from the following monolith files:
 - `Avatar`, `AvatarProps`, `avatarVariants`, `avatarStatusVariants`
 - `AvatarGroup`, `AvatarGroupProps`
 - `Badge`, `BadgeProps`, `badgeVariants`
+- `Link`, `LinkProps`, `linkVariants`
+- `List`, `ListProps`, `ListItem`, `ListItemProps`
+- `Progress`, `ProgressProps`, `progressVariants`
+- `Spinner`, `SpinnerProps`, `spinnerVariants`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`

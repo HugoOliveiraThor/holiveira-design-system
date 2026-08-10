@@ -19,6 +19,26 @@ export { AvatarGroup, type AvatarGroupProps } from './avatar-group';
  */
 export { Badge, badgeVariants, type BadgeProps } from './badge';
 /**
+ * Link with 8 color variants, optional underline, and opacity levels.
+ * @public
+ */
+export { Link, linkVariants, type LinkProps } from './link';
+/**
+ * List container (ul/ol) with vertical or horizontal orientation.
+ * @public
+ */
+export { List, ListItem, type ListProps, type ListItemProps } from './list';
+/**
+ * Horizontal progress bar with value, size, shape, and optional percentage label.
+ * @public
+ */
+export { Progress, progressVariants, type ProgressProps } from './progress';
+/**
+ * Circular arc spinner with size and color variants.
+ * @public
+ */
+export { Spinner, spinnerVariants, type SpinnerProps } from './spinner';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */
