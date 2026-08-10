@@ -19,6 +19,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:visual": "pnpm run build:storybook && pnpm --filter storybook run test:visual",
     "check:size": "pnpm exec tsx scripts/check-size.ts",
     "check:exports": "pnpm exec tsx scripts/check-exports.ts",
     "check:publish": "pnpm exec tsx scripts/check-publish.ts",
@@ -36,7 +37,7 @@
     "version": "changeset version",
     "release:publish": "turbo run build --filter='./packages/*' && changeset publish",
     "prepare": "husky",
-    "all-checks": "pnpm run format:check && turbo run lint && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:license && pnpm run check:exports && pnpm run check:deps"
+    "all-checks": "pnpm run format:check && turbo run lint && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:visual && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:license && pnpm run check:exports && pnpm run check:deps"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
