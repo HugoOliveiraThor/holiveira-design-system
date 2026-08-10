@@ -84,6 +84,9 @@ _rules
 reports
 # storybook
 storybook-static
+# playwright output
+test-results/
+playwright-report/
 # macOS version metadata
 --version/
 
