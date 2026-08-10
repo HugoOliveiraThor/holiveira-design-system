@@ -39,6 +39,22 @@ export { Progress, progressVariants, type ProgressProps } from './progress';
  */
 export { Spinner, spinnerVariants, type SpinnerProps } from './spinner';
 /**
+ * Pagination with number trail (automatic ellipsis), prev/next buttons,
+ * optional labels and icons.
+ * @public
+ */
+export { Pagination, getPageItems, type PaginationProps } from './pagination';
+/**
+ * Compact inline status notification with tinted icon box, title, and optional close.
+ * @public
+ */
+export {
+  NotificationBar,
+  notificationBarVariants,
+  iconBoxVariants,
+  type NotificationBarProps,
+} from './notification-bar';
+/**
  * Alert with 4 severity variants (success, warning, error, info) and optional link.
  * @public
  */

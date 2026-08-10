@@ -34,6 +34,8 @@ Components extracted from the following monolith files:
 - TailAdmin `/list` page → List, ListItem (TailAdmin port)
 - TailAdmin `/progress-bar` page → Progress (TailAdmin port)
 - TailAdmin `/spinners` page → Spinner (TailAdmin port)
+- TailAdmin `/pagination` page → Pagination (TailAdmin port)
+- TailAdmin `/notifications` page → NotificationBar (TailAdmin port)
 
 ## Non-Migration (Stay in Monolith)
 
@@ -71,6 +73,8 @@ Components extracted from the following monolith files:
 - `List`, `ListProps`, `ListItem`, `ListItemProps`
 - `Progress`, `ProgressProps`, `progressVariants`
 - `Spinner`, `SpinnerProps`, `spinnerVariants`
+- `Pagination`, `PaginationProps`, `getPageItems`
+- `NotificationBar`, `NotificationBarProps`, `notificationBarVariants`, `iconBoxVariants`
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`
