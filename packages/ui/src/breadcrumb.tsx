@@ -1,6 +1,5 @@
 import { cn } from '@ho-dev/utils';
 
-import Link from 'next/link';
 import type { HTMLAttributes } from 'react';
 
 interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
@@ -21,9 +20,9 @@ const Breadcrumb = ({ pageName, className, ...props }: BreadcrumbProps) => {
       <nav aria-label="Breadcrumb">
         <ol className="flex items-center gap-2">
           <li>
-            <Link className="font-medium" href="/">
+            <a className="font-medium" href="/">
               Dashboard /
-            </Link>
+            </a>
           </li>
           <li aria-current="page" className="text-primary font-medium">
             {pageName}
