@@ -59,9 +59,10 @@ All icons follow the naming convention `PascalCaseIconName`:
 `UserIcon`, `CallIcon`, `PencilSquareIcon`, `MenuIcon`, `BellIcon`, `SunIcon`, `MoonIcon`,
 `SettingsIcon`, `LogOutIcon`, `HomeIcon`, `CalendarIcon`, `TableIcon`, `PieChartIcon`,
 `PreviewIcon`, `DownloadIcon`, `CameraIcon`, `AlertWarningIcon`, `AlertSuccessIcon`,
-`AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`, `AuthenticationIcon`, `UploadIcon`
+`AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`, `AuthenticationIcon`, `UploadIcon`, `EyeIcon`,
+`EyeCloseIcon`, `GoogleIcon`
 
-(42 components total at v0.1.0)
+(45 components total at v0.1.0)
 
 ## Internal API
 

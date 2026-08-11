@@ -46,6 +46,9 @@ import {
   TrendingUpIcon,
   UploadIcon,
   UserIcon,
+  EyeIcon,
+  EyeCloseIcon,
+  GoogleIcon,
   XIcon,
 } from './index';
 
@@ -90,6 +93,9 @@ const ALL_ICONS = [
   { name: 'TrendingUp', Icon: TrendingUpIcon },
   { name: 'Upload', Icon: UploadIcon },
   { name: 'User', Icon: UserIcon },
+  { name: 'Eye', Icon: EyeIcon },
+  { name: 'EyeClose', Icon: EyeCloseIcon },
+  { name: 'Google', Icon: GoogleIcon },
   { name: 'X', Icon: XIcon },
 ] as const;
 
