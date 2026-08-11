@@ -31,7 +31,6 @@
   ],
   "peerDependencies": {
     "react": "^19.0.0",
-    "@ho-dev/types": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {
@@ -50,5 +49,8 @@
     "access": "public",
     "provenance": true
   },
-  "module": "./dist/index.js"
+  "module": "./dist/index.js",
+  "dependencies": {
+    "@ho-dev/types": "workspace:*"
+  }
 }

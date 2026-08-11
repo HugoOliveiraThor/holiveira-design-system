@@ -33,11 +33,11 @@
   "dependencies": {
     "@ho-dev/hooks": "workspace:*",
     "@ho-dev/icons": "workspace:*",
+    "@ho-dev/theme": "workspace:*",
+    "@ho-dev/types": "workspace:*",
     "@ho-dev/utils": "workspace:*"
   },
   "peerDependencies": {
-    "@ho-dev/types": "workspace:*",
-    "@ho-dev/theme": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.0.0"

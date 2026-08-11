@@ -37,9 +37,10 @@
       "import": "./dist/index.js"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "@ho-dev/types": "workspace:*"
+  },
   "peerDependencies": {
-    "@ho-dev/types": "workspace:*",
     "typescript": "^5.0.0"
   },
   "scripts": {
