@@ -15,7 +15,7 @@ type TableProps = HTMLAttributes<HTMLTableElement> & {
  */
 const Table = forwardRef<HTMLDivElement, TableProps>(({ className, ...props }, ref) => (
   <div ref={ref} className="relative w-full overflow-auto">
-    <table className={cn('w-full caption-bottom text-sm', className)} {...props} />
+    <table className={cn('w-full', className)} {...props} />
   </div>
 ));
 
@@ -26,7 +26,12 @@ Table.displayName = 'Table';
  * @public
  */
 function TableHeader({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className={cn('[&_tr]:border-b', className)} {...props} />;
+  return (
+    <thead
+      className={cn('border-b border-gray-100 dark:border-white/[0.05]', className)}
+      {...props}
+    />
+  );
 }
 
 TableHeader.displayName = 'TableHeader';
@@ -36,7 +41,12 @@ TableHeader.displayName = 'TableHeader';
  * @public
  */
 function TableBody({ className, ...props }: HTMLAttributes<HTMLTableSectionElement>) {
-  return <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />;
+  return (
+    <tbody
+      className={cn('divide-y divide-gray-100 dark:divide-white/[0.05]', className)}
+      {...props}
+    />
+  );
 }
 
 TableBody.displayName = 'TableBody';
@@ -67,7 +77,7 @@ function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) 
   return (
     <tr
       className={cn(
-        'dark:border-dark-3 dark:hover:bg-dark-2 border-b transition-colors hover:bg-neutral-100/50 data-[state=selected]:bg-neutral-100 dark:data-[state=selected]:bg-neutral-800',
+        'border-b border-gray-100 transition-colors hover:bg-gray-50 data-[state=selected]:bg-gray-50 dark:border-white/[0.05] dark:hover:bg-white/[0.03] dark:data-[state=selected]:bg-white/[0.03]',
         className,
       )}
       {...props}
@@ -85,7 +95,7 @@ function TableHead({ className, ...props }: ThHTMLAttributes<HTMLTableCellElemen
   return (
     <th
       className={cn(
-        'h-12 px-4 text-left align-middle font-medium text-neutral-500 dark:text-neutral-400 [&:has([role=checkbox])]:pr-0',
+        'px-5 py-3 text-start align-middle text-xs font-medium text-gray-500 dark:text-gray-400 [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}
@@ -101,7 +111,13 @@ TableHead.displayName = 'TableHead';
  */
 function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
   return (
-    <td className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
+    <td
+      className={cn(
+        'px-5 py-4 align-middle text-sm text-gray-500 dark:text-gray-400 [&:has([role=checkbox])]:pr-0',
+        className,
+      )}
+      {...props}
+    />
   );
 }
 

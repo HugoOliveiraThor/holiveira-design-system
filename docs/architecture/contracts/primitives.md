@@ -93,7 +93,8 @@ Components extracted from the following monolith files:
 - `Radio`, `RadioProps`
 - `Select`, `SelectProps`
 - `Switch`, `SwitchProps`
-- `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`
+- `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell` — v2
+  visual (TailAdmin port): bordered header, divided body, gray hover; API unchanged
 - `Dropdown`, `DropdownProps`, `DropdownContent`, `DropdownContentProps`, `DropdownTrigger`,
   `DropdownTriggerProps`, `DropdownClose`, `DropdownCloseProps`
 
