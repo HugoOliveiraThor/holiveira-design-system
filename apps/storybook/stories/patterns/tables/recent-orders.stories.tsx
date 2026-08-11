@@ -1,4 +1,3 @@
-import { FilterIcon } from '@ho-dev/icons';
 import { FilterIcon, TrashIcon } from '@ho-dev/icons';
 import {
   Badge,
