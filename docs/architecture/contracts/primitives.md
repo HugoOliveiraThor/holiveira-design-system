@@ -88,6 +88,7 @@ Components extracted from the following monolith files:
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`
+- `OTPInput`, `OTPInputProps` — segmented one-time-code input with auto-advance and paste
 - `Checkbox`, `CheckboxProps` — `label` accepts `ReactNode` (composable labels, e.g. linked terms)
 - `Radio`, `RadioProps`
 - `Select`, `SelectProps`

@@ -131,6 +131,11 @@ export { InputGroup, type InputGroupProps } from './input-group';
  */
 export { TextArea, type TextAreaProps } from './text-area';
 /**
+ * Segmented one-time-code input with auto-advance and paste support.
+ * @public
+ */
+export { OTPInput, type OTPInputProps } from './otp-input';
+/**
  * Native select with typed items, placeholder, prefix icon, and error state.
  * @public
  */
