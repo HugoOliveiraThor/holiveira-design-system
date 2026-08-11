@@ -1,8 +1,8 @@
 /**
- * Dashboard breadcrumb with page title and navigation trail.
+ * Page header with title heading and breadcrumb trail.
  * @public
  */
-export { Breadcrumb, type BreadcrumbProps } from './breadcrumb';
+export { PageHeader, type PageHeaderProps } from './page-header';
 
 /**
  * Generic section card with title header and padded content area.

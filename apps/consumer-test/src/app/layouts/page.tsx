@@ -1,10 +1,10 @@
 import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@ho-dev/layouts';
-import { Breadcrumb } from '@ho-dev/ui';
+import { PageHeader } from '@ho-dev/ui';
 
 export default function LayoutsPage() {
   return (
     <main>
-      <h1>Layouts Example — Sidebar + Header + Breadcrumb</h1>
+      <h1>Layouts Example — Sidebar + Header + PageHeader</h1>
 
       <SidebarProvider>
         <Header>
@@ -16,7 +16,7 @@ export default function LayoutsPage() {
 
         <Sidebar>
           <nav>
-            <Breadcrumb pageName="Layouts" />
+            <PageHeader title="Layouts" />
           </nav>
         </Sidebar>
       </SidebarProvider>

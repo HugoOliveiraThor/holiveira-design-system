@@ -1,5 +1,5 @@
 import { Sidebar, SidebarProvider } from '@ho-dev/layouts';
-import { Breadcrumb } from '@ho-dev/ui';
+import { PageHeader } from '@ho-dev/ui';
 
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
@@ -30,7 +30,7 @@ function SidebarBreadcrumbLayout() {
         </Sidebar>
 
         <main className="flex-1 p-6">
-          <Breadcrumb pageName="Dashboard" />
+          <PageHeader title="Dashboard" />
           <div className="rounded-lg border-2 border-dashed border-neutral-300 p-12 text-center text-neutral-500">
             Main content area
           </div>

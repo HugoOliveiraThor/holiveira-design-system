@@ -5,7 +5,7 @@ Level: 3 Category: Composition
 ## Purpose
 
 Provide composite UI components that combine multiple primitives into ready-to-use patterns
-(Breadcrumb, Card, ShowcaseSection, etc.).
+(PageHeader, Card, ShowcaseSection, etc.).
 
 ## Responsibilities
 
@@ -31,7 +31,8 @@ Provide composite UI components that combine multiple primitives into ready-to-u
 
 ## Public API
 
-- `Breadcrumb`, `BreadcrumbProps` — dashboard breadcrumb with page title and navigation trail
+- `PageHeader`, `PageHeaderProps` — page header with title heading and breadcrumb trail (renamed
+  from Breadcrumb, existing dashboard breadcrumb header)
 - `ShowcaseSection`, `ShowcaseSectionProps` — generic section card with title header and padded
   content
 - `Card`, `cardVariants`, `CardProps` — card container with 3 variants: default, bordered, ghost

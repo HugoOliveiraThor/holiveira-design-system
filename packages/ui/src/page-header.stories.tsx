@@ -1,20 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within, expect } from '@storybook/test';
+import { within, expect } from '@storybook/test';
 
-import { Breadcrumb } from './breadcrumb';
+import { PageHeader } from './page-header';
 
-const meta: Meta<typeof Breadcrumb> = {
-  title: 'UI/Breadcrumb',
-  component: Breadcrumb,
+const meta: Meta<typeof PageHeader> = {
+  title: 'UI/PageHeader',
+  component: PageHeader,
   tags: ['autodocs'],
   args: {
-    pageName: 'Default Page',
+    title: 'Default Page',
   },
   argTypes: {
-    pageName: {
-      description: 'Current page name displayed as the last (active) breadcrumb item.',
+    title: {
+      description: 'Page title rendered as the h2 heading.',
       control: { type: 'text' },
-      table: { defaultValue: { summary: 'undefined' } },
+    },
+    breadcrumb: {
+      description: 'Optional breadcrumb trail items. Defaults to "Dashboard / {title}".',
+      control: false,
     },
     className: {
       description: 'Additional CSS classes.',
@@ -28,42 +31,43 @@ type Story = StoryObj<typeof meta>;
 
 export const SingleLevel: Story = {
   args: {
-    pageName: 'Dashboard',
+    title: 'Dashboard',
   },
 };
 
 export const Nested: Story = {
   args: {
-    pageName: 'Settings / Profile',
+    title: 'Profile',
+    breadcrumb: [
+      { label: 'Dashboard', href: '/' },
+      { label: 'Settings', href: '/settings' },
+      { label: 'Profile' },
+    ],
   },
 };
 
 export const LongPaths: Story = {
   args: {
-    pageName: 'A very long page name that spans multiple lines in the breadcrumb layout',
+    title: 'A very long page name that spans multiple lines in the page header layout',
   },
 };
 
-export const WithIcon: Story = {
-  render: (args) => (
-    <div className="flex items-center gap-2">
-      <span aria-hidden="true">&#9733;</span>
-      <Breadcrumb {...args} />
-    </div>
-  ),
+export const WithTrail: Story = {
+  render: (args) => <PageHeader {...args} />,
   args: {
-    pageName: 'Favorites',
+    title: 'Analytics',
+    breadcrumb: [{ label: 'Dashboard', href: '/' }, { label: 'Analytics' }],
   },
 };
 
 export const Interactive: Story = {
   args: {
-    pageName: 'Interactive',
+    title: 'Interactive',
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Breadcrumb is visible with page name', async () => {
+    await step('PageHeader is visible with page name', async () => {
       const heading = canvas.getByRole('heading', { name: /interactive/i });
       await expect(heading).toBeVisible();
     });
@@ -74,7 +78,9 @@ export const Interactive: Story = {
     });
 
     await step('Current page is marked with aria-current', async () => {
-      const current = canvas.getByRole('heading', { name: /interactive/i });
+      const current = canvas
+        .getByRole('navigation', { name: /breadcrumb/i })
+        .getByText('Interactive');
       const listItem = current.closest('li');
       await expect(listItem).toHaveAttribute('aria-current', 'page');
     });
