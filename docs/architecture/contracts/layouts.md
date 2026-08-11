@@ -19,6 +19,7 @@ Provide page-level layout components (Sidebar, Header) for dashboard and applica
 - `@ho-dev/primitives` (L2) — atomic components
 - `@ho-dev/theme` (L3) — theme context
 - `@ho-dev/hooks` (L2) — useIsMobile for responsive behavior
+- `@ho-dev/icons` (L2) — icon components used by auth layout
 - `@ho-dev/types` (L0) — shared types
 
 ## Forbidden Dependencies
@@ -34,6 +35,8 @@ Provide page-level layout components (Sidebar, Header) for dashboard and applica
 - `Header`, `HeaderProps` — application header shell (slot-based)
 - `HeaderToggle`, `HeaderToggleProps` — hamburger toggle component
 - `HeaderActions`, `HeaderActionsProps` — right-aligned actions container
+- `AuthLayout`, `AuthLayoutProps` — authentication page layout with split-pane shell and brand panel
+  (TailAdmin port)
 
 ## Internal API
 

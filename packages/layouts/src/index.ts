@@ -27,3 +27,9 @@ export {
   type HeaderToggleProps,
   type HeaderActionsProps,
 } from './header';
+
+/**
+ * Authentication page layout with split-pane shell and brand panel.
+ * @public
+ */
+export { AuthLayout, type AuthLayoutProps } from './auth/auth-layout';
