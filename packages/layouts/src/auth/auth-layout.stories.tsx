@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { AuthLayout } from './auth-layout';
 import { SignInForm } from './sign-in-form';
+import { SignUpForm } from './sign-up-form';
 
 function FullPageDecorator(Story: () => React.JSX.Element) {
   return (
@@ -64,4 +65,16 @@ export const WithBackLink: Story = {
       <SignInForm onSubmit={() => {}} />
     </AuthLayout>
   ),
+};
+
+export const SignUp: Story = {
+  render: () => (
+    <AuthLayout
+      brandLogo={<span className="text-2xl font-bold text-white">HO</span>}
+      brandText="Engineering-first design system"
+    >
+      <SignUpForm onSubmit={() => {}} />
+    </AuthLayout>
+  ),
+  parameters: { viewport: { defaultViewport: 'desktop' } },
 };
