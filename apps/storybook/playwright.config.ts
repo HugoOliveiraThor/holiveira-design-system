@@ -3,6 +3,8 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './visual',
   timeout: 30_000,
+  fullyParallel: true,
+  workers: 8,
   use: {
     baseURL: 'http://localhost:6007',
     browserName: 'chromium',

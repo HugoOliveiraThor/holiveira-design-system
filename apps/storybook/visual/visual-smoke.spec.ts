@@ -28,7 +28,17 @@ async function assertStoryRenders(page: Page, id: string, theme: string) {
   );
 
   await page.waitForSelector('#storybook-root', { state: 'attached', timeout: 15_000 });
-  await page.waitForTimeout(500);
+
+  await page.waitForFunction(
+    () => {
+      const root = document.querySelector('#storybook-root');
+      const errorDisplay = document.querySelector('#sb-errordisplay, .sb-errordisplay');
+      if (errorDisplay && getComputedStyle(errorDisplay).display !== 'none') return true;
+      return root !== null && root.childElementCount > 0;
+    },
+    undefined,
+    { timeout: 15_000 },
+  );
 
   const errorDisplay = page.locator('#sb-errordisplay, .sb-errordisplay');
   expect(
