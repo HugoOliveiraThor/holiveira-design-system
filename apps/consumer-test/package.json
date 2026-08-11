@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "validate": "tsx scripts/validate.ts"
+    "validate": "tsx scripts/validate.ts",
+    "validate:packed": "tsx scripts/validate-packed.ts"
   },
   "dependencies": {
     "@ho-dev/charts": "workspace:*",

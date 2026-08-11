@@ -1,0 +1,9 @@
+# Pack staging for validate:packed (installability test)
+.packed/
+
+# Next.js
+.next/
+out/
+
+# dependencies
+node_modules/
