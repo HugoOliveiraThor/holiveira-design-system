@@ -39,3 +39,9 @@ export { AuthLayout, type AuthLayoutProps } from './auth/auth-layout';
  * @public
  */
 export { SignInForm, type SignInFormProps, type SocialProvider } from './auth/sign-in-form';
+
+/**
+ * Controlled sign-up form composing primitives.
+ * @public
+ */
+export { SignUpForm, type SignUpFormProps } from './auth/sign-up-form';
