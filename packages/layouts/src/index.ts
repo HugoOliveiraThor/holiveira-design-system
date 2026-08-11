@@ -51,3 +51,12 @@ export { SignUpForm, type SignUpFormProps } from './auth/sign-up-form';
  * @public
  */
 export { PasswordResetForm, type PasswordResetFormProps } from './auth/password-reset-form';
+
+/**
+ * Controlled two-step verification form composing OTPInput.
+ * @public
+ */
+export {
+  TwoStepVerificationForm,
+  type TwoStepVerificationFormProps,
+} from './auth/two-step-verification-form';
