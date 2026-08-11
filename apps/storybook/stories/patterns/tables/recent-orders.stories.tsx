@@ -1,4 +1,5 @@
 import { FilterIcon } from '@ho-dev/icons';
+import { FilterIcon, TrashIcon } from '@ho-dev/icons';
 import {
   Badge,
   Button,
@@ -9,7 +10,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  TrashIcon,
 } from '@ho-dev/primitives';
 import { Card, CardTitle } from '@ho-dev/ui';
 
