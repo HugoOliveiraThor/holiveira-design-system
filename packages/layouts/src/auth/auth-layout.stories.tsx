@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { AuthLayout } from './auth-layout';
+import { PasswordResetForm } from './password-reset-form';
 import { SignInForm } from './sign-in-form';
 import { SignUpForm } from './sign-up-form';
 
@@ -74,6 +75,18 @@ export const SignUp: Story = {
       brandText="Engineering-first design system"
     >
       <SignUpForm onSubmit={() => {}} />
+    </AuthLayout>
+  ),
+  parameters: { viewport: { defaultViewport: 'desktop' } },
+};
+
+export const PasswordReset: Story = {
+  render: () => (
+    <AuthLayout
+      brandLogo={<span className="text-2xl font-bold text-white">HO</span>}
+      brandText="Engineering-first design system"
+    >
+      <PasswordResetForm onSubmit={() => {}} />
     </AuthLayout>
   ),
   parameters: { viewport: { defaultViewport: 'desktop' } },
