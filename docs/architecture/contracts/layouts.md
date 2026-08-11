@@ -39,6 +39,8 @@ Provide page-level layout components (Sidebar, Header) for dashboard and applica
   (TailAdmin port)
 - `SignInForm`, `SignInFormProps` — controlled sign-in form composing primitives (TailAdmin port)
 - `SignUpForm`, `SignUpFormProps` — controlled sign-up form composing primitives (TailAdmin port)
+- `PasswordResetForm`, `PasswordResetFormProps` — controlled password-reset form composing
+  primitives (TailAdmin port)
 - `SocialProvider` — social login provider descriptor for SignInForm
 
 ## Internal API

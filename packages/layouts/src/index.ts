@@ -45,3 +45,9 @@ export { SignInForm, type SignInFormProps, type SocialProvider } from './auth/si
  * @public
  */
 export { SignUpForm, type SignUpFormProps } from './auth/sign-up-form';
+
+/**
+ * Controlled password-reset form composing primitives.
+ * @public
+ */
+export { PasswordResetForm, type PasswordResetFormProps } from './auth/password-reset-form';
