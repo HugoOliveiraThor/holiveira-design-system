@@ -60,9 +60,9 @@ All icons follow the naming convention `PascalCaseIconName`:
 `SettingsIcon`, `LogOutIcon`, `HomeIcon`, `CalendarIcon`, `TableIcon`, `PieChartIcon`,
 `PreviewIcon`, `DownloadIcon`, `CameraIcon`, `AlertWarningIcon`, `AlertSuccessIcon`,
 `AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`, `AuthenticationIcon`, `UploadIcon`, `EyeIcon`,
-`EyeCloseIcon`, `GoogleIcon`
+`EyeCloseIcon`, `GoogleIcon`, `FilterIcon`, `MoreIcon`
 
-(45 components total at v0.1.0)
+(47 components total at v0.1.0)
 
 ## Internal API
 
