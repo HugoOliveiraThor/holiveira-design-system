@@ -7,7 +7,7 @@ import { forwardRef, useId } from 'react';
 
 /** @public */
 type CheckboxProps = {
-  label: string;
+  label: React.ReactNode;
   withIcon?: 'check' | 'x';
   withBg?: boolean;
   minimal?: boolean;

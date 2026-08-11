@@ -88,7 +88,7 @@ Components extracted from the following monolith files:
 - `Skeleton`, `SkeletonProps`
 - `InputGroup`, `InputGroupProps`
 - `TextArea`, `TextAreaProps`
-- `Checkbox`, `CheckboxProps`
+- `Checkbox`, `CheckboxProps` — `label` accepts `ReactNode` (composable labels, e.g. linked terms)
 - `Radio`, `RadioProps`
 - `Select`, `SelectProps`
 - `Switch`, `SwitchProps`

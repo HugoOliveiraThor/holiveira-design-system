@@ -15,6 +15,19 @@ describe('Checkbox', () => {
     expect(getByLabelText('Accept terms')).toBeVisible();
   });
 
+  it('renders a ReactNode label containing an element', () => {
+    const { getByText } = render(
+      <Checkbox
+        label={
+          <>
+            I agree to the <a href="/terms">Terms</a>
+          </>
+        }
+      />,
+    );
+    expect(getByText('Terms')).toHaveAttribute('href', '/terms');
+  });
+
   it('renders checked', () => {
     const { getByRole } = render(<Checkbox label="Checked" defaultChecked />);
     expect(getByRole('checkbox')).toBeChecked();
