@@ -33,6 +33,7 @@
   "dependencies": {
     "@ho-dev/hooks": "workspace:*",
     "@ho-dev/icons": "workspace:*",
+    "@ho-dev/primitives": "workspace:*",
     "@ho-dev/utils": "workspace:*"
   },
   "peerDependencies": {

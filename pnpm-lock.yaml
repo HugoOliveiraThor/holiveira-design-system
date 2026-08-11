@@ -603,6 +603,12 @@ importers:
       '@ho-dev/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@ho-dev/icons':
+        specifier: workspace:*
+        version: link:../icons
+      '@ho-dev/primitives':
+        specifier: workspace:*
+        version: link:../primitives
       '@ho-dev/types':
         specifier: workspace:*
         version: link:../types
