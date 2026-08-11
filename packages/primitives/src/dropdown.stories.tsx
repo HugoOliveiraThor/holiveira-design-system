@@ -7,23 +7,32 @@ import { Dropdown, DropdownContent, DropdownTrigger, DropdownClose } from './dro
 
 type DropdownStoryProps = {
   triggerLabel: string;
-  items: { label: string }[];
+  items: { label: string; icon?: React.ReactNode }[];
   hint?: string;
   disabled?: boolean;
   dividerAfter?: number;
+  chevron?: boolean;
 };
 
-function DropdownStory({ triggerLabel, items, hint, disabled, dividerAfter }: DropdownStoryProps) {
+function DropdownStory({
+  triggerLabel,
+  items,
+  hint,
+  disabled,
+  dividerAfter,
+  chevron,
+}: DropdownStoryProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
       <DropdownTrigger
         className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2"
         disabled={disabled}
+        chevron={chevron}
       >
         {triggerLabel}
       </DropdownTrigger>
-      <DropdownContent className="border-stroke dark:border-dark-3 dark:bg-dark-2 min-w-40 rounded-lg border bg-white p-2 shadow-lg">
+      <DropdownContent className="min-w-[240px]">
         {hint && <p className="px-3 py-2 text-sm text-neutral-500">{hint}</p>}
         {items.map((item, i) => (
           <React.Fragment key={item.label}>
@@ -31,8 +40,9 @@ function DropdownStory({ triggerLabel, items, hint, disabled, dividerAfter }: Dr
               <hr className="border-stroke dark:border-dark-3 my-1 border-t" />
             )}
             <DropdownClose>
-              <button className="dark:hover:bg-dark-3 w-full rounded px-3 py-2 text-left hover:bg-neutral-100">
-                {item.label}
+              <button className="dark:hover:bg-dark-3 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left hover:bg-neutral-100">
+                {item.icon}
+                <span>{item.label}</span>
               </button>
             </DropdownClose>
           </React.Fragment>
@@ -66,6 +76,7 @@ export const Default: Story = {
     <DropdownStory
       triggerLabel="Menu"
       items={[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }]}
+      chevron
     />
   ),
 };
@@ -76,14 +87,17 @@ export const Open: Story = {
       const [isOpen, setIsOpen] = useState(true);
       return (
         <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>
-          <DropdownTrigger className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2">
+          <DropdownTrigger
+            className="border-stroke dark:border-dark-3 dark:bg-dark-2 flex items-center gap-2 rounded-lg border px-4 py-2"
+            chevron
+          >
             Menu
           </DropdownTrigger>
-          <DropdownContent className="border-stroke dark:border-dark-3 dark:bg-dark-2 min-w-40 rounded-lg border bg-white p-2 shadow-lg">
+          <DropdownContent>
             {[{ label: 'Profile' }, { label: 'Settings' }, { label: 'Logout' }].map((item) => (
               <DropdownClose key={item.label}>
-                <button className="dark:hover:bg-dark-3 w-full rounded px-3 py-2 text-left hover:bg-neutral-100">
-                  {item.label}
+                <button className="dark:hover:bg-dark-3 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left hover:bg-neutral-100">
+                  <span>{item.label}</span>
                 </button>
               </DropdownClose>
             ))}
@@ -123,6 +137,7 @@ export const WithDivider: Story = {
         { label: 'Separated action' },
       ]}
       dividerAfter={2}
+      chevron
     />
   ),
 };
@@ -132,10 +147,27 @@ export const WithIcons: Story = {
     <DropdownStory
       triggerLabel="Actions"
       items={[
-        { label: '\u270F\uFE0F Edit' },
-        { label: '\uD83D\uDCCB Duplicate' },
-        { label: '\uD83D\uDDD1\uFE0F Delete' },
+        { label: 'Edit', icon: <span aria-hidden="true">✏️</span> },
+        { label: 'Duplicate', icon: <span aria-hidden="true">📋</span> },
+        { label: 'Delete', icon: <span aria-hidden="true">🗑️</span> },
       ]}
+      chevron
+    />
+  ),
+};
+
+export const WithIconsDivider: Story = {
+  render: () => (
+    <DropdownStory
+      triggerLabel="Actions"
+      items={[
+        { label: 'Edit', icon: <span aria-hidden="true">✏️</span> },
+        { label: 'Duplicate', icon: <span aria-hidden="true">📋</span> },
+        { label: 'Delete', icon: <span aria-hidden="true">🗑️</span> },
+        { label: 'Separated action', icon: <span aria-hidden="true">↪️</span> },
+      ]}
+      dividerAfter={2}
+      chevron
     />
   ),
 };
@@ -145,6 +177,7 @@ export const KeyboardNavigation: Story = {
     <DropdownStory
       triggerLabel="Actions"
       items={[{ label: 'Edit' }, { label: 'Duplicate' }, { label: 'Delete' }]}
+      chevron
     />
   ),
 };
@@ -164,6 +197,7 @@ export const Interactive: Story = {
     <DropdownStory
       triggerLabel="Open"
       items={[{ label: 'Item 1' }, { label: 'Item 2' }, { label: 'Item 3' }]}
+      chevron
     />
   ),
   play: async ({ canvasElement, step }) => {

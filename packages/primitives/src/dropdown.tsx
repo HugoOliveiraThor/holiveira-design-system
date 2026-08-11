@@ -1,6 +1,7 @@
 'use client';
 
 import { useClickOutside, useFocusTrap, useFocusRestore } from '@ho-dev/hooks';
+import { ChevronDownIcon } from '@ho-dev/icons';
 import type { SetStateActionType } from '@ho-dev/types';
 import { cn } from '@ho-dev/utils';
 
@@ -141,7 +142,7 @@ function DropdownContent({ children, align = 'center', className }: DropdownCont
       aria-orientation="vertical"
       onKeyDown={handleKeyDown}
       className={cn(
-        'fade-in-0 zoom-in-95 pointer-events-auto absolute z-99 mt-2 min-w-32 origin-top-right rounded-lg',
+        'fade-in-0 zoom-in-95 shadow-theme-lg pointer-events-auto absolute z-99 mt-2 min-w-[260px] origin-top-right rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-[#1E2635]',
         {
           'animate-in right-0': align === 'end',
           'left-0': align === 'start',
@@ -161,19 +162,21 @@ DropdownContent.displayName = 'DropdownContent';
 type DropdownTriggerProps = {
   children: ReactNode;
   className?: string;
+  chevron?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * Button that toggles the dropdown open/closed.
  * Renders with aria-expanded and aria-haspopup attributes.
+ * Optionally renders a trailing chevron that rotates 180° when open.
  * @public
  */
-function DropdownTrigger({ children, className, ...props }: DropdownTriggerProps) {
+function DropdownTrigger({ children, className, chevron, ...props }: DropdownTriggerProps) {
   const { handleOpen, isOpen } = useDropdownContext();
 
   return (
     <button
-      className={className}
+      className={cn('inline-flex items-center gap-2', className)}
       onClick={handleOpen}
       aria-expanded={isOpen}
       aria-haspopup="menu"
@@ -181,6 +184,15 @@ function DropdownTrigger({ children, className, ...props }: DropdownTriggerProps
       {...props}
     >
       {children}
+      {chevron && (
+        <ChevronDownIcon
+          aria-hidden="true"
+          className={cn(
+            'h-5 w-5 transition-transform duration-200 ease-in-out',
+            isOpen && 'rotate-180',
+          )}
+        />
+      )}
     </button>
   );
 }
@@ -204,3 +216,4 @@ function DropdownClose({ children }: DropdownCloseProps) {
 DropdownClose.displayName = 'DropdownClose';
 
 export { Dropdown, DropdownContent, DropdownTrigger, DropdownClose };
+export type { DropdownProps, DropdownContentProps, DropdownTriggerProps, DropdownCloseProps };

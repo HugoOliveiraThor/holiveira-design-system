@@ -93,7 +93,8 @@ Components extracted from the following monolith files:
 - `Select`, `SelectProps`
 - `Switch`, `SwitchProps`
 - `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`
-- `Dropdown`, `DropdownContent`, `DropdownTrigger`, `DropdownClose`
+- `Dropdown`, `DropdownProps`, `DropdownContent`, `DropdownContentProps`, `DropdownTrigger`,
+  `DropdownTriggerProps`, `DropdownClose`, `DropdownCloseProps`
 
 ## Internal API
 

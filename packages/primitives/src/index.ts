@@ -155,3 +155,9 @@ export {
  * @public
  */
 export { Dropdown, DropdownContent, DropdownTrigger, DropdownClose } from './dropdown';
+export type {
+  DropdownProps,
+  DropdownContentProps,
+  DropdownTriggerProps,
+  DropdownCloseProps,
+} from './dropdown';
