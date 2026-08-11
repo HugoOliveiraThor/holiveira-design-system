@@ -35,6 +35,9 @@ Provide composite UI components that combine multiple primitives into ready-to-u
 - `ShowcaseSection`, `ShowcaseSectionProps` — generic section card with title header and padded
   content
 - `Card`, `cardVariants`, `CardProps` — card container with 3 variants: default, bordered, ghost
+- `CardImage`, `CardImageProps` — card image with top/left orientation (TailAdmin port)
+- `CardTitle`, `CardTitleProps` — card title heading (h2/h3/h4) (TailAdmin port)
+- `CardContent`, `CardContentProps` — neutral card content container (TailAdmin port)
 - `ButtonGroup`, `ButtonGroupProps` — joined button group composing primitives Button children
 
 ## Internal API

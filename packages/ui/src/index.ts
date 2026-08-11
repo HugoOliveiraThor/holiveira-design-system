@@ -17,6 +17,24 @@ export { ShowcaseSection, type ShowcaseSectionProps } from './showcase-section';
 export { Card, cardVariants, type CardProps } from './card';
 
 /**
+ * Card image with top/left orientation. Composes with Card.
+ * @public
+ */
+export { CardImage, type CardImageProps } from './card-image';
+
+/**
+ * Card title heading (h2/h3/h4). Composes with Card.
+ * @public
+ */
+export { CardTitle, type CardTitleProps } from './card-title';
+
+/**
+ * Neutral card content container. Composes with Card.
+ * @public
+ */
+export { CardContent, type CardContentProps } from './card-content';
+
+/**
  * Joined button group composing primitives Button children.
  * @public
  */

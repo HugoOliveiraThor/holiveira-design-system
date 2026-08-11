@@ -1,25 +1,28 @@
 import { cva, cn, type VariantProps } from '@ho-dev/utils';
 
-import type { HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes } from 'react';
 
-const cardVariants = cva('shadow-1 dark:bg-gray-dark rounded-[10px] bg-white', {
-  variants: {
-    variant: {
-      default: 'dark:shadow-card',
-      bordered: 'dark:shadow-card border-stroke dark:border-dark-3 border',
-      ghost: '',
+const cardVariants = cva(
+  'rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]',
+  {
+    variants: {
+      variant: {
+        default: '',
+        bordered: 'shadow-theme-xs',
+        ghost: 'border-transparent bg-transparent',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
     },
   },
-  defaultVariants: {
-    variant: 'default',
-  },
-});
+);
 
 interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
 
-const Card = ({ variant, className, ...props }: CardProps) => {
-  return <div className={cn(cardVariants({ variant }), className)} {...props} />;
-};
+const Card = forwardRef<HTMLDivElement, CardProps>(({ variant, className, ...props }, ref) => {
+  return <div ref={ref} className={cn(cardVariants({ variant }), className)} {...props} />;
+});
 
 Card.displayName = 'Card';
 
