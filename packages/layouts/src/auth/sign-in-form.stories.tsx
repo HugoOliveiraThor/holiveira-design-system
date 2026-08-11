@@ -4,7 +4,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { userEvent, within, expect } from '@storybook/test';
 import { useState } from 'react';
 
-
 import { SignInForm } from './sign-in-form';
 
 const socialProviders = [
