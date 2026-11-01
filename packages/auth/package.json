@@ -39,7 +39,7 @@
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.7",
     "@ho-dev/db": "workspace:*",
-    "better-auth": "^1.6.7"
+    "better-auth": "^1.7.7"
   },
   "peerDependencies": {
     "next": "^16.3.0",
