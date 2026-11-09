@@ -43,7 +43,7 @@
     "typescript": "^5.0.0"
   },
   "devDependencies": {
-    "@storybook/test": "^8.6.12"
+    "@storybook/test": "^8.6.19"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
