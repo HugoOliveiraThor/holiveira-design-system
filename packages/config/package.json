@@ -34,7 +34,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {},
   "devDependencies": {
@@ -42,7 +43,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/config/src"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

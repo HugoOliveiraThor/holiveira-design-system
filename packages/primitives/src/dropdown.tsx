@@ -176,6 +176,7 @@ function DropdownTrigger({ children, className, chevron, ...props }: DropdownTri
 
   return (
     <button
+      type="button"
       className={cn('inline-flex items-center gap-2', className)}
       onClick={handleOpen}
       aria-expanded={isOpen}
@@ -210,7 +211,11 @@ type DropdownCloseProps = {
  */
 function DropdownClose({ children }: DropdownCloseProps) {
   const { handleClose } = useDropdownContext();
-  return <div onClick={handleClose}>{children}</div>;
+  return (
+    <button type="button" onClick={handleClose} className="w-full text-left">
+      {children}
+    </button>
+  );
 }
 
 DropdownClose.displayName = 'DropdownClose';

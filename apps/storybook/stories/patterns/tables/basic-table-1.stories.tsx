@@ -79,7 +79,7 @@ export const Default: Story = {
             <TableRow key={row.user}>
               <TableCell>
                 <div className="flex items-center gap-3">
-                  <Avatar name={row.user} />
+                  <Avatar name={row.user} alt={row.user} />
                   <div>
                     <span className="block font-medium text-gray-800 dark:text-white/90">
                       {row.user}
@@ -92,7 +92,7 @@ export const Default: Story = {
               <TableCell>
                 <AvatarGroup max={3}>
                   {Array.from({ length: row.team }, (_, i) => (
-                    <Avatar key={i} name={`M${i + 1}`} />
+                    <Avatar key={i} name={`M${i + 1}`} alt={`M${i + 1}`} />
                   ))}
                 </AvatarGroup>
               </TableCell>

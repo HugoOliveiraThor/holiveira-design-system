@@ -1,0 +1,4 @@
+@reference 'tailwindcss';
+@reference '../../../tokens/src/tokens.css';
+@custom-variant dark (&:where(.dark, .dark *));
+@import './date-picker-styles.css';

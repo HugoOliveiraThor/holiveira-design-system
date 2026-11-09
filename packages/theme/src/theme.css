@@ -1,10 +1,9 @@
 @import 'tailwindcss';
-@import '@ho-dev/tokens/tokens.css';
+@import '../../tokens/src/tokens.css';
 
-@source '../../../packages/**/src/**/*.{ts,tsx,css}';
-@source '../../../apps/storybook/stories/**/*.{ts,tsx,mdx}';
+@source '../../*/src/**/*.{ts,tsx,css}';
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   *,

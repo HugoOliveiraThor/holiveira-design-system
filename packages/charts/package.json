@@ -43,15 +43,16 @@
     "next": "^16.3.0",
     "react": "^19.0.0",
     "react-apexcharts": "^1.0.0",
-    "react-dom": "^19.0.0",
     "typescript": "^5.0.0"
   },
   "devDependencies": {
+    "@ho-dev/testing": "workspace:*",
     "@storybook/test": "^8.6.12"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc && cp src/chart-styles.css dist/"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && tailwindcss -i src/chart-styles.build.css -o dist/chart-styles.css && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/charts/src"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -63,7 +64,8 @@
     "./chart-styles.css": {
       "import": "./dist/chart-styles.css",
       "default": "./dist/chart-styles.css"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",

@@ -40,14 +40,16 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {},
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "devDependencies": {}
 }

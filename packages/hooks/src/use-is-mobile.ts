@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 /** Default breakpoint (in px) for mobile detection. @public */

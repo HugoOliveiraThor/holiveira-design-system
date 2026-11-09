@@ -1,7 +1,7 @@
-/**
- * Container dimension tokens.
- * Maps named sizes (3, 4, 7, 10, etc.) to rem values.
- */
+// AUTO-GENERATED from packages/tokens/src/tokens.css by scripts/generate-tokens.ts.
+// Do not edit by hand. Run `pnpm run generate:tokens` after changing tokens.css.
+
+/** Container dimension tokens, derived from the CSS `@theme` block. */
 export const containers = {
   '3': '0.75rem',
   '4': '1rem',
@@ -35,14 +35,11 @@ export const containers = {
   '280': '70rem',
 } as const;
 
-/**
- * Custom breakpoints extending Tailwind defaults.
- * Values are min-width media query thresholds.
- */
+/** Custom breakpoints, derived from the CSS `@theme` block. */
 export const breakpoints = {
   '2xsm': '375px',
-  xsm: '425px',
   '3xl': '2000px',
+  xsm: '425px',
 } as const;
 
 /** Valid keys for the `breakpoints` object. */

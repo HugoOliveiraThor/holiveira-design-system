@@ -1,28 +1,47 @@
 import { ThemeProvider } from '@ho-dev/theme';
 
-import { withThemeByClassName } from '@storybook/addon-themes';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import type { Preview } from '@storybook/react';
+import type { Decorator, Preview } from '@storybook/react';
 
 import '@ho-dev/theme/theme.css';
 
+/**
+ * Single source of truth for the theme: the Storybook toolbar global drives
+ * next-themes via `forcedTheme`. `withThemeByClassName` is intentionally not
+ * used — it would fight the provider for the `class` attribute.
+ */
+const withTheme: Decorator = (Story, context) => {
+  const theme = (context.globals?.theme as string | undefined) ?? 'light';
+
+  return (
+    <ThemeProvider attribute="class" defaultTheme="light" forcedTheme={theme} enableSystem={false}>
+      <div className="p-4">
+        <Story />
+      </div>
+    </ThemeProvider>
+  );
+};
+
 const preview: Preview = {
-  decorators: [
-    withThemeByClassName({
-      themes: {
-        light: 'light',
-        dark: 'dark',
+  decorators: [withTheme],
+  globalTypes: {
+    theme: {
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
       },
-      defaultTheme: 'light',
-    }),
-    (Story) => (
-      <ThemeProvider>
-        <div className="p-4">
-          <Story />
-        </div>
-      </ThemeProvider>
-    ),
-  ],
+    },
+  },
+  initialGlobals: {
+    theme: 'light',
+  },
   parameters: {
     controls: {
       matchers: {

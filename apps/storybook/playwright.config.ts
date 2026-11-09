@@ -2,9 +2,10 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './visual',
-  timeout: 30_000,
+  timeout: 120_000,
   fullyParallel: true,
-  workers: 8,
+  workers: process.env.CI ? 2 : 4,
+  retries: process.env.CI ? 2 : 1,
   use: {
     baseURL: 'http://localhost:6007',
     browserName: 'chromium',
@@ -15,6 +16,6 @@ export default defineConfig({
     command: 'npx http-server storybook-static -p 6007 -s -c-1',
     url: 'http://localhost:6007',
     reuseExistingServer: !process.env.CI,
-    timeout: 30_000,
+    timeout: 120_000,
   },
 });

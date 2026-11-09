@@ -1,8 +1,11 @@
 import { readdirSync, readFileSync, existsSync } from 'fs';
 import { join, basename } from 'path';
 
+import { elapsedMs, nowIso, writeGateReport, type GateItem } from './lib/gate-report';
+
 const CONTRACTS_DIR = join(__dirname, '..', 'docs', 'architecture', 'contracts');
 const PACKAGES_DIR = join(__dirname, '..', 'packages');
+const startedAt = nowIso();
 
 const EXCLUDED_SUBHEADING_KEYWORDS = ['removed', 'deferred', 'deprecated'];
 
@@ -336,14 +339,41 @@ function main(): void {
 
   if (hasStructuralError) {
     console.error('\nExit 2: Structural errors detected.');
+    writeReport('error', results);
     process.exit(2);
   }
   if (!allPass) {
     console.error('\nExit 1: Validation failures detected.');
+    writeReport('fail', results);
     process.exit(1);
   }
   console.log('\nAll packages pass export validation.');
+  writeReport('pass', results);
   process.exit(0);
+}
+
+function writeReport(status: 'pass' | 'fail' | 'error', results: Result[]): void {
+  const items: GateItem[] = results.map((r) => ({
+    name: r.package,
+    status:
+      r.errors.length > 0
+        ? 'error'
+        : r.missing.length > 0 || r.unexpected.length > 0
+          ? 'fail'
+          : 'pass',
+    detail: r.errors.join('; ') || undefined,
+    evidence: { missing: r.missing, unexpected: r.unexpected },
+  }));
+
+  writeGateReport({
+    gate: 'exports',
+    status,
+    executed: true,
+    tool: 'check-exports',
+    startedAt,
+    durationMs: elapsedMs(startedAt),
+    items,
+  });
 }
 
 main();

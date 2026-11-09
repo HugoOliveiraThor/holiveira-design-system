@@ -38,12 +38,12 @@
     "eslint-plugin-react-hooks": "^5.2.0"
   },
   "peerDependencies": {
-    "eslint": ">=9.0.0",
+    "eslint": ">=9.0.0 <10",
     "typescript": "^5.0.0"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -51,11 +51,13 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "module": "./dist/index.js"
+  "module": "./dist/index.js",
+  "devDependencies": {}
 }

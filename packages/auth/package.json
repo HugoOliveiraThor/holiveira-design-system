@@ -15,14 +15,14 @@
   ],
   "license": "MIT",
   "author": "HO Design System",
-  "homepage": "https://github.com/holiveira/holiveira",
+  "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/HugoOliveiraThor/holiveira-design-system.git",
     "directory": "packages/auth"
   },
   "bugs": {
-    "url": "https://github.com/holiveira/holiveira/issues"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
   },
   "sideEffects": false,
   "files": [
@@ -34,7 +34,8 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.7",
@@ -48,6 +49,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
-  }
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/auth/src"
+  },
+  "devDependencies": {}
 }

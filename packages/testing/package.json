@@ -14,14 +14,14 @@
   ],
   "license": "MIT",
   "author": "HO Design System",
-  "homepage": "https://github.com/holiveira/holiveira",
+  "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/HugoOliveiraThor/holiveira-design-system.git",
     "directory": "packages/testing"
   },
   "bugs": {
-    "url": "https://github.com/holiveira/holiveira/issues"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
   },
   "sideEffects": false,
   "files": [
@@ -52,7 +52,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/testing/src"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -60,6 +61,7 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   }
 }

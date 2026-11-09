@@ -15,14 +15,14 @@
   ],
   "license": "MIT",
   "author": "HO Design System",
-  "homepage": "https://github.com/holiveira/holiveira",
+  "homepage": "https://github.com/HugoOliveiraThor/holiveira-design-system#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/HugoOliveiraThor/holiveira-design-system.git",
     "directory": "packages/db"
   },
   "bugs": {
-    "url": "https://github.com/holiveira/holiveira/issues"
+    "url": "https://github.com/HugoOliveiraThor/holiveira-design-system/issues"
   },
   "sideEffects": false,
   "files": [
@@ -34,7 +34,8 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
@@ -50,6 +51,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio"

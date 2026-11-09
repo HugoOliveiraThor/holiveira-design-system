@@ -127,7 +127,8 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     useEffect(() => {
       if (isOpen && focusIndex >= 0 && listboxRef.current) {
         const option = listboxRef.current.children[focusIndex] as HTMLElement;
-        option?.scrollIntoView({ block: 'nearest' });
+        option?.focus();
+        option?.scrollIntoView?.({ block: 'nearest' });
       }
     }, [isOpen, focusIndex]);
 
@@ -137,7 +138,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       <div className={cn('relative', className)} ref={ref}>
         {label && <Label htmlFor={id}>{label}</Label>}
 
-        <div ref={containerRef} className="relative">
+        <div ref={containerRef} className="relative" onKeyDown={handleKeyDown}>
           <div
             ref={comboboxRef}
             id={id}
@@ -150,7 +151,6 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             aria-disabled={disabled}
             tabIndex={0}
             onClick={() => !disabled && setIsOpen(!isOpen)}
-            onKeyDown={handleKeyDown}
             className={cn(
               'border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 flex min-h-[42px] w-full cursor-pointer items-center rounded-[7px] border-[1.5px] bg-transparent px-3 py-2 transition-colors',
               error && 'border-red-500 focus:border-red-500 dark:border-red-500',
@@ -224,6 +224,7 @@ const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                   <li
                     key={option.value}
                     role="option"
+                    tabIndex={-1}
                     aria-selected={isSelected}
                     className={cn(
                       'border-stroke dark:border-dark-3 cursor-pointer border-b px-4 py-2.5 text-sm transition-colors last:border-b-0',

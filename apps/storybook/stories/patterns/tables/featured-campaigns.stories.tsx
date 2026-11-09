@@ -96,7 +96,7 @@ export const Default: Story = {
             <TableRow key={i}>
               <TableCell>
                 <div className="flex items-center gap-[18px]">
-                  <Avatar name={row.user} />
+                  <Avatar name={row.user} alt={row.user} />
                   <span>{row.user}</span>
                 </div>
               </TableCell>

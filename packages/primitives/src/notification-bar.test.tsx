@@ -23,9 +23,9 @@ describe('NotificationBar', () => {
     expect(container.querySelector('div[class*="rounded-md"]')).toHaveClass(expectedClass);
   });
 
-  it('renders close button by default', () => {
-    const { getByRole } = render(<NotificationBar title="Notice" />);
-    expect(getByRole('button', { name: /close notification/i })).toBeVisible();
+  it('omits the close button when no onClose handler is provided', () => {
+    const { queryByRole } = render(<NotificationBar title="Notice" />);
+    expect(queryByRole('button', { name: /close notification/i })).toBeNull();
   });
 
   it('fires onClose when close clicked', () => {
