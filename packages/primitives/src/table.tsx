@@ -91,9 +91,10 @@ TableRow.displayName = 'TableRow';
  * Table `<th>` wrapper.
  * @public
  */
-function TableHead({ className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
+function TableHead({ className, scope = 'col', ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
+      scope={scope}
       className={cn(
         'px-5 py-3 text-start align-middle text-xs font-medium text-gray-500 dark:text-gray-400 [&:has([role=checkbox])]:pr-0',
         className,

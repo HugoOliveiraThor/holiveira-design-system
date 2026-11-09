@@ -10,3 +10,8 @@ storybook-static
 prisma/migrations
 CHANGELOG.md
 .superpowers
+.pnpm-store
+packages/db/src/generated
+test-results
+playwright-report
+next-env.d.ts

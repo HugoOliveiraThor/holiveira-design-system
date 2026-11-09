@@ -34,6 +34,12 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
+      - name: Publish gates
+        run: |
+          pnpm run check:publish
+          pnpm run check:license
+          pnpm run check:exports
+
       - name: Configure npm auth
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc

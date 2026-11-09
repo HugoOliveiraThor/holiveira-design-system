@@ -29,7 +29,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - run: pnpm --filter storybook exec playwright install --with-deps chromium
+      - run: pnpm --filter @ho-dev/storybook exec playwright install --with-deps chromium
 
       - run: pnpm run all-checks
         env:

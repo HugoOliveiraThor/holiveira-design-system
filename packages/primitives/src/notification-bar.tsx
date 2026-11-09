@@ -60,14 +60,19 @@ const NotificationBar = forwardRef<HTMLDivElement, NotificationBarProps>(
     const IconComponent = icons[variant ?? 'success'];
 
     return (
-      <div ref={ref} className={cn(notificationBarVariants({ variant }), className)} {...props}>
+      <div
+        ref={ref}
+        role="status"
+        className={cn(notificationBarVariants({ variant }), className)}
+        {...props}
+      >
         <div className="flex items-center gap-4">
           <div className={cn(iconBoxVariants({ variant }))}>
             <IconComponent size={24} />
           </div>
           <h4 className="text-sm text-gray-800 sm:text-base dark:text-white/90">{title}</h4>
         </div>
-        {closable && (
+        {closable && onClose && (
           <button
             type="button"
             aria-label="Close notification"

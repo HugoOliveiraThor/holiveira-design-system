@@ -51,7 +51,7 @@ describe('Switch — keyboard', () => {
 });
 
 describe('Switch — pre-existing findings', () => {
-  it.skip('P2-2: Switch has no label prop — accessible name via explicit prop (D6.9)', () => {
+  it('P2-2: Switch has no label prop — accessible name via explicit prop (D6.9)', () => {
     const { container } = render(<Switch label="Enable notifications" />);
     const input = container.querySelector('input');
     expect(input).toHaveAccessibleName('Enable notifications');

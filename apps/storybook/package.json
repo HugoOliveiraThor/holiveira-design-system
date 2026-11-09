@@ -1,12 +1,13 @@
 {
-  "name": "storybook",
+  "name": "@ho-dev/storybook",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build:storybook": "storybook build",
-    "test:visual": "playwright test"
+    "test:visual": "playwright test",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ho-dev/charts": "workspace:*",
@@ -53,6 +54,6 @@
     "storybook": "^8.6.12",
     "tailwindcss": "^4.2.4",
     "typescript": "^5",
-    "vite": "^7.3.6"
+    "vite": "^6.0.0"
   }
 }

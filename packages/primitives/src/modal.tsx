@@ -78,6 +78,11 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
     if (fullScreen) {
       return (
         <div
+          ref={(node) => {
+            panelRef.current = node;
+            if (typeof ref === 'function') ref(node);
+            else if (ref) ref.current = node;
+          }}
           role="dialog"
           aria-modal="true"
           aria-label={label}

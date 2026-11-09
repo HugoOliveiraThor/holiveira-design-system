@@ -34,7 +34,8 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/hooks/src"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -42,7 +43,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public",
@@ -51,5 +53,6 @@
   "module": "./dist/index.js",
   "dependencies": {
     "@ho-dev/types": "workspace:*"
-  }
+  },
+  "devDependencies": {}
 }

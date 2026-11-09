@@ -41,19 +41,23 @@
     "./tokens.css": {
       "import": "./dist/tokens.css",
       "default": "./dist/tokens.css"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {},
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc && cp src/tokens.css dist/"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && cp src/tokens.css dist/ && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/tokens/src"
   },
   "peerDependencies": {
+    "tailwindcss": "^4.0.0",
     "typescript": "^5.0.0"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "module": "./dist/index.js"
+  "module": "./dist/index.js",
+  "devDependencies": {}
 }

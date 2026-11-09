@@ -3,7 +3,16 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "noEmit": true,
-    "incremental": true
+    "incremental": true,
+    "types": ["node"]
   },
-  "include": [".storybook/**/*.ts"]
+  "include": [
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "stories/**/*.ts",
+    "stories/**/*.tsx",
+    "visual/**/*.ts",
+    "playwright.config.ts",
+    "vite.config.ts"
+  ]
 }

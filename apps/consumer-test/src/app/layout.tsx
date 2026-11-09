@@ -3,7 +3,6 @@ import { ThemeProvider } from '@ho-dev/theme';
 import type { Metadata } from 'next';
 
 import '@ho-dev/theme/theme.css';
-import '@ho-dev/tokens/tokens.css';
 import '@ho-dev/charts/chart-styles.css';
 import '@ho-dev/forms/date-picker-styles.css';
 

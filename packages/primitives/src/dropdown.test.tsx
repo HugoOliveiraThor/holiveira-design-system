@@ -103,7 +103,7 @@ describe('Dropdown — v2 restyle', () => {
 });
 
 describe('Dropdown — pre-existing findings', () => {
-  it.skip('P2-3: DropdownTrigger does not default type="button" — form submit risk (D6.9)', () => {
+  it('P2-3: DropdownTrigger does not default type="button" — form submit risk (D6.9)', () => {
     const { container } = render(<TestDropdown />);
     const trigger = container.querySelector('button');
     expect(trigger?.getAttribute('type')).toBe('button');

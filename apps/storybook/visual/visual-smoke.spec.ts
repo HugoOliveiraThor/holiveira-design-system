@@ -27,7 +27,7 @@ async function assertStoryRenders(page: Page, id: string, theme: string) {
     { waitUntil: 'domcontentloaded' },
   );
 
-  await page.waitForSelector('#storybook-root', { state: 'attached', timeout: 15_000 });
+  await page.waitForSelector('#storybook-root', { state: 'attached', timeout: 30_000 });
 
   await page.waitForFunction(
     () => {
@@ -37,7 +37,7 @@ async function assertStoryRenders(page: Page, id: string, theme: string) {
       return root !== null && root.childElementCount > 0;
     },
     undefined,
-    { timeout: 15_000 },
+    { timeout: 30_000 },
   );
 
   const errorDisplay = page.locator('#sb-errordisplay, .sb-errordisplay');

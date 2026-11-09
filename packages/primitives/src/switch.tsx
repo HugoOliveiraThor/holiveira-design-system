@@ -10,6 +10,8 @@ type SwitchProps = {
   withIcon?: boolean;
   background?: 'dark' | 'light';
   backgroundSize?: 'sm' | 'default';
+  /** Visible label rendered next to the switch. */
+  label?: string;
   className?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'id' | 'className'>;
 
@@ -27,6 +29,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       background,
       withIcon,
       backgroundSize,
+      label,
       name,
       className,
       ...props
@@ -38,7 +41,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     return (
       <label
         htmlFor={id}
-        className={cn('flex max-w-fit cursor-pointer items-center select-none', className)}
+        className={cn('flex max-w-fit cursor-pointer items-center gap-2 select-none', className)}
       >
         <div className="relative">
           <input
@@ -51,7 +54,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             defaultChecked={defaultChecked}
             onChange={onChange}
             className="peer sr-only"
-            aria-label={name || 'Toggle'}
+            aria-label={label ? undefined : name || 'Toggle'}
             {...props}
           />
           <div
@@ -78,6 +81,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             )}
           </div>
         </div>
+        {label && <span className="text-body-sm text-dark dark:text-white">{label}</span>}
       </label>
     );
   },

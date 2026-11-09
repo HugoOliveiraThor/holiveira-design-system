@@ -34,12 +34,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "dependencies": {},
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "rm -rf dist tsconfig.tsbuildinfo && tsc && node ../../scripts/fix-esm-extensions.mjs",
+    "test": "cd ../.. && vitest run packages/constants/src"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -48,5 +50,6 @@
     "access": "public",
     "provenance": true
   },
-  "module": "./dist/index.js"
+  "module": "./dist/index.js",
+  "devDependencies": {}
 }

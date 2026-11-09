@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 
 /** Detects clicks outside a referenced element. Returns a ref to attach to the element. @public */

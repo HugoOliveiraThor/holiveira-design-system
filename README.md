@@ -178,12 +178,17 @@ HO Design System uses [Changesets](https://github.com/changesets/changesets) for
 per-package semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
 `@ho-dev/charts` does not force a major bump in `@ho-dev/types`.
 
-The release pipeline is fully automated:
+Releases are published from a manually dispatched workflow (`.github/workflows/release.yml`):
 
 1. Contributors run `pnpm changeset` to record changes
-2. A Version PR is automatically created when changesets accumulate on `main`
-3. Merging the PR triggers quality gates → consumer validation → npm publish
+2. Run `pnpm changeset version` to apply the pending bumps and update the per-package CHANGELOGs
+3. A maintainer dispatches the **Publish** workflow, which runs the publish-time gates
+   (`check:publish`, `check:license`, `check:exports`) and then `changeset publish`
 4. All packages carry npm provenance attestation
+
+> Automated Version PR creation via `changesets/action` is intentionally not enabled yet — the
+> current flow keeps a human review gate before publishing. See
+> `docs/architecture/ads-010-release.md` for the release architecture.
 
 Releases follow a graduated path: `beta` → `rc` → `latest` (GA).
 

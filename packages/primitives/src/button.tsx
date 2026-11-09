@@ -3,7 +3,7 @@
 import { cva, cn } from '@ho-dev/utils';
 import type { VariantProps } from '@ho-dev/utils';
 
-import { forwardRef, type HTMLAttributes } from 'react';
+import { forwardRef, type ButtonHTMLAttributes } from 'react';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition disabled:cursor-not-allowed disabled:opacity-50',
@@ -37,7 +37,7 @@ const buttonVariants = cva(
 );
 
 /** @public */
-type ButtonProps = HTMLAttributes<HTMLButtonElement> &
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     label?: string;
     icon?: React.ReactNode;

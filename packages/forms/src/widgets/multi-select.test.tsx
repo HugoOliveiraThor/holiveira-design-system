@@ -1,5 +1,5 @@
 import { userEvent } from '@storybook/test';
-import { cleanup } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { axe } from 'vitest-axe';
@@ -22,10 +22,36 @@ describe('MultiSelect', () => {
   });
 });
 
-describe('MultiSelect — pre-existing findings', () => {
-  it.skip('P2-6: MultiSelect has no focus trap when listbox is open (D8.1)', () => {
-    // TODO: When focus trap is implemented, verify Tab cycling stays within listbox
-    expect(true).toBe(true);
+describe('MultiSelect — keyboard contract', () => {
+  it('opens with ArrowDown, navigates, toggles with Enter and closes on Escape', () => {
+    const onChange = vi.fn();
+    const { getByRole, getAllByRole, queryByRole } = render(
+      <MultiSelect label="Frameworks" options={options} onChange={onChange} />,
+    );
+    const combobox = getByRole('combobox');
+
+    fireEvent.keyDown(combobox, { key: 'ArrowDown' });
+    expect(combobox).toHaveAttribute('aria-expanded', 'true');
+
+    const opts = getAllByRole('option');
+    expect(document.activeElement).toBe(opts[0]);
+
+    fireEvent.keyDown(opts[0], { key: 'ArrowDown' });
+    expect(document.activeElement).toBe(opts[1]);
+
+    fireEvent.keyDown(opts[1], { key: 'Enter' });
+    expect(onChange).toHaveBeenCalledWith(['vue']);
+
+    fireEvent.keyDown(opts[1], { key: 'Escape' });
+    expect(queryByRole('listbox')).toBeNull();
+    expect(document.activeElement).toBe(combobox);
+  });
+
+  it('closes the listbox on Tab', () => {
+    const { getByRole } = render(<MultiSelect label="Frameworks" options={options} />);
+    fireEvent.keyDown(getByRole('combobox'), { key: 'ArrowDown' });
+    fireEvent.keyDown(document.activeElement as Element, { key: 'Tab' });
+    expect(getByRole('combobox')).toHaveAttribute('aria-expanded', 'false');
   });
 });
 

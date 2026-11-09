@@ -2,9 +2,11 @@
 
 import { cn } from '@ho-dev/utils';
 
-import { createContext, useContext, forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { createContext, useContext, forwardRef, useId } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 type TabsContextType = {
+  baseId: string;
   value: string;
   onValueChange: (value: string) => void;
   orientation: 'horizontal' | 'vertical';
@@ -40,8 +42,10 @@ type TabsProps = {
  * @public
  */
 const Tabs = ({ children, value, onValueChange, orientation = 'horizontal' }: TabsProps) => {
+  const baseId = useId();
+
   return (
-    <TabsContext.Provider value={{ value, onValueChange, orientation }}>
+    <TabsContext.Provider value={{ baseId, value, onValueChange, orientation }}>
       {children}
     </TabsContext.Provider>
   );
@@ -52,13 +56,38 @@ type TabsListProps = HTMLAttributes<HTMLDivElement> & {
   variant?: 'pills' | 'underline';
 };
 
+const NAVIGATION_KEYS = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'];
+
 /**
  * Tab trail. `pills` = contained pill bar; `underline` = underline tab bar.
+ * Implements roving tabindex and arrow/Home/End keyboard navigation.
  * @public
  */
 const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
   ({ variant = 'pills', className, children, ...props }, ref) => {
-    const { orientation } = useTabsContext();
+    const { orientation, onValueChange } = useTabsContext();
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!NAVIGATION_KEYS.includes(event.key)) return;
+
+      const tabs = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('[role="tab"]'));
+      if (tabs.length === 0) return;
+
+      const currentIndex = tabs.indexOf(document.activeElement as HTMLElement);
+      let nextIndex = currentIndex;
+
+      if (event.key === 'Home') nextIndex = 0;
+      else if (event.key === 'End') nextIndex = tabs.length - 1;
+      else if (event.key === 'ArrowRight' || event.key === 'ArrowDown')
+        nextIndex = currentIndex + 1 >= tabs.length ? 0 : currentIndex + 1;
+      else nextIndex = currentIndex - 1 < 0 ? tabs.length - 1 : currentIndex - 1;
+
+      event.preventDefault();
+      const next = tabs[nextIndex];
+      next.focus();
+      const nextValue = next.dataset.value;
+      if (nextValue) onValueChange(nextValue);
+    };
 
     return (
       <TabsListContext.Provider value={{ variant }}>
@@ -66,6 +95,7 @@ const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
           ref={ref}
           role="tablist"
           aria-orientation={orientation}
+          onKeyDown={handleKeyDown}
           className={cn(
             'flex overflow-x-auto [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-200 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600',
             variant === 'pills'
@@ -97,7 +127,7 @@ type TabsTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
  */
 const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
   ({ value, className, children, ...props }, ref) => {
-    const { value: activeValue, onValueChange, orientation } = useTabsContext();
+    const { baseId, value: activeValue, onValueChange, orientation } = useTabsContext();
     const { variant } = useContext(TabsListContext);
     const active = value === activeValue;
 
@@ -122,9 +152,13 @@ const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     return (
       <button
         ref={ref}
+        id={`${baseId}-tab-${value}`}
         type="button"
         role="tab"
         aria-selected={active}
+        aria-controls={`${baseId}-panel-${value}`}
+        tabIndex={active ? 0 : -1}
+        data-value={value}
         className={cn(base, styleClass, className)}
         onClick={() => onValueChange(value)}
         {...props}
@@ -148,11 +182,19 @@ type TabsContentProps = HTMLAttributes<HTMLDivElement> & {
  */
 const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
   ({ value, className, children, ...props }, ref) => {
-    const { value: activeValue } = useTabsContext();
+    const { baseId, value: activeValue } = useTabsContext();
     if (value !== activeValue) return null;
 
     return (
-      <div ref={ref} role="tabpanel" className={className} {...props}>
+      <div
+        ref={ref}
+        id={`${baseId}-panel-${value}`}
+        role="tabpanel"
+        aria-labelledby={`${baseId}-tab-${value}`}
+        tabIndex={0}
+        className={className}
+        {...props}
+      >
         {children}
       </div>
     );

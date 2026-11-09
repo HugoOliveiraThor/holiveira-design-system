@@ -1,5 +1,7 @@
-import { execFileSync } from 'child_process';
-import { join } from 'path';
+import { execFileSync } from 'node:child_process';
+import { join } from 'node:path';
+
+import { depVersion, elapsedMs, nowIso, writeGateReport, type GateItem } from './lib/gate-report';
 
 interface SizeLimitEntry {
   name: string;
@@ -8,23 +10,34 @@ interface SizeLimitEntry {
   sizeLimit: number;
 }
 
-/**
- * Parse size-limit JSON output from stdout.
- * size-limit may also emit non-JSON progress lines to stderr.
- */
+const startedAt = nowIso();
+
+function abort(message: string): never {
+  console.error(message);
+  writeGateReport({
+    gate: 'size',
+    status: 'error',
+    executed: false,
+    tool: 'size-limit',
+    toolVersion: depVersion('size-limit'),
+    startedAt,
+    durationMs: elapsedMs(startedAt),
+    items: [],
+    error: message,
+  });
+  process.exit(2);
+}
+
+/** Parse size-limit JSON output from stdout. */
 function parseSizeLimitOutput(stdout: string): SizeLimitEntry[] {
   const trimmed = stdout.trim();
   if (!trimmed) {
-    console.error('check:size: size-limit produced empty output');
-    process.exit(2);
+    abort('check:size: size-limit produced empty output');
   }
   try {
     return JSON.parse(trimmed);
   } catch {
-    console.error('check:size: failed to parse size-limit JSON output');
-    console.error('Output was:');
-    console.error(stdout);
-    process.exit(2);
+    abort(`check:size: failed to parse size-limit JSON output\nOutput was:\n${stdout}`);
   }
 }
 
@@ -48,11 +61,10 @@ const ciMode = process.env.CI === 'true';
 
 function main(): void {
   const sizeLimitBin = join(__dirname, '..', 'node_modules', '.bin', 'size-limit');
-  const args = ['--json'];
 
   let stdout: string;
   try {
-    stdout = execFileSync(sizeLimitBin, args, {
+    stdout = execFileSync(sizeLimitBin, ['--json'], {
       encoding: 'utf-8',
       maxBuffer: 50 * 1024 * 1024,
     });
@@ -60,28 +72,32 @@ function main(): void {
     if (err && typeof err === 'object' && 'stdout' in err) {
       stdout = (err as { stdout: string }).stdout;
     } else {
-      console.error('check:size: failed to execute size-limit');
-      if (err instanceof Error) {
-        console.error(`  ${err.message}`);
-      }
-      process.exit(2);
+      abort(
+        `check:size: failed to execute size-limit${err instanceof Error ? `: ${err.message}` : ''}`,
+      );
     }
   }
 
   const entries = parseSizeLimitOutput(stdout);
   let blockFailures = 0;
   let warnFailures = 0;
+  const items: GateItem[] = [];
 
   for (const entry of entries) {
     const pkgName = extractPackageName(entry.name);
     const tier = classifyTier(pkgName);
-    const sizeKB = (entry.size / 1000).toFixed(2);
-    const limitKB = (entry.sizeLimit / 1000).toFixed(2);
+    const sizeKB = Number((entry.size / 1000).toFixed(2));
+    const limitKB = Number((entry.sizeLimit / 1000).toFixed(2));
+
+    items.push({
+      name: entry.name,
+      status: entry.passed ? 'pass' : tier === 'block' ? 'fail' : 'pass',
+      detail: `${sizeKB} KB / limit ${limitKB} KB (tier: ${tier})`,
+      evidence: { sizeKB, limitKB, tier, passed: entry.passed },
+    });
 
     if (entry.passed) {
-      if (verbose) {
-        console.log(`  PASS  ${entry.name}: ${sizeKB} KB (limit: ${limitKB} KB)`);
-      }
+      if (verbose) console.log(`  PASS  ${entry.name}: ${sizeKB} KB (limit: ${limitKB} KB)`);
       continue;
     }
 
@@ -95,14 +111,11 @@ function main(): void {
         console.error(`  WARN  ${entry.name}: ${sizeKB} KB exceeds ${limitKB} KB`);
         break;
       case 'info':
-        if (verbose) {
+        if (verbose)
           console.log(`  INFO  ${entry.name}: ${sizeKB} KB exceeds ${limitKB} KB (informational)`);
-        }
         break;
       default:
-        if (verbose) {
-          console.log(`  ???   ${entry.name}: ${sizeKB} KB (unclassified)`);
-        }
+        if (verbose) console.log(`  ???   ${entry.name}: ${sizeKB} KB (unclassified)`);
         break;
     }
   }
@@ -110,7 +123,6 @@ function main(): void {
   const total = entries.length;
   const passed = entries.filter((e) => e.passed).length;
   const failed = total - passed;
-  const blocked = blockFailures > 0;
 
   console.log(`\ncheck:size: ${passed}/${total} entries within budget`);
 
@@ -121,22 +133,30 @@ function main(): void {
     console.error(`check:size: ${warnFailures} Warn-tier violation(s) — action recommended`);
   }
   if (ciMode && verbose) {
-    const summary = {
-      total,
-      passed,
-      failed,
-      blockFailures,
-      warnFailures,
-      blocked,
-    };
-    console.log(JSON.stringify(summary));
+    console.log(
+      JSON.stringify({
+        total,
+        passed,
+        failed,
+        blockFailures,
+        warnFailures,
+        blocked: blockFailures > 0,
+      }),
+    );
   }
 
-  if (blockFailures > 0) {
-    process.exit(1);
-  }
+  writeGateReport({
+    gate: 'size',
+    status: blockFailures > 0 ? 'fail' : 'pass',
+    executed: true,
+    tool: 'size-limit',
+    toolVersion: depVersion('size-limit'),
+    startedAt,
+    durationMs: elapsedMs(startedAt),
+    items,
+  });
 
-  process.exit(0);
+  process.exit(blockFailures > 0 ? 1 : 0);
 }
 
 main();

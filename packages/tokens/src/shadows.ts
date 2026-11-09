@@ -1,7 +1,7 @@
-/**
- * Shadow token definitions.
- * Maps semantic names to box-shadow values used across the design system.
- */
+// AUTO-GENERATED from packages/tokens/src/tokens.css by scripts/generate-tokens.ts.
+// Do not edit by hand. Run `pnpm run generate:tokens` after changing tokens.css.
+
+/** Shadow tokens, derived from the CSS `@theme` block. */
 export const shadows = {
   '1': '0px 1px 2px 0px rgba(84, 87, 118, 0.12)',
   '2': '0px 2px 3px 0px rgba(84, 87, 118, 0.15)',
@@ -10,10 +10,8 @@ export const shadows = {
   '5': '0px 10px 30px 0px rgba(85, 106, 235, 0.12), 0px 4px 10px 0px rgba(85, 106, 235, 0.04), 0px -18px 38px 0px rgba(85, 106, 235, 0.04)',
   '6': '0px 12px 34px 0px rgba(13, 10, 44, 0.08), 0px 34px 26px 0px rgba(13, 10, 44, 0.05)',
   '7': '0px 18px 25px 0px rgba(113, 116, 152, 0.05)',
-  'theme-xs': '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-  default: '0px 4px 7px 0px rgba(0, 0, 0, 0.14)',
-  error: '0px 12px 34px 0px rgba(13, 10, 44, 0.05)',
   card: '0px 1px 2px 0px rgba(0, 0, 0, 0.12)',
+  'card-10': '0px 2px 3px 0px rgba(0, 0, 0, 0.1)',
   'card-2': '0px 8px 13px -3px rgba(0, 0, 0, 0.07)',
   'card-3': '0px 2px 3px 0px rgba(183, 183, 183, 0.5)',
   'card-4': '0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
@@ -22,5 +20,12 @@ export const shadows = {
   'card-7': '0px 0.5px 3px 0px rgba(0, 0, 0, 0.18)',
   'card-8': '0px 1px 2px 0px rgba(0, 0, 0, 0.1)',
   'card-9': '0px 1px 3px 0px rgba(0, 0, 0, 0.08)',
-  'card-10': '0px 2px 3px 0px rgba(0, 0, 0, 0.1)',
+  datepicker: '-5px 0 0 #1f2a37, 5px 0 0 #1f2a37',
+  default: '0px 4px 7px 0px rgba(0, 0, 0, 0.14)',
+  error: '0px 12px 34px 0px rgba(13, 10, 44, 0.05)',
+  'switch-1': '0px 0px 4px 0px rgba(0, 0, 0, 0.1)',
+  'switch-2': '0px 0px 5px 0px rgba(0, 0, 0, 0.15)',
+  switcher:
+    '0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #ffffff, inset 0px -1px 1px rgba(0, 0, 0, 0.1)',
+  'theme-xs': '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
 } as const;
