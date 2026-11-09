@@ -11,8 +11,8 @@
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint packages/ apps/",
-    "lint:fix": "eslint packages/ apps/ --fix",
+    "lint": "turbo run build --filter=@ho-dev/eslint && eslint packages/ apps/",
+    "lint:fix": "turbo run build --filter=@ho-dev/eslint && eslint packages/ apps/ --fix",
     "typecheck": "turbo run typecheck",
     "build": "turbo run build",
     "build:storybook": "turbo run build:storybook",
