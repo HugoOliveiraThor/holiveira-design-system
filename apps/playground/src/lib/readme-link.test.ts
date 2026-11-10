@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const REPO_ROOT = process.cwd();
-const PLAYGROUND_URL = 'https://HugoOliveiraThor.github.io/holiveira-design-system/playground/';
+const PLAYGROUND_URL = 'https://hugooliveirathor.github.io/holiveira-design-system/playground/';
 
 interface PackageManifest {
   private?: boolean;
@@ -35,7 +35,10 @@ describe('README links', () => {
     expect(readmes).toHaveLength(17);
 
     for (const readme of readmes) {
-      expect(readFileSync(readme, 'utf8'), readme).toContain(`[Playground](${PLAYGROUND_URL})`);
+      // Package READMEs still use the legacy mixed-case host; the URL is case-insensitive.
+      expect(readFileSync(readme, 'utf8').toLowerCase(), readme).toContain(
+        `[playground](${PLAYGROUND_URL})`,
+      );
     }
   });
 });
