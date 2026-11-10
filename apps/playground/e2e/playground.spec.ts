@@ -19,6 +19,15 @@ test('serves every route directly', async ({ page }) => {
   }
 });
 
+test('lets a signed-out visitor reach the orders route', async ({ page }) => {
+  const response = await page.goto('/playground/orders/');
+
+  expect(response?.status()).toBe(200);
+  await expect(page).toHaveURL(/\/playground\/orders\/$/);
+  await expect(page.getByRole('heading', { level: 2, name: 'Orders' }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Sign in' })).toHaveCount(0);
+});
+
 test('keeps the theme after reload', async ({ page }) => {
   await page.goto('/playground/settings/');
   await expect(page.locator('html')).toHaveClass(/light/);
