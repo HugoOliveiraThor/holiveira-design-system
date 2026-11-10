@@ -1,5 +1,8 @@
 import { defineConfig } from '@playwright/test';
 
+const DEV_URL = 'http://127.0.0.1:3100/playground/';
+const EXPORT_URL = 'http://127.0.0.1:3200/playground/';
+
 export default defineConfig({
   testDir: './e2e',
   timeout: 120_000,
@@ -16,15 +19,35 @@ export default defineConfig({
     },
   },
   use: {
-    baseURL: 'http://127.0.0.1:3100/playground',
     browserName: 'chromium',
     viewport: { width: 1440, height: 900 },
     trace: 'retain-on-failure',
   },
-  webServer: {
-    command: 'pnpm exec next dev --port 3100',
-    url: 'http://127.0.0.1:3100/playground/',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  projects: [
+    {
+      name: 'dev',
+      testMatch: /playground\.spec\.ts$/,
+      use: { baseURL: DEV_URL },
+    },
+    {
+      name: 'export',
+      testMatch: /(?:export|visual)\.spec\.ts$/,
+      retries: 0,
+      use: { baseURL: EXPORT_URL },
+    },
+  ],
+  webServer: [
+    {
+      command: 'pnpm exec next dev --port 3100',
+      url: DEV_URL,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+    {
+      command: 'node scripts/serve-export.mjs',
+      url: EXPORT_URL,
+      reuseExistingServer: !process.env.CI,
+      timeout: 60_000,
+    },
+  ],
 });
