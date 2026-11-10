@@ -62,8 +62,7 @@ docs/        — Architecture documentation, specifications, contracts
 
 ### Architecture Governance
 
-HO Design System follows
-[SPEC-GOVERNANCE-001](docs/superpowers/specs/architecture-governance-workflow.md). All changes must
+HO Design System follows SPEC-GOVERNANCE-001 (internal governance specification). All changes must
 follow the mandatory workflow:
 
 ```
@@ -113,8 +112,7 @@ depend on the HO Design System package, never on the third-party library directl
 | react-hook-form          | `@ho-dev/forms`  |
 | apexcharts               | `@ho-dev/charts` |
 
-See [ADS-003b](docs/superpowers/specs/dependency-ownership-architecture.md) for the full
-architecture.
+See ADS-003b (dependency ownership architecture) for the full architecture.
 
 ## Documentation
 
