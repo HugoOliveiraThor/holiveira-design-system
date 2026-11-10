@@ -51,6 +51,26 @@ describe('TableView', () => {
     expect(renderedRows()[0]).toHaveTextContent('Acme Studio');
   });
 
+  it('ignores values the table does not render, like the email', () => {
+    render(<TableView />);
+
+    fireEvent.change(screen.getByLabelText('Filter orders'), {
+      target: { value: 'northwind.dev' },
+    });
+
+    expect(screen.queryAllByTestId('order-row')).toHaveLength(0);
+
+    fireEvent.change(screen.getByLabelText('Filter orders'), {
+      target: { value: 'refunded' },
+    });
+
+    const refundedRows = renderedRows();
+    expect(refundedRows).toHaveLength(4);
+    for (const row of refundedRows) {
+      expect(row).toHaveTextContent('refunded');
+    }
+  });
+
   it('shows an empty state when nothing matches', () => {
     render(<TableView />);
 

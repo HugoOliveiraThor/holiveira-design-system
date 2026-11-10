@@ -32,13 +32,7 @@ export function TableView({ orders = defaultOrders }: TableViewProps) {
     const term = filter.trim().toLowerCase();
     const filtered = term
       ? orders.filter((order) =>
-          [
-            order.customer,
-            order.email,
-            order.status,
-            formatOrderAmount(order.amount),
-            order.placedAt,
-          ]
+          [order.customer, order.status, formatOrderAmount(order.amount)]
             .join(' ')
             .toLowerCase()
             .includes(term),
