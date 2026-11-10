@@ -1,5 +1,19 @@
 # Contributing to HO Design System
 
+## Contribution Policy
+
+This repository has a single maintainer. **Issues are welcome** — bug reports, accessibility
+problems, and documentation gaps are read and tracked here.
+
+**Pull requests from external contributors are not accepted at this stage.** No package is published
+to npm yet, the public API is still moving, and every change has to be validated against the release
+gates. A PR opened today would most likely be closed unmerged — not because the contribution is
+unwelcome, but because there is no release cadence for it to land against. If you want to propose a
+change, open an issue first and it can be scheduled by the maintainer.
+
+`main` is protected: it takes no direct push, and changes land only through a pull request with
+green `all-checks`. The maintainer merges; no automated process does.
+
 ## Development Setup
 
 ```bash
