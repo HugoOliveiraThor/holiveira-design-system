@@ -6,25 +6,10 @@ import { cn } from '@ho-dev/utils';
 
 import type { ReactNode } from 'react';
 
+import { storybookHref } from '../../lib/storybook-links';
+
 /** App is served from a single static export mounted at this base path. */
 const BASE_PATH = '/playground';
-
-/** Deployed Storybook site these screens document their components in. */
-const STORYBOOK_BASE = 'https://HugoOliveiraThor.github.io/holiveira-design-system';
-
-/** Storybook entry each route illustrates, taken from the built story index. */
-const STORYBOOK_PATHS: Record<string, string> = {
-  '/': '/?path=/story/patterns-sidebar-breadcrumb--layout',
-  '/forms': '/?path=/story/patterns-form-validation--example',
-  '/orders': '/?path=/story/patterns-tables-data-table-1--default',
-  '/settings': '/?path=/docs/design-tokens-colors--docs',
-  '/login': '/?path=/story/layouts-signinform--default',
-};
-
-/** Resolves a route to its deployed Storybook entry. */
-export function storybookHref(path: string): string {
-  return `${STORYBOOK_BASE}${STORYBOOK_PATHS[path] ?? '/?path=/docs/getting-started--docs'}`;
-}
 
 export interface NavItem {
   href: string;
