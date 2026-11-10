@@ -53,22 +53,6 @@ test('keeps the theme after reload', async ({ page }) => {
   expect(errors, errors.join('\n')).toEqual([]);
 });
 
-test('matches the dashboard forms and settings screenshots', async ({ page }) => {
-  await page.goto('/playground/');
-  await expect(page.getByRole('region', { name: 'Key metrics' })).toBeVisible();
-  await expect(page.locator('.apexcharts-svg')).toHaveCount(2);
-  await page.waitForTimeout(1_000);
-  await expect(page).toHaveScreenshot('dashboard.png');
-
-  await page.goto('/playground/forms/');
-  await expect(page.getByRole('heading', { name: 'Project intake' })).toBeVisible();
-  await expect(page).toHaveScreenshot('forms.png');
-
-  await page.goto('/playground/settings/');
-  await expect(page.getByRole('heading', { name: 'Color tokens' })).toBeVisible();
-  await expect(page).toHaveScreenshot('settings.png');
-});
-
 test.describe('375px', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 

@@ -17,6 +17,9 @@ export interface DashboardViewProps {
   orders?: Order[];
 }
 
+/** Static charts keep visual snapshots deterministic. */
+const staticChartOptions = { chart: { animations: { enabled: false } } };
+
 export function DashboardView({ orders = defaultOrders }: DashboardViewProps) {
   return (
     <div className="space-y-6">
@@ -33,11 +36,15 @@ export function DashboardView({ orders = defaultOrders }: DashboardViewProps) {
       <section aria-label="Performance charts" className="grid gap-4 xl:grid-cols-2">
         <Card>
           <CardTitle as="h2">Revenue by month</CardTitle>
-          <AreaChart series={revenueSeries} label="Monthly revenue" />
+          <AreaChart
+            series={revenueSeries}
+            label="Monthly revenue"
+            apexOptions={staticChartOptions}
+          />
         </Card>
         <Card>
           <CardTitle as="h2">Orders by month</CardTitle>
-          <BarChart series={ordersSeries} label="Monthly orders" />
+          <BarChart series={ordersSeries} label="Monthly orders" apexOptions={staticChartOptions} />
         </Card>
       </section>
 
