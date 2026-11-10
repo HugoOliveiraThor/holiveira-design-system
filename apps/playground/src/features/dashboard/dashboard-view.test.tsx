@@ -1,3 +1,5 @@
+import { formatCurrency } from '@ho-dev/i18n';
+
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -34,6 +36,8 @@ vi.mock('@ho-dev/charts', () => {
   return { AreaChart, BarChart };
 });
 
+import { orders } from '../../data/mock-data';
+
 import { DashboardView } from './dashboard-view';
 
 afterEach(cleanup);
@@ -51,6 +55,17 @@ describe('DashboardView', () => {
 
     rerender(<DashboardView orders={[]} />);
     expect(screen.getByText('No orders yet.')).toBeVisible();
+  });
+
+  it('renders order amounts with formatCurrency', () => {
+    render(<DashboardView />);
+
+    const table = screen.getByRole('table', { name: 'Recent orders' });
+    const firstRow = within(table).getAllByRole('row')[1];
+    const amountCell = within(firstRow).getAllByRole('cell')[2];
+
+    expect(amountCell.textContent).toBe(formatCurrency(orders[0].amount));
+    expect(amountCell.textContent).toBe('$1,240.50');
   });
 
   it('renders the area and bar charts', () => {
