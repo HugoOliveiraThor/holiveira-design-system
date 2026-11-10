@@ -101,7 +101,7 @@ describe('Storybook cross-links', () => {
     );
 
     expect(gettingStarted).toContain(
-      '[HO Design System Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/)',
+      '[Playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/)',
     );
   });
 });

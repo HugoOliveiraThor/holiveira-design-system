@@ -2,9 +2,42 @@
 
 > Start from architecture, not boilerplate.
 
+[![CI](https://github.com/HugoOliveiraThor/holiveira-design-system/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/HugoOliveiraThor/holiveira-design-system/actions/workflows/ci.yml)
+[![Pages](https://github.com/HugoOliveiraThor/holiveira-design-system/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/HugoOliveiraThor/holiveira-design-system/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
----
+## Live
+
+- **Storybook** — component documentation:
+  <https://hugooliveirathor.github.io/holiveira-design-system/>
+- **Getting Started** — install and first steps:
+  <https://hugooliveirathor.github.io/holiveira-design-system/?path=/docs/getting-started--docs>
+- **Playground** — full product screens composed from the packages:
+  <https://hugooliveirathor.github.io/holiveira-design-system/playground/>
+
+## What is HO Design System
+
+HO Design System is a composable, engineering-first Design System for professional web applications.
+It is a monorepo of independent npm packages under the `@ho-dev/*` namespace — install only what you
+use, nothing more.
+
+The project is React-first and Next.js-optimized, with built-in professional application
+infrastructure: authentication, authorization with RBAC, forms with validation, charting, theming
+with dark mode, and application layouts.
+
+Every decision is documented in specifications, ADRs, and contracts. Public APIs are governed by
+explicit rules. Standards are intentional, not accidental. HO Design System is not defined by
+feature count — it is defined by engineering quality.
+
+HO Design System is not a template, a starter kit, or a copy-paste component library. It is a
+long-term engineering investment designed for a 10+ year lifecycle.
+
+## Status
+
+> **Pre-release.** The current version is `0.2.0`, not yet published to npm. Until the first
+> release, use this repository and the
+> [playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/) — the
+> `pnpm add` commands below apply after publishing.
 
 ## Why HO Exists
 
@@ -20,25 +53,6 @@ more specific, more opinionated, tailored to how I build.
 
 I did not build this for an audience. I built it for myself, so every new project starts from
 **architecture instead of boilerplate**. If it helps other developers do the same, even better.
-
-## Quick Start
-
-```bash
-pnpm add @ho-dev/primitives @ho-dev/theme
-```
-
-```tsx
-import { ThemeProvider } from '@ho-dev/theme';
-import { Button } from '@ho-dev/primitives';
-
-function App() {
-  return (
-    <ThemeProvider>
-      <Button variant="primary">Get Started</Button>
-    </ThemeProvider>
-  );
-}
-```
 
 ## Components
 
@@ -59,24 +73,7 @@ function App() {
 | <img src="assets/screenshots/sidebar.png" width="300" alt="Sidebar"> | <img src="assets/screenshots/form.png" width="300" alt="Form"> |
 
 > Explore all components interactively in
-> [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system).
-
-## What is HO Design System
-
-HO Design System is a composable, engineering-first Design System for professional web applications.
-It is a monorepo of independent npm packages under the `@ho-dev/*` namespace — install only what you
-use, nothing more.
-
-The project is React-first and Next.js-optimized, with built-in professional application
-infrastructure: authentication, authorization with RBAC, forms with validation, charting, theming
-with dark mode, and application layouts.
-
-Every decision is documented in specifications, ADRs, and contracts. Public APIs are governed by
-explicit rules. Standards are intentional, not accidental. HO Design System is not defined by
-feature count — it is defined by engineering quality.
-
-HO Design System is not a template, a starter kit, or a copy-paste component library. It is a
-long-term engineering investment designed for a 10+ year lifecycle.
+> [Storybook](https://hugooliveirathor.github.io/holiveira-design-system/).
 
 ## Ecosystem
 
@@ -133,15 +130,10 @@ Core (Level 0)
 
 See [docs/architecture/](docs/architecture/) for specifications, ADRs, and package contracts.
 
-## Development
+## Quick Start
 
-### Requirements
-
-- **Node.js** 22+
-- **pnpm** 11+
-- **PostgreSQL** (for Prisma-generated code; `DATABASE_URL` env var required)
-
-### Setup
+Requirements: **Node.js 24** (see `.nvmrc`; packages declare `engines.node >= 22`), **pnpm 11.3.0**
+(see `packageManager`), and **PostgreSQL** for `db:generate`.
 
 ```bash
 git clone https://github.com/HugoOliveiraThor/holiveira-design-system.git
@@ -149,42 +141,71 @@ cd holiveira-design-system
 pnpm install
 cp .env.example .env
 pnpm run db:generate
+pnpm run dev
 ```
+
+`pnpm run dev` starts Storybook on <http://localhost:6006> and the Playground on
+<http://localhost:3000>.
+
+### After the first npm release
+
+```bash
+pnpm add @ho-dev/primitives @ho-dev/theme
+```
+
+```tsx
+import { ThemeProvider } from '@ho-dev/theme';
+import { Button } from '@ho-dev/primitives';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Button variant="primary">Get Started</Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## Development
 
 ### Commands
 
-| Command                  | Purpose                                            |
-| ------------------------ | -------------------------------------------------- |
-| `pnpm run all-checks`    | Complete repository validation (all quality gates) |
-| `pnpm run dev:storybook` | Start Storybook development server                 |
-| `pnpm run build`         | Build all packages                                 |
-| `pnpm run test`          | Run test suite                                     |
-| `pnpm run typecheck`     | TypeScript compilation check                       |
-| `pnpm run format:check`  | Prettier compliance check                          |
-| `pnpm run lint`          | ESLint check                                       |
+| Command                    | Purpose                                            |
+| -------------------------- | -------------------------------------------------- |
+| `pnpm run all-checks`      | Complete repository validation (all quality gates) |
+| `pnpm run dev`             | Storybook (:6006) and Playground (:3000)           |
+| `pnpm run dev:storybook`   | Storybook development server only                  |
+| `pnpm run build`           | Build all packages                                 |
+| `pnpm run build:storybook` | Static Storybook build                             |
+| `pnpm run test`            | Run test suite                                     |
+| `pnpm run typecheck`       | TypeScript compilation check                       |
+| `pnpm run check:docs`      | Validate documentation links                       |
+| `pnpm run changeset`       | Record a change for the next release               |
 
 ### Toolchain
 
 - **Turbo** — Orchestrates builds with dependency-aware caching. All packages compile via `tsc`.
 - **pnpm** — Workspace management with `workspace:*` protocol for inter-package dependencies.
 - **Storybook** — Interactive component development and documentation at
-  [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system).
+  [Storybook](https://hugooliveirathor.github.io/holiveira-design-system/).
 - **Changesets** — Independent per-package versioning. Run `pnpm changeset` to record changes.
 - **Vitest** — Test runner with jsdom environment and Testing Library integration.
 
 ## Releases
 
-HO Design System uses [Changesets](https://github.com/changesets/changesets) for independent
-per-package semantic versioning. Each package has its own MAJOR.MINOR.PATCH — a breaking change in
-`@ho-dev/charts` does not force a major bump in `@ho-dev/types`.
+Versions are managed with [Changesets](https://github.com/changesets/changesets) — independent
+per-package semver. A breaking change in `@ho-dev/charts` does not force a major bump in
+`@ho-dev/types`.
 
-Releases are published from a manually dispatched workflow (`.github/workflows/release.yml`):
+Nothing has been published to npm yet; `0.2.0` is the first planned release. The history lives in
+[CHANGELOG.md](CHANGELOG.md) and in each package's `CHANGELOG.md`.
+
+Publishing is a manual workflow (`.github/workflows/release.yml`):
 
 1. Contributors run `pnpm changeset` to record changes
 2. Run `pnpm changeset version` to apply the pending bumps and update the per-package CHANGELOGs
 3. A maintainer dispatches the **Publish** workflow, which runs the publish-time gates
    (`check:publish`, `check:license`, `check:exports`) and then `changeset publish`
-4. All packages carry npm provenance attestation
 
 > Automated Version PR creation via `changesets/action` is intentionally not enabled yet — the
 > current flow keeps a human review gate before publishing. See
@@ -201,10 +222,11 @@ workflow.
 
 - [Issues](https://github.com/HugoOliveiraThor/holiveira-design-system/issues) — Bug reports and
   feature requests
-- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system) — Interactive component
+- [Storybook](https://hugooliveirathor.github.io/holiveira-design-system/) — Interactive component
   documentation
-- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+- [Playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/) — Full
   product screens composed from the packages
+- [Changelog](CHANGELOG.md) — Release history
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md) — Reporting vulnerabilities
 
