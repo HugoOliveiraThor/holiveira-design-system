@@ -1,0 +1,4 @@
+/* Compiles the theme from its source so utilities used only by the playground
+   are generated; the theme scans package sources, and the app lives in apps/. */
+@import '../../../../packages/theme/src/theme.css';
+@source '../../src/**/*.{ts,tsx}';

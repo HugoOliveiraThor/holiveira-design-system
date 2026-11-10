@@ -1,0 +1,93 @@
+import { expect, test } from '@playwright/test';
+
+const ROUTES = [
+  { path: '/holiveira-design-system/playground/', heading: 'Dashboard' },
+  { path: '/holiveira-design-system/playground/forms/', heading: 'Forms' },
+  { path: '/holiveira-design-system/playground/settings/', heading: 'Settings' },
+  { path: '/holiveira-design-system/playground/login/', heading: 'Login' },
+  { path: '/holiveira-design-system/playground/orders/', heading: 'Orders' },
+];
+
+test('serves every route directly', async ({ page }) => {
+  for (const route of ROUTES) {
+    const response = await page.goto(route.path);
+    expect(response?.status(), route.path).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 2, name: route.heading }).first(),
+      route.path,
+    ).toBeVisible();
+  }
+});
+
+test('lets a signed-out visitor reach the orders route', async ({ page }) => {
+  const response = await page.goto('/holiveira-design-system/playground/orders/');
+
+  expect(response?.status()).toBe(200);
+  await expect(page).toHaveURL(/\/playground\/orders\/$/);
+  await expect(page.getByRole('heading', { level: 2, name: 'Orders' }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Sign in' })).toHaveCount(0);
+});
+
+test('keeps the theme after reload', async ({ page }) => {
+  const errors: string[] = [];
+
+  page.on('console', (message) => {
+    if (message.type() === 'error') {
+      errors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    errors.push(error.message);
+  });
+
+  await page.goto('/holiveira-design-system/playground/settings/');
+  await expect(page.locator('html')).toHaveClass(/light/);
+
+  await page.getByRole('button', { name: 'Switch to dark' }).click();
+  await expect(page.locator('html')).toHaveClass(/dark/);
+
+  await page.reload();
+  await expect(page.locator('html')).toHaveClass(/dark/);
+  await expect(page.getByRole('button', { name: 'Switch to light' })).toBeVisible();
+
+  expect(errors, errors.join('\n')).toEqual([]);
+});
+
+test.describe('375px', () => {
+  test.use({ viewport: { width: 375, height: 812 } });
+
+  test('opens the sidebar drawer at 375px', async ({ page }) => {
+    await page.goto('/holiveira-design-system/playground/');
+
+    const sidebar = page.locator('aside[aria-label="Main navigation"]');
+    await expect(sidebar).toHaveAttribute('aria-hidden', 'true');
+
+    await page.getByRole('button', { name: 'Toggle Sidebar' }).click();
+
+    await expect(sidebar).toHaveAttribute('aria-hidden', 'false');
+    await expect(sidebar).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Sidebar' })).toBeVisible();
+  });
+
+  test('scrolls the table horizontally at 375px', async ({ page }) => {
+    await page.goto('/holiveira-design-system/playground/orders/');
+
+    const table = page.getByRole('table', { name: 'Orders' });
+    await expect(table).toBeVisible();
+    const container = table.locator('..');
+
+    const metrics = await container.evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      overflowX: getComputedStyle(element).overflowX,
+      scrollWidth: element.scrollWidth,
+    }));
+
+    expect(metrics.overflowX).toBe('auto');
+    expect(metrics.scrollWidth).toBeGreaterThan(metrics.clientWidth);
+
+    await container.evaluate((element) => {
+      element.scrollLeft = element.scrollWidth;
+    });
+    expect(await container.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  });
+});

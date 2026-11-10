@@ -47,7 +47,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    include: ['packages/*/src/**/*.test.{ts,tsx}'],
+    include: ['packages/*/src/**/*.test.{ts,tsx}', 'apps/playground/src/**/*.test.{ts,tsx}'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/*.stories.*'],
     coverage: {
       provider: 'v8',

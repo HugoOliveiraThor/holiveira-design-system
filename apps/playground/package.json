@@ -1,29 +1,26 @@
 {
-  "name": "with-nextjs",
-  "version": "0.1.1",
+  "name": "playground",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build:next": "next build"
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test:visual": "playwright test"
   },
   "dependencies": {
     "@ho-dev/charts": "workspace:*",
-    "@ho-dev/constants": "workspace:*",
+    "@ho-dev/eslint": "workspace:*",
     "@ho-dev/forms": "workspace:*",
     "@ho-dev/hooks": "workspace:*",
     "@ho-dev/i18n": "workspace:*",
     "@ho-dev/icons": "workspace:*",
     "@ho-dev/layouts": "workspace:*",
     "@ho-dev/primitives": "workspace:*",
-    "@ho-dev/providers": "workspace:*",
     "@ho-dev/theme": "workspace:*",
     "@ho-dev/tokens": "workspace:*",
-    "@ho-dev/types": "workspace:*",
     "@ho-dev/ui": "workspace:*",
     "@ho-dev/utils": "workspace:*"
-  },
-  "devDependencies": {
-    "@ho-dev/eslint": "workspace:*"
   },
   "peerDependencies": {
     "next": "^16.3.0",
@@ -35,5 +32,8 @@
     "apexcharts": "^4.5.0",
     "flatpickr": "^4.6.13",
     "react-apexcharts": "^1.7.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0"
   }
 }
