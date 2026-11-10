@@ -35,6 +35,18 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Capture linux baselines (temporary)
+        if: always()
+        run: pnpm --filter playground exec playwright test --update-snapshots --project=export
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        continue-on-error: true
+        with:
+          name: playground-linux-snapshots
+          path: apps/playground/e2e
+
       - uses: actions/upload-artifact@v7
         if: always()
         continue-on-error: true
