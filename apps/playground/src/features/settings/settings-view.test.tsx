@@ -25,6 +25,11 @@ describe('SettingsView', () => {
 
     await waitFor(() => expect(document.documentElement).toHaveClass('dark'));
     expect(await screen.findByRole('button', { name: 'Switch to light' })).toBeVisible();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Switch to light' }));
+
+    await waitFor(() => expect(document.documentElement).not.toHaveClass('dark'));
+    expect(await screen.findByRole('button', { name: 'Switch to dark' })).toBeVisible();
   });
 
   it('renders color spacing and shadow swatches', () => {
