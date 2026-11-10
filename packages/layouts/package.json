@@ -44,7 +44,7 @@
   "devDependencies": {
     "@ho-dev/testing": "workspace:*",
     "@ho-dev/theme": "workspace:*",
-    "@storybook/test": "^8.6.12"
+    "@storybook/test": "^8.6.19"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
