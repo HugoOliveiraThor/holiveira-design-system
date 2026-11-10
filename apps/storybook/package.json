@@ -51,7 +51,7 @@
     "autoprefixer": "^10.4.20",
     "http-server": "^14.1.1",
     "postcss": "^8.5.26",
-    "storybook": "^8.6.12",
+    "storybook": "^8.6.19",
     "tailwindcss": "^4.2.4",
     "typescript": "^5",
     "vite": "^6.0.0"
