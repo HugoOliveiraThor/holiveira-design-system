@@ -41,5 +41,17 @@ describe('SettingsView', () => {
 
     expect(screen.getByText('brand-500')).toBeVisible();
     expect(screen.getAllByText('#465fff').length).toBeGreaterThan(0);
+
+    const spacingBar = screen
+      .getAllByTestId('spacing-swatch')[0]
+      .querySelector<HTMLElement>('[aria-hidden="true"]');
+    if (!spacingBar) {
+      throw new Error('spacing swatch is missing its width bar');
+    }
+    expect(spacingBar).toHaveStyle({ width: containers['3'] });
+
+    expect(screen.getAllByTestId('shadow-swatch')[0]).toHaveStyle({
+      boxShadow: shadows['1'],
+    });
   });
 });
