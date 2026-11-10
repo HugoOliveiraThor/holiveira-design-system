@@ -3,6 +3,7 @@ import { ThemeProvider } from '@ho-dev/theme';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
+import '@ho-dev/charts/chart-styles.css';
 import '@ho-dev/theme/theme.css';
 
 export const metadata: Metadata = {

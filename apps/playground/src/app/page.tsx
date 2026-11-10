@@ -1,12 +1,10 @@
-import { Card } from '@ho-dev/ui';
+import { DashboardView } from '../features/dashboard/dashboard-view';
+import { AppShell } from '../features/shell/app-shell';
 
 export default function Page() {
   return (
-    <main className="p-6">
-      <Card>
-        <h1 className="text-xl font-semibold">Playground</h1>
-        <p className="mt-2 text-sm">Reference screens for the HO Design System.</p>
-      </Card>
-    </main>
+    <AppShell title="Dashboard" activePath="/">
+      <DashboardView />
+    </AppShell>
   );
 }
