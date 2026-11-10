@@ -26,7 +26,7 @@ afterEach(() => {
 });
 
 function pickDate(date: Date) {
-  const input = screen.getByLabelText('Start date');
+  const input = screen.getByLabelText('Start date') as HTMLInputElement;
   // flatpickr writes the formatted value into the input before firing onChange.
   input.value = 'Nov 20, 2026';
 
