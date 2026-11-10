@@ -29,6 +29,17 @@ test('lets a signed-out visitor reach the orders route', async ({ page }) => {
 });
 
 test('keeps the theme after reload', async ({ page }) => {
+  const errors: string[] = [];
+
+  page.on('console', (message) => {
+    if (message.type() === 'error') {
+      errors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => {
+    errors.push(error.message);
+  });
+
   await page.goto('/playground/settings/');
   await expect(page.locator('html')).toHaveClass(/light/);
 
@@ -38,6 +49,8 @@ test('keeps the theme after reload', async ({ page }) => {
   await page.reload();
   await expect(page.locator('html')).toHaveClass(/dark/);
   await expect(page.getByRole('button', { name: 'Switch to light' })).toBeVisible();
+
+  expect(errors, errors.join('\n')).toEqual([]);
 });
 
 test('matches the dashboard forms and settings screenshots', async ({ page }) => {

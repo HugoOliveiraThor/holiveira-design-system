@@ -5,9 +5,16 @@ import { useTheme } from '@ho-dev/theme';
 import { colors, containers, shadows } from '@ho-dev/tokens';
 import { Card, CardTitle } from '@ho-dev/ui';
 
+import { useEffect, useState } from 'react';
+
 export function SettingsView() {
   const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const isDark = resolvedTheme === 'dark';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -17,7 +24,8 @@ export function SettingsView() {
           Switch between light and dark. The choice is kept across page loads.
         </p>
         <Button className="mt-4" onClick={() => setTheme(isDark ? 'light' : 'dark')}>
-          {isDark ? 'Switch to light' : 'Switch to dark'}
+          {/* The stored theme is only known after mount; keep the server and client text equal. */}
+          {mounted ? (isDark ? 'Switch to light' : 'Switch to dark') : 'Theme'}
         </Button>
       </Card>
 
