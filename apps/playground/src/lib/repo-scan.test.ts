@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
@@ -65,5 +65,14 @@ describe('playground app boundary', () => {
       }
       expect(text, path).not.toMatch(envRead);
     }
+  });
+});
+
+describe('dead example app', () => {
+  it('has no examples with-nextjs', () => {
+    expect(existsSync(join(REPO_ROOT, 'examples', 'with-nextjs'))).toBe(false);
+
+    const workspace = readFileSync(join(REPO_ROOT, 'pnpm-workspace.yaml'), 'utf8');
+    expect(workspace).not.toContain('examples/');
   });
 });
