@@ -12,8 +12,8 @@ pnpm run db:generate
 
 ### Requirements
 
-- Node.js 22+
-- pnpm 11+
+- Node.js 24 (see `.nvmrc`; packages declare `engines.node >= 22`)
+- pnpm 11.3.0 (see `packageManager`)
 - PostgreSQL (for Prisma-generated code; `DATABASE_URL` env var required)
 
 ### Running Quality Gates
@@ -22,21 +22,23 @@ pnpm run db:generate
 pnpm run all-checks
 ```
 
-This runs the complete validation pipeline: formatting, linting, type checking, builds, tests,
-bundle size checks, export validation, and dependency checks.
+This runs the complete validation pipeline: formatting, linting, documentation links, type checking,
+builds, tests, bundle size checks, publish readiness, license scan, export validation, and
+dependency checks.
 
 ### Development Servers
 
 ```bash
-pnpm run dev:storybook    # Storybook on localhost:6006
+pnpm run dev              # Storybook on :6006 and Playground on :3000
+pnpm run dev:storybook    # Storybook only
 pnpm run test:watch       # Vitest in watch mode
 ```
 
 ## Repository Structure
 
 ```
-packages/    — 19 design system packages (source of truth)
-apps/        — Consumer applications (Storybook, consumer-test)
+packages/    — 20 design system packages (16 public, 4 private)
+apps/        — Storybook, playground, and consumer-test
 docs/        — Architecture documentation, specifications, contracts
 ```
 
@@ -85,7 +87,12 @@ Select the affected packages and choose the bump type:
 - **minor** — New features, non-breaking API additions
 - **major** — Breaking changes to public API
 
-Changesets are version-controlled and accumulate until a Version PR is created automatically.
+Changesets are committed with the change and accumulate on `main`. When a release is due, a
+maintainer runs `pnpm changeset version`, which applies the bumps and updates the per-package
+`CHANGELOG.md` files, then dispatches the manual **Publish** workflow. There is no automated Version
+PR — the release is intentionally gated by a human.
+
+Product-level history is tracked in the root [CHANGELOG.md](CHANGELOG.md).
 
 ### Before Submitting
 
@@ -112,8 +119,11 @@ architecture.
 ## Documentation
 
 - [Architecture](docs/architecture/) — Specifications, ADRs, contracts
-- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system) — Interactive component
+- [Storybook](https://hugooliveirathor.github.io/holiveira-design-system/) — Interactive component
   docs
+- [Playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
+- [Changelog](CHANGELOG.md) — Release history
 - [Security Policy](SECURITY.md)
 
 ## License
