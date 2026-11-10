@@ -203,6 +203,8 @@ workflow.
   feature requests
 - [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system) — Interactive component
   documentation
+- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md) — Reporting vulnerabilities
 

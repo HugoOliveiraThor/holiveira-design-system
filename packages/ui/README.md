@@ -70,6 +70,8 @@ Contract: `docs/architecture/contracts/ui.md`
   — Card
 - [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-showcasesection--docs)
   — ShowcaseSection
+- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
 - [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
 - Contract: `docs/architecture/contracts/ui.md`
 

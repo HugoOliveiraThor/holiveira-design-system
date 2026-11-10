@@ -89,6 +89,8 @@ See `docs/architecture/contracts/icons.md` for ownership and dependency boundari
 
 - **Storybook:**
   https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/components-icons
+- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
 - [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
 - **Contract:** `docs/architecture/contracts/icons.md`
 

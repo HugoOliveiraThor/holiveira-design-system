@@ -111,6 +111,8 @@ See `docs/architecture/contracts/forms.md` for ownership and dependency boundari
 
 - **Storybook:**
   https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/components-forms
+- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
 - [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
 - **Contract:** `docs/architecture/contracts/forms.md`
 

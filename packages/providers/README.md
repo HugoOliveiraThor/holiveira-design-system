@@ -58,6 +58,8 @@ Contract: `docs/architecture/contracts/providers.md`
 ## Documentation
 
 - [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system)
+- [Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/) — Full
+  product screens composed from the packages
 - [GitHub](https://github.com/HugoOliveiraThor/holiveira-design-system)
 - Contract: `docs/architecture/contracts/providers.md`
 
