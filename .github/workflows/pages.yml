@@ -42,12 +42,12 @@ jobs:
         run: |
           pnpm run build
           pnpm run build:storybook
-          mkdir -p storybook-static/playground
-          cp -R apps/playground/out/. storybook-static/playground/
+          mkdir -p apps/storybook/storybook-static/playground
+          cp -R apps/playground/out/. apps/storybook/storybook-static/playground/
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: storybook-static
+          path: apps/storybook/storybook-static
 
   deploy:
     needs: build
