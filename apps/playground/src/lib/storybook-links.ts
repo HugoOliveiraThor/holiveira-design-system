@@ -1,5 +1,5 @@
 /** Deployed Storybook site these screens document their components in. */
-export const STORYBOOK_BASE = 'https://HugoOliveiraThor.github.io/holiveira-design-system';
+export const STORYBOOK_BASE = 'https://hugooliveirathor.github.io/holiveira-design-system';
 
 /** Storybook title each route illustrates, read from the real story files. */
 export const PAGE_STORY_TITLES: Record<string, string> = {

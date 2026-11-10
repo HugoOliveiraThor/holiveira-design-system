@@ -4,13 +4,37 @@ import { Meta } from '@storybook/blocks';
 
 # Getting Started
 
-Install the packages you need from the HO Design System.
+HO Design System is a set of independently versioned packages under the `@ho-dev/*` namespace. Until
+the first release, the packages are consumed from this repository and demonstrated by the
+playground.
 
-## Live Playground
+## Live
 
-See the packages composed into a complete product app: [HO Design System Playground](https://HugoOliveiraThor.github.io/holiveira-design-system/playground/).
+- **Storybook** — [component documentation](https://hugooliveirathor.github.io/holiveira-design-system/)
+- **Playground** — [full product screens](https://hugooliveirathor.github.io/holiveira-design-system/playground/)
+- **Repository** — [HugoOliveiraThor/holiveira-design-system](https://github.com/HugoOliveiraThor/holiveira-design-system)
+- **Issues** — [report a bug](https://github.com/HugoOliveiraThor/holiveira-design-system/issues)
 
-## Installation
+## Status
+
+> **Pre-release.** The current version is `0.2.0`, not yet published to npm. Use the repository
+> today; the `pnpm add` instructions below apply after the first release.
+
+## Run from the repository
+
+```bash
+git clone https://github.com/HugoOliveiraThor/holiveira-design-system.git
+cd holiveira-design-system
+pnpm install
+cp .env.example .env
+pnpm run db:generate
+pnpm run dev
+```
+
+Open [localhost:3000](http://localhost:3000) for the playground and
+[localhost:6006](http://localhost:6006) for Storybook.
+
+## Install from npm (after the first release)
 
 Each `@ho-dev/*` package is published independently. Install only what your application needs:
 
@@ -18,7 +42,7 @@ Each `@ho-dev/*` package is published independently. Install only what your appl
 # Primitives (base components)
 pnpm add @ho-dev/primitives
 
-# Theme (required by all packages)
+# Theme (provider, CSS tokens, dark mode)
 pnpm add @ho-dev/theme
 
 # UI components
@@ -45,7 +69,8 @@ pnpm add @ho-dev/utils
 
 ## Quick Start
 
-Wrap your application with `ThemeProvider` to enable the design system's theme context, dark mode, and CSS tokens:
+Wrap your application with `ThemeProvider` to enable the design system's theme context, dark mode,
+and CSS tokens:
 
 ```tsx
 import { ThemeProvider } from '@ho-dev/theme';
@@ -81,10 +106,17 @@ export function SubmitForm() {
 
 - **React** 19+
 - **Tailwind CSS** v4
-- **Next.js** 15+ (optional — HO Design System works with any React framework)
+- **Next.js** 16 (optional — HO Design System works with any React framework; the playground is
+  built on Next.js 16)
 
 ## Learn More
 
-- [README](https://github.com/hugoluisvieira/design-system) — project overview and setup guide
-- Browse components in the sidebar to see API documentation, variants, and interactive examples
-- Each component's Docs tab shows the full prop table with types and defaults
+- Browse components in the sidebar for API documentation, variants, and interactive examples
+- [Playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/) — full
+  product screens composed from the packages
+- [README](https://github.com/HugoOliveiraThor/holiveira-design-system#readme) — project overview
+  and setup guide
+- [Changelog](https://github.com/HugoOliveiraThor/holiveira-design-system/blob/main/CHANGELOG.md) —
+  release history
+- [Architecture](https://github.com/HugoOliveiraThor/holiveira-design-system/tree/main/docs/architecture) —
+  specifications, ADRs, and package contracts
