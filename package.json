@@ -27,6 +27,7 @@
     "check:install": "pnpm --filter consumer-test run validate:packed",
     "check:license": "pnpm exec tsx scripts/check-license.ts",
     "check:deps": "syncpack lint --dependency-types prod,dev",
+    "check:docs": "pnpm exec tsx scripts/check-docs.ts",
     "check:deps:peer": "pnpm peers check 2>&1 || true",
     "check:unused": "knip",
     "dev": "turbo run dev",
@@ -39,7 +40,7 @@
     "version": "changeset version",
     "release:publish": "turbo run build --filter='./packages/*' && changeset publish",
     "prepare": "husky",
-    "all-checks": "pnpm run format:check && pnpm run lint && pnpm run check:tokens && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:visual && pnpm --filter playground run test:visual && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:install && pnpm run check:license && pnpm run check:exports && pnpm run check:deps && pnpm run check:gates",
+    "all-checks": "pnpm run format:check && pnpm run lint && pnpm run check:tokens && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:visual && pnpm --filter playground run test:visual && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:install && pnpm run check:license && pnpm run check:exports && pnpm run check:deps && pnpm run check:docs && pnpm run check:gates",
     "check:gates": "pnpm exec tsx scripts/check-gates.ts",
     "generate:tokens": "pnpm exec tsx scripts/generate-tokens.ts",
     "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check"
