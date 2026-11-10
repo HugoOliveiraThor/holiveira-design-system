@@ -1,13 +1,38 @@
 import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('next/dynamic', () => ({
-  default: () => {
-    const MockChart = () => <div data-testid="apex-chart" />;
-    MockChart.displayName = 'MockChart';
-    return MockChart;
-  },
-}));
+interface ChartStubProps {
+  label: string;
+  series: { name: string; data: unknown[] }[];
+}
+
+vi.mock('@ho-dev/charts', () => {
+  function AreaChart({ label, series }: ChartStubProps) {
+    return (
+      <div
+        data-testid="area-chart"
+        role="img"
+        aria-label={label}
+        data-series-name={series[0]?.name}
+        data-series-points={series[0]?.data.length}
+      />
+    );
+  }
+
+  function BarChart({ label, series }: ChartStubProps) {
+    return (
+      <div
+        data-testid="bar-chart"
+        role="img"
+        aria-label={label}
+        data-series-name={series[0]?.name}
+        data-series-points={series[0]?.data.length}
+      />
+    );
+  }
+
+  return { AreaChart, BarChart };
+});
 
 import { DashboardView } from './dashboard-view';
 
@@ -28,11 +53,21 @@ describe('DashboardView', () => {
     expect(screen.getByText('No orders yet.')).toBeVisible();
   });
 
-  it('renders the area and bar charts', async () => {
+  it('renders the area and bar charts', () => {
     render(<DashboardView />);
 
-    expect(await screen.findByRole('img', { name: 'Monthly revenue' })).toBeVisible();
-    expect(await screen.findByRole('img', { name: 'Monthly orders' })).toBeVisible();
-    expect(await screen.findAllByTestId('apex-chart')).toHaveLength(2);
+    expect(screen.getAllByTestId('area-chart')).toHaveLength(1);
+    expect(screen.getAllByTestId('bar-chart')).toHaveLength(1);
+
+    const area = screen.getByTestId('area-chart');
+    const bar = screen.getByTestId('bar-chart');
+
+    expect(area).toHaveAccessibleName('Monthly revenue');
+    expect(bar).toHaveAccessibleName('Monthly orders');
+
+    expect(area).toHaveAttribute('data-series-name', 'Revenue');
+    expect(bar).toHaveAttribute('data-series-name', 'Orders');
+    expect(area).toHaveAttribute('data-series-points', '12');
+    expect(bar).toHaveAttribute('data-series-points', '12');
   });
 });
