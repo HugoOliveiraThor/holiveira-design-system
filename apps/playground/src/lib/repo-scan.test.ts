@@ -14,6 +14,19 @@ const PRIVATE_PACKAGES = ['auth', 'api', 'db', 'testing'].map((name) =>
 const PROCESS_ENV = ['process', 'env'].join('\\.');
 const IMPORT_RE = /(?:from\s+|import\s*)['"]([^'"]+)['"]/g;
 
+/** Third-party packages the app may import directly, beyond its own `@ho-dev/*` UI. */
+const ALLOWED_EXTERNAL = [
+  'react',
+  'react-dom',
+  'next',
+  'zod',
+  'react-hook-form',
+  'flatpickr',
+  'next-themes',
+  'clsx',
+  'tailwind-merge',
+];
+
 function listFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((entry) => {
     const path = join(dir, entry);
@@ -23,6 +36,27 @@ function listFiles(dir: string): string[] {
 
 function readSources(): { path: string; text: string }[] {
   return listFiles(SRC_ROOT).map((path) => ({ path, text: readFileSync(path, 'utf8') }));
+}
+
+/** Production files only: tests import their own runner and DOM helpers. */
+function appSources(): { path: string; text: string }[] {
+  return readSources().filter(
+    ({ path }) => !/\.test\.(ts|tsx)$/.test(path) && !path.endsWith('/test-setup.ts'),
+  );
+}
+
+function bareImports(text: string): string[] {
+  return [...text.matchAll(IMPORT_RE)]
+    .map((match) => match[1])
+    .filter((specifier) => !specifier.startsWith('.') && !specifier.startsWith('/'));
+}
+
+function isAllowedExternal(specifier: string): boolean {
+  if (specifier.startsWith('@ho-dev/')) {
+    return true;
+  }
+
+  return ALLOWED_EXTERNAL.some((name) => specifier === name || specifier.startsWith(`${name}/`));
 }
 
 function hoImports(text: string): string[] {
@@ -51,6 +85,25 @@ describe('playground app boundary', () => {
     for (const name of imported) {
       expect(declared).toContain(name);
     }
+  });
+
+  it('imports only the approved external packages', () => {
+    const sources = appSources();
+    expect(sources.length).toBeGreaterThan(0);
+
+    const specifiers = new Set(sources.flatMap(({ text }) => bareImports(text)));
+    expect(specifiers.size).toBeGreaterThan(0);
+
+    for (const { path, text } of sources) {
+      for (const specifier of bareImports(text)) {
+        expect(isAllowedExternal(specifier), `${path} imports ${specifier}`).toBe(true);
+      }
+    }
+
+    expect(isAllowedExternal('lodash')).toBe(false);
+    expect(isAllowedExternal('@tanstack/react-query')).toBe(false);
+    expect(isAllowedExternal('react-dom/client')).toBe(true);
+    expect(isAllowedExternal('next/link')).toBe(true);
   });
 
   it('imports no private packages and no environment variables', () => {
