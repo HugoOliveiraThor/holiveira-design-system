@@ -15,19 +15,21 @@ describe('Pages workflow', () => {
     const buildStep = workflow.search(/^\s*pnpm run build\s*$/m);
     expect(buildStep).toBeGreaterThan(-1);
     expect(workflow).toContain('pnpm run build:storybook');
-    expect(workflow).toContain('mkdir -p storybook-static/playground');
-    expect(workflow).toContain('cp -R apps/playground/out/. storybook-static/playground/');
-    expect(workflow).toContain('actions/upload-pages-artifact');
-    expect(workflow).toMatch(
-      /upload-pages-artifact@v\d+\s*\n\s*with:\s*\n\s*path: storybook-static/,
+    expect(workflow).toContain('mkdir -p apps/storybook/storybook-static/playground');
+    expect(workflow).toContain(
+      'cp -R apps/playground/out/. apps/storybook/storybook-static/playground/',
     );
+    expect(workflow).toContain('actions/upload-pages-artifact');
+    expect(workflow).toContain('path: apps/storybook/storybook-static');
     expect(workflow).toContain('actions/deploy-pages');
 
-    const copyOut = workflow.indexOf('cp -R apps/playground/out/. storybook-static/playground/');
+    const copyOut = workflow.indexOf(
+      'cp -R apps/playground/out/. apps/storybook/storybook-static/playground/',
+    );
     const upload = workflow.indexOf('actions/upload-pages-artifact');
     const deploy = workflow.indexOf('actions/deploy-pages');
 
-    expect(copyOut, 'copies out/ into storybook-static/playground').toBeGreaterThan(buildStep);
+    expect(copyOut, 'copies out/ into the storybook output').toBeGreaterThan(buildStep);
     expect(upload, 'uploads the artifact after copying the export').toBeGreaterThan(copyOut);
     expect(deploy, 'deploys after the artifact upload').toBeGreaterThan(upload);
 
