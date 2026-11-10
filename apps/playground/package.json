@@ -32,5 +32,8 @@
     "apexcharts": "^4.5.0",
     "flatpickr": "^4.6.13",
     "react-apexcharts": "^1.7.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0"
   }
 }

@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   output: 'export',
   basePath: '/playground',
   trailingSlash: true,
+  allowedDevOrigins: ['127.0.0.1'],
   transpilePackages: [
     '@ho-dev/charts',
     '@ho-dev/forms',

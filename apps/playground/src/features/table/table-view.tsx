@@ -84,7 +84,7 @@ export function TableView({ orders = defaultOrders }: TableViewProps) {
         />
       </div>
 
-      <Table aria-label="Orders" className="mt-4">
+      <Table aria-label="Orders" className="mt-4 whitespace-nowrap">
         <TableHeader>
           <TableRow>
             <TableHead aria-sort={ariaSort('customer')}>

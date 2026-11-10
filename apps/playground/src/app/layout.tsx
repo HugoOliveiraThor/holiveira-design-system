@@ -5,7 +5,9 @@ import type { ReactNode } from 'react';
 
 import '@ho-dev/charts/chart-styles.css';
 import '@ho-dev/forms/date-picker-styles.css';
-import '@ho-dev/theme/theme.css';
+import 'flatpickr/dist/flatpickr.min.css';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Playground — HO Design System',
@@ -15,7 +17,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-2 text-dark dark:bg-dark dark:text-white">{children}</body>
+      <body className="bg-gray-2 text-dark dark:bg-dark dark:text-white">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
