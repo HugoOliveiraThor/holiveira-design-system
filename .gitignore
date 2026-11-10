@@ -95,3 +95,4 @@ playwright-report/
 ._*
 
 .ai-memory.toml
+.specs
