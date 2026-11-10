@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { storybookHref } from '../../lib/storybook-links';
 
 /** App is served from a single static export mounted at this base path. */
-const BASE_PATH = '/playground';
+const BASE_PATH = '/holiveira-design-system/playground';
 
 export interface NavItem {
   href: string;

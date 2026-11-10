@@ -6,7 +6,10 @@ export default function NotFound() {
       <Card>
         <h1 className="text-dark text-xl font-semibold dark:text-white">Page not found</h1>
         <p className="mt-2 text-sm">This playground route does not exist.</p>
-        <a className="text-primary mt-4 inline-block text-sm font-medium" href="/playground/">
+        <a
+          className="text-primary mt-4 inline-block text-sm font-medium"
+          href="/holiveira-design-system/playground/"
+        >
           Back to the dashboard
         </a>
       </Card>

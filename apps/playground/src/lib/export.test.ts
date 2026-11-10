@@ -34,7 +34,7 @@ describe('static export', () => {
 
     expect(assetRefs.length).toBeGreaterThan(0);
     for (const ref of assetRefs) {
-      expect(ref.startsWith('/playground/_next/'), ref).toBe(true);
+      expect(ref.startsWith('/holiveira-design-system/playground/_next/'), ref).toBe(true);
     }
     expect(html).not.toContain('src="/_next/');
     expect(html).not.toContain('href="/_next/');

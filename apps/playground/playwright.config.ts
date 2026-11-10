@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
-const DEV_URL = 'http://127.0.0.1:3100/playground/';
-const EXPORT_URL = 'http://127.0.0.1:3200/playground/';
+const DEV_URL = 'http://127.0.0.1:3100/holiveira-design-system/playground/';
+const EXPORT_URL = 'http://127.0.0.1:3200/holiveira-design-system/playground/';
 
 export default defineConfig({
   testDir: './e2e',

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const APP_ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const OUT_ROOT = join(APP_ROOT, 'out');
-const PREFIX = '/playground';
+const PREFIX = '/holiveira-design-system/playground';
 const PORT = Number(process.env.PORT ?? 3200);
 const HOST = process.env.HOST ?? '127.0.0.1';
 

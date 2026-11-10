@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/playground',
+  basePath: '/holiveira-design-system/playground',
   trailingSlash: true,
   allowedDevOrigins: ['127.0.0.1'],
   transpilePackages: [

@@ -13,20 +13,20 @@ async function waitForStablePage(page: Page) {
 }
 
 test('matches the dashboard forms and settings screenshots', async ({ page }) => {
-  await page.goto('/playground/');
+  await page.goto('/holiveira-design-system/playground/');
   await expect(page.getByRole('region', { name: 'Key metrics' })).toBeVisible();
   await expect(page.locator('.apexcharts-svg')).toHaveCount(2);
   await expect(page.locator('.apexcharts-svg').first()).toBeVisible();
   await waitForStablePage(page);
   await expect(page).toHaveScreenshot('dashboard.png');
 
-  await page.goto('/playground/forms/');
+  await page.goto('/holiveira-design-system/playground/forms/');
   await expect(page.getByRole('heading', { name: 'Project intake' })).toBeVisible();
   await expect(page.getByLabel('Start date')).toBeVisible();
   await waitForStablePage(page);
   await expect(page).toHaveScreenshot('forms.png');
 
-  await page.goto('/playground/settings/');
+  await page.goto('/holiveira-design-system/playground/settings/');
   await expect(page.getByRole('heading', { name: 'Color tokens' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Switch to dark' })).toBeVisible();
   await waitForStablePage(page);

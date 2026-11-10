@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
 
 const ROUTES = [
-  { path: '/playground/', heading: 'Dashboard' },
-  { path: '/playground/forms/', heading: 'Forms' },
-  { path: '/playground/settings/', heading: 'Settings' },
-  { path: '/playground/login/', heading: 'Login' },
-  { path: '/playground/orders/', heading: 'Orders' },
+  { path: '/holiveira-design-system/playground/', heading: 'Dashboard' },
+  { path: '/holiveira-design-system/playground/forms/', heading: 'Forms' },
+  { path: '/holiveira-design-system/playground/settings/', heading: 'Settings' },
+  { path: '/holiveira-design-system/playground/login/', heading: 'Login' },
+  { path: '/holiveira-design-system/playground/orders/', heading: 'Orders' },
 ];
 
 test('serves every route directly', async ({ page }) => {
@@ -20,7 +20,7 @@ test('serves every route directly', async ({ page }) => {
 });
 
 test('lets a signed-out visitor reach the orders route', async ({ page }) => {
-  const response = await page.goto('/playground/orders/');
+  const response = await page.goto('/holiveira-design-system/playground/orders/');
 
   expect(response?.status()).toBe(200);
   await expect(page).toHaveURL(/\/playground\/orders\/$/);
@@ -40,7 +40,7 @@ test('keeps the theme after reload', async ({ page }) => {
     errors.push(error.message);
   });
 
-  await page.goto('/playground/settings/');
+  await page.goto('/holiveira-design-system/playground/settings/');
   await expect(page.locator('html')).toHaveClass(/light/);
 
   await page.getByRole('button', { name: 'Switch to dark' }).click();
@@ -57,7 +57,7 @@ test.describe('375px', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
   test('opens the sidebar drawer at 375px', async ({ page }) => {
-    await page.goto('/playground/');
+    await page.goto('/holiveira-design-system/playground/');
 
     const sidebar = page.locator('aside[aria-label="Main navigation"]');
     await expect(sidebar).toHaveAttribute('aria-hidden', 'true');
@@ -70,7 +70,7 @@ test.describe('375px', () => {
   });
 
   test('scrolls the table horizontally at 375px', async ({ page }) => {
-    await page.goto('/playground/orders/');
+    await page.goto('/holiveira-design-system/playground/orders/');
 
     const table = page.getByRole('table', { name: 'Orders' });
     await expect(table).toBeVisible();
