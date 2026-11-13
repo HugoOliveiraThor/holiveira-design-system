@@ -1,9 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 
 import prettier from 'prettier';
 
 import { elapsedMs, nowIso, writeGateReport } from './lib/gate-report';
+import { parseTheme } from './lib/token-surface';
 
 /**
  * Generate the TypeScript token modules from `packages/tokens/src/tokens.css`.
@@ -13,72 +14,37 @@ import { elapsedMs, nowIso, writeGateReport } from './lib/gate-report';
  * `spacing.ts` and `typography.ts` from it, and `--check` mode fails when the
  * committed TS drifts from the CSS.
  *
+ * Declarations come from the same parser the compatibility guard uses, so a
+ * name with `_` or a CSS escape cannot be silently skipped.
+ *
  * Usage:
- *   tsx scripts/generate-tokens.ts          # write generated files
- *   tsx scripts/generate-tokens.ts --check  # fail on drift (no writes)
+ *   tsx scripts/generate-tokens.ts                  # write generated files
+ *   tsx scripts/generate-tokens.ts --check          # fail on drift (no writes)
+ *   tsx scripts/generate-tokens.ts --root <dir>     # operate on a fixture root
  */
-const REPO_ROOT = join(__dirname, '..');
+function readOption(argv: string[], name: string): string | undefined {
+  const index = argv.indexOf(name);
+  return index === -1 ? undefined : argv[index + 1];
+}
+
+const argv = process.argv.slice(2);
+const rootOption = readOption(argv, '--root');
+const REPO_ROOT = rootOption ? resolve(rootOption) : join(__dirname, '..');
 const TOKENS_CSS = join(REPO_ROOT, 'packages', 'tokens', 'src', 'tokens.css');
 const OUT_DIR = join(REPO_ROOT, 'packages', 'tokens', 'src');
-const CHECK = process.argv.includes('--check');
+const CHECK = argv.includes('--check');
 const startedAt = nowIso();
 
 const HEADER = `// AUTO-GENERATED from packages/tokens/src/tokens.css by scripts/generate-tokens.ts.
 // Do not edit by hand. Run \`pnpm run generate:tokens\` after changing tokens.css.
 `;
 
-function extractThemeBlock(css: string): string {
-  const at = css.indexOf('@theme');
-  if (at === -1) throw new Error('tokens.css: no @theme block found');
-  const open = css.indexOf('{', at);
-  let depth = 0;
-  for (let i = open; i < css.length; i++) {
-    if (css[i] === '{') depth++;
-    else if (css[i] === '}') {
-      depth--;
-      if (depth === 0) return css.slice(open + 1, i);
-    }
-  }
-  throw new Error('tokens.css: unbalanced @theme block');
-}
+type Declarations = Record<string, string>;
 
-/** Remove nested at-rule blocks (e.g. @keyframes) so only top-level declarations remain. */
-function stripNestedBlocks(body: string): string {
-  let out = '';
-  let depth = 0;
-  for (const ch of body) {
-    if (ch === '{') {
-      depth++;
-      continue;
-    }
-    if (ch === '}') {
-      depth--;
-      continue;
-    }
-    if (depth === 0) out += ch;
-  }
-  return out;
-}
-
-function parseDeclarations(theme: string): Map<string, string> {
-  const declarations = new Map<string, string>();
-  for (const part of stripNestedBlocks(theme).split(';')) {
-    const match = part.match(/^\s*(--[A-Za-z0-9-]+)\s*:\s*([\s\S]*)$/);
-    if (!match) continue;
-    const value = match[2].replace(/\s+/g, ' ').trim();
-    if (value) declarations.set(match[1], value);
-  }
-  return declarations;
-}
-
-function escapeValue(value: string): string {
-  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-}
-
-function objectEntries(declarations: Map<string, string>, prefix: string): Array<[string, string]> {
-  return [...declarations]
+function entriesFor(declarations: Declarations, prefix: string): Array<[string, string]> {
+  return Object.entries(declarations)
     .filter(([name]) => name.startsWith(prefix))
-    .map(([name, value]) => [name.slice(prefix.length), value] as [string, string])
+    .map(([name, value]) => [name.slice(prefix.length).replace(/\\(.)/g, '$1'), value])
     .sort(([a], [b]) => a.localeCompare(b));
 }
 
@@ -91,12 +57,16 @@ function numericAwareSort(entries: Array<[string, string]>): Array<[string, stri
   });
 }
 
+function escapeValue(value: string): string {
+  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
 function renderObject(entries: Array<[string, string]>, indent = '  '): string {
   return entries.map(([k, v]) => `${indent}'${k}': '${escapeValue(v)}',`).join('\n');
 }
 
-function buildColors(declarations: Map<string, string>): string {
-  const entries = objectEntries(declarations, '--color-');
+function buildColors(declarations: Declarations): string {
+  const entries = entriesFor(declarations, '--color-');
   return `${HEADER}\n/** Design token color palette, derived from the CSS \`@theme\` block. */
 export const colors = {
 ${renderObject(entries)}
@@ -107,8 +77,8 @@ export type ColorKey = keyof typeof colors;
 `;
 }
 
-function buildShadows(declarations: Map<string, string>): string {
-  const entries = objectEntries(declarations, '--shadow-');
+function buildShadows(declarations: Declarations): string {
+  const entries = entriesFor(declarations, '--shadow-');
   return `${HEADER}\n/** Shadow tokens, derived from the CSS \`@theme\` block. */
 export const shadows = {
 ${renderObject(entries)}
@@ -116,9 +86,9 @@ ${renderObject(entries)}
 `;
 }
 
-function buildSpacing(declarations: Map<string, string>): string {
-  const containers = numericAwareSort(objectEntries(declarations, '--container-'));
-  const breakpoints = objectEntries(declarations, '--breakpoint-');
+function buildSpacing(declarations: Declarations): string {
+  const containers = numericAwareSort(entriesFor(declarations, '--container-'));
+  const breakpoints = entriesFor(declarations, '--breakpoint-');
   return `${HEADER}\n/** Container dimension tokens, derived from the CSS \`@theme\` block. */
 export const containers = {
 ${renderObject(containers)}
@@ -134,11 +104,11 @@ export type Breakpoint = keyof typeof breakpoints;
 `;
 }
 
-function buildTypography(declarations: Map<string, string>): string {
-  const fontEntries = objectEntries(declarations, '--font-');
+function buildTypography(declarations: Declarations): string {
+  const fontEntries = entriesFor(declarations, '--font-');
   const text = new Map<string, { fontSize?: string; lineHeight?: string }>();
 
-  for (const [name, value] of declarations) {
+  for (const [name, value] of Object.entries(declarations)) {
     if (!name.startsWith('--text-')) continue;
     const isLineHeight = name.endsWith('--line-height');
     const key = isLineHeight
@@ -179,7 +149,7 @@ async function format(filePath: string, source: string): Promise<string> {
 
 async function main(): Promise<void> {
   const css = readFileSync(TOKENS_CSS, 'utf8');
-  const declarations = parseDeclarations(extractThemeBlock(css));
+  const declarations = parseTheme(css);
 
   const files: Array<[string, string]> = [
     [join(OUT_DIR, 'colors.ts'), buildColors(declarations)],
@@ -246,4 +216,7 @@ async function main(): Promise<void> {
   process.exit(0);
 }
 
-void main();
+void main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+});
