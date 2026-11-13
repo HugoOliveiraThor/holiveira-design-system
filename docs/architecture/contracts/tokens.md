@@ -25,10 +25,15 @@ breakpoints).
 
 - CSS custom properties (`--color-*`, `--container-*`, `--text-*`, `--shadow-*`, `--breakpoint-*`,
   `--font-*`)
-- TypeScript token objects (`colors`, `containers`, `breakpoints`, `fontFamily`, `text`, `shadows`)
+- TypeScript token objects (`colors`, `containers`, `breakpoints`, `fontFamily`, `text`, `shadows`,
+  `minWidth`, `aspectRatio`, `animate`)
 - `TokenValue` type
 - `ColorKey` type
 - `Breakpoint` type
+
+TypeScript keys are the CSS suffix after the token prefix, with CSS escapes resolved:
+`--container-2_5` → `containers['2_5']`, `--aspect-4\/3` → `aspectRatio['4/3']`,
+`--animate-spin-1_5` → `animate['spin-1_5']`.
 
 ## Internal API
 
@@ -60,3 +65,11 @@ The snapshot command refuses to write when the version does not advance, when a 
 lacks an approval reference, when the reference matches no `docs/architecture/ads-NNN*.md`, or when
 a breaking change is not a breaking bump. A breaking change below `1.0` needs a minor bump; from
 `1.0` it needs a major bump. Additions need no approval.
+
+### Baseline corrections
+
+A snapshot that has never been published may be corrected when the recording tool itself was wrong,
+for example a parser that dropped declarations. The correction PR states the tooling defect and the
+before/after counts; deleting the file and rerunning `pnpm run generate:tokens:snapshot` is allowed
+only under that condition. It is never a path to accept a change to a real token: once the snapshot
+has shipped, a removal or a repaint needs a new ADS.
