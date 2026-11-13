@@ -48,6 +48,24 @@ describe('check-tokens-compat CLI', () => {
     expect(result.output).toContain('new ADS');
   });
 
+  it('records the parity additions at 0.2.1', () => {
+    const snapshot = JSON.parse(
+      readFileSync(join(process.cwd(), 'packages', 'tokens', 'tokens.snapshot.json'), 'utf8'),
+    ) as {
+      version: string;
+      approval: string | null;
+      css: Record<string, string>;
+      ts: Record<string, string>;
+    };
+    expect(snapshot.version).toBe('0.2.1');
+    expect(snapshot.approval).toBeNull();
+    expect(Object.keys(snapshot.css)).toHaveLength(237);
+    expect(snapshot.ts['containers.2_5']).toBe('0.625rem');
+    expect(snapshot.ts['minWidth.22_5']).toBe('5.625rem');
+    expect(snapshot.ts['aspectRatio.4/3']).toBe('4 / 3');
+    expect(snapshot.ts['animate.spin-1_5']).toBe('spin 1.5s linear infinite');
+  });
+
   it('records every declared @theme name in the committed snapshot', () => {
     const css = readFileSync(
       join(process.cwd(), 'packages', 'tokens', 'src', 'tokens.css'),
@@ -67,6 +85,7 @@ describe('check-tokens-compat CLI', () => {
     const result = runCli([]);
     expect(result.status).toBe(0);
     expect(result.output).toContain('token surface compatible');
+    expect(result.output).toContain('237 css variables, 214 typescript paths');
   });
 
   it('exits 2 when the snapshot is malformed', () => {
