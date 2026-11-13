@@ -47,6 +47,7 @@ describe('token guard wiring', () => {
     expect(contract).toContain('`value-changed`');
     expect(contract).toContain('new ADS');
     expect(contract).toContain('minor bump');
+    expect(contract).toContain('major bump');
     expect(contract).toContain('--approval ads-NNN');
     expect(contract).toContain('pnpm run check:tokens');
     expect(contract).toContain('pnpm run generate:tokens:snapshot');

@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -45,6 +46,21 @@ describe('check-tokens-compat CLI', () => {
     expect(result.status).toBe(1);
     expect(result.output).toContain('removed (css):');
     expect(result.output).toContain('new ADS');
+  });
+
+  it('records every declared @theme name in the committed snapshot', () => {
+    const css = readFileSync(
+      join(process.cwd(), 'packages', 'tokens', 'src', 'tokens.css'),
+      'utf8',
+    );
+    const declared = [...css.matchAll(/^\s*(--[^:]+):/gm)].map((match) => match[1].trim());
+    const snapshot = JSON.parse(
+      readFileSync(join(process.cwd(), 'packages', 'tokens', 'tokens.snapshot.json'), 'utf8'),
+    ) as { css: Record<string, string> };
+    expect(declared.length).toBeGreaterThan(200);
+    expect(Object.keys(snapshot.css).sort()).toEqual(declared.sort());
+    expect(snapshot.css['--container-2_5']).toBe('0.625rem');
+    expect(snapshot.css['--aspect-4\\/3']).toBe('4 / 3');
   });
 
   it('exits 0 on the committed repository surface', () => {
