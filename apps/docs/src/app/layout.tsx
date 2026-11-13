@@ -1,0 +1,19 @@
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+
+import { docsSite } from '../../site.config';
+
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: docsSite.title,
+  description: docsSite.description,
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
