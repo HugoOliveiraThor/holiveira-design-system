@@ -198,4 +198,60 @@ describe('token compatibility', () => {
     expect(second.lines.join('\n')).toContain('already current');
     expect(fixture.readSnapshotRaw()).toBe(before);
   });
+
+  it('lists a value change on the typescript face only', async () => {
+    const fixture = createTokenFixture();
+    const live = surface(defaultSurface().css, { 'colors.primary': '#222222' });
+    const result = await runCheck(fixture.root, deps(live));
+    const text = result.lines.join('\n');
+    expect(result.code).toBe(1);
+    expect(text).toContain('value-changed (ts):');
+    expect(text).toContain('colors.primary: #5750f1 -> #222222');
+    expect(text).not.toContain('value-changed (css)');
+  });
+
+  it('records a null approval for an additive rewrite', async () => {
+    const fixture = createTokenFixture({ version: '0.2.1' });
+    const live = surface(
+      { ...defaultSurface().css, '--color-brand': '#000000' },
+      defaultSurface().ts,
+    );
+    const result = await runSnapshot(fixture.root, { approval: 'ads-012' }, deps(live));
+    expect(result.code).toBe(0);
+    const written = JSON.parse(fixture.readSnapshotRaw() ?? '{}') as { approval: string | null };
+    expect(written.approval).toBeNull();
+  });
+
+  it('verifies the approval on a metadata refresh', async () => {
+    const fixture = createTokenFixture({ version: '0.2.1' });
+    const before = fixture.readSnapshotRaw();
+    const result = await runSnapshot(fixture.root, { approval: 'ads-999' }, deps(defaultSurface()));
+    expect(result.code).toBe(1);
+    expect(result.lines.join('\n')).toContain('no matching');
+    expect(fixture.readSnapshotRaw()).toBe(before);
+  });
+
+  it('fails when the snapshot is missing', async () => {
+    const fixture = createTokenFixture({ snapshot: null });
+    const result = await runCheck(fixture.root, deps(defaultSurface()));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain('snapshot missing');
+  });
+
+  it('fails on unparsable snapshot JSON', async () => {
+    const fixture = createTokenFixture({ snapshot: '{not json' });
+    const result = await runCheck(fixture.root, deps(defaultSurface()));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain('not valid JSON');
+  });
+
+  it('fails on an unsupported snapshot format', async () => {
+    const fixture = createTokenFixture({
+      snapshot:
+        '{"format":2,"package":"@ho-dev/tokens","version":"0.2.0","generatedAt":"2026-11-13","approval":null,"css":{},"ts":{}}',
+    });
+    const result = await runCheck(fixture.root, deps(defaultSurface()));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain('unsupported');
+  });
 });

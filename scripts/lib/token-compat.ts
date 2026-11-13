@@ -153,10 +153,11 @@ export async function runSnapshot(
       };
     }
 
+    if (options.approval && !resolveApproval(root, options.approval)) {
+      return approvalRefusal(options.approval);
+    }
+
     if (!snapshot) {
-      if (options.approval && !resolveApproval(root, options.approval)) {
-        return approvalRefusal(options.approval);
-      }
       const created = buildSnapshot(surface, { version, approval: options.approval ?? null });
       writeSnapshot(root, renderSnapshot(created));
       return { code: 0, lines: [`✓ snapshot created at ${version}: ${counts(surface)}`] };
@@ -195,10 +196,6 @@ export async function runSnapshot(
       };
     }
 
-    if (options.approval && !resolveApproval(root, options.approval)) {
-      return approvalRefusal(options.approval);
-    }
-
     if (diff.breaking && !isBreakingBump(snapshot.version, version)) {
       return {
         code: 1,
@@ -211,7 +208,7 @@ export async function runSnapshot(
 
     const recorded = buildSnapshot(surface, {
       version,
-      approval: options.approval ?? null,
+      approval: diff.breaking ? (options.approval ?? null) : null,
     });
     writeSnapshot(root, renderSnapshot(recorded));
     return {
