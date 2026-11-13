@@ -24,16 +24,16 @@ breakpoints).
 ## Public API
 
 - CSS custom properties (`--color-*`, `--container-*`, `--text-*`, `--shadow-*`, `--breakpoint-*`,
-  `--font-*`)
+  `--font-*`, `--min-width-*`, `--aspect-*`, `--animate-*`)
 - TypeScript token objects (`colors`, `containers`, `breakpoints`, `fontFamily`, `text`, `shadows`,
   `minWidth`, `aspectRatio`, `animate`)
 - `TokenValue` type
 - `ColorKey` type
 - `Breakpoint` type
 
-TypeScript keys are the CSS suffix after the token prefix, with CSS escapes resolved:
-`--container-2_5` → `containers['2_5']`, `--aspect-4\/3` → `aspectRatio['4/3']`,
-`--animate-spin-1_5` → `animate['spin-1_5']`.
+TypeScript object keys are the CSS suffix after the token prefix, with CSS escapes resolved (the
+typography scale keeps its `fontSize`/`lineHeight` fields): `--container-2_5` → `containers['2_5']`,
+`--aspect-4\/3` → `aspectRatio['4/3']`, `--animate-spin-1_5` → `animate['spin-1_5']`.
 
 ## Internal API
 
