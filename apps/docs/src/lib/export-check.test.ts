@@ -1,10 +1,15 @@
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { assertDocsExport, findAssetViolations } from './export-check';
+import {
+  MISSING_INDEX_MESSAGE,
+  assertDocsExport,
+  findAssetViolations,
+  findPrivateImports,
+} from './export-check';
 
 const BASE = '/holiveira-design-system/docs';
 
@@ -27,7 +32,32 @@ describe('export-check', () => {
     expect(findAssetViolations(html, BASE)).toEqual(['/other/_next/static/app.css']);
   });
 
-  it('reports a missing index', () => {
+  it('flags single-quoted root-relative _next', () => {
+    const html = "<script src='/_next/static/app.js'></script>";
+
+    expect(findAssetViolations(html, BASE)).toEqual(['/_next/static/app.js']);
+  });
+
+  it('reports nested non-index HTML files', () => {
+    const root = mkdtempSync(join(tmpdir(), 'ho-docs-export-'));
+    const outDir = join(root, 'out');
+    const routeDir = join(outDir, 'guide');
+
+    try {
+      mkdirSync(routeDir, { recursive: true });
+      writeFileSync(join(outDir, 'index.html'), '<html></html>');
+      writeFileSync(join(routeDir, 'page.html'), '<html></html>');
+
+      const result = assertDocsExport(outDir, BASE);
+
+      expect(result.nonIndexHtml).toHaveLength(1);
+      expect(result.nonIndexHtml[0].endsWith(join('guide', 'page.html'))).toBe(true);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('reports the missing-index build command', () => {
     const root = mkdtempSync(join(tmpdir(), 'ho-docs-export-'));
     const outDir = join(root, 'out');
 
@@ -36,8 +66,22 @@ describe('export-check', () => {
 
       expect(result.ok).toBe(false);
       expect(result.missingIndex).toBe(true);
+      expect(result.message).toBe(MISSING_INDEX_MESSAGE);
+      expect(result.message).toContain('pnpm --filter @ho-dev/docs build');
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+
+  it('flags side-effect private imports', () => {
+    expect(findPrivateImports("import '@ho-dev/testing';")).toHaveLength(1);
+  });
+
+  it('flags private subpath imports', () => {
+    expect(findPrivateImports("import { x } from '@ho-dev/db/client';")).toHaveLength(1);
+  });
+
+  it('accepts public package imports', () => {
+    expect(findPrivateImports("import { cn } from '@ho-dev/utils';")).toEqual([]);
   });
 });

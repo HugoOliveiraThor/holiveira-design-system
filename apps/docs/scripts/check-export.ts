@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { DOCS_BASE_PATH } from '../site.config';
-import { assertDocsExport } from '../src/lib/export-check';
+import { PRIVATE_PACKAGES, assertDocsExport, findPrivateImports } from '../src/lib/export-check';
 
 const root = process.cwd();
 const outDir = join(root, 'out');
@@ -17,11 +17,20 @@ const packageJson = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
 const nextConfig = readFileSync(join(root, 'next.config.ts'), 'utf8');
 const globalsCss = readFileSync(join(root, 'src/app/globals.css'), 'utf8');
 const pageSource = readFileSync(join(root, 'src/app/page.tsx'), 'utf8');
-const sourceText = walk(join(root, 'src'))
-  .filter((file) => file.endsWith('.ts') || file.endsWith('.tsx'))
-  .map((file) => readFileSync(file, 'utf8'))
-  .join('\n');
-const privateImport = /from\s+['"]@ho-dev\/(auth|api|db|testing)['"]/;
+const sourceFiles = [
+  ...walk(join(root, 'src')),
+  join(root, 'site.config.ts'),
+  join(root, 'next.config.ts'),
+  join(root, 'scripts/check-export.ts'),
+].filter((file) => /\.(ts|tsx)$/.test(file) && !/\.test\.(ts|tsx)$/.test(file));
+const privateImports = sourceFiles.flatMap((file) =>
+  findPrivateImports(readFileSync(file, 'utf8')),
+);
+const privateLinked = PRIVATE_PACKAGES.some((pkg) =>
+  existsSync(join(root, 'node_modules/@ho-dev', pkg)),
+);
+const mainCount = (indexHtml.match(/<main(?=[\s>])/g) ?? []).length;
+const h1Count = (indexHtml.match(/<h1(?=[\s>])/g) ?? []).length;
 
 const checks = [
   {
@@ -34,39 +43,42 @@ const checks = [
   {
     id: 'DOCS-04',
     label: 'basePath and trailingSlash configured',
-    pass: nextConfig.includes('DOCS_BASE_PATH') && nextConfig.includes('trailingSlash: true'),
+    pass:
+      nextConfig.includes('basePath: DOCS_BASE_PATH') && nextConfig.includes('trailingSlash: true'),
   },
   {
     id: 'DOCS-05',
-    label: 'exported route contains index.html',
-    pass: result.missingIndex === false,
+    label: 'exported routes use index.html',
+    pass: result.missingIndex === false && result.nonIndexHtml.length === 0,
   },
-  { id: 'DOCS-06', label: 'no private package imports', pass: !privateImport.test(sourceText) },
+  { id: 'DOCS-06', label: 'no private package imports', pass: privateImports.length === 0 },
   {
     id: 'DOCS-07',
     label: 'placeholder title and status present',
     pass:
       indexHtml.includes('Holiveira Documentation Platform') &&
-      indexHtml.includes('under construction'),
+      indexHtml.includes('under construction') &&
+      indexHtml.includes('pre-release') &&
+      indexHtml.includes('href="/"') &&
+      indexHtml.includes('href="/playground/"'),
   },
   { id: 'DOCS-08', label: 'shell language is en', pass: indexHtml.includes('<html lang="en"') },
   {
     id: 'DOCS-09',
     label: 'main, h1 and lang landmarks present',
-    pass:
-      indexHtml.includes('<main') &&
-      indexHtml.includes('<h1') &&
-      indexHtml.includes('<html lang="en"'),
+    pass: mainCount === 1 && h1Count === 1 && indexHtml.includes('<html lang="en"'),
   },
   {
     id: 'DOCS-10',
     label: 'no header/sidebar/search',
-    pass: !/<header|<aside|<nav|role="search"|type="search"/.test(indexHtml),
+    pass: !/<header|<aside|<nav|role="(search|navigation)"|type="search"/.test(indexHtml),
   },
   {
     id: 'DOCS-11',
     label: 'no npm installation claim',
-    pass: !/npm install|pnpm add/.test(indexHtml),
+    pass: !/\bnpm\s+(?:install|i)\b|\bpnpm\s+(?:add|install)\b|\byarn\s+add\b|\bbun\s+add\b/.test(
+      indexHtml,
+    ),
   },
   {
     id: 'DOCS-12',
@@ -88,7 +100,7 @@ const checks = [
   {
     id: 'DOCS-21',
     label: 'no private package import in source',
-    pass: !privateImport.test(sourceText),
+    pass: privateImports.length === 0 && !privateLinked,
   },
 ];
 
@@ -100,15 +112,18 @@ for (const check of checks) {
   }
 }
 
-if (result.missingIndex) {
-  console.error('out/index.html not found. Run: pnpm --filter @ho-dev/docs build');
+if (result.missingIndex && result.message) {
+  console.error(result.message);
   failed = true;
 }
 
-if (result.violations.length > 0) {
-  for (const violation of result.violations) {
-    console.error(`  ${violation.file}: ${violation.url}`);
-  }
+for (const violation of result.violations) {
+  console.error(`  ${violation.file}: ${violation.url}`);
+  failed = true;
+}
+
+for (const file of result.nonIndexHtml) {
+  console.error(`  non-index HTML: ${file}`);
   failed = true;
 }
 
