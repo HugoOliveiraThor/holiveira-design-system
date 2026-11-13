@@ -47,6 +47,12 @@ describe('check-tokens-compat CLI', () => {
     expect(result.output).toContain('new ADS');
   });
 
+  it('exits 0 on the committed repository surface', () => {
+    const result = runCli([]);
+    expect(result.status).toBe(0);
+    expect(result.output).toContain('token surface compatible');
+  });
+
   it('exits 2 when the snapshot is malformed', () => {
     const fixture = createTokenFixture({ snapshot: '{ "format": 1 }' });
     const result = runCli(['--root', fixture.root]);
