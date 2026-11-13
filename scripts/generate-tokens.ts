@@ -11,7 +11,7 @@ import { parseTheme } from './lib/token-surface';
  *
  * `tokens.css` (`@theme`) is the single source of truth — it is what Tailwind
  * actually consumes at runtime. This script derives `colors.ts`, `shadows.ts`,
- * `spacing.ts` and `typography.ts` from it, and `--check` mode fails when the
+ * `spacing.ts`, `typography.ts`, `dimensions.ts` and `animations.ts` from it, and `--check` mode fails when the
  * committed TS drifts from the CSS.
  *
  * Declarations come from the same parser the compatibility guard uses, so a
@@ -50,8 +50,8 @@ function entriesFor(declarations: Declarations, prefix: string): Array<[string, 
 
 function numericAwareSort(entries: Array<[string, string]>): Array<[string, string]> {
   return [...entries].sort(([a], [b]) => {
-    const na = Number(a);
-    const nb = Number(b);
+    const na = Number(a.replace('_', '.'));
+    const nb = Number(b.replace('_', '.'));
     if (Number.isFinite(na) && Number.isFinite(nb)) return na - nb;
     return a.localeCompare(b);
   });
@@ -142,6 +142,30 @@ ${textEntries}
 `;
 }
 
+function buildDimensions(declarations: Declarations): string {
+  const minWidth = entriesFor(declarations, '--min-width-');
+  const aspectRatio = entriesFor(declarations, '--aspect-');
+  return `${HEADER}\n/** Min-width tokens, derived from the CSS \`@theme\` block. */
+export const minWidth = {
+${renderObject(minWidth)}
+} as const;
+
+/** Aspect ratio tokens, derived from the CSS \`@theme\` block. */
+export const aspectRatio = {
+${renderObject(aspectRatio)}
+} as const;
+`;
+}
+
+function buildAnimations(declarations: Declarations): string {
+  const entries = entriesFor(declarations, '--animate-');
+  return `${HEADER}\n/** Animation tokens, derived from the CSS \`@theme\` block. */
+export const animate = {
+${renderObject(entries)}
+} as const;
+`;
+}
+
 async function format(filePath: string, source: string): Promise<string> {
   const config = (await prettier.resolveConfig(filePath)) ?? {};
   return prettier.format(source, { ...config, parser: 'typescript', filepath: filePath });
@@ -156,6 +180,8 @@ async function main(): Promise<void> {
     [join(OUT_DIR, 'shadows.ts'), buildShadows(declarations)],
     [join(OUT_DIR, 'spacing.ts'), buildSpacing(declarations)],
     [join(OUT_DIR, 'typography.ts'), buildTypography(declarations)],
+    [join(OUT_DIR, 'dimensions.ts'), buildDimensions(declarations)],
+    [join(OUT_DIR, 'animations.ts'), buildAnimations(declarations)],
   ];
 
   const drifted: string[] = [];

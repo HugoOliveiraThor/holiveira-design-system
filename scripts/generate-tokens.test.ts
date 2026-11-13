@@ -59,6 +59,10 @@ describe('generate-tokens CLI', () => {
     expect(result.status).toBe(0);
     expect(generated(root, 'spacing.ts')).toMatch(/["']2_5["']:\s*["']0\.625rem["']/);
     expect(generated(root, 'spacing.ts')).toMatch(/["']10_5["']:\s*["']2\.625rem["']/);
+    expect(generated(root, 'dimensions.ts')).toMatch(/["']4\/3["']:\s*["']4 \/ 3["']/);
+    expect(generated(root, 'animations.ts')).toMatch(
+      /["']spin-1_5["']:\s*["']spin 1\.5s linear infinite["']/,
+    );
   });
 
   it('fails on a declaration it cannot parse', () => {
@@ -82,7 +86,9 @@ describe('generate-tokens CLI', () => {
     expect(run(['--root', root]).status).toBe(0);
     expect(generated(root, 'colors.ts').startsWith('// AUTO-GENERATED')).toBe(true);
     expect(readdirSync(join(root, 'packages', 'tokens', 'src')).sort()).toEqual([
+      'animations.ts',
       'colors.ts',
+      'dimensions.ts',
       'shadows.ts',
       'spacing.ts',
       'tokens.css',
