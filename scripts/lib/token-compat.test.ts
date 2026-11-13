@@ -231,6 +231,15 @@ describe('token compatibility', () => {
     expect(fixture.readSnapshotRaw()).toBe(before);
   });
 
+  it('fails the check when metadata is incomplete', async () => {
+    const fixture = createTokenFixture({
+      meta: { requiredCategories: ['typography'], tokens: {} },
+    });
+    const result = await runCheck(fixture.root, deps(surface({ '--text-heading-1': '60px' }, {})));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain('missing an entry for "--text-heading-1"');
+  });
+
   it('fails when the snapshot is missing', async () => {
     const fixture = createTokenFixture({ snapshot: null });
     const result = await runCheck(fixture.root, deps(defaultSurface()));
