@@ -119,7 +119,7 @@
     },
     "--text-body-2xlg--line-height": {
       "category": "typography",
-      "description": "body-2xlg--line-height: None font size."
+      "description": "body-2xlg line height: 28px."
     },
     "--text-body-sm": {
       "category": "typography",
@@ -127,7 +127,7 @@
     },
     "--text-body-sm--line-height": {
       "category": "typography",
-      "description": "body-sm--line-height: None font size."
+      "description": "body-sm line height: 22px."
     },
     "--text-body-xs": {
       "category": "typography",
@@ -135,7 +135,7 @@
     },
     "--text-body-xs--line-height": {
       "category": "typography",
-      "description": "body-xs--line-height: None font size."
+      "description": "body-xs line height: 20px."
     },
     "--text-heading-1": {
       "category": "typography",
@@ -143,7 +143,7 @@
     },
     "--text-heading-1--line-height": {
       "category": "typography",
-      "description": "heading-1--line-height: None font size."
+      "description": "heading-1 line height: 72px."
     },
     "--text-heading-2": {
       "category": "typography",
@@ -151,7 +151,7 @@
     },
     "--text-heading-2--line-height": {
       "category": "typography",
-      "description": "heading-2--line-height: None font size."
+      "description": "heading-2 line height: 58px."
     },
     "--text-heading-3": {
       "category": "typography",
@@ -159,7 +159,7 @@
     },
     "--text-heading-3--line-height": {
       "category": "typography",
-      "description": "heading-3--line-height: None font size."
+      "description": "heading-3 line height: 48px."
     },
     "--text-heading-4": {
       "category": "typography",
@@ -167,7 +167,7 @@
     },
     "--text-heading-4--line-height": {
       "category": "typography",
-      "description": "heading-4--line-height: None font size."
+      "description": "heading-4 line height: 45px."
     },
     "--text-heading-5": {
       "category": "typography",
@@ -175,7 +175,7 @@
     },
     "--text-heading-5--line-height": {
       "category": "typography",
-      "description": "heading-5--line-height: None font size."
+      "description": "heading-5 line height: 40px."
     },
     "--text-heading-6": {
       "category": "typography",
@@ -183,7 +183,7 @@
     },
     "--text-heading-6--line-height": {
       "category": "typography",
-      "description": "heading-6--line-height: None font size."
+      "description": "heading-6 line height: 30px."
     }
   }
 }

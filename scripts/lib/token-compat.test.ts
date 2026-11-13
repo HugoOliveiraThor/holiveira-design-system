@@ -263,4 +263,31 @@ describe('token compatibility', () => {
     expect(result.code).toBe(2);
     expect(result.lines.join('\n')).toContain('unsupported');
   });
+
+  it('fails the check when metadata is incomplete even without drift', async () => {
+    const live = surface({ '--text-heading-1': '60px' }, {});
+    const fixture = createTokenFixture({
+      snapshot: buildSnapshot(live, { version: '0.2.0', generatedAt: '2026-11-13' }),
+      meta: { requiredCategories: ['typography'], tokens: {} },
+    });
+    const result = await runCheck(fixture.root, deps(live));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain('missing an entry for "--text-heading-1"');
+  });
+
+  it('refuses to record a snapshot when metadata is incomplete', async () => {
+    const live = surface({ '--text-heading-1': '60px' }, {});
+    const fixture = createTokenFixture({
+      version: '0.2.1',
+      snapshot: buildSnapshot(live, { version: '0.2.0', generatedAt: '2026-11-13' }),
+      meta: { requiredCategories: ['typography'], tokens: {} },
+    });
+    const before = fixture.readSnapshotRaw();
+    const result = await runSnapshot(fixture.root, {}, deps(live));
+    expect(result.code).toBe(2);
+    expect(result.lines.join('\n')).toContain(
+      'metadata is missing an entry for "--text-heading-1"',
+    );
+    expect(fixture.readSnapshotRaw()).toBe(before);
+  });
 });
