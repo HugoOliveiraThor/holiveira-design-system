@@ -136,9 +136,17 @@ function extractThemeBody(css: string): string {
 /** Parse the `@theme` block into token name to normalized value, sorted by name. */
 export function parseTheme(css: string): Record<string, string> {
   const declarations: Record<string, string> = {};
-  for (const part of stripNestedBlocks(extractThemeBody(css)).split(';')) {
-    const match = part.match(/^\s*(--[A-Za-z0-9-]+)\s*:\s*([\s\S]*)$/);
-    if (!match) continue;
+  const body = stripNestedBlocks(extractThemeBody(css)).replace(/\/\*[\s\S]*?\*\//g, '');
+  for (const part of body.split(';')) {
+    const match = part.match(/^\s*(--(?:\\.|[A-Za-z0-9_-])+)\s*:\s*([\s\S]*)$/);
+    if (!match) {
+      if (part.trim().startsWith('--')) {
+        throw new TokenSurfaceError(
+          `tokens.css: unrecognized declaration "${part.trim().slice(0, 40)}"`,
+        );
+      }
+      continue;
+    }
     const name = match[1];
     const value = normalizeValue(match[2]);
     if (!value) continue;
@@ -243,11 +251,14 @@ export function resolveApproval(root: string, reference: string): string | null 
     return null;
   }
   const prefix = reference.toLowerCase();
-  return (
-    files.find(
-      (file) => file.toLowerCase().startsWith(prefix) && file.toLowerCase().endsWith('.md'),
-    ) ?? null
-  );
+  for (const file of files) {
+    const name = file.toLowerCase();
+    if (!name.endsWith('.md')) continue;
+    const suffix = name.slice(prefix.length);
+    if (!name.startsWith(prefix)) continue;
+    if (suffix === '.md' || suffix.startsWith('-')) return file;
+  }
+  return null;
 }
 
 function isPlainRecord(value: unknown): value is Record<string, unknown> {
@@ -280,6 +291,11 @@ export function validateSnapshot(value: unknown): TokenSnapshot {
   }
   if (typeof value.package !== 'string' || value.package.length === 0) {
     throw new TokenSurfaceError('snapshot is malformed: missing "package"');
+  }
+  if (value.package !== TOKEN_PACKAGE) {
+    throw new TokenSurfaceError(
+      `snapshot is malformed: package "${value.package}" is not ${TOKEN_PACKAGE}`,
+    );
   }
   if (typeof value.version !== 'string') {
     throw new TokenSurfaceError('snapshot is malformed: missing "version"');

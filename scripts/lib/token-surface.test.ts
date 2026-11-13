@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -42,6 +42,30 @@ describe('token surface', () => {
       '--font-sans',
       '--spacing-4',
     ]);
+  });
+
+  it('records escaped and fractional names', () => {
+    const parsed = parseTheme(
+      '@theme {\n--container-2_5: 0.625rem;\n--aspect-4\\/3: 4 / 3;\n--animate-spin-1_5: spin 1.5s linear infinite;\n}',
+    );
+    expect(parsed).toEqual({
+      '--animate-spin-1_5': 'spin 1.5s linear infinite',
+      '--aspect-4\\/3': '4 / 3',
+      '--container-2_5': '0.625rem',
+    });
+
+    const real = parseTheme(
+      readFileSync(join(process.cwd(), 'packages', 'tokens', 'src', 'tokens.css'), 'utf8'),
+    );
+    expect(real['--container-2_5']).toBe('0.625rem');
+    expect(real['--aspect-4\\/3']).toBe('4 / 3');
+    expect(real['--animate-spin-1_5']).toBe('spin 1.5s linear infinite');
+  });
+
+  it('fails on an unrecognized declaration', () => {
+    expect(() => parseTheme('@theme {\n--color-ok: #000;\n-- broken !!!\n}')).toThrow(
+      /unrecognized declaration/,
+    );
   });
 
   it('fails on a duplicate @theme variable', () => {
@@ -92,6 +116,15 @@ describe('token surface', () => {
       css: { '--color-primary': '#5750f1' },
       ts: { 'colors.primary': '#5750f1' },
     });
+
+    const committed = JSON.parse(
+      readFileSync(join(process.cwd(), 'packages', 'tokens', 'tokens.snapshot.json'), 'utf8'),
+    ) as unknown;
+    const validated = validateSnapshot(committed);
+    expect(validated.format).toBe(1);
+    expect(validated.package).toBe('@ho-dev/tokens');
+    expect(validated.version).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(validated.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it('renders the snapshot sorted and byte-stable', () => {
@@ -105,7 +138,9 @@ describe('token surface', () => {
       ts: { 'colors.z': '#fff', 'colors.a': '#000' },
     };
     const first = renderSnapshot(snapshot);
-    expect(first).toBe(renderSnapshot(snapshot));
+    expect(renderSnapshot({ ...snapshot, css: { '--color-a': '#000', '--color-z': '#fff' } })).toBe(
+      first,
+    );
     expect(first.endsWith('\n')).toBe(true);
     const parsed = JSON.parse(first) as { css: Record<string, string>; ts: Record<string, string> };
     expect(Object.keys(parsed.css)).toEqual(['--color-a', '--color-z']);
@@ -123,6 +158,20 @@ describe('token surface', () => {
         css: {},
       }),
     ).toThrow(/missing "ts"/);
+  });
+
+  it('rejects a snapshot for another package', () => {
+    expect(() =>
+      validateSnapshot({
+        format: 1,
+        package: '@other/tokens',
+        version: '0.2.0',
+        generatedAt: '2026-11-13',
+        approval: null,
+        css: {},
+        ts: {},
+      }),
+    ).toThrow(/is not @ho-dev\/tokens/);
   });
 
   it('rejects an unsupported snapshot format', () => {
@@ -238,5 +287,13 @@ describe('token surface', () => {
     expect(resolveApproval(root, 'ADS-012')).toBe('ads-012-fixture.md');
     expect(resolveApproval(root, 'ads-999')).toBeNull();
     expect(resolveApproval(root, 'not-an-ads')).toBeNull();
+  });
+
+  it('does not resolve a longer ADS identifier', () => {
+    const root = mkdtempSync(join(tmpdir(), 'token-approval-'));
+    mkdirSync(join(root, 'docs', 'architecture'), { recursive: true });
+    writeFileSync(join(root, 'docs', 'architecture', 'ads-0124-other.md'), '# ADS\n');
+    expect(resolveApproval(root, 'ads-012')).toBeNull();
+    expect(resolveApproval(root, 'ads-0124')).toBeNull();
   });
 });
