@@ -4,7 +4,7 @@ import { join, resolve } from 'node:path';
 import prettier from 'prettier';
 
 import { elapsedMs, nowIso, writeGateReport } from './lib/gate-report';
-import { parseTheme } from './lib/token-surface';
+import { parseTheme, TokenSurfaceError } from './lib/token-surface';
 
 /**
  * Generate the TypeScript token modules from `packages/tokens/src/tokens.css`.
@@ -42,10 +42,20 @@ const HEADER = `// AUTO-GENERATED from packages/tokens/src/tokens.css by scripts
 type Declarations = Record<string, string>;
 
 function entriesFor(declarations: Declarations, prefix: string): Array<[string, string]> {
-  return Object.entries(declarations)
-    .filter(([name]) => name.startsWith(prefix))
-    .map(([name, value]) => [name.slice(prefix.length).replace(/\\(.)/g, '$1'), value])
-    .sort(([a], [b]) => a.localeCompare(b));
+  const entries: Array<[string, string]> = [];
+  const seen = new Set<string>();
+  for (const [name, value] of Object.entries(declarations)) {
+    if (!name.startsWith(prefix)) continue;
+    const key = name.slice(prefix.length).replace(/\\(.)/g, '$1');
+    if (seen.has(key)) {
+      throw new TokenSurfaceError(
+        `tokens.css: duplicate generated key "${key}" under ${prefix} (${name})`,
+      );
+    }
+    seen.add(key);
+    entries.push([key, value]);
+  }
+  return entries.sort(([a], [b]) => a.localeCompare(b));
 }
 
 function numericAwareSort(entries: Array<[string, string]>): Array<[string, string]> {
@@ -118,6 +128,14 @@ function buildTypography(declarations: Declarations): string {
     if (isLineHeight) entry.lineHeight = value;
     else entry.fontSize = value;
     text.set(key, entry);
+  }
+
+  for (const [key, value] of text) {
+    if (value.lineHeight !== undefined && value.fontSize === undefined) {
+      throw new TokenSurfaceError(
+        `tokens.css: "--text-${key}--line-height" has no matching "--text-${key}"`,
+      );
+    }
   }
 
   const textEntries = [...text]

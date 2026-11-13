@@ -70,21 +70,40 @@ describe('generate-tokens CLI', () => {
     const result = run(['--root', root]);
     expect(result.status).toBe(1);
     expect(result.output).toContain('unrecognized declaration');
+    expect(result.output).toContain('-- broken !!!');
   });
 
   it('detects drift in check mode', () => {
     const root = createFixture();
     expect(run(['--root', root]).status).toBe(0);
-    writeCss(root, CSS.replace('#5750f1', '#111111'));
+    const before = generated(root, 'colors.ts');
+    writeCss(
+      root,
+      CSS.replace('#5750f1', '#111111').replace(
+        'spin 1.5s linear infinite',
+        'spin 2s linear infinite',
+      ),
+    );
     const result = run(['--root', root, '--check']);
     expect(result.status).toBe(1);
     expect(result.output).toContain('colors.ts');
+    expect(result.output).toContain('animations.ts');
+    expect(generated(root, 'colors.ts')).toBe(before);
   });
 
   it('keeps the generated header and writes only generated files', () => {
     const root = createFixture();
     expect(run(['--root', root]).status).toBe(0);
-    expect(generated(root, 'colors.ts').startsWith('// AUTO-GENERATED')).toBe(true);
+    for (const file of [
+      'colors.ts',
+      'shadows.ts',
+      'spacing.ts',
+      'typography.ts',
+      'dimensions.ts',
+      'animations.ts',
+    ]) {
+      expect(generated(root, file).startsWith('// AUTO-GENERATED')).toBe(true);
+    }
     expect(readdirSync(join(root, 'packages', 'tokens', 'src')).sort()).toEqual([
       'animations.ts',
       'colors.ts',
@@ -101,6 +120,7 @@ describe('generate-tokens CLI', () => {
     const result = run(['--root', root]);
     expect(result.status).toBe(1);
     expect(result.output).toContain('no @theme block');
+    expect(readdirSync(join(root, 'packages', 'tokens', 'src'))).toEqual(['tokens.css']);
   });
 
   it('fails on a duplicate declaration', () => {
@@ -108,5 +128,29 @@ describe('generate-tokens CLI', () => {
     const result = run(['--root', root]);
     expect(result.status).toBe(1);
     expect(result.output).toContain('duplicate token');
+    expect(result.output).toContain('--color-a');
+  });
+
+  it('keeps semicolons inside quoted values', () => {
+    const root = createFixture('@theme {\n  --shadow-semi: "a;b";\n}\n');
+    expect(run(['--root', root]).status).toBe(0);
+    expect(generated(root, 'shadows.ts')).toContain('a;b');
+  });
+
+  it('fails on an orphan line-height declaration', () => {
+    const root = createFixture('@theme {\n  --text-x--line-height: 20px;\n}\n');
+    const result = run(['--root', root]);
+    expect(result.status).toBe(1);
+    expect(result.output).toContain('--text-x--line-height');
+    expect(result.output).toContain('no matching');
+  });
+
+  it('fails on duplicate generated keys', () => {
+    const root = createFixture(
+      '@theme {\n  --animate-x-y: spin 1s linear infinite;\n  --animate-x\\-y: spin 2s linear infinite;\n}\n',
+    );
+    const result = run(['--root', root]);
+    expect(result.status).toBe(1);
+    expect(result.output).toContain('duplicate generated key "x-y"');
   });
 });
