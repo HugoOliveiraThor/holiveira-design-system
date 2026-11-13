@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { animate, aspectRatio, containers, minWidth } from '@ho-dev/tokens';
+
 import { buildSnapshot } from './lib/token-surface';
 import { createTokenFixture, defaultSurface } from './lib/test-fixtures/token-root';
 
@@ -60,10 +62,18 @@ describe('check-tokens-compat CLI', () => {
     expect(snapshot.version).toBe('0.2.1');
     expect(snapshot.approval).toBeNull();
     expect(Object.keys(snapshot.css)).toHaveLength(237);
-    expect(snapshot.ts['containers.2_5']).toBe('0.625rem');
-    expect(snapshot.ts['minWidth.22_5']).toBe('5.625rem');
-    expect(snapshot.ts['aspectRatio.4/3']).toBe('4 / 3');
-    expect(snapshot.ts['animate.spin-1_5']).toBe('spin 1.5s linear infinite');
+    for (const [key, value] of Object.entries(containers)) {
+      expect(snapshot.ts[`containers.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(minWidth)) {
+      expect(snapshot.ts[`minWidth.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(aspectRatio)) {
+      expect(snapshot.ts[`aspectRatio.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(animate)) {
+      expect(snapshot.ts[`animate.${key}`]).toBe(value);
+    }
   });
 
   it('records every declared @theme name in the committed snapshot', () => {

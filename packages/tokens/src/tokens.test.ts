@@ -15,6 +15,34 @@ import {
   text,
 } from './index';
 
+function declaredGroups(): {
+  containers: Record<string, string>;
+  minWidth: Record<string, string>;
+  aspectRatio: Record<string, string>;
+  animate: Record<string, string>;
+} {
+  const css = readFileSync(
+    join(process.cwd(), 'packages', 'tokens', 'src', 'tokens.css'),
+    'utf8',
+  ).replace(/\/\*[\s\S]*?\*\//g, '');
+  const declarations = [...css.matchAll(/^\s*(--[^:]+):\s*(.+?);\s*$/gm)].map(
+    ([, name, value]) => [name.trim(), value.replace(/\s+/g, ' ').trim()] as const,
+  );
+  const group = (prefix: string): Record<string, string> => {
+    const entries = declarations
+      .filter(([name]) => name.startsWith(prefix))
+      .map(([name, value]) => [name.slice(prefix.length).replace(/\\(.)/g, '$1'), value] as const)
+      .sort(([a], [b]) => a.localeCompare(b));
+    return Object.fromEntries(entries);
+  };
+  return {
+    containers: group('--container-'),
+    minWidth: group('--min-width-'),
+    aspectRatio: group('--aspect-'),
+    animate: group('--animate-'),
+  };
+}
+
 describe('tokens', () => {
   it('exports colors as a record of strings', () => {
     expect(typeof colors.primary).toBe('string');
@@ -52,25 +80,23 @@ describe('tokens', () => {
   });
 
   it('exports fractional container keys', () => {
-    expect(containers['2_5']).toBe('0.625rem');
-    expect(containers['10_5']).toBe('2.625rem');
+    expect(containers).toEqual(declaredGroups().containers);
     expect(Object.keys(containers)).toHaveLength(39);
+    expect(containers['2_5']).toBe('0.625rem');
   });
 
   it('exports min width tokens', () => {
-    expect(minWidth['22_5']).toBe('5.625rem');
-    expect(minWidth['75']).toBe('18.75rem');
+    expect(minWidth).toEqual(declaredGroups().minWidth);
     expect(Object.keys(minWidth)).toHaveLength(4);
   });
 
   it('exports aspect ratio tokens with resolved escapes', () => {
-    expect(aspectRatio['4/3']).toBe('4 / 3');
-    expect(aspectRatio['21/9']).toBe('21 / 9');
+    expect(aspectRatio).toEqual(declaredGroups().aspectRatio);
+    expect(Object.keys(aspectRatio)).toEqual(['21/9', '4/3']);
   });
 
   it('exports animation tokens', () => {
-    expect(animate['spin-1_5']).toBe('spin 1.5s linear infinite');
-    expect(animate.linspin).toBe('linspin 1568.2353ms linear infinite');
+    expect(animate).toEqual(declaredGroups().animate);
     expect(Object.keys(animate)).toHaveLength(14);
   });
 
