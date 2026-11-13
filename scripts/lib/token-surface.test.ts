@@ -62,6 +62,10 @@ describe('token surface', () => {
     expect(real['--animate-spin-1_5']).toBe('spin 1.5s linear infinite');
   });
 
+  it('fails on an empty @theme block', () => {
+    expect(() => parseTheme('@theme {\n}')).toThrow(/declares no tokens/);
+  });
+
   it('fails on an unrecognized declaration', () => {
     expect(() => parseTheme('@theme {\n--color-ok: #000;\n-- broken !!!\n}')).toThrow(
       /unrecognized declaration/,
