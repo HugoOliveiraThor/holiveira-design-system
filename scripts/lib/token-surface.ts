@@ -380,9 +380,21 @@ export function readPackageVersion(root: string): string {
  * TypeScript entry point natively.
  */
 export async function collectSurface(root: string): Promise<TokenSurface> {
-  const css = readFileSync(join(root, THEME_CSS_RELATIVE_PATH), 'utf8');
+  let css: string;
+  try {
+    css = readFileSync(join(root, THEME_CSS_RELATIVE_PATH), 'utf8');
+  } catch {
+    throw new TokenSurfaceError(`missing ${THEME_CSS_RELATIVE_PATH}`);
+  }
   const entry = pathToFileURL(join(root, 'packages', 'tokens', 'src', 'index.ts')).href;
-  const exports = (await import(entry)) as Record<string, unknown>;
+  let exports: Record<string, unknown>;
+  try {
+    exports = (await import(entry)) as Record<string, unknown>;
+  } catch (error) {
+    throw new TokenSurfaceError(
+      `cannot load packages/tokens/src/index.ts: ${(error as Error).message}`,
+    );
+  }
   return { css: parseTheme(css), ts: flattenExports(exports) };
 }
 

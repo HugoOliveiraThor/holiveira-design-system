@@ -1,10 +1,11 @@
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import {
   buildSnapshot,
+  collectSurface,
   compareVersions,
   diffSurfaces,
   flattenExports,
@@ -16,6 +17,7 @@ import {
   resolveApproval,
   validateSnapshot,
 } from './token-surface';
+import { createTokenFixture } from './test-fixtures/token-root';
 
 const CSS = `@theme {
   --color-primary: #5750f1;
@@ -210,6 +212,22 @@ describe('token surface', () => {
 
   it('rejects a pre-release version', () => {
     expect(() => parseVersion('0.2.0-beta.1')).toThrow(/MAJOR.MINOR.PATCH/);
+  });
+
+  it('fails structurally when the token source is unreadable', async () => {
+    const fixture = createTokenFixture();
+    rmSync(join(fixture.root, 'packages', 'tokens', 'src', 'tokens.css'));
+    await expect(collectSurface(fixture.root)).rejects.toThrow(
+      /missing packages\/tokens\/src\/tokens.css/,
+    );
+  });
+
+  it('fails structurally when the token entry cannot be loaded', async () => {
+    const fixture = createTokenFixture();
+    rmSync(join(fixture.root, 'packages', 'tokens', 'src', 'index.ts'));
+    await expect(collectSurface(fixture.root)).rejects.toThrow(
+      /cannot load packages\/tokens\/src\/index\.ts/,
+    );
   });
 
   it('resolves an approval reference to an existing ADS file', () => {
