@@ -783,3 +783,35 @@ jobs:
 
 **ADS-010 — Release Architecture is frozen.**  
 **20 architectural decisions. 8 sections. 3 appendices. 20 acceptance criteria. 18 risks. 8 freeze rules.**
+
+---
+
+## Amendment Record A-1 — Documentation Platform
+
+**Appended:** 2026-11-13  
+**Authority:** ARB verdict of 2026-11-13 — Approved with Observations — under §12.1  
+**Proposal:** ADS-011 — Documentation Platform (M12)  
+**Effect on frozen text:** none. This record is additive; DOC-3 and every other frozen decision remain verbatim.
+
+### A-1.1 Added decision — DOC-3a
+
+```markdown
+| DOC-3a | Documentation Platform (supplement to DOC-3) | **A separate `apps/docs` portal at `/docs/` is the primary surface for package discovery, onboarding, installation, and usage guidance.** Storybook remains the interactive API reference for component states, stories, and technical component documentation, and MUST stay deployed at the GitHub Pages root. The Playground at `/playground/` remains the integration demonstration and experimentation surface. Package READMEs MUST link to Storybook and the Documentation Platform. The Documentation Platform does not replace Storybook or the Playground. | The portal adds the discovery and editorial layer Storybook does not own; it does not remove Storybook or change its deployment. |
+```
+
+### A-1.2 Historical note — prior ADS-011 (SPC-1)
+
+> The previously proposed ADS-011 (Consumer Validation) was absorbed by ADS-010 and never became a
+> standalone specification in this repository. Its identifier is retired. ADS-011 now designates the
+> Documentation Platform (M12). This note preserves the historical reference in ADS-010 SPC-1; no
+> prior ADS-010 text is deleted or rewritten.
+
+### A-1.3 Effect and observation
+
+No change to DOC-1, DOC-2, PUB-1..5, VER-1..4, REL-1..5, VAL-1..3, PRE-1..3, COM-1, CI-1..3, ROA-1,
+or SPC-1 text. Storybook remains deployed at `/`; the Playground remains at `/playground/`; the
+Documentation Platform is added at `/docs/`. This record is prospective.
+
+**Observation to resolve before M12 implementation:** confirm M11's exit criteria and record the
+explicit public-release state. ADS-011 is approved but not yet frozen. No implementation, dependency
+installation, or publication is authorized by this record.

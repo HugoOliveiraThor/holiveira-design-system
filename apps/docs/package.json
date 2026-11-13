@@ -1,0 +1,20 @@
+{
+  "name": "@ho-dev/docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test:export": "next build && tsx scripts/check-export.ts"
+  },
+  "dependencies": {
+    "@ho-dev/theme": "workspace:*",
+    "@ho-dev/utils": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^16.4.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}

@@ -186,6 +186,24 @@ importers:
         specifier: ^4.3.6
         version: 4.4.3
 
+  apps/docs:
+    dependencies:
+      '@ho-dev/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
+      '@ho-dev/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
+      next:
+        specifier: ^16.4.5
+        version: 16.4.5(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.20.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.7(react@19.2.7)
+
   apps/playground:
     dependencies:
       '@ho-dev/charts':

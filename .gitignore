@@ -96,3 +96,16 @@ playwright-report/
 
 .ai-memory.toml
 .specs
+
+# ADS/governance allowlist — ARB-approved 2026-11-13
+!/docs/architecture/ads-011-documentation-platform.md
+!/docs/architecture/ads-011-ads-010-impact.md
+!/docs/governance/
+/docs/governance/*
+!/docs/governance/ads-011-arb-readiness-package.md
+!/docs/governance/ads-011-arb-review-checklist.md
+!/docs/governance/ads-011-open-decisions.md
+!/docs/roadmap/
+/docs/roadmap/*
+!/docs/roadmap/m12-documentation-platform-proposal.md
+!/docs/roadmap/engineering-execution-roadmap.md
