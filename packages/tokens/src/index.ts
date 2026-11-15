@@ -15,5 +15,9 @@ export { fontFamily, text } from './typography';
 
 export { shadows } from './shadows';
 
+export { minWidth, aspectRatio } from './dimensions';
+
+export { animate } from './animations';
+
 /** Generic type for design token string values. */
 export type TokenValue = string;

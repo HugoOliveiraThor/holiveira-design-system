@@ -8,6 +8,7 @@
  */
 import { writeFileSync } from 'node:fs';
 
+import { checkTokenMeta } from './token-meta';
 import {
   buildSnapshot,
   collectSurface,
@@ -103,6 +104,7 @@ export async function runCheck(
       };
     }
     const surface = await deps.collectSurface(root);
+    checkTokenMeta(root, surface);
     const diff = diffSurfaces(snapshot, surface);
     if (diff.empty) {
       return { code: 0, lines: [`✓ token surface compatible: ${counts(surface)}`] };
@@ -143,6 +145,7 @@ export async function runSnapshot(
     const snapshot = readSnapshot(root);
     const version = readPackageVersion(root);
     const surface = await deps.collectSurface(root);
+    checkTokenMeta(root, surface);
 
     if (snapshot && isVersionRegression(version, snapshot.version)) {
       return {

@@ -133,11 +133,47 @@ function extractThemeBody(css: string): string {
   throw new TokenSurfaceError('tokens.css: unbalanced @theme block');
 }
 
+/** Split declarations on `;` outside quotes and parentheses, so values keep their semicolons. */
+function splitDeclarations(body: string): string[] {
+  const parts: string[] = [];
+  let current = '';
+  let quote: string | null = null;
+  let depth = 0;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (ch === '\\') {
+      current += ch + (body[i + 1] ?? '');
+      i++;
+      continue;
+    }
+    if (quote !== null) {
+      current += ch;
+      if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      current += ch;
+      continue;
+    }
+    if (ch === '(') depth++;
+    if (ch === ')') depth = Math.max(0, depth - 1);
+    if (ch === ';' && depth === 0) {
+      parts.push(current);
+      current = '';
+      continue;
+    }
+    current += ch;
+  }
+  parts.push(current);
+  return parts;
+}
+
 /** Parse the `@theme` block into token name to normalized value, sorted by name. */
 export function parseTheme(css: string): Record<string, string> {
   const declarations: Record<string, string> = {};
   const body = stripNestedBlocks(extractThemeBody(css)).replace(/\/\*[\s\S]*?\*\//g, '');
-  for (const part of body.split(';')) {
+  for (const part of splitDeclarations(body)) {
     const match = part.match(/^\s*(--(?:\\.|[A-Za-z0-9_-])+)\s*:\s*([\s\S]*)$/);
     if (!match) {
       if (part.trim().startsWith('--')) {

@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { animate, aspectRatio, containers, minWidth } from '@ho-dev/tokens';
+
 import { buildSnapshot } from './lib/token-surface';
 import { createTokenFixture, defaultSurface } from './lib/test-fixtures/token-root';
 
@@ -48,6 +50,32 @@ describe('check-tokens-compat CLI', () => {
     expect(result.output).toContain('new ADS');
   });
 
+  it('records the parity additions at 0.2.1', () => {
+    const snapshot = JSON.parse(
+      readFileSync(join(process.cwd(), 'packages', 'tokens', 'tokens.snapshot.json'), 'utf8'),
+    ) as {
+      version: string;
+      approval: string | null;
+      css: Record<string, string>;
+      ts: Record<string, string>;
+    };
+    expect(snapshot.version).toBe('0.2.1');
+    expect(snapshot.approval).toBeNull();
+    expect(Object.keys(snapshot.css)).toHaveLength(237);
+    for (const [key, value] of Object.entries(containers)) {
+      expect(snapshot.ts[`containers.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(minWidth)) {
+      expect(snapshot.ts[`minWidth.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(aspectRatio)) {
+      expect(snapshot.ts[`aspectRatio.${key}`]).toBe(value);
+    }
+    for (const [key, value] of Object.entries(animate)) {
+      expect(snapshot.ts[`animate.${key}`]).toBe(value);
+    }
+  });
+
   it('records every declared @theme name in the committed snapshot', () => {
     const css = readFileSync(
       join(process.cwd(), 'packages', 'tokens', 'src', 'tokens.css'),
@@ -67,6 +95,7 @@ describe('check-tokens-compat CLI', () => {
     const result = runCli([]);
     expect(result.status).toBe(0);
     expect(result.output).toContain('token surface compatible');
+    expect(result.output).toContain('237 css variables, 214 typescript paths');
   });
 
   it('exits 2 when the snapshot is malformed', () => {

@@ -31,6 +31,8 @@ export interface FixtureOverrides {
   version?: string;
   /** `undefined` writes the default snapshot, `null` writes none, a string is used verbatim. */
   snapshot?: TokenSnapshot | string | null;
+  /** `undefined` writes an empty-coverage sidecar, `null` writes none, a string is used verbatim. */
+  meta?: { requiredCategories: string[]; tokens: Record<string, unknown> } | string | null;
   approvalFiles?: string[];
 }
 
@@ -58,6 +60,13 @@ export function createTokenFixture(overrides: FixtureOverrides = {}): TokenFixtu
   if (snapshot !== null) {
     const text = typeof snapshot === 'string' ? snapshot : renderSnapshot(snapshot);
     writeFileSync(snapshotPath(root), text);
+  }
+
+  const meta =
+    overrides.meta === undefined ? { requiredCategories: [], tokens: {} } : overrides.meta;
+  if (meta !== null) {
+    const text = typeof meta === 'string' ? meta : `${JSON.stringify(meta, null, 2)}\n`;
+    writeFileSync(join(tokenDir, 'tokens.meta.json'), text);
   }
 
   const approvalFiles = overrides.approvalFiles ?? ['ads-012-fixture.md'];

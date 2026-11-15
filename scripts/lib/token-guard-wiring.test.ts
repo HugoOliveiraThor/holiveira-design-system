@@ -52,4 +52,29 @@ describe('token guard wiring', () => {
     expect(contract).toContain('pnpm run check:tokens');
     expect(contract).toContain('pnpm run generate:tokens:snapshot');
   });
+
+  it('bumps tokens to 0.2.1 with a patch changeset', () => {
+    expect(readJson<{ version: string }>('packages/tokens/package.json').version).toBe('0.2.1');
+    const changeset = readFileSync(join(ROOT, '.changeset', 'tokens-export-parity.md'), 'utf8');
+    expect(changeset).toContain("'@ho-dev/tokens': patch");
+    expect(changeset).toContain('fractional container keys');
+    expect(changeset).toContain('animation tokens');
+  });
+
+  it('documents the promoted token objects and baseline corrections', () => {
+    const contract = readFileSync(
+      join(ROOT, 'docs', 'architecture', 'contracts', 'tokens.md'),
+      'utf8',
+    );
+    expect(contract).toContain('minWidth');
+    expect(contract).toContain('aspectRatio');
+    expect(contract).toContain('animate');
+    expect(contract).toContain("`aspectRatio['4/3']`");
+    expect(contract).toContain("`containers['2_5']`");
+    expect(contract).toContain('fontSize`/`lineHeight');
+    expect(contract).toContain('--min-width-*');
+    expect(contract).toContain('### Baseline corrections');
+    expect(contract).toContain('never been published');
+    expect(contract).toContain('before/after counts');
+  });
 });
