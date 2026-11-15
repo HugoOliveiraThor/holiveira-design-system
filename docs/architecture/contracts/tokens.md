@@ -25,8 +25,8 @@ breakpoints).
 
 - CSS custom properties (`--color-*`, `--container-*`, `--text-*`, `--shadow-*`, `--breakpoint-*`,
   `--font-*`, `--min-width-*`, `--aspect-*`, `--animate-*`)
-- TypeScript token objects (`colors`, `containers`, `breakpoints`, `fontFamily`, `text`, `shadows`,
-  `minWidth`, `aspectRatio`, `animate`)
+- TypeScript token objects (`colors`, `containers`, `breakpoints`, `fontFamily`, `text`, `shadows`)
+- Additional token objects (`minWidth`, `aspectRatio`, `animate`)
 - `TokenValue` type
 - `ColorKey` type
 - `Breakpoint` type
