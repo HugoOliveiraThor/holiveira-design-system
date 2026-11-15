@@ -32,11 +32,12 @@ function writeCss(root: string, css: string): void {
   writeFileSync(join(root, 'packages', 'tokens', 'src', 'tokens.css'), css);
 }
 
-function run(args: string[]): { status: number; output: string } {
+function run(args: string[], env: NodeJS.ProcessEnv = {}): { status: number; output: string } {
   try {
     const stdout = execFileSync('pnpm', ['exec', 'tsx', CLI, ...args], {
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, ...env },
     });
     return { status: 0, output: stdout };
   } catch (error) {
@@ -152,5 +153,13 @@ describe('generate-tokens CLI', () => {
     const result = run(['--root', root]);
     expect(result.status).toBe(1);
     expect(result.output).toContain('duplicate generated key "x-y"');
+  });
+
+  it('does not write a gate report for a fixture root', () => {
+    const root = createFixture();
+    const gates = mkdtempSync(join(tmpdir(), 'gates-'));
+    const result = run(['--root', root, '--check'], { HO_GATES_DIR: gates });
+    expect(result.status).toBe(1);
+    expect(readdirSync(gates)).toEqual([]);
   });
 });

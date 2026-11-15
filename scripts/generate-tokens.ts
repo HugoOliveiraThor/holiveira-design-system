@@ -33,6 +33,8 @@ const REPO_ROOT = rootOption ? resolve(rootOption) : join(__dirname, '..');
 const TOKENS_CSS = join(REPO_ROOT, 'packages', 'tokens', 'src', 'tokens.css');
 const OUT_DIR = join(REPO_ROOT, 'packages', 'tokens', 'src');
 const CHECK = argv.includes('--check');
+// Gate reports describe the repository gate; a fixture run must not overwrite them.
+const WRITE_GATE_REPORT = rootOption === undefined;
 const startedAt = nowIso();
 
 const HEADER = `// AUTO-GENERATED from packages/tokens/src/tokens.css by scripts/generate-tokens.ts.
@@ -227,30 +229,34 @@ async function main(): Promise<void> {
       console.error('check:tokens: token TS is out of sync with tokens.css:');
       for (const f of drifted) console.error(`  - ${f}`);
       console.error('Run `pnpm run generate:tokens` to regenerate.');
+      if (WRITE_GATE_REPORT) {
+        writeGateReport({
+          gate: 'tokens',
+          status: 'fail',
+          executed: true,
+          tool: 'generate-tokens',
+          startedAt,
+          durationMs: elapsedMs(startedAt),
+          items: drifted.map((f) => ({ name: f, status: 'fail' as const })),
+        });
+      }
+      process.exit(1);
+    }
+    console.log('check:tokens: PASS — TS tokens match tokens.css');
+    if (WRITE_GATE_REPORT) {
       writeGateReport({
         gate: 'tokens',
-        status: 'fail',
+        status: 'pass',
         executed: true,
         tool: 'generate-tokens',
         startedAt,
         durationMs: elapsedMs(startedAt),
-        items: drifted.map((f) => ({ name: f, status: 'fail' as const })),
+        items: files.map(([f]) => ({
+          name: f.replace(`${REPO_ROOT}/`, ''),
+          status: 'pass' as const,
+        })),
       });
-      process.exit(1);
     }
-    console.log('check:tokens: PASS — TS tokens match tokens.css');
-    writeGateReport({
-      gate: 'tokens',
-      status: 'pass',
-      executed: true,
-      tool: 'generate-tokens',
-      startedAt,
-      durationMs: elapsedMs(startedAt),
-      items: files.map(([f]) => ({
-        name: f.replace(`${REPO_ROOT}/`, ''),
-        status: 'pass' as const,
-      })),
-    });
     process.exit(0);
   }
 
