@@ -3,6 +3,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { GUIDE_ROUTES } from './routes';
+
 const ROOT = process.cwd();
 const GENERATED = join(ROOT, 'apps', 'docs', 'src', 'generated');
 
@@ -108,12 +110,18 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     expect(alert?.props.find((prop) => prop.name === 'title')?.origin).toBe('component');
   });
 
-  it('records one search record per package and component', () => {
+  it('records one search record per package, component and guide', () => {
     const search = generated<Array<{ id: string; type: string }>>('search-index.json');
     const registry = generated<Array<{ name: string }>>('registry.json');
     const api = generated<Array<{ id: string }>>('api.json');
-    expect(search).toHaveLength(registry.length + api.length);
+    expect(search).toHaveLength(registry.length + api.length + GUIDE_ROUTES.length);
     expect(new Set(search.map((record) => record.id)).size).toBe(search.length);
+    expect(
+      search
+        .filter((record) => record.type === 'guide')
+        .map((record) => record.id)
+        .sort(),
+    ).toEqual([...GUIDE_ROUTES].sort());
     for (const record of registry) {
       expect(
         search.some((entry) => entry.type === 'package' && entry.id === record.name.split('/')[1]),
@@ -181,25 +189,35 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     const search = generated<
       Array<{
         type: string;
-        package: string;
+        package?: string;
         category: string;
         summary: string;
         keywords: string[];
       }>
     >('search-index.json');
-    expect(search).toHaveLength(29);
+    expect(search).toHaveLength(41);
     expect(search.filter((record) => record.type === 'package')).toHaveLength(16);
     expect(search.filter((record) => record.type === 'component')).toHaveLength(13);
+    expect(search.filter((record) => record.type === 'guide')).toHaveLength(12);
     for (const record of search) {
       expect(record.category.length).toBeGreaterThan(0);
-      expect(record.summary).toBe('');
       expect(record.keywords.length).toBeGreaterThan(0);
       expect(record.keywords).toEqual([...record.keywords].sort());
       expect(new Set(record.keywords).size).toBe(record.keywords.length);
       expect(record.keywords.every((keyword) => keyword === keyword.toLowerCase())).toBe(true);
+      expect(record.keywords.every((keyword) => keyword.length > 0)).toBe(true);
       expect(['@ho-dev/auth', '@ho-dev/api', '@ho-dev/db', '@ho-dev/testing']).not.toContain(
         record.package,
       );
+      if (record.type === 'guide') {
+        expect(record.package).toBeUndefined();
+        expect(record.summary.length).toBeGreaterThan(0);
+        expect(record.category).toMatch(/^(Getting Started|Foundations|Guides|Architecture)$/);
+      } else {
+        expect(record.summary).toBe('');
+        expect(record.package).toBeDefined();
+        expect(record.category.length).toBeGreaterThan(0);
+      }
     }
   });
 

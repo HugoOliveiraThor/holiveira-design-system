@@ -154,7 +154,6 @@ async function main(): Promise<void> {
     componentExportsByPackage,
   });
   const components = buildApi(program, ROOT, catalog);
-  const search = buildSearch(registry, components);
   const examples = buildExamples(ROOT);
   const guideExamples = buildGuideExamples(ROOT);
   assertCoreCoverage({ coreIds: coreComponentIds, docs, examples, components });
@@ -195,6 +194,7 @@ async function main(): Promise<void> {
       enforceOrphans: guides.length >= GUIDE_ROUTES.length,
     });
   }
+  const search = buildSearch(registry, components, guides);
   const coverage = describeCoverage({ registry, resolve: resolveTarget });
   const coverageItem = {
     name: 'coverage',

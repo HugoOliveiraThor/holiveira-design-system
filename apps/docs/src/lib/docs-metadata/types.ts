@@ -110,9 +110,10 @@ export interface ComponentRecord {
 
 export interface SearchRecord {
   id: string;
-  type: 'package' | 'component';
+  type: 'package' | 'component' | 'guide';
   title: string;
-  package: string;
+  /** The owning package; a guide belongs to a section, not to a package. */
+  package?: string;
   category: string;
   summary: string;
   keywords: string[];

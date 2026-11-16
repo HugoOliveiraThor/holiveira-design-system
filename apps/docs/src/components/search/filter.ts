@@ -10,7 +10,7 @@ export function filterRecords(records: SearchRecord[], query: string): SearchRec
     .filter(
       (record) =>
         record.title.toLowerCase().includes(term) ||
-        record.package.toLowerCase().includes(term) ||
+        (record.package ?? '').toLowerCase().includes(term) ||
         record.category.toLowerCase().includes(term) ||
         record.keywords.some((keyword) => keyword.includes(term)),
     )

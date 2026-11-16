@@ -82,6 +82,32 @@ describe('search', () => {
     }
   });
 
+  it('navigates to a guide record by its route', () => {
+    render(
+      <DocsSearch
+        records={[
+          {
+            id: 'getting-started/theming',
+            type: 'guide',
+            title: 'Theming',
+            category: 'Getting Started',
+            summary: 'ThemeProvider switches the application between light and dark.',
+            keywords: ['theming', 'getting started'],
+            path: '/getting-started/theming/',
+          },
+        ]}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /search/i }));
+    const input = screen.getByRole('combobox');
+    fireEvent.change(input, { target: { value: 'theming' } });
+    const option = screen.getByRole('option');
+    expect(option).toHaveTextContent('Theming');
+    expect(option).not.toHaveTextContent('·');
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(router.push).toHaveBeenCalledWith('/getting-started/theming/');
+  });
+
   it('shows the no-results state for an empty index', () => {
     render(<DocsSearch records={[]} />);
     fireEvent.click(screen.getByRole('button', { name: /search/i }));

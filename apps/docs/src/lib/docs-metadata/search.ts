@@ -1,8 +1,11 @@
 /**
- * Search index — one record per public package and per catalog component.
+ * Search index — one record per public package, catalog component and guide.
  *
- * Paths are the routes the M12.3 shell will serve; no UI reads this yet.
+ * Paths are the routes the portal serves. Package and component records are
+ * generated facts; a guide record is one editorial record, indexed with the
+ * summary and the package relations it states.
  */
+import type { GuideDoc } from './guides';
 import type { ComponentRecord, PackageRecord, SearchRecord } from './types';
 
 function slugOf(packageName: string): string {
@@ -16,6 +19,7 @@ function keywords(...values: string[]): string[] {
 export function buildSearch(
   registry: PackageRecord[],
   components: ComponentRecord[],
+  guides: readonly GuideDoc[],
 ): SearchRecord[] {
   const categories = new Map(registry.map((record) => [record.name, record.category]));
   const packages: SearchRecord[] = registry.map((record) => ({
@@ -25,7 +29,12 @@ export function buildSearch(
     package: record.name,
     category: record.category,
     summary: '',
-    keywords: keywords(slugOf(record.name), record.name, record.category),
+    keywords: keywords(
+      slugOf(record.name),
+      record.name,
+      record.category,
+      ...record.componentExports.map((component) => component.exportName),
+    ),
     path: `/packages/${slugOf(record.name)}/`,
   }));
   const componentRecords: SearchRecord[] = components.map((component) => ({
@@ -44,5 +53,22 @@ export function buildSearch(
     ),
     path: `/components/${component.id}/`,
   }));
-  return [...packages, ...componentRecords].sort((a, b) => a.id.localeCompare(b.id));
+  const guideRecords: SearchRecord[] = guides.map((guide) => ({
+    id: guide.slug,
+    type: 'guide',
+    title: guide.title,
+    category: guide.section,
+    summary: guide.summary,
+    keywords: keywords(
+      guide.title,
+      guide.section,
+      guide.slug,
+      ...guide.related.packages,
+      ...guide.related.packages.map(slugOf),
+    ),
+    path: `/${guide.slug}/`,
+  }));
+  return [...packages, ...componentRecords, ...guideRecords].sort((a, b) =>
+    a.id.localeCompare(b.id),
+  );
 }

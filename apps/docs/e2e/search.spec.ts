@@ -73,3 +73,15 @@ test('shows the no-results state', async ({ page }) => {
     /\/holiveira-design-system\/docs\/packages\/$/,
   );
 });
+
+test('finds the theming guide and opens it', async ({ page }) => {
+  await page.goto('./');
+  await page.keyboard.press('/');
+  const input = page.getByRole('combobox');
+  await input.fill('theming');
+  await expect(page.getByRole('status')).toHaveText('1 results');
+  await expect(page.getByRole('option')).toContainText('Theming');
+  await input.press('Enter');
+  await expect(page).toHaveURL(/\/holiveira-design-system\/docs\/getting-started\/theming\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Theming');
+});

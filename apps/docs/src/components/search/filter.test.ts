@@ -58,6 +58,24 @@ describe('search filter', () => {
     expect(filterRecords(many, '')).toHaveLength(MAX_RESULTS);
   });
 
+  it('matches a guide record that carries no package', () => {
+    const guide = record({
+      id: 'getting-started/theming',
+      type: 'guide',
+      title: 'Theming',
+      package: undefined,
+      category: 'Getting Started',
+      keywords: ['getting started', 'theming'],
+      path: '/getting-started/theming/',
+    });
+    expect(filterRecords([...RECORDS, guide], 'theming').map((entry) => entry.id)).toEqual([
+      'getting-started/theming',
+    ]);
+    expect(filterRecords([...RECORDS, guide], 'getting started').map((entry) => entry.id)).toEqual([
+      'getting-started/theming',
+    ]);
+  });
+
   it('returns nothing for a query that matches nothing', () => {
     expect(filterRecords(RECORDS, 'zzz')).toEqual([]);
   });
