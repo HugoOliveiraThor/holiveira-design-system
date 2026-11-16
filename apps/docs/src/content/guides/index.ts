@@ -8,9 +8,14 @@
  */
 import type { GuideDoc } from '../../lib/docs-metadata/guides';
 
+import { architectureGuides } from './architecture';
 import { foundationGuides } from './foundations';
 import { gettingStartedGuides } from './getting-started';
+import { guideFamilyGuides } from './guides';
 
-export const guideDocs: GuideDoc[] = [...gettingStartedGuides, ...foundationGuides].sort(
-  (a, b) => a.order - b.order,
-);
+export const guideDocs: GuideDoc[] = [
+  ...gettingStartedGuides,
+  ...foundationGuides,
+  ...guideFamilyGuides,
+  ...architectureGuides,
+].sort((a, b) => a.order - b.order);

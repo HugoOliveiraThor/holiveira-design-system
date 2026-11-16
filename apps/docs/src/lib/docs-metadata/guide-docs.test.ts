@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { guideDocs } from '../../content/guides';
 import { packages } from '../docs-metadata-query';
 
+import { assertGuideCoverage } from './coverage';
 import { validateGuideDocs, type GuideDoc } from './guides';
 import { GUIDE_ROUTES } from './routes';
 
@@ -39,7 +40,7 @@ function prose(record: GuideDoc): string {
 describe('guide content', () => {
   it('validates every guide record against the model', () => {
     const validated = validateGuideDocs(guideDocs, context());
-    expect(validated).toHaveLength(6);
+    expect(validated).toHaveLength(12);
     expect(validated.map((record) => record.slug)).toEqual(guideDocs.map((record) => record.slug));
   });
 
@@ -81,9 +82,37 @@ describe('guide content', () => {
     }
   });
 
-  it('uses every guide route the portal has a record for', () => {
-    for (const record of guideDocs) {
-      expect(GUIDE_ROUTES).toContain(record.slug);
-    }
+  it('covers every guide route the portal serves', () => {
+    expect(guideDocs.map((record) => record.slug).sort()).toEqual([...GUIDE_ROUTES].sort());
+  });
+
+  it('references every snippet once and leaves no orphan', () => {
+    const referenced = guideDocs.flatMap((record) => record.snippets);
+    expect(referenced.sort()).toEqual(guideExamples.map((example) => example.path).sort());
+    expect(new Set(referenced).size).toBe(guideDocs.length);
+  });
+
+  it('fails when a snippet belongs to no guide', () => {
+    const snippets = [
+      ...guideExamples.map((example) => example.path),
+      'apps/docs/src/examples/guides/orphan.tsx',
+    ];
+    expect(() =>
+      assertGuideCoverage({
+        guides: guideDocs,
+        snippets,
+        packages: context().packages,
+        componentExports: context().componentExports,
+      }),
+    ).toThrow(/snippet apps\/docs\/src\/examples\/guides\/orphan.tsx is referenced by no guide/);
+  });
+
+  it('cites the dependency ownership spec and the contracts directory in the architecture guide', () => {
+    const record = bySlug('architecture');
+    expect(record.sources).toContain('docs/superpowers/specs/dependency-ownership-architecture.md');
+    expect(record.sources.some((source) => source.startsWith('docs/architecture/contracts/'))).toBe(
+      true,
+    );
+    expect(prose(record)).toContain('Level 0');
   });
 });
