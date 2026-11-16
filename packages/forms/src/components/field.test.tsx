@@ -34,6 +34,16 @@ describe('Field', () => {
     expect(getByText('Invalid email')).toBeVisible();
   });
 
+  it('uses accessible colours for the description and error', () => {
+    const { getByText } = render(
+      <Field label="Email" description="Enter your work email" error="Invalid email">
+        <input />
+      </Field>,
+    );
+    expect(getByText('Enter your work email').className).toContain('text-gray-600');
+    expect(getByText('Invalid email').className).toContain('text-red-700');
+  });
+
   it('renders children', () => {
     const { getByPlaceholderText } = render(
       <Field label="Field">

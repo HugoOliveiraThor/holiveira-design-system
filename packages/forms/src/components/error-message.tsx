@@ -10,7 +10,12 @@ const ErrorMessage = ({ error, id, className }: ErrorMessageProps) => {
   if (!error) return null;
 
   return (
-    <p id={id} role="alert" aria-live="polite" className={cn('text-sm text-red-500', className)}>
+    <p
+      id={id}
+      role="alert"
+      aria-live="polite"
+      className={cn('text-sm text-red-700 dark:text-red-400', className)}
+    >
       {error}
     </p>
   );
