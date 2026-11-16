@@ -102,6 +102,8 @@ function createFixture(): string {
   const componentIds: string[] = [];
   for (const [dir, name, components, withVariants] of packages) {
     write(root, `packages/${dir}/package.json`, manifest(name));
+    write(root, `packages/${dir}/README.md`, `# ${name}\n`);
+    write(root, `docs/architecture/contracts/${dir}.md`, `# ${name}\n`);
     if (components.length > 0) {
       write(root, `packages/${dir}/src/components.ts`, componentsFile(components, withVariants));
       write(

@@ -87,6 +87,12 @@ export interface GuideExampleRecord {
   source: string;
 }
 
+/** Where a component export is documented: a page, a guide, or a package anchor. */
+export type Target =
+  | { kind: 'page'; id: string }
+  | { kind: 'guide'; slug: string }
+  | { kind: 'anchor'; package: string; anchor: string };
+
 export interface StoryRecord {
   title: string;
   id: string;

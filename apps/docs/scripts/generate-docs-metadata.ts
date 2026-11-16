@@ -28,6 +28,16 @@ import {
 } from '../src/lib/docs-metadata/guide-examples';
 import { buildComponentExports, buildExports } from '../src/lib/docs-metadata/inventory';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
+import {
+  assertExportCoverage,
+  assertGuideCoverage,
+  assertPackageCoverage,
+  assertTargetCoverage,
+  describeCoverage,
+  portalRoutes,
+  type ComponentExportRef,
+  type GuideCoverageRecord,
+} from '../src/lib/docs-metadata/coverage';
 import { renderJson } from '../src/lib/docs-metadata/render';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
 import { buildSearch } from '../src/lib/docs-metadata/search';
@@ -37,6 +47,7 @@ import {
   type Catalog,
   type ComponentExportRecord,
   type ExportRecord,
+  type Target,
 } from '../src/lib/docs-metadata/types';
 
 import { elapsedMs, nowIso, writeGateReport } from '../../../scripts/lib/gate-report';
@@ -78,6 +89,30 @@ async function loadCatalog(): Promise<Catalog> {
     throw new MetadataError('catalog is malformed: no catalog export');
   }
   return module.catalog as Catalog;
+}
+
+type ResolveTarget = (packageName: string, exportName: string) => Target | undefined;
+
+/** The editorial target map, once T4 adds it; before that no target is claimed. */
+async function loadTargetResolver(): Promise<ResolveTarget | undefined> {
+  const path = join(ROOT, 'apps', 'docs', 'src', 'content', 'targets.ts');
+  if (!existsSync(path)) return undefined;
+  const module = (await import(pathToFileURL(path).href)) as { resolveTarget?: unknown };
+  if (typeof module.resolveTarget !== 'function') {
+    throw new MetadataError('targets.ts has no resolveTarget export');
+  }
+  return module.resolveTarget as ResolveTarget;
+}
+
+/** The guide records, once T12/T13 write them; before that the set is empty. */
+async function loadGuideDocs(): Promise<GuideCoverageRecord[]> {
+  const path = join(ROOT, 'apps', 'docs', 'src', 'content', 'guides', 'index.ts');
+  if (!existsSync(path)) return [];
+  const module = (await import(pathToFileURL(path).href)) as { guideDocs?: unknown };
+  if (!Array.isArray(module.guideDocs)) {
+    throw new MetadataError('guide content is malformed: no guideDocs array');
+  }
+  return module.guideDocs as GuideCoverageRecord[];
 }
 
 async function main(): Promise<void> {
@@ -127,6 +162,40 @@ async function main(): Promise<void> {
   );
   assertExampleImports(examples, privateNames);
   assertGuideExampleImports(guideExamples, privateNames);
+
+  assertPackageCoverage({ packages: registry, root: ROOT });
+  assertExportCoverage({ registry, barrelExports: exportsByPackage });
+  const componentExportRefs: ComponentExportRef[] = registry.flatMap((record) =>
+    record.componentExports.map((component) => ({
+      package: record.name,
+      exportName: component.exportName,
+    })),
+  );
+  const resolveTarget = await loadTargetResolver();
+  if (resolveTarget !== undefined) {
+    assertTargetCoverage({
+      componentExports: componentExportRefs,
+      resolve: resolveTarget,
+      routes: portalRoutes({ packages: registry, components }),
+    });
+  }
+  const guides = await loadGuideDocs();
+  if (guides.length > 0) {
+    assertGuideCoverage({
+      guides,
+      snippets: guideExamples.map((example) => example.path),
+      packages: registry.map((record) => record.name),
+      componentExports: componentExportRefs,
+    });
+  }
+  const coverage = describeCoverage({ registry, resolve: resolveTarget });
+  const coverageItem = {
+    name: 'coverage',
+    status: 'pass' as const,
+    detail: `${coverage.packages} packages, ${coverage.componentExports} component exports, ${coverage.targeted} targeted, ${coverage.fallbacks.length} storybook fallbacks`,
+    evidence: { ...coverage },
+  };
+
   const rendered: Record<(typeof FILES)[number], string> = {
     'registry.json': renderJson(registry),
     'api.json': renderJson(components),
@@ -156,7 +225,10 @@ async function main(): Promise<void> {
           tool: 'generate-docs-metadata',
           startedAt,
           durationMs: elapsedMs(startedAt),
-          items: problems.map((problem) => ({ name: problem, status: 'fail' as const })),
+          items: [
+            ...problems.map((problem) => ({ name: problem, status: 'fail' as const })),
+            coverageItem,
+          ],
         });
       }
       console.error('check:docs:metadata: generated metadata is out of date:');
@@ -172,11 +244,11 @@ async function main(): Promise<void> {
         tool: 'generate-docs-metadata',
         startedAt,
         durationMs: elapsedMs(startedAt),
-        items: FILES.map((file) => ({ name: file, status: 'pass' as const })),
+        items: [...FILES.map((file) => ({ name: file, status: 'pass' as const })), coverageItem],
       });
     }
     console.log(
-      `✓ docs metadata current: ${registry.length} packages, ${components.length} components, ${examples.length} examples`,
+      `✓ docs metadata current: ${registry.length} packages, ${components.length} components, ${examples.length} examples, ${coverage.componentExports} component exports, ${coverage.targeted} targeted, ${coverage.fallbacks.length} storybook fallbacks`,
     );
     process.exit(0);
   }
