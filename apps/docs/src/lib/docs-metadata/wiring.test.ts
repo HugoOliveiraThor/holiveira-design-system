@@ -229,7 +229,9 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     expect(files).toEqual([
       'a11y.spec.ts',
       'drawer.spec.ts',
+      'guides.spec.ts',
       'navigation.spec.ts',
+      'packages.spec.ts',
       'pages-a11y.spec.ts',
       'pages.spec.ts',
       'search.spec.ts',
@@ -244,6 +246,10 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
       'defaults to the system theme and persists a change',
       'skip link moves focus to main',
       'every catalogue link resolves',
+      'every package page renders the six sections in order',
+      'every guide page names the guide once',
+      'a guide search result opens the guide',
+      'every internal link resolves under the docs base path',
     ]) {
       expect(content).toContain(title);
     }

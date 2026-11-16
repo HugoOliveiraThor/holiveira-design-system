@@ -59,56 +59,6 @@ test('package index links every package', async ({ page }) => {
   expect([...linked].sort()).toEqual([...slugs].sort());
 });
 
-test('every package page names the package once', async ({ page }) => {
-  for (const record of registry) {
-    const slug = record.name.split('/')[1];
-    await page.goto(`./${packagePath(slug)}`);
-    const headings = page.getByRole('heading', { level: 1 });
-    await expect(headings, slug).toHaveCount(1);
-    await expect(headings.first(), slug).toHaveText(record.name);
-  }
-});
-
-test('every package page renders the six sections in order', async ({ page }) => {
-  for (const record of registry) {
-    const slug = record.name.split('/')[1];
-    await page.goto(`./${packagePath(slug)}`);
-    const sections = await page
-      .locator('main article > header, main article > section[id]')
-      .evaluateAll((nodes) => nodes.map((node) => node.id || node.tagName.toLowerCase()));
-    expect(sections, slug).toEqual([
-      'header',
-      'installation',
-      'exports',
-      'components',
-      'related-pages',
-      'related-packages',
-    ]);
-  }
-});
-
-test('no package page shows the not-documented notice', async ({ page }) => {
-  for (const record of registry) {
-    const slug = record.name.split('/')[1];
-    await page.goto(`./${packagePath(slug)}`);
-    const main = page.locator('main');
-    await expect(main, slug).not.toContainText('Not documented yet');
-    await expect(main, slug).not.toContainText('undocumented');
-  }
-});
-
-test('every package page is indexable', async ({ page }) => {
-  const base = test.info().project.use.baseURL as string;
-  for (const record of registry) {
-    const slug = record.name.split('/')[1];
-    const response = await page.request.get(new URL(packagePath(slug), base).toString());
-    expect(response.status(), slug).toBe(200);
-    const html = await response.text();
-    expect(html, slug).not.toMatch(/<meta[^>]+name=["']robots["'][^>]*noindex/i);
-    expect(html, slug).not.toContain('content="noindex"');
-  }
-});
-
 test('every package page shows its real install state', async ({ page }) => {
   for (const record of registry) {
     const slug = record.name.split('/')[1];
@@ -121,23 +71,6 @@ test('every package page shows its real install state', async ({ page }) => {
       await expect(main, slug).toContainText('workspace:*');
     }
   }
-});
-
-test('the package index links all sixteen packages', async ({ page }) => {
-  await page.goto('./packages/');
-  const hrefs = await page
-    .locator('main a[href*="/packages/"]')
-    .evaluateAll((links) =>
-      links.map((link) => (link as HTMLAnchorElement).getAttribute('href') ?? ''),
-    );
-  const linked = new Set(
-    hrefs.map((href) => href.replace(/^.*\/packages\//, '').replace(/\/$/, '')),
-  );
-  expect(linked.size).toBe(16);
-  expect([...linked].sort()).toEqual([...slugs].sort());
-  const main = page.locator('main');
-  await expect(main).not.toContainText('Not documented');
-  await expect(main).not.toContainText('undocumented');
 });
 
 test('component page renders the contract', async ({ page }) => {
