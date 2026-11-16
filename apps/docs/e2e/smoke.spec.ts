@@ -14,15 +14,8 @@ const registry = JSON.parse(
   exports: string[];
 }>;
 
-const api = JSON.parse(
-  readFileSync(join(process.cwd(), 'src', 'generated', 'api.json'), 'utf8'),
-) as Array<{ id: string; exportName: string; package: string; variants: Record<string, unknown> }>;
-
 const slugs = registry.map((record) => record.name.split('/')[1]);
-const stubPaths = [
-  ...slugs.map((slug) => `packages/${slug}/`),
-  ...api.map((record) => `components/${record.id}/`),
-];
+const stubPaths = slugs.map((slug) => `packages/${slug}/`);
 
 test('landing renders the hero and package groups', async ({ page }) => {
   await page.goto('./');
@@ -35,10 +28,13 @@ test('landing renders the hero and package groups', async ({ page }) => {
 
 test('header links to storybook, playground and the repository', async ({ page }) => {
   await page.goto('./');
-  await expect(page.getByRole('link', { name: 'Storybook' })).toHaveAttribute('href', '/');
+  await expect(page.getByRole('link', { name: 'Storybook' })).toHaveAttribute(
+    'href',
+    'https://hugoliveirathor.github.io/holiveira-design-system/',
+  );
   await expect(page.getByRole('link', { name: 'Playground' })).toHaveAttribute(
     'href',
-    '/playground/',
+    'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
   );
   await expect(page.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', /github\.com/);
 });
@@ -77,23 +73,26 @@ test('package stub shows version, install state and exports', async ({ page }) =
   await expect(main.getByText(record!.exports[0], { exact: true })).toBeVisible();
 });
 
-test('component stub shows variants and prop count', async ({ page }) => {
-  const record = api.find((entry) => entry.id === 'button');
-  expect(record).toBeDefined();
+test('component page renders the contract', async ({ page }) => {
   await page.goto('./components/button/');
   await expect(page.getByRole('heading', { level: 1, name: 'Button' })).toBeVisible();
-  const main = page.locator('main');
-  await expect(main.getByText(/\d+ props/)).toBeVisible();
-  for (const variant of Object.keys(record!.variants)) {
-    await expect(main.getByText(variant, { exact: true }).first()).toBeVisible();
+  for (const section of [
+    'Description',
+    'Installation',
+    'Preview',
+    'Variants and states',
+    'Usage',
+    'Props / API',
+    'Accessibility',
+    'Related components',
+    'References',
+  ]) {
+    await expect(page.getByRole('heading', { level: 2, name: section })).toBeVisible();
   }
-  await expect(main.getByRole('link', { name: record!.package })).toHaveAttribute(
-    'href',
-    /\/packages\/primitives\//,
-  );
+  await expect(page.getByText('Not documented yet')).toHaveCount(0);
 });
 
-test('stub pages state they are not documented', async ({ page }) => {
+test('package stub pages state they are not documented', async ({ page }) => {
   const base = test.info().project.use.baseURL as string;
   for (const path of stubPaths) {
     const response = await page.request.get(new URL(path, base).toString());
@@ -102,7 +101,7 @@ test('stub pages state they are not documented', async ({ page }) => {
   }
 });
 
-test('stub pages make no completeness claim', async ({ page }) => {
+test('package stub pages make no completeness claim', async ({ page }) => {
   const base = test.info().project.use.baseURL as string;
   for (const path of stubPaths) {
     const body = await (await page.request.get(new URL(path, base).toString())).text();
