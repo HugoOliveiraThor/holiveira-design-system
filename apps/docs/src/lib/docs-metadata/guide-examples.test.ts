@@ -1,9 +1,10 @@
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { assertGuideExampleImports, buildGuideExamples, guideExamplesRoot } from './guide-examples';
+import { GUIDE_ROUTES } from './routes';
 
 function write(root: string, relative: string, content: string): void {
   const file = join(root, relative);
@@ -98,5 +99,42 @@ export function FormsSnippet() {
     expect(() =>
       assertGuideExampleImports(buildGuideExamples(root), new Set(['@ho-dev/db'])),
     ).not.toThrow();
+  });
+});
+
+const ROOT = process.cwd();
+
+/** The private packages ADS-010 PUB-1 keeps out of the published catalogue. */
+const PRIVATE_PACKAGES = new Set(['@ho-dev/api', '@ho-dev/auth', '@ho-dev/db', '@ho-dev/testing']);
+
+/** The snippet filename each guide route shows, derived from its last segment. */
+function expectedSnippet(route: string): string {
+  return `${route.split('/').pop()}.tsx`;
+}
+
+describe('guide snippets on disk', () => {
+  it('records one snippet per guide route', () => {
+    const examples = buildGuideExamples(ROOT);
+    expect(examples.map((example) => example.path)).toEqual(
+      GUIDE_ROUTES.map((route) => `apps/docs/src/examples/guides/${expectedSnippet(route)}`).sort(),
+    );
+    for (const example of examples) {
+      expect(example.source.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('keeps every guide snippet on the public entry points', () => {
+    const examples = buildGuideExamples(ROOT);
+    expect(() => assertGuideExampleImports(examples, PRIVATE_PACKAGES)).not.toThrow();
+    for (const example of examples) {
+      expect(example.source, example.path).not.toContain('packages/');
+    }
+  });
+
+  it('keeps the committed artifact current with the snippets', () => {
+    const artifact = JSON.parse(
+      readFileSync(join(ROOT, 'apps', 'docs', 'src', 'generated', 'guide-examples.json'), 'utf8'),
+    ) as unknown;
+    expect(artifact).toEqual(buildGuideExamples(ROOT));
   });
 });

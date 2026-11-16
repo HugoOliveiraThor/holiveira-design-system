@@ -194,15 +194,24 @@ importers:
       '@ho-dev/forms':
         specifier: workspace:*
         version: link:../../packages/forms
+      '@ho-dev/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons
       '@ho-dev/layouts':
         specifier: workspace:*
         version: link:../../packages/layouts
       '@ho-dev/primitives':
         specifier: workspace:*
         version: link:../../packages/primitives
+      '@ho-dev/providers':
+        specifier: workspace:*
+        version: link:../../packages/providers
       '@ho-dev/theme':
         specifier: workspace:*
         version: link:../../packages/theme
+      '@ho-dev/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
       '@ho-dev/ui':
         specifier: workspace:*
         version: link:../../packages/ui
