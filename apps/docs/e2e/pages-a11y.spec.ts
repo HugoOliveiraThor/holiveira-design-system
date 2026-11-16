@@ -9,6 +9,11 @@ const api = JSON.parse(
 ) as Array<{ id: string; exportName: string }>;
 
 async function axeViolations(page: import('@playwright/test').Page) {
+  // Settled state only: the theme toggle and the previews transition their colours,
+  // and axe samples computed styles in between frames.
+  await page.addStyleTag({
+    content: '*, *::before, *::after { transition: none !important; animation: none !important; }',
+  });
   const results = await new AxeBuilder({ page }).analyze();
   return results.violations;
 }
