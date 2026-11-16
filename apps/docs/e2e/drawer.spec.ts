@@ -34,6 +34,27 @@ test.describe('mobile drawer', () => {
       const inside = await dialog.evaluate((node) => node.contains(document.activeElement));
       expect(inside).toBe(true);
     }
+
+    // Shift+Tab from the first focusable wraps to the last inside the dialog.
+    await dialog.locator('a[href], button:not([disabled])').first().focus();
+    await page.keyboard.press('Shift+Tab');
+    const wrappedBack = await dialog.evaluate((node) => node.contains(document.activeElement));
+    expect(wrappedBack).toBe(true);
+
+    // Tab from the last focusable wraps to the first.
+    await dialog.locator('a[href], button:not([disabled])').last().focus();
+    await page.keyboard.press('Tab');
+    const wrappedForward = await dialog.evaluate((node) => node.contains(document.activeElement));
+    expect(wrappedForward).toBe(true);
+  });
+
+  test('overlay closes the drawer and returns focus', async ({ page }) => {
+    await page.goto('./');
+    const trigger = page.getByRole('button', { name: 'Menu' });
+    await trigger.click();
+    await page.mouse.click(380, 20);
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(trigger).toBeFocused();
   });
 
   test('escape closes the drawer and returns focus', async ({ page }) => {

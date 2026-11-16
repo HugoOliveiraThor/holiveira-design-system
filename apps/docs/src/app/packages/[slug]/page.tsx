@@ -4,10 +4,16 @@ import { notFound } from 'next/navigation';
 
 import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
-import { breadcrumbsForPackage, packages, pager, slugOf } from '../../../lib/docs-metadata-query';
+import {
+  breadcrumbsForPackage,
+  packageSlugs,
+  packages,
+  pager,
+  slugOf,
+} from '../../../lib/docs-metadata-query';
 
 export function generateStaticParams() {
-  return packages.map((record) => ({ slug: slugOf(record.name) }));
+  return packageSlugs().map((slug) => ({ slug }));
 }
 
 function findPackage(slug: string) {

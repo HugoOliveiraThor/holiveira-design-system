@@ -32,7 +32,7 @@ const CONTENT_TYPES = {
 
 if (!existsSync(OUT_ROOT)) {
   console.error(`serve-export: no static export at ${OUT_ROOT}`);
-  console.error('serve-export: run `pnpm --filter playground run build` first.');
+  console.error('serve-export: run `pnpm --filter @ho-dev/docs build` first.');
   process.exit(1);
 }
 

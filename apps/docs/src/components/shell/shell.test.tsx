@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { ThemeProvider } from '@ho-dev/theme';
 
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { SiteHeader } from './site-header';
@@ -30,13 +30,16 @@ describe('shell', () => {
       'href',
       expect.stringContaining('github.com'),
     );
+    expect(screen.getByRole('button', { name: /switch to .* theme/i })).toBeInTheDocument();
   });
 
   it('labels the theme toggle by its action', async () => {
     renderWithTheme(<SiteHeader />);
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Switch to dark theme' })).toBeEnabled(),
-    );
+    const toggle = await screen.findByRole('button', { name: /switch to .* theme/i });
+    const initial = toggle.getAttribute('aria-label');
+    await waitFor(() => expect(toggle).toBeEnabled());
+    fireEvent.click(toggle);
+    await waitFor(() => expect(toggle.getAttribute('aria-label')).not.toBe(initial));
   });
 
   it('renders the skip link targeting main', () => {

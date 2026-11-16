@@ -6,13 +6,14 @@ import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
 import {
   breadcrumbsForComponent,
+  componentSlugs,
   components,
   pager,
   slugOf,
 } from '../../../lib/docs-metadata-query';
 
 export function generateStaticParams() {
-  return components.map((component) => ({ slug: component.id }));
+  return componentSlugs().map((slug) => ({ slug }));
 }
 
 function findComponent(id: string) {

@@ -1,7 +1,9 @@
 import Link from 'next/link';
 
 import { Breadcrumbs } from '../../components/shell/breadcrumbs';
-import { packages, slugOf } from '../../lib/docs-metadata-query';
+import { assertCatalogueCoverage, packages, slugOf } from '../../lib/docs-metadata-query';
+
+assertCatalogueCoverage();
 
 export default function PackagesIndex() {
   return (

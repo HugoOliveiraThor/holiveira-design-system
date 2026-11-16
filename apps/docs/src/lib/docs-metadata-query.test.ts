@@ -1,13 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  assertCatalogueCoverage,
   breadcrumbsForComponent,
   breadcrumbsForPackage,
   componentSections,
+  componentSlugs,
   components,
   coversEveryCatalogueEntry,
   packages,
   packageSections,
+  packageSlugs,
   pager,
   slugOf,
   unbuiltSections,
@@ -63,6 +66,37 @@ describe('docs metadata query', () => {
     const last = pager(list, list[list.length - 1].id);
     expect(last.previous?.id).toBe(list[list.length - 2].id);
     expect(last.next).toBeNull();
+
+    const componentList = components.map((record) => ({ id: record.id }));
+    const sorted = [...componentList].sort((a, b) => a.id.localeCompare(b.id));
+    expect(sorted[0].id).toBe('alert');
+    const componentMiddle = pager(sorted, sorted[3].id);
+    expect(componentMiddle.previous?.id).toBe(sorted[2].id);
+    expect(componentMiddle.next?.id).toBe(sorted[4].id);
+    expect(pager(sorted, sorted[0].id).previous).toBeNull();
+    expect(pager(sorted, sorted[sorted.length - 1].id).next).toBeNull();
+  });
+
+  it('generates slugs for every catalogue entry', () => {
+    expect(packageSlugs()).toHaveLength(16);
+    expect(componentSlugs()).toHaveLength(13);
+    expect(new Set(packageSlugs()).size).toBe(16);
+    expect(new Set(componentSlugs()).size).toBe(13);
+    const coverage = coversEveryCatalogueEntry();
+    expect(coverage.missingPackages).toEqual([]);
+    expect(coverage.missingComponents).toEqual([]);
+  });
+
+  it('fails the build input when a catalogue entry has no page', () => {
+    expect(() => assertCatalogueCoverage()).not.toThrow();
+    expect(() =>
+      assertCatalogueCoverage({
+        packages: 15,
+        components: 12,
+        missingPackages: ['ghost-package'],
+        missingComponents: ['ghost-component'],
+      }),
+    ).toThrow(/ghost-package, ghost-component/);
   });
 
   it('covers every catalogue entry', () => {

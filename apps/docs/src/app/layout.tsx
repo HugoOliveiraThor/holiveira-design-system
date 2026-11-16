@@ -7,6 +7,7 @@ import { docsSite } from '../../site.config';
 import { DocsSearch } from '../components/search/search';
 import { DocsShell } from '../components/shell/docs-shell';
 import { SkipLink } from '../components/shell/skip-link';
+import { ThemeGuard } from '../components/shell/theme-guard';
 import {
   componentSections,
   packageSections,
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           storageKey="ho-dev-docs-theme"
         >
+          <ThemeGuard />
           <SkipLink />
           <DocsShell
             search={<DocsSearch records={searchRecords} />}

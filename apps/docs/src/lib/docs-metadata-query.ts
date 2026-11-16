@@ -131,6 +131,14 @@ export interface CatalogueCoverage {
   missingComponents: string[];
 }
 
+export function packageSlugs(): string[] {
+  return packages.map((record) => slugOf(record.name));
+}
+
+export function componentSlugs(): string[] {
+  return components.map((record) => record.id);
+}
+
 /** Every catalogue entry must resolve to a generated record; the build fails otherwise. */
 export function coversEveryCatalogueEntry(): CatalogueCoverage {
   const packageSlugs = new Set(packages.map((record) => slugOf(record.name)));
@@ -145,4 +153,19 @@ export function coversEveryCatalogueEntry(): CatalogueCoverage {
     missingPackages: catalogPackages.filter((slug) => !packageSlugs.has(slug)),
     missingComponents: catalogComponents.filter((id) => !componentIds.has(id)),
   };
+}
+
+/**
+ * Called while rendering the catalogue indexes, so a catalogue entry without a
+ * generated record fails the build instead of exporting a dead link.
+ */
+export function assertCatalogueCoverage(coverage = coversEveryCatalogueEntry()): void {
+  if (coverage.missingPackages.length > 0 || coverage.missingComponents.length > 0) {
+    throw new Error(
+      `catalogue entries without a generated page: ${[
+        ...coverage.missingPackages,
+        ...coverage.missingComponents,
+      ].join(', ')}`,
+    );
+  }
 }

@@ -1,7 +1,14 @@
 import Link from 'next/link';
 
 import { Breadcrumbs } from '../../components/shell/breadcrumbs';
-import { components, slugOf, packages } from '../../lib/docs-metadata-query';
+import {
+  assertCatalogueCoverage,
+  components,
+  packages,
+  slugOf,
+} from '../../lib/docs-metadata-query';
+
+assertCatalogueCoverage();
 
 export default function ComponentsIndex() {
   const categories = new Map(packages.map((record) => [record.name, record.category]));

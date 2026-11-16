@@ -1,5 +1,8 @@
 import '@testing-library/jest-dom/vitest';
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -70,6 +73,13 @@ describe('search', () => {
     expect(options).toHaveLength(1);
     expect(options[0]).toHaveTextContent('@ho-dev/tokens');
     expect(fetchSpy).not.toHaveBeenCalled();
+    for (const file of ['search.tsx', 'filter.ts']) {
+      const source = readFileSync(
+        join(process.cwd(), 'apps', 'docs', 'src', 'components', 'search', file),
+        'utf8',
+      );
+      expect(source).not.toMatch(/\bfetch\(|XMLHttpRequest/);
+    }
   });
 
   it('shows the no-results state for an empty index', () => {
