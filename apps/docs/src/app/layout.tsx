@@ -4,9 +4,15 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { docsSite } from '../../site.config';
+import { DocsSearch } from '../components/search/search';
 import { DocsShell } from '../components/shell/docs-shell';
 import { SkipLink } from '../components/shell/skip-link';
-import { componentSections, packageSections, unbuiltSections } from '../lib/docs-metadata-query';
+import {
+  componentSections,
+  packageSections,
+  searchRecords,
+  unbuiltSections,
+} from '../lib/docs-metadata-query';
 
 import './globals.css';
 
@@ -27,6 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           <SkipLink />
           <DocsShell
+            search={<DocsSearch records={searchRecords} />}
             packageSections={packageSections()}
             componentSections={componentSections()}
             unbuiltSections={unbuiltSections()}
