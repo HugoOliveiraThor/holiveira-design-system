@@ -63,6 +63,21 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     }
   });
 
+  it('adds peers to the registry and the story to the api', () => {
+    const registry =
+      generated<Array<{ name: string; peers: Record<string, string> }>>('registry.json');
+    const primitives = registry.find((record) => record.name === '@ho-dev/primitives');
+    expect(primitives?.peers).toMatchObject({ react: '^19.0.0' });
+
+    const api =
+      generated<Array<{ id: string; story: { title: string; id: string }; sourceFile: string }>>(
+        'api.json',
+      );
+    const button = api.find((record) => record.id === 'button');
+    expect(button?.story).toEqual({ title: 'Primitives/Button', id: 'primitives-button' });
+    expect(button?.sourceFile).toBe('packages/primitives/src/button.tsx');
+  });
+
   it('records the real components in the api', () => {
     const api = generated<
       Array<{

@@ -85,6 +85,16 @@ export const Optionless = (props: PlainProps) => null;
     'packages/primitives/src/index.ts',
     "export { Button, Broken, MissingProps, AnyProps } from './button';\nexport { Avatar } from './avatar';\nexport { Plain, Optionless } from './plain';\n",
   );
+  write(
+    root,
+    'packages/primitives/src/button.stories.tsx',
+    "export default { title: 'Primitives/Button' };\n",
+  );
+  write(
+    root,
+    'packages/primitives/src/avatar.stories.tsx',
+    "export default { title: 'Primitives/Avatar' };\n",
+  );
   return root;
 }
 
@@ -214,6 +224,74 @@ describe('component api extraction', { timeout: 30_000 }, () => {
     });
     expect(button.variants.variant.default).toBe('primary');
     expect(button.props.find((prop) => prop.name === 'variant')?.default).toBe('primary');
+  });
+
+  it('records the story title and id from the colocated story', () => {
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [{ exportName: 'Button', id: 'button' }],
+        },
+      ],
+    };
+    const [button] = buildApi(program, root, catalog);
+    expect(button.story).toEqual({ title: 'Primitives/Button', id: 'primitives-button' });
+  });
+
+  it('records the declaration source file', () => {
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [{ exportName: 'Button', id: 'button' }],
+        },
+      ],
+    };
+    const [button] = buildApi(program, root, catalog);
+    expect(button.sourceFile).toBe('packages/primitives/src/button.ts');
+  });
+
+  it('fails when a component has no story file', () => {
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [{ exportName: 'Plain', id: 'plain' }],
+        },
+      ],
+    };
+    expect(() => buildApi(program, root, catalog)).toThrow(
+      /@ho-dev\/primitives has no story for Plain \(expected .*plain\.stories\.tsx\)/,
+    );
+  });
+
+  it('fails when two components share a story title', () => {
+    const duplicateRoot = fixtureRoot();
+    write(
+      duplicateRoot,
+      'packages/primitives/src/avatar.stories.tsx',
+      "export default { title: 'Primitives/Button' };\n",
+    );
+    const duplicateProgram = createProgram(duplicateRoot, PACKAGES);
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [
+            { exportName: 'Button', id: 'button' },
+            { exportName: 'Avatar', id: 'avatar' },
+          ],
+        },
+      ],
+    };
+    expect(() => buildApi(duplicateProgram, duplicateRoot, catalog)).toThrow(
+      /share the story title "Primitives\/Button"/,
+    );
   });
 
   it('is stable when the catalogue order changes', () => {

@@ -30,12 +30,19 @@ export interface VariantRecord {
   default: string | null;
 }
 
+export interface StoryRecord {
+  title: string;
+  id: string;
+}
+
 export interface ComponentRecord {
   id: string;
   package: string;
   exportName: string;
   props: PropRecord[];
   variants: Record<string, VariantRecord>;
+  story: StoryRecord;
+  sourceFile: string;
 }
 
 export interface SearchRecord {

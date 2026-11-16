@@ -61,6 +61,13 @@ function createFixture(): string {
     ['layouts', '@ho-dev/layouts', ['Sidebar', 'Header'], false],
     ['types', '@ho-dev/types', [], false],
   ];
+  const storyTitles: Record<string, string> = {
+    primitives: 'Primitives',
+    ui: 'UI',
+    forms: 'Forms',
+    charts: 'Charts',
+    layouts: 'Layouts',
+  };
   for (const [dir, name, components, withVariants] of packages) {
     write(root, `packages/${dir}/package.json`, manifest(name));
     if (components.length > 0) {
@@ -71,6 +78,17 @@ function createFixture(): string {
         components.map((component) => `export { ${component} } from './components';`).join('\n') +
           '\n',
       );
+      for (const component of components) {
+        const slug = component
+          .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+          .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+          .toLowerCase();
+        write(
+          root,
+          `packages/${dir}/src/${slug}.stories.tsx`,
+          `export default { title: '${storyTitles[dir]}/${component}' };\n`,
+        );
+      }
     } else {
       write(
         root,

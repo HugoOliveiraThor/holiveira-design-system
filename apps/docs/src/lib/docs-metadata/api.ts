@@ -5,11 +5,12 @@
  * public barrels; variants come from a static walk of the component's `cva`
  * call. No package is imported at runtime and no private package is read.
  */
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 
 import ts from 'typescript';
 
 import { MetadataError } from './registry';
+import { assertUniqueStoryTitles, resolveStory } from './stories';
 import type { Catalog, ComponentRecord, PropRecord, VariantRecord } from './types';
 
 /**
@@ -257,6 +258,24 @@ export function extractVariants(
   return { variants, defaults };
 }
 
+/** The repo-relative source file that declares the exported component. */
+function componentSourceFile(
+  program: ts.Program,
+  root: string,
+  packageName: string,
+  exportName: string,
+): string {
+  const { checker, symbol } = barrelSymbol(program, root, packageName);
+  const exported = checker.getExportsOfModule(symbol).find((entry) => entry.name === exportName);
+  const target =
+    exported !== undefined && (exported.getFlags() & ts.SymbolFlags.Alias) !== 0
+      ? checker.getAliasedSymbol(exported)
+      : exported;
+  const declaration = target?.getDeclarations()?.[0];
+  if (!declaration) throw new MetadataError(`cannot resolve the declaration of ${exportName}`);
+  return relative(root, declaration.getSourceFile().fileName).split(/[\\/]/).join('/');
+}
+
 /** One API record per catalog component, sorted by id. */
 export function buildApi(program: ts.Program, root: string, catalog: Catalog): ComponentRecord[] {
   const records: ComponentRecord[] = [];
@@ -270,8 +289,18 @@ export function buildApi(program: ts.Program, root: string, catalog: Catalog): C
         exportName: component.exportName,
         props,
         variants,
+        story: resolveStory(root, pkg.name, component.exportName),
+        sourceFile: componentSourceFile(program, root, pkg.name, component.exportName),
       });
     }
   }
-  return records.sort((a, b) => a.id.localeCompare(b.id));
+  records.sort((a, b) => a.id.localeCompare(b.id));
+  assertUniqueStoryTitles(
+    records.map((record) => ({
+      id: record.id,
+      exportName: record.exportName,
+      title: record.story.title,
+    })),
+  );
+  return records;
 }

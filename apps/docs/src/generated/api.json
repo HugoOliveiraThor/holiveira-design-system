@@ -152,6 +152,11 @@
         "type": "\"error\" | \"info\" | \"success\" | \"warning\" | undefined"
       }
     ],
+    "sourceFile": "packages/primitives/src/alert.tsx",
+    "story": {
+      "id": "primitives-alert",
+      "title": "Primitives/Alert"
+    },
     "variants": {
       "variant": {
         "default": "info",
@@ -213,6 +218,11 @@
         "type": "ChartSeries[]"
       }
     ],
+    "sourceFile": "packages/charts/src/lazy-area-chart.tsx",
+    "story": {
+      "id": "charts-areachart",
+      "title": "Charts/AreaChart"
+    },
     "variants": {}
   },
   {
@@ -375,6 +385,11 @@
         "type": "\"dark\" | \"error\" | \"info\" | \"light\" | \"primary\" | \"success\" | \"warning\" | null | undefined"
       }
     ],
+    "sourceFile": "packages/primitives/src/badge.tsx",
+    "story": {
+      "id": "primitives-badge",
+      "title": "Primitives/Badge"
+    },
     "variants": {
       "fill": {
         "default": "light",
@@ -594,6 +609,11 @@
         "type": "\"dark\" | \"green\" | \"outline\" | \"outlineGreen\" | \"outlinePrimary\" | \"primary\" | null | undefined"
       }
     ],
+    "sourceFile": "packages/primitives/src/button.tsx",
+    "story": {
+      "id": "primitives-button",
+      "title": "Primitives/Button"
+    },
     "variants": {
       "shape": {
         "default": "default",
@@ -764,6 +784,11 @@
         "type": "\"bordered\" | \"default\" | \"ghost\" | null | undefined"
       }
     ],
+    "sourceFile": "packages/ui/src/card.tsx",
+    "story": {
+      "id": "ui-card",
+      "title": "UI/Card"
+    },
     "variants": {
       "variant": {
         "default": "default",
@@ -803,6 +828,11 @@
         "type": "SetStateActionType<boolean>"
       }
     ],
+    "sourceFile": "packages/primitives/src/dropdown.tsx",
+    "story": {
+      "id": "primitives-dropdown",
+      "title": "Primitives/Dropdown"
+    },
     "variants": {}
   },
   {
@@ -846,6 +876,11 @@
         "type": "string | undefined"
       }
     ],
+    "sourceFile": "packages/forms/src/components/field.tsx",
+    "story": {
+      "id": "forms-field",
+      "title": "Forms/Field"
+    },
     "variants": {}
   },
   {
@@ -1001,6 +1036,11 @@
         "type": "string | undefined"
       }
     ],
+    "sourceFile": "packages/forms/src/components/form.tsx",
+    "story": {
+      "id": "forms-form",
+      "title": "Forms/Form"
+    },
     "variants": {}
   },
   {
@@ -1135,6 +1175,11 @@
         "type": "string | undefined"
       }
     ],
+    "sourceFile": "packages/layouts/src/header.tsx",
+    "story": {
+      "id": "layouts-header",
+      "title": "Layouts/Header"
+    },
     "variants": {}
   },
   {
@@ -1409,6 +1454,11 @@
         "type": "number | string | undefined"
       }
     ],
+    "sourceFile": "packages/primitives/src/input-group.tsx",
+    "story": {
+      "id": "primitives-inputgroup",
+      "title": "Primitives/InputGroup"
+    },
     "variants": {}
   },
   {
@@ -1550,6 +1600,11 @@
         "type": "string"
       }
     ],
+    "sourceFile": "packages/ui/src/page-header.tsx",
+    "story": {
+      "id": "ui-pageheader",
+      "title": "UI/PageHeader"
+    },
     "variants": {}
   },
   {
@@ -1691,6 +1746,11 @@
         "type": "string | undefined"
       }
     ],
+    "sourceFile": "packages/layouts/src/sidebar.tsx",
+    "story": {
+      "id": "layouts-sidebar",
+      "title": "Layouts/Sidebar"
+    },
     "variants": {}
   },
   {
@@ -1825,6 +1885,11 @@
         "type": "string | undefined"
       }
     ],
+    "sourceFile": "packages/primitives/src/table.tsx",
+    "story": {
+      "id": "primitives-table",
+      "title": "Primitives/Table"
+    },
     "variants": {}
   }
 ]
