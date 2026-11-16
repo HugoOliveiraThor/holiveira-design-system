@@ -136,15 +136,46 @@ function run(
   }
 }
 
+function runReal(args: string[], env: NodeJS.ProcessEnv = {}): { status: number; output: string } {
+  try {
+    const stdout = execFileSync('pnpm', ['exec', 'tsx', CLI, ...args], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, ...env },
+    });
+    return { status: 0, output: stdout };
+  } catch (error) {
+    const failure = error as { status?: number; stdout?: string; stderr?: string };
+    return {
+      status: failure.status ?? 1,
+      output: `${failure.stdout ?? ''}${failure.stderr ?? ''}`,
+    };
+  }
+}
+
+function walk(directory: string, prefix = ''): string[] {
+  const entries = readdirSync(join(directory, prefix), { withFileTypes: true });
+  return entries.flatMap((entry) =>
+    entry.isDirectory() ? walk(directory, join(prefix, entry.name)) : [join(prefix, entry.name)],
+  );
+}
+
 const GENERATED = ['api.json', 'registry.json', 'search-index.json'];
 
 describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
   it('writes only the generated directory', () => {
     const root = createFixture();
+    const before = walk(root);
     const result = run(root);
     expect(result.status).toBe(0);
     const generated = readdirSync(join(root, 'apps', 'docs', 'src', 'generated')).sort();
     expect(generated).toEqual(GENERATED);
+    const added = walk(root)
+      .filter((file) => !before.includes(file))
+      .sort();
+    expect(added).toEqual(
+      GENERATED.map((file) => join('apps', 'docs', 'src', 'generated', file)).sort(),
+    );
   });
 
   it('regenerates in memory and compares committed files', () => {
@@ -165,18 +196,20 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     const root = createFixture();
     expect(run(root).status).toBe(0);
     writeFileSync(join(root, 'apps', 'docs', 'src', 'generated', 'registry.json'), '{}\n');
+    writeFileSync(join(root, 'apps', 'docs', 'src', 'generated', 'api.json'), '[]\n');
     const result = run(root, ['--check']);
     expect(result.status).toBe(1);
     expect(result.output).toContain('registry.json: out of date');
+    expect(result.output).toContain('api.json: out of date');
   });
 
   it('never writes in check mode', () => {
     const root = createFixture();
     expect(run(root).status).toBe(0);
-    const path = join(root, 'apps', 'docs', 'src', 'generated', 'registry.json');
-    writeFileSync(path, '{}\n');
+    const paths = GENERATED.map((file) => join(root, 'apps', 'docs', 'src', 'generated', file));
+    for (const path of paths) writeFileSync(path, 'sentinel\n');
     run(root, ['--check']);
-    expect(readFileSync(path, 'utf8')).toBe('{}\n');
+    for (const path of paths) expect(readFileSync(path, 'utf8')).toBe('sentinel\n');
   });
 
   it('fails when an artifact is missing', () => {
@@ -195,12 +228,22 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     expect(existsSync(join(root, 'apps', 'docs', 'src', 'generated', 'registry.json'))).toBe(true);
   });
 
-  it('does not write gate reports for fixture roots', () => {
-    const root = createFixture();
+  it('writes gate reports only for the real repository', () => {
     const gates = mkdtempSync(join(tmpdir(), 'docs-gates-'));
-    const result = run(root, [], { HO_GATES_DIR: gates });
-    expect(result.status).toBe(0);
-    expect(readdirSync(gates)).toEqual([]);
+    const real = runReal(['--check'], { HO_GATES_DIR: gates });
+    expect(real.status).toBe(0);
+    const report = JSON.parse(readFileSync(join(gates, 'docs-metadata.json'), 'utf8')) as {
+      gate: string;
+      status: string;
+      executed: boolean;
+    };
+    expect(report).toMatchObject({ gate: 'docs-metadata', status: 'pass', executed: true });
+
+    const root = createFixture();
+    expect(run(root).status).toBe(0);
+    const fixtureGates = mkdtempSync(join(tmpdir(), 'docs-gates-'));
+    expect(run(root, ['--check'], { HO_GATES_DIR: fixtureGates }).status).toBe(0);
+    expect(readdirSync(fixtureGates)).toEqual([]);
   });
 
   it('fails when the catalog is missing', () => {

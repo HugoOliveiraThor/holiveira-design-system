@@ -18,7 +18,15 @@ const GATES_DIR = process.env.HO_GATES_DIR ?? join(__dirname, '..', 'reports', '
 const SUMMARY_FILE = join(GATES_DIR, 'summary.json');
 
 /** Gates that MUST have produced a report after a full pipeline run. */
-const EXPECTED_GATES = ['tokens', 'size', 'publish', 'license', 'exports', 'install'];
+const EXPECTED_GATES = [
+  'tokens',
+  'docs-metadata',
+  'size',
+  'publish',
+  'license',
+  'exports',
+  'install',
+];
 
 interface GateItem {
   name: string;

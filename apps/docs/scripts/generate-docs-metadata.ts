@@ -22,6 +22,8 @@ import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-met
 import { buildSearch } from '../src/lib/docs-metadata/search';
 import type { Catalog } from '../src/lib/docs-metadata/types';
 
+import { elapsedMs, nowIso, writeGateReport } from '../../../scripts/lib/gate-report';
+
 function readOption(argv: string[], name: string): string | undefined {
   const index = argv.indexOf(name);
   return index === -1 ? undefined : argv[index + 1];
@@ -31,6 +33,9 @@ const argv = process.argv.slice(2);
 const rootOption = readOption(argv, '--root');
 const ROOT = rootOption ? resolve(rootOption) : resolve(__dirname, '..', '..', '..');
 const CHECK = argv.includes('--check');
+// The gate report describes the repository gate; a fixture run must not touch it.
+const WRITE_GATE_REPORT = CHECK && rootOption === undefined;
+const startedAt = nowIso();
 const OUTPUT_DIR = join(ROOT, 'apps', 'docs', 'src', 'generated');
 const CATALOG_PATH = join(ROOT, 'apps', 'docs', 'src', 'content', 'catalog.ts');
 
@@ -89,10 +94,32 @@ async function main(): Promise<void> {
       }
     }
     if (problems.length > 0) {
+      if (WRITE_GATE_REPORT) {
+        writeGateReport({
+          gate: 'docs-metadata',
+          status: 'fail',
+          executed: true,
+          tool: 'generate-docs-metadata',
+          startedAt,
+          durationMs: elapsedMs(startedAt),
+          items: problems.map((problem) => ({ name: problem, status: 'fail' as const })),
+        });
+      }
       console.error('check:docs:metadata: generated metadata is out of date:');
       for (const problem of problems) console.error(`  - ${problem}`);
       console.error('Run `pnpm run generate:docs:metadata` to regenerate.');
       process.exit(1);
+    }
+    if (WRITE_GATE_REPORT) {
+      writeGateReport({
+        gate: 'docs-metadata',
+        status: 'pass',
+        executed: true,
+        tool: 'generate-docs-metadata',
+        startedAt,
+        durationMs: elapsedMs(startedAt),
+        items: FILES.map((file) => ({ name: file, status: 'pass' as const })),
+      });
     }
     console.log(
       `✓ docs metadata current: ${registry.length} packages, ${components.length} components`,
