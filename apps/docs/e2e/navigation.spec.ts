@@ -31,9 +31,14 @@ test('skip link moves focus to main', async ({ page }) => {
   await expect(page.locator('#main-content')).toBeFocused();
 });
 
-test('renders unbuilt sections as disabled text', async ({ page }) => {
+test('replaces the disabled placeholder with real guide links', async ({ page }) => {
   await page.goto('./');
   const sidebar = page.getByRole('navigation', { name: 'Documentation' });
-  await expect(sidebar.getByText('Design tokens')).toBeVisible();
-  await expect(sidebar.getByRole('link', { name: 'Design tokens' })).toHaveCount(0);
+  await expect(sidebar.locator('[aria-disabled="true"]')).toHaveCount(0);
+  await expect(sidebar.getByRole('link', { name: 'Design tokens' })).toHaveAttribute(
+    'href',
+    '/holiveira-design-system/docs/foundations/tokens/',
+  );
+  await sidebar.getByRole('link', { name: 'Design tokens' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Design tokens' })).toBeVisible();
 });

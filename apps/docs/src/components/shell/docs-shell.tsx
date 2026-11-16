@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
-import type { UnbuiltSection } from '../../content/navigation';
 import type { NavigationSection } from '../../lib/docs-metadata-query';
 
 import { SiteHeader } from './site-header';
@@ -12,10 +11,13 @@ import { SiteHeader } from './site-header';
 export interface DocsShellProps {
   children: ReactNode;
   search?: ReactNode;
+  guideSections: NavigationSection[];
   packageSections: NavigationSection[];
   componentSections: NavigationSection[];
-  unbuiltSections: UnbuiltSection[];
 }
+
+const ITEM_CLASS =
+  'text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium';
 
 function matches(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/' || pathname === '';
@@ -24,9 +26,9 @@ function matches(pathname: string, href: string): boolean {
 
 function SidebarContent({
   pathname,
+  guideSections,
   packageSections,
   componentSections,
-  unbuiltSections,
   onNavigate,
 }: Omit<DocsShellProps, 'children' | 'search'> & {
   pathname: string;
@@ -34,6 +36,32 @@ function SidebarContent({
 }) {
   return (
     <nav aria-label="Documentation" className="space-y-6 text-sm">
+      {guideSections.length > 0 && (
+        <div>
+          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
+            Documentation
+          </p>
+          {guideSections.map((section) => (
+            <div key={section.category} className="mb-3">
+              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.category}</p>
+              <ul className="space-y-1">
+                {section.items.map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={item.href}
+                      onClick={onNavigate}
+                      aria-current={matches(pathname, item.href) ? 'page' : undefined}
+                      className={ITEM_CLASS}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
       {packageSections.length > 0 && (
         <div>
           <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
@@ -49,7 +77,7 @@ function SidebarContent({
                       href={item.href}
                       onClick={onNavigate}
                       aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                      className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:text-blue-light-400 dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
+                      className={ITEM_CLASS}
                     >
                       {item.label}
                     </Link>
@@ -73,7 +101,7 @@ function SidebarContent({
                     href={item.href}
                     onClick={onNavigate}
                     aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                    className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:text-blue-light-400 dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
+                    className={ITEM_CLASS}
                   >
                     {item.label}
                   </Link>
@@ -83,29 +111,6 @@ function SidebarContent({
           </ul>
         </div>
       )}
-      {unbuiltSections.length > 0 && (
-        <div>
-          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
-            Soon
-          </p>
-          {unbuiltSections.map((section) => (
-            <div key={section.title} className="mb-3">
-              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.title}</p>
-              <ul className="space-y-1">
-                {section.items.map((item) => (
-                  <li
-                    key={item}
-                    className="text-dark-4 dark:text-dark-6/70 px-2 py-1"
-                    aria-disabled="true"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
     </nav>
   );
 }
@@ -113,9 +118,9 @@ function SidebarContent({
 export function DocsShell({
   children,
   search,
+  guideSections,
   packageSections,
   componentSections,
-  unbuiltSections,
 }: DocsShellProps) {
   const pathname = usePathname() ?? '';
   const [open, setOpen] = useState(false);
@@ -188,9 +193,9 @@ export function DocsShell({
         <aside className="hidden w-64 shrink-0 py-8 lg:block">
           <SidebarContent
             pathname={pathname}
+            guideSections={guideSections}
             packageSections={packageSections}
             componentSections={componentSections}
-            unbuiltSections={unbuiltSections}
           />
         </aside>
         <main id="main-content" tabIndex={-1} className="min-h-dvh min-w-0 flex-1 py-10">
@@ -218,9 +223,9 @@ export function DocsShell({
           >
             <SidebarContent
               pathname={pathname}
+              guideSections={guideSections}
               packageSections={packageSections}
               componentSections={componentSections}
-              unbuiltSections={unbuiltSections}
               onNavigate={() => setOpen(false)}
             />
           </div>

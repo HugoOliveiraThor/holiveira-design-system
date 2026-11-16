@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   assertCatalogueCoverage,
   breadcrumbsForComponent,
+  breadcrumbsForGuide,
   breadcrumbsForPackage,
   componentSections,
   componentSlugs,
@@ -10,6 +11,8 @@ import {
   coversEveryCatalogueEntry,
   examplesForSlug,
   findComponentDoc,
+  guideNeighbours,
+  guideSections,
   packages,
   packageSections,
   playgroundHref,
@@ -17,7 +20,6 @@ import {
   pager,
   slugOf,
   storyHref,
-  unbuiltSections,
 } from './docs-metadata-query';
 import type { ComponentDoc, ExampleRecord } from './docs-metadata/types';
 
@@ -164,14 +166,68 @@ describe('docs metadata query', () => {
     expect(storyHref('ghost')).toBe('');
   });
 
-  it('lists unbuilt sections as disabled', () => {
-    const sections = unbuiltSections();
-    expect(sections.map((section) => section.title)).toEqual([
+  it('groups the twelve guides into the four ADS sections', () => {
+    const sections = guideSections();
+    expect(sections.map((section) => section.category)).toEqual([
       'Getting Started',
       'Foundations',
       'Guides',
       'Architecture',
     ]);
-    for (const section of sections) expect(section.items.length).toBeGreaterThan(0);
+    expect(sections.map((section) => section.items.length)).toEqual([3, 3, 5, 1]);
+    const items = sections.flatMap((section) => section.items);
+    expect(items).toHaveLength(12);
+    for (const item of items) {
+      expect(item.href).toBe(`/${item.id}/`);
+      expect(item.label.length).toBeGreaterThan(0);
+    }
+    expect(items.map((item) => item.id)).toEqual([
+      'getting-started',
+      'getting-started/installation',
+      'getting-started/theming',
+      'foundations/tokens',
+      'foundations/styling',
+      'foundations/accessibility',
+      'guides/providers',
+      'guides/forms',
+      'guides/charts',
+      'guides/layouts',
+      'guides/icons',
+      'architecture',
+    ]);
+  });
+
+  it('builds a breadcrumb trail with the section and the guide', () => {
+    expect(breadcrumbsForGuide('getting-started/installation')).toEqual([
+      { label: 'Home', href: '/' },
+      { label: 'Getting Started' },
+      { label: 'Installation' },
+    ]);
+    expect(breadcrumbsForGuide('architecture')).toEqual([
+      { label: 'Home', href: '/' },
+      { label: 'Architecture' },
+      { label: 'Architecture' },
+    ]);
+    expect(breadcrumbsForGuide('ghost/guide')).toEqual([]);
+  });
+
+  it('walks the guide order with the previous and next neighbour', () => {
+    const first = guideNeighbours('getting-started');
+    expect(first.previous).toBeNull();
+    expect(first.next).toEqual({
+      id: 'getting-started/installation',
+      label: 'Installation',
+      href: '/getting-started/installation/',
+    });
+
+    const middle = guideNeighbours('foundations/accessibility');
+    expect(middle.previous?.id).toBe('foundations/styling');
+    expect(middle.next?.id).toBe('guides/providers');
+
+    const last = guideNeighbours('architecture');
+    expect(last.previous?.id).toBe('guides/icons');
+    expect(last.next).toBeNull();
+
+    expect(guideNeighbours('ghost')).toEqual({ previous: null, next: null });
   });
 });

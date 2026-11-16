@@ -14,8 +14,7 @@ import { docsSite } from '../../site.config';
 import { catalog } from '../content/catalog';
 import { componentDocs } from '../content/components';
 import { guideDocs as contentGuides } from '../content/guides';
-import { UNBUILT_SECTIONS, type UnbuiltSection } from '../content/navigation';
-import type { GuideDoc } from './docs-metadata/guides';
+import { GUIDE_SECTIONS, type GuideDoc } from './docs-metadata/guides';
 import { guideRouteSegments } from './docs-metadata/routes';
 import type {
   ComponentDoc,
@@ -149,8 +148,14 @@ export function componentSections(): NavigationSection[] {
   );
 }
 
-export function unbuiltSections(): UnbuiltSection[] {
-  return UNBUILT_SECTIONS;
+/** The guide sections in ADS order, each item linking to its guide route. */
+export function guideSections(): NavigationSection[] {
+  return GUIDE_SECTIONS.flatMap((section) => {
+    const items = contentGuides
+      .filter((guide) => guide.section === section)
+      .map((guide) => ({ id: guide.slug, label: guide.title, href: `/${guide.slug}/` }));
+    return items.length === 0 ? [] : [{ category: section, items }];
+  });
 }
 
 export interface Crumb {
@@ -178,6 +183,12 @@ export function breadcrumbsForComponent(id: string): Crumb[] {
   ];
 }
 
+export function breadcrumbsForGuide(slug: string): Crumb[] {
+  const guide = guideBySlug(slug);
+  if (!guide) return [];
+  return [{ label: 'Home', href: '/' }, { label: guide.section }, { label: guide.title }];
+}
+
 export interface Pager<T> {
   previous: T | null;
   next: T | null;
@@ -190,6 +201,18 @@ export function pager<T extends { id: string }>(list: readonly T[], id: string):
     previous: index > 0 ? list[index - 1] : null,
     next: index < list.length - 1 ? list[index + 1] : null,
   };
+}
+
+/** The guide siblings in the record order the sidebar reads, for the pager. */
+export function guideNeighbours(slug: string): Pager<NavigationItem> {
+  return pager(
+    contentGuides.map((guide) => ({
+      id: guide.slug,
+      label: guide.title,
+      href: `/${guide.slug}/`,
+    })),
+    slug,
+  );
 }
 
 export interface CatalogueCoverage {

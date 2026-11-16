@@ -1,7 +1,15 @@
 import { docsHref } from '../../../site.config';
 import { resolveTarget } from '../../content/targets';
 import type { GuideDoc } from '../../lib/docs-metadata/guides';
-import { packages, snippetSource, slugOf } from '../../lib/docs-metadata-query';
+import {
+  breadcrumbsForGuide,
+  guideNeighbours,
+  packages,
+  snippetSource,
+  slugOf,
+} from '../../lib/docs-metadata-query';
+import { Breadcrumbs } from '../shell/breadcrumbs';
+import { Pager } from '../shell/pager';
 
 import { CodeBlock } from './code-block';
 import { targetHref, type RelatedLink } from './related-links';
@@ -113,6 +121,7 @@ export function GuidePage({ guide, snippets = snippetSource }: GuidePageProps) {
 
   return (
     <article className="space-y-10">
+      <Breadcrumbs crumbs={breadcrumbsForGuide(guide.slug)} />
       <header className="space-y-3">
         <h1 className="text-dark text-3xl font-semibold dark:text-white">{guide.title}</h1>
         <p className="text-dark-4 dark:text-dark-6 text-sm leading-6">{guide.summary}</p>
@@ -174,6 +183,8 @@ export function GuidePage({ guide, snippets = snippetSource }: GuidePageProps) {
           )}
         </div>
       </section>
+
+      <Pager pager={guideNeighbours(guide.slug)} />
     </article>
   );
 }

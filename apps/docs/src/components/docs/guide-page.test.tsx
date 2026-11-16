@@ -76,6 +76,26 @@ describe('guide page', () => {
     expect(headings[0]).toHaveTextContent('Theming');
   });
 
+  it('shows the section and the guide in its breadcrumbs', () => {
+    render(<GuidePage guide={GUIDE} snippets={snippetsWith(SOURCE)} />);
+    const trail = screen.getByRole('navigation', { name: 'Breadcrumb trail' });
+    expect(trail).toHaveTextContent('Home');
+    expect(trail).toHaveTextContent('Getting Started');
+    expect(trail).toHaveTextContent('Theming');
+    expect(trail.querySelector('[aria-current="page"]')).toHaveTextContent('Theming');
+    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
+  });
+
+  it('moves to the previous and next guide in the record order', () => {
+    render(<GuidePage guide={GUIDE} snippets={snippetsWith(SOURCE)} />);
+    const previous = screen.getByRole('link', { name: 'Previous: Installation' });
+    const next = screen.getByRole('link', { name: 'Next: Design tokens' });
+    expect(previous).toHaveAttribute('href', '/getting-started/installation');
+    expect(previous).toHaveAttribute('rel', 'prev');
+    expect(next).toHaveAttribute('href', '/foundations/tokens');
+    expect(next).toHaveAttribute('rel', 'next');
+  });
+
   it('renders the summary, then every section in record order', () => {
     const { container } = render(<GuidePage guide={GUIDE} snippets={snippetsWith(SOURCE)} />);
     const summary = screen.getByText(/ThemeProvider switches/);

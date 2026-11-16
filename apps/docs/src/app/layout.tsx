@@ -10,9 +10,9 @@ import { SkipLink } from '../components/shell/skip-link';
 import { ThemeGuard } from '../components/shell/theme-guard';
 import {
   componentSections,
+  guideSections,
   packageSections,
   searchRecords,
-  unbuiltSections,
 } from '../lib/docs-metadata-query';
 
 import './globals.css';
@@ -36,9 +36,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SkipLink />
           <DocsShell
             search={<DocsSearch records={searchRecords} />}
+            guideSections={guideSections()}
             packageSections={packageSections()}
             componentSections={componentSections()}
-            unbuiltSections={unbuiltSections()}
           >
             {children}
           </DocsShell>
