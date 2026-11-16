@@ -34,6 +34,7 @@ One record per public package, sorted by name:
 | `installState` | `pre-release` while the version is `0.x`, otherwise `published`        |
 | `exports`      | Runtime export names from the public barrel, sorted                    |
 | `category`     | Catalogue section (`Foundation`, `Utilities`, `Components`, `Tooling`) |
+| `peers`        | Declared peer dependencies as a name→range map, sorted                 |
 
 ### `api.json`
 
@@ -46,9 +47,25 @@ One record per catalogue component, sorted by id:
 | `exportName` | Public export (`Button`)                                                     |
 | `props`      | `name`, `type`, `required`, `default`, `origin` (`component` or `inherited`) |
 | `variants`   | Per variant: `name`, `values`, `default` from `defaultVariants`              |
+| `story`      | Storybook story `title` from the colocated story file, and its derived `id`  |
+| `sourceFile` | Repo-relative file that declares the component                               |
 
 Inherited native props are limited to the documented allowlist in
 `apps/docs/src/lib/docs-metadata/api.ts`; component-declared props are never filtered.
+
+### `examples.json`
+
+One record per example file under `apps/docs/src/examples/<id>/<kind>.tsx`, sorted by component id
+and then by kind (`minimal`, `realistic`):
+
+| Field    | Meaning                                            |
+| -------- | -------------------------------------------------- |
+| `id`     | Component slug                                     |
+| `kind`   | `minimal` or `realistic`                           |
+| `path`   | Repo-relative example path                         |
+| `source` | File contents, verbatim; the code block shows this |
+
+The generator rejects an example that imports a private package or a path into `packages/`.
 
 ### `search-index.json`
 

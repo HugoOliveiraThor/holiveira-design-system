@@ -144,9 +144,9 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     );
   });
 
-  it('documents the three artifacts in the README', () => {
+  it('documents the generated artifacts in the README', () => {
     const readme = readFileSync(join(ROOT, 'apps', 'docs', 'README.md'), 'utf8');
-    for (const name of ['registry.json', 'api.json', 'search-index.json']) {
+    for (const name of ['registry.json', 'api.json', 'search-index.json', 'examples.json']) {
       expect(readme).toContain(name);
     }
     for (const field of [

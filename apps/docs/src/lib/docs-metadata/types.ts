@@ -30,6 +30,18 @@ export interface VariantRecord {
   default: string | null;
 }
 
+/** The example directories the portal promises per core component. */
+export const EXAMPLES_DIR = ['apps', 'docs', 'src', 'examples'] as const;
+
+export type ExampleKind = 'minimal' | 'realistic';
+
+export interface ExampleRecord {
+  id: string;
+  kind: ExampleKind;
+  path: string;
+  source: string;
+}
+
 export interface StoryRecord {
   title: string;
   id: string;
