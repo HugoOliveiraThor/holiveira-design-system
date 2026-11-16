@@ -100,6 +100,13 @@ export function exportNames(program: ts.Program, root: string, packageName: stri
     .sort();
 }
 
+function canonicalType(text: string): string {
+  if (!text.includes(' | ')) return text;
+  const parts = text.split(' | ').map((part) => part.trim());
+  if (parts.some((part) => /[<{(]/.test(part))) return text;
+  return [...new Set(parts)].sort().join(' | ');
+}
+
 export function extractProps(
   program: ts.Program,
   root: string,
@@ -118,18 +125,25 @@ export function extractProps(
     throw new MetadataError(`cannot resolve props type for ${exportName}`);
   }
   const propsType = checker.getTypeOfSymbolAtLocation(parameter, source);
+  if ((propsType.flags & ts.TypeFlags.Any) !== 0) {
+    throw new MetadataError(`cannot resolve props type for ${exportName}`);
+  }
   const componentRoot = join(root, 'packages', packageDir(packageName), 'src');
 
   return checker
     .getPropertiesOfType(propsType)
     .map((property): PropRecord | null => {
-      const declaration = property.getDeclarations()?.[0];
-      const fileName = declaration?.getSourceFile().fileName ?? '';
-      const inherited = !fileName.startsWith(componentRoot);
+      const declarations = property.getDeclarations() ?? [];
+      const local = declarations.find((entry) =>
+        entry.getSourceFile().fileName.startsWith(componentRoot),
+      );
+      const inherited = local === undefined;
       if (inherited && !NATIVE_PROP_ALLOWLIST.has(property.name)) return null;
       return {
         name: property.name,
-        type: checker.typeToString(checker.getTypeOfSymbolAtLocation(property, source)),
+        type: canonicalType(
+          checker.typeToString(checker.getTypeOfSymbolAtLocation(property, source)),
+        ),
         required: (property.getFlags() & ts.SymbolFlags.Optional) === 0,
         default: variantDefaults[property.name] ?? null,
         origin: inherited ? ('inherited' as const) : ('component' as const),

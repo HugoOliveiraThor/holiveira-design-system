@@ -17,7 +17,7 @@ function fixtureRoot(): string {
   write(
     root,
     'packages/types/src/index.ts',
-    'export interface NativeProps {\n  onClick?: () => void;\n  className?: string;\n  dataFoo?: string;\n}\n',
+    'export interface NativeProps {\n  onClick?: () => void;\n  className?: string;\n  title?: string;\n  dataFoo?: string;\n}\n',
   );
   write(
     root,
@@ -36,12 +36,17 @@ export interface ButtonProps extends NativeProps {
   variant?: string;
   size?: string;
   disabled?: boolean;
+  title: string;
   children: string;
 }
 
 export const Button = (props: ButtonProps) => null;
 
 export const Broken = () => null;
+
+export const MissingProps = (props: DoesNotExistAnywhere) => null;
+
+export const AnyProps = (props: any) => null;
 `,
   );
   write(
@@ -64,17 +69,21 @@ export const Avatar = (props: AvatarProps) => null;
   write(
     root,
     'packages/primitives/src/plain.ts',
-    `export interface PlainProps {
+    `const optionlessVariants = cva('base');
+
+export interface PlainProps {
   label?: string;
 }
 
 export const Plain = (props: PlainProps) => null;
+
+export const Optionless = (props: PlainProps) => null;
 `,
   );
   write(
     root,
     'packages/primitives/src/index.ts',
-    "export { Button, Broken } from './button';\nexport { Avatar } from './avatar';\nexport { Plain } from './plain';\n",
+    "export { Button, Broken, MissingProps, AnyProps } from './button';\nexport { Avatar } from './avatar';\nexport { Plain, Optionless } from './plain';\n",
   );
   return root;
 }
@@ -111,6 +120,7 @@ describe('component api extraction', { timeout: 30_000 }, () => {
     const onClick = props.find((prop) => prop.name === 'onClick');
     expect(onClick?.origin).toBe('inherited');
     expect(props.find((prop) => prop.name === 'disabled')?.origin).toBe('component');
+    expect(props.find((prop) => prop.name === 'title')?.origin).toBe('component');
     expect(props.map((prop) => prop.name)).not.toContain('dataFoo');
   });
 
@@ -118,13 +128,22 @@ describe('component api extraction', { timeout: 30_000 }, () => {
     expect(() => extractProps(program, root, '@ho-dev/primitives', 'Broken')).toThrow(
       /cannot resolve props type for Broken/,
     );
+    expect(() => extractProps(program, root, '@ho-dev/primitives', 'MissingProps')).toThrow(
+      /cannot resolve props type for MissingProps/,
+    );
+    expect(() => extractProps(program, root, '@ho-dev/primitives', 'AnyProps')).toThrow(
+      /cannot resolve props type for AnyProps/,
+    );
   });
 
   it('reads export names from the barrel', () => {
     expect(exportNames(program, root, '@ho-dev/primitives')).toEqual([
+      'AnyProps',
       'Avatar',
       'Broken',
       'Button',
+      'MissingProps',
+      'Optionless',
       'Plain',
     ]);
   });
@@ -155,8 +174,12 @@ describe('component api extraction', { timeout: 30_000 }, () => {
     expect(variants.size.default).toBeNull();
   });
 
-  it('returns no variants when the component has no cva call', () => {
+  it('returns no variants when there is nothing to extract', () => {
     expect(extractVariants(program, root, '@ho-dev/primitives', 'Plain')).toEqual({
+      variants: {},
+      defaults: {},
+    });
+    expect(extractVariants(program, root, '@ho-dev/primitives', 'Optionless')).toEqual({
       variants: {},
       defaults: {},
     });
@@ -191,5 +214,26 @@ describe('component api extraction', { timeout: 30_000 }, () => {
     });
     expect(button.variants.variant.default).toBe('primary');
     expect(button.props.find((prop) => prop.name === 'variant')?.default).toBe('primary');
+  });
+
+  it('is stable when the catalogue order changes', () => {
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [
+            { exportName: 'Button', id: 'button', core: true },
+            { exportName: 'Avatar', id: 'avatar' },
+          ],
+        },
+      ],
+    };
+    const reversed: Catalog = {
+      packages: [
+        { ...catalog.packages[0], components: [...catalog.packages[0].components!].reverse() },
+      ],
+    };
+    expect(buildApi(program, root, reversed)).toEqual(buildApi(program, root, catalog));
   });
 });

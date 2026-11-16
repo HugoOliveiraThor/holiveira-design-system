@@ -140,7 +140,7 @@
       {
         "default": null,
         "name": "title",
-        "origin": "inherited",
+        "origin": "component",
         "required": true,
         "type": "string"
       },
@@ -149,7 +149,7 @@
         "name": "variant",
         "origin": "component",
         "required": false,
-        "type": "\"success\" | \"warning\" | \"error\" | \"info\" | undefined"
+        "type": "\"error\" | \"info\" | \"success\" | \"warning\" | undefined"
       }
     ],
     "variants": {
@@ -372,7 +372,7 @@
         "name": "variant",
         "origin": "component",
         "required": false,
-        "type": "\"primary\" | \"dark\" | \"success\" | \"warning\" | \"error\" | \"info\" | \"light\" | null | undefined"
+        "type": "\"dark\" | \"error\" | \"info\" | \"light\" | \"primary\" | \"success\" | \"warning\" | null | undefined"
       }
     ],
     "variants": {
@@ -549,7 +549,7 @@
         "name": "size",
         "origin": "component",
         "required": false,
-        "type": "\"sm\" | \"md\" | null | undefined"
+        "type": "\"md\" | \"sm\" | null | undefined"
       },
       {
         "default": null,
@@ -577,21 +577,21 @@
         "name": "type",
         "origin": "inherited",
         "required": false,
-        "type": "\"submit\" | \"reset\" | \"button\" | undefined"
+        "type": "\"button\" | \"reset\" | \"submit\" | undefined"
       },
       {
         "default": null,
         "name": "value",
         "origin": "inherited",
         "required": false,
-        "type": "string | number | readonly string[] | undefined"
+        "type": "number | readonly string[] | string | undefined"
       },
       {
         "default": "primary",
         "name": "variant",
         "origin": "component",
         "required": false,
-        "type": "\"primary\" | \"green\" | \"dark\" | \"outlinePrimary\" | \"outlineGreen\" | \"outline\" | null | undefined"
+        "type": "\"dark\" | \"green\" | \"outline\" | \"outlineGreen\" | \"outlinePrimary\" | \"primary\" | null | undefined"
       }
     ],
     "variants": {
@@ -761,7 +761,7 @@
         "name": "variant",
         "origin": "component",
         "required": false,
-        "type": "\"default\" | \"bordered\" | \"ghost\" | null | undefined"
+        "type": "\"bordered\" | \"default\" | \"ghost\" | null | undefined"
       }
     ],
     "variants": {
@@ -1406,7 +1406,7 @@
         "name": "width",
         "origin": "inherited",
         "required": false,
-        "type": "string | number | undefined"
+        "type": "number | string | undefined"
       }
     ],
     "variants": {}
@@ -1715,7 +1715,7 @@
       {
         "default": null,
         "name": "aria-label",
-        "origin": "inherited",
+        "origin": "component",
         "required": false,
         "type": "string | undefined"
       },
