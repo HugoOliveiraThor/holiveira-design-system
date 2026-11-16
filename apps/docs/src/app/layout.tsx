@@ -3,11 +3,10 @@ import { ThemeProvider } from '@ho-dev/theme';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-
 import { docsSite } from '../../site.config';
-import { SiteHeader } from '../components/shell/site-header';
+import { DocsShell } from '../components/shell/docs-shell';
 import { SkipLink } from '../components/shell/skip-link';
-
+import { componentSections, packageSections, unbuiltSections } from '../lib/docs-metadata-query';
 
 import './globals.css';
 
@@ -27,10 +26,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           storageKey="ho-dev-docs-theme"
         >
           <SkipLink />
-          <SiteHeader />
-          <main id="main-content" tabIndex={-1} className="min-h-dvh px-4 py-10 lg:px-6">
-            <div className="mx-auto w-full max-w-[1060px]">{children}</div>
-          </main>
+          <DocsShell
+            packageSections={packageSections()}
+            componentSections={componentSections()}
+            unbuiltSections={unbuiltSections()}
+          >
+            {children}
+          </DocsShell>
         </ThemeProvider>
       </body>
     </html>

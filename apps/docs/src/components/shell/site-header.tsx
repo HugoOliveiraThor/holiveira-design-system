@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 
 import { docsSite } from '../../../site.config';
 
@@ -7,12 +7,27 @@ import { ThemeToggle } from './theme-toggle';
 
 export interface SiteHeaderProps {
   search?: ReactNode;
+  onMenuClick?: () => void;
+  menuOpen?: boolean;
+  menuButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
-export function SiteHeader({ search }: SiteHeaderProps) {
+export function SiteHeader({ search, onMenuClick, menuOpen, menuButtonRef }: SiteHeaderProps) {
   return (
     <header className="border-stroke dark:border-stroke-dark dark:bg-dark-2 border-b bg-white">
       <div className="mx-auto flex w-full max-w-[1440px] items-center gap-4 px-4 py-3 lg:px-6">
+        {onMenuClick && (
+          <button
+            ref={menuButtonRef}
+            type="button"
+            onClick={onMenuClick}
+            aria-expanded={menuOpen ?? false}
+            aria-controls="docs-mobile-navigation"
+            className="border-stroke dark:border-stroke-dark rounded-md border px-2 py-1 text-sm lg:hidden"
+          >
+            Menu
+          </button>
+        )}
         <Link href="/" className="text-dark text-base font-semibold dark:text-white">
           Holiveira <span className="text-primary">Docs</span>
         </Link>

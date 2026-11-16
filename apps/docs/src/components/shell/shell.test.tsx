@@ -1,8 +1,8 @@
+import '@testing-library/jest-dom/vitest';
 import { ThemeProvider } from '@ho-dev/theme';
 
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-
 
 import { SiteHeader } from './site-header';
 import { SkipLink } from './skip-link';
