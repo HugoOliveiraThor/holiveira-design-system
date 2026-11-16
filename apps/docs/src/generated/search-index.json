@@ -1,0 +1,205 @@
+[
+  {
+    "id": "alert",
+    "package": "@ho-dev/primitives",
+    "path": "/components/alert/",
+    "title": "Alert",
+    "type": "component"
+  },
+  {
+    "id": "area-chart",
+    "package": "@ho-dev/charts",
+    "path": "/components/area-chart/",
+    "title": "AreaChart",
+    "type": "component"
+  },
+  {
+    "id": "badge",
+    "package": "@ho-dev/primitives",
+    "path": "/components/badge/",
+    "title": "Badge",
+    "type": "component"
+  },
+  {
+    "id": "button",
+    "package": "@ho-dev/primitives",
+    "path": "/components/button/",
+    "title": "Button",
+    "type": "component"
+  },
+  {
+    "id": "card",
+    "package": "@ho-dev/ui",
+    "path": "/components/card/",
+    "title": "Card",
+    "type": "component"
+  },
+  {
+    "id": "charts",
+    "package": "@ho-dev/charts",
+    "path": "/packages/charts/",
+    "title": "@ho-dev/charts",
+    "type": "package"
+  },
+  {
+    "id": "config",
+    "package": "@ho-dev/config",
+    "path": "/packages/config/",
+    "title": "@ho-dev/config",
+    "type": "package"
+  },
+  {
+    "id": "constants",
+    "package": "@ho-dev/constants",
+    "path": "/packages/constants/",
+    "title": "@ho-dev/constants",
+    "type": "package"
+  },
+  {
+    "id": "dropdown",
+    "package": "@ho-dev/primitives",
+    "path": "/components/dropdown/",
+    "title": "Dropdown",
+    "type": "component"
+  },
+  {
+    "id": "eslint",
+    "package": "@ho-dev/eslint",
+    "path": "/packages/eslint/",
+    "title": "@ho-dev/eslint",
+    "type": "package"
+  },
+  {
+    "id": "field",
+    "package": "@ho-dev/forms",
+    "path": "/components/field/",
+    "title": "Field",
+    "type": "component"
+  },
+  {
+    "id": "form",
+    "package": "@ho-dev/forms",
+    "path": "/components/form/",
+    "title": "Form",
+    "type": "component"
+  },
+  {
+    "id": "forms",
+    "package": "@ho-dev/forms",
+    "path": "/packages/forms/",
+    "title": "@ho-dev/forms",
+    "type": "package"
+  },
+  {
+    "id": "header",
+    "package": "@ho-dev/layouts",
+    "path": "/components/header/",
+    "title": "Header",
+    "type": "component"
+  },
+  {
+    "id": "hooks",
+    "package": "@ho-dev/hooks",
+    "path": "/packages/hooks/",
+    "title": "@ho-dev/hooks",
+    "type": "package"
+  },
+  {
+    "id": "i18n",
+    "package": "@ho-dev/i18n",
+    "path": "/packages/i18n/",
+    "title": "@ho-dev/i18n",
+    "type": "package"
+  },
+  {
+    "id": "icons",
+    "package": "@ho-dev/icons",
+    "path": "/packages/icons/",
+    "title": "@ho-dev/icons",
+    "type": "package"
+  },
+  {
+    "id": "input-group",
+    "package": "@ho-dev/primitives",
+    "path": "/components/input-group/",
+    "title": "InputGroup",
+    "type": "component"
+  },
+  {
+    "id": "layouts",
+    "package": "@ho-dev/layouts",
+    "path": "/packages/layouts/",
+    "title": "@ho-dev/layouts",
+    "type": "package"
+  },
+  {
+    "id": "page-header",
+    "package": "@ho-dev/ui",
+    "path": "/components/page-header/",
+    "title": "PageHeader",
+    "type": "component"
+  },
+  {
+    "id": "primitives",
+    "package": "@ho-dev/primitives",
+    "path": "/packages/primitives/",
+    "title": "@ho-dev/primitives",
+    "type": "package"
+  },
+  {
+    "id": "providers",
+    "package": "@ho-dev/providers",
+    "path": "/packages/providers/",
+    "title": "@ho-dev/providers",
+    "type": "package"
+  },
+  {
+    "id": "sidebar",
+    "package": "@ho-dev/layouts",
+    "path": "/components/sidebar/",
+    "title": "Sidebar",
+    "type": "component"
+  },
+  {
+    "id": "table",
+    "package": "@ho-dev/primitives",
+    "path": "/components/table/",
+    "title": "Table",
+    "type": "component"
+  },
+  {
+    "id": "theme",
+    "package": "@ho-dev/theme",
+    "path": "/packages/theme/",
+    "title": "@ho-dev/theme",
+    "type": "package"
+  },
+  {
+    "id": "tokens",
+    "package": "@ho-dev/tokens",
+    "path": "/packages/tokens/",
+    "title": "@ho-dev/tokens",
+    "type": "package"
+  },
+  {
+    "id": "types",
+    "package": "@ho-dev/types",
+    "path": "/packages/types/",
+    "title": "@ho-dev/types",
+    "type": "package"
+  },
+  {
+    "id": "ui",
+    "package": "@ho-dev/ui",
+    "path": "/packages/ui/",
+    "title": "@ho-dev/ui",
+    "type": "package"
+  },
+  {
+    "id": "utils",
+    "package": "@ho-dev/utils",
+    "path": "/packages/utils/",
+    "title": "@ho-dev/utils",
+    "type": "package"
+  }
+]

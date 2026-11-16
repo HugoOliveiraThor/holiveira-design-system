@@ -6,7 +6,9 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "typecheck": "tsc --noEmit",
-    "test:export": "next build && tsx scripts/check-export.ts"
+    "test:export": "next build && tsx scripts/check-export.ts",
+    "generate:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts",
+    "check:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts --check"
   },
   "dependencies": {
     "@ho-dev/theme": "workspace:*",

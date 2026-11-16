@@ -52,6 +52,7 @@ export default defineConfig({
       'apps/playground/src/**/*.test.{ts,tsx}',
       'scripts/**/*.test.ts',
       'apps/docs/src/**/*.test.{ts,tsx}',
+      'apps/docs/scripts/**/*.test.ts',
     ],
     exclude: ['**/node_modules/**', '**/dist/**', '**/*.stories.*'],
     coverage: {
