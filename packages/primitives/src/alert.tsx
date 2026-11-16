@@ -58,11 +58,11 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
 
           <div>
             <h4 className="mb-1 text-sm font-semibold text-gray-800 dark:text-white/90">{title}</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
+            <p className="text-sm text-gray-700 dark:text-gray-400">{description}</p>
             {link && (
               <a
                 href={link.href}
-                className="mt-3 inline-block text-sm font-medium text-gray-500 underline dark:text-gray-400"
+                className="mt-3 inline-block text-sm font-medium text-gray-700 underline dark:text-gray-400"
               >
                 {link.label}
               </a>

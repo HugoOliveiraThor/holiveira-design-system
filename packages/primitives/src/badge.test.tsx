@@ -25,7 +25,7 @@ describe('Badge', () => {
     ['warning', 'bg-warning-50'],
     ['info', 'bg-blue-light-50'],
     ['light', 'bg-gray-100'],
-    ['dark', 'bg-gray-500'],
+    ['dark', 'bg-gray-700'],
   ] as const)('renders %s variant', (variant, expectedClass) => {
     const { getByText } = render(<Badge variant={variant}>{variant}</Badge>);
     expect(getByText(variant).className).toContain(expectedClass);
@@ -37,7 +37,28 @@ describe('Badge', () => {
         Success
       </Badge>,
     );
-    expect(getByText('Success').className).toContain('bg-success-500');
+    expect(getByText('Success').className).toContain('bg-success-700');
+  });
+
+  it('uses AA backgrounds for every solid variant', () => {
+    const backgrounds = {
+      primary: 'bg-primary',
+      success: 'bg-success-700',
+      error: 'bg-error-600',
+      warning: 'bg-warning-700',
+      info: 'bg-blue-light-800',
+      light: 'bg-gray-600',
+      dark: 'bg-gray-800',
+    } as const;
+    for (const [variant, expected] of Object.entries(backgrounds)) {
+      const { getByText, unmount } = render(
+        <Badge variant={variant as keyof typeof backgrounds} fill="solid">
+          {variant}
+        </Badge>,
+      );
+      expect(getByText(variant).className, variant).toContain(expected);
+      unmount();
+    }
   });
 
   it('renders icon on the left by default', () => {
