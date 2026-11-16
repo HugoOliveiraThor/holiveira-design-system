@@ -12,9 +12,11 @@ import {
   findComponentDoc,
   packages,
   packageSections,
+  playgroundHref,
   packageSlugs,
   pager,
   slugOf,
+  storyHref,
   unbuiltSections,
 } from './docs-metadata-query';
 import type { ComponentDoc, ExampleRecord } from './docs-metadata/types';
@@ -147,6 +149,19 @@ describe('docs metadata query', () => {
       'realistic',
     ]);
     expect(examplesForSlug(examples, 'alert')).toEqual([]);
+  });
+
+  it('builds absolute story and playground links', () => {
+    expect(storyHref('button')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/?path=/docs/primitives-button--docs',
+    );
+    expect(playgroundHref('forms')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/playground/forms/',
+    );
+    expect(playgroundHref('dashboard')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
+    );
+    expect(storyHref('ghost')).toBe('');
   });
 
   it('lists unbuilt sections as disabled', () => {

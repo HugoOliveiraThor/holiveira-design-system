@@ -51,14 +51,12 @@ export function examplesFor(id: string): ExampleRecord[] {
 /** The Storybook docs page of a component, from its generated story id. */
 export function storyHref(id: string): string {
   const record = components.find((component) => component.id === id);
-  return record === undefined
-    ? ''
-    : `${docsSite.storybookPath}?path=/docs/${record.story.id}--docs`;
+  return record === undefined ? '' : `${docsSite.storybookUrl}?path=/docs/${record.story.id}--docs`;
 }
 
 /** The Playground screen linked by a component page, when one exists. */
 export function playgroundHref(screen: PlaygroundScreen): string {
-  return screen === 'dashboard' ? docsSite.playgroundPath : `${docsSite.playgroundPath}${screen}/`;
+  return screen === 'dashboard' ? docsSite.playgroundUrl : `${docsSite.playgroundUrl}${screen}/`;
 }
 
 export function slugOf(packageName: string): string {

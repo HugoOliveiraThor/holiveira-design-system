@@ -36,13 +36,13 @@ export function SiteHeader({ search, onMenuClick, menuOpen, menuButtonRef }: Sit
           {search}
           <nav aria-label="External links" className="flex items-center gap-3 text-sm">
             <a
-              href={docsSite.storybookPath}
+              href={docsSite.storybookUrl}
               className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
             >
               Storybook
             </a>
             <a
-              href={docsSite.playgroundPath}
+              href={docsSite.playgroundUrl}
               className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
             >
               Playground
