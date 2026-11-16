@@ -100,5 +100,5 @@ Components extracted from the following monolith files:
 
 ## Internal API
 
-- `packages/primitives/src/internal/` — reserved for internal helpers (empty until extracted)
+- Internal helpers stay beside their component and are not exported
 - Monolith helpers not yet extracted: `_useButtonA11y`, `_mergeInputProps`, `_composeEventHandlers`

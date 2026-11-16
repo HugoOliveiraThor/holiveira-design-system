@@ -38,8 +38,31 @@ export interface DocOptions {
 /** Languages whose blocks assert a TypeScript API. */
 export const CODE_LANGUAGES = new Set(['ts', 'tsx', 'js', 'jsx']);
 
+/** First-column headers that mean "this table lists exports". */
+const API_TABLE_HEADERS = new Set([
+  'export',
+  'exports',
+  'name',
+  'names',
+  'identifier',
+  'identifiers',
+  'component',
+  'components',
+]);
+
+/** Number words that state a count as surely as a digit does. */
+const WORD_NUMBERS =
+  'one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty';
+
 /** A statement that hard-codes how many exports or components exist. */
-const COUNT_PATTERN = /\b\d+\s+(?:[A-Za-z][A-Za-z-]*\s+){0,3}(?:exports?|components?)\b/i;
+const COUNT_PATTERN = new RegExp(
+  [
+    `\\b(?:\\d+|${WORD_NUMBERS})\\s+(?:[A-Za-z][A-Za-z-]*\\s+){0,3}(?:exports?|components?)\\b`,
+    '\\bexports?\\s*:\\s*\\d+',
+    '\\bPublic API\\s*\\(\\s*\\d+\\s*\\)',
+  ].join('|'),
+  'i',
+);
 
 const FENCE = /^\s*```(.*)$/;
 const HEADING = /^##\s+(.+?)\s*$/;
@@ -213,21 +236,23 @@ export function publicApiNames(doc: MarkdownDoc): Array<{ name: string; line: nu
           parts.push(continuation.trim());
           index = next;
         }
-        const beforeDash = parts.join(' ').split('—')[0];
+        const beforeDash = parts.join(' ').split(/\s*[—–]\s*/)[0];
         for (const name of namesIn(beforeDash)) add(name, line);
         continue;
       }
 
       if (TABLE_ROW.test(text)) {
-        const header = firstCell(text).toLowerCase();
+        const header = firstCell(text).replace(/`/g, '').trim().toLowerCase();
         let cursor = index + 1;
         while (cursor < lines.length && TABLE_ROW.test(lines[cursor])) cursor += 1;
         const tableBody = lines.slice(index, cursor);
-        if (header !== 'export' || tableBody.length < 2) {
+        if (tableBody.length < 2 || !TABLE_SEPARATOR.test(tableBody[1])) {
           index = cursor - 1;
           continue;
         }
-        if (!TABLE_SEPARATOR.test(tableBody[1])) {
+        // A table whose first column names exports documents them, whatever the
+        // header spelling. Props/options tables in the same section do not.
+        if (!API_TABLE_HEADERS.has(header)) {
           index = cursor - 1;
           continue;
         }
@@ -236,6 +261,12 @@ export function publicApiNames(doc: MarkdownDoc): Array<{ name: string; line: nu
           if (match !== null) add(match[1], section.line + 1 + index + row);
         }
         index = cursor - 1;
+        continue;
+      }
+
+      if (/\bexports?\b/i.test(text)) {
+        // A paragraph that states what the package exports documents those names.
+        for (const name of namesIn(text)) add(name, line);
       }
     }
   }

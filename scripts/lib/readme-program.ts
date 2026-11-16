@@ -110,6 +110,8 @@ export function programOptions(root: string): ts.CompilerOptions {
     strict: true,
     skipLibCheck: true,
     esModuleInterop: true,
+    allowJs: true,
+    checkJs: true,
     noEmit: true,
     moduleDetection: ts.ModuleDetectionKind.Force,
     lib: ['lib.es2022.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'],

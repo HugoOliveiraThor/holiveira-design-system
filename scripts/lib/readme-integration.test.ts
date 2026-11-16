@@ -142,13 +142,15 @@ describe('readme gate CLI', () => {
     const result = runGate(cleanRoot);
     expect(result.code).toBe(0);
     expect(result.stderr).toBe('');
-    expect(result.stdout).toContain('✓ docs readme current: 1 packages, 1 contracts, 0 findings');
+    expect(result.stdout).toContain(
+      '✓ docs readme current: 1 packages, 1 contracts, 1 blocks, 0 findings',
+    );
   });
 
   it('prints the summary line for the checked packages', () => {
     const result = runGate(cleanRoot);
     const summary = result.stdout.trim().split('\n').at(-1);
-    expect(summary).toBe('✓ docs readme current: 1 packages, 1 contracts, 0 findings');
+    expect(summary).toBe('✓ docs readme current: 1 packages, 1 contracts, 1 blocks, 0 findings');
   });
 
   it('exits 1 on findings', () => {
@@ -165,7 +167,9 @@ describe('readme gate CLI', () => {
     const broken = runGate(mixedRoot, ['--filter', 'beta']);
     expect(full.code).toBe(1);
     expect(clean.code).toBe(0);
-    expect(clean.stdout).toContain('✓ docs readme current: 1 packages, 1 contracts, 0 findings');
+    expect(clean.stdout).toContain(
+      '✓ docs readme current: 1 packages, 1 contracts, 1 blocks, 0 findings',
+    );
     expect(clean.stderr).toBe('');
     expect(broken.code).toBe(1);
     expect(broken.stderr).toContain('packages/beta/README.md');

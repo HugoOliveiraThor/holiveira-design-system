@@ -5,7 +5,7 @@
  * returns findings with the file, the line and a message a human can act on.
  * No rule writes anything, and running the set twice yields the same list.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 import ts from 'typescript';
@@ -45,9 +45,50 @@ export const RULES: RuleName[] = [
   'paths',
 ];
 
-/** A cited repository path: a backticked token rooted at a known directory. */
-const PATH_PATTERN =
-  /^(?:packages|docs|apps|scripts|tests|reports|examples|\.github|\.changeset|\.husky|\.specs)\/[^\s`]+$/;
+/** A bare file name a README may cite without a directory. */
+const BARE_FILE_PATTERN = /^[\w.-]+\.(?:ts|tsx|js|mjs|cjs|json|md|css|yml|yaml|prisma|sh)$/;
+
+/**
+ * Whether a backticked token claims a repository path. A token with a slash is
+ * a path when its first segment exists at the root (so `next/dynamic` and
+ * `@ho-dev/ui` are not paths); a bare name is a path only when it carries a
+ * known file extension.
+ */
+function isPathCandidate(token: string, root: string, knownBareNames: Set<string>): boolean {
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(token)) return false;
+  if (/[*?<>]/.test(token)) return false;
+  if (token.includes('/')) {
+    const first = token.split('/')[0];
+    if (first.length === 0 || first.startsWith('@')) return false;
+    return existsSync(join(root, first));
+  }
+  // A bare name that exists somewhere in the packages is a package asset, not
+  // a repository-root claim (e.g. `theme.css`); the rest must resolve at the root.
+  if (knownBareNames.has(token)) return false;
+  return BARE_FILE_PATTERN.test(token);
+}
+
+/** Basenames of the files under `packages/`, plus the repository root files. */
+function collectKnownBareNames(root: string): Set<string> {
+  const names = new Set<string>();
+  const walk = (directory: string): void => {
+    if (!existsSync(directory)) return;
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name === 'node_modules' || entry.name === 'dist') continue;
+        walk(path);
+      } else {
+        names.add(entry.name);
+      }
+    }
+  };
+  walk(join(root, 'packages'));
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    if (entry.isFile()) names.add(entry.name);
+  }
+  return names;
+}
 
 function flatten(message: ts.DiagnosticMessageChain | string): string {
   return ts.flattenDiagnosticMessageText(message, ' ');
@@ -164,6 +205,15 @@ export function checkPublicApi(docs: MarkdownDoc[], exports: ExportMap): Finding
       }
     }
 
+    if (doc.kind === 'contract' && apiSection !== undefined && documented.length === 0) {
+      findings.push({
+        rule: 'missing-api',
+        file: doc.file,
+        line: apiSection.line,
+        message: `${doc.file} has a '## Public API' section that documents no identifier`,
+      });
+    }
+
     for (const entry of documented) {
       if (!packageExports.has(entry.name)) {
         findings.push({
@@ -224,6 +274,7 @@ function expandBraces(token: string): string[] {
 /** Never point a reader at a repository path that does not exist. */
 export function checkPaths(docs: MarkdownDoc[], root: string): Finding[] {
   const findings: Finding[] = [];
+  const knownBareNames = collectKnownBareNames(root);
   let inFence = false;
 
   for (const doc of docs) {
@@ -240,7 +291,7 @@ export function checkPaths(docs: MarkdownDoc[], root: string): Finding[] {
           .replace(/[.,;:]+$/, '')
           .replace(/#.*$/, '');
         // A glob is a pattern, not a path claim, so it has nothing to resolve.
-        if (!PATH_PATTERN.test(token) || /[*?]/.test(token)) continue;
+        if (!isPathCandidate(token, root, knownBareNames)) continue;
         for (const candidate of expandBraces(token)) {
           if (existsSync(join(root, candidate))) continue;
           findings.push({

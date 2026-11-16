@@ -8,7 +8,21 @@
  */
 
 /** Vendors whose name alone is enough to reject the message. */
-const VENDORS = ['claude', 'deepseek', 'chatgpt', 'copilot', 'anthropic', 'openai'];
+const VENDORS = [
+  'claude',
+  'deepseek',
+  'chatgpt',
+  'copilot',
+  'anthropic',
+  'openai',
+  'gemini',
+  'grok',
+  'mistral',
+  'llama',
+  'perplexity',
+  'qwen',
+  'codex',
+];
 
 const PATTERNS = [
   {

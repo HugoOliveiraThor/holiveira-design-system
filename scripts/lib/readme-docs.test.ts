@@ -158,6 +158,30 @@ describe('package documentation', () => {
     expect(blocks.length).toBeGreaterThanOrEqual(15);
     const program = createVirtualProgram({ root: ROOT, blocks, packages });
     expect(checkCompiles(program)).toEqual([]);
+
+    // The four covered languages compile; js and jsx are not dropped.
+    const synthetic = [
+      '#!/usr/bin/env node',
+      '',
+      '```js',
+      'export const bad = UndeclaredJs;',
+      '```',
+      '',
+      '```jsx',
+      'export const node = <Missing />;',
+      '```',
+      '',
+    ].join('\n');
+    const extra = parseMarkdown('packages/synthetic/README.md', synthetic);
+    const extraBlocks = extra.blocks
+      .filter((block) => CODE_LANGUAGES.has(block.lang))
+      .map((block) => ({ file: extra.file, block }));
+    expect(extraBlocks).toHaveLength(2);
+    const diagnostics = checkCompiles(
+      createVirtualProgram({ root: ROOT, blocks: extraBlocks, packages }),
+    );
+    expect(diagnostics.map((finding) => finding.message).join(' ')).toContain('UndeclaredJs');
+    expect(diagnostics.map((finding) => finding.message).join(' ')).toContain('Missing');
   });
 
   it('declares the session headers and drops the unknown config key', () => {

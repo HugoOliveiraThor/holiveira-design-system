@@ -44,6 +44,26 @@ const BLOCKS = [
     },
   },
   {
+    file: 'packages/fixture/README.md',
+    block: { lang: 'js', code: 'export const value = NeverDeclaredInJs;', line: 70 },
+  },
+  {
+    file: 'packages/fixture/README.md',
+    block: {
+      lang: 'jsx',
+      code: "import { Ghost } from '@ho-dev/ui';\n\nexport const element = <Ghost />;",
+      line: 80,
+    },
+  },
+  {
+    file: 'packages/fixture/README.md',
+    block: {
+      lang: 'js',
+      code: "import { helper } from './missing-helper-js';\n\nexport const value = helper;",
+      line: 90,
+    },
+  },
+  {
     file: 'packages/fixture-clean/README.md',
     block: {
       lang: 'ts',
@@ -151,6 +171,13 @@ describe('readme rules', () => {
     expect(findings).toHaveLength(1);
     expect(findings[0].message).toContain('TS2304');
     expect(findings[0].message).toContain("Cannot find name 'NeverDeclared'");
+
+    // A js block is compiled like a ts block: dropping it would hide the error.
+    const js = forFile(checkCompiles(program), 'packages/fixture/README.md').filter(
+      (finding) => finding.line === 70,
+    );
+    expect(js).toHaveLength(1);
+    expect(js[0].message).toContain("Cannot find name 'NeverDeclaredInJs'");
   });
 
   it('rejects a named import the package does not export', () => {
@@ -159,6 +186,12 @@ describe('readme rules', () => {
       rule: 'import',
       file: 'packages/fixture/README.md',
       line: 10,
+      message: "@ho-dev/ui does not export 'Ghost'",
+    });
+    expect(findings).toContainEqual({
+      rule: 'import',
+      file: 'packages/fixture/README.md',
+      line: 80,
       message: "@ho-dev/ui does not export 'Ghost'",
     });
   });
@@ -170,6 +203,12 @@ describe('readme rules', () => {
       file: 'packages/fixture/README.md',
       line: 40,
       message: "relative import './missing-helper' does not resolve",
+    });
+    expect(findings).toContainEqual({
+      rule: 'import',
+      file: 'packages/fixture/README.md',
+      line: 90,
+      message: "relative import './missing-helper-js' does not resolve",
     });
   });
 
@@ -183,6 +222,44 @@ describe('readme rules', () => {
         message: "@ho-dev/ui does not export 'Ghost' documented under Public API",
       },
     ]);
+
+    const table = doc(
+      [
+        '# ui',
+        '',
+        '## Public API',
+        '',
+        '| Name | Kind |',
+        '| --- | --- |',
+        '| `Ghost` | value |',
+        '',
+      ].join('\n'),
+    );
+    expect(checkPublicApi([table], exports)).toContainEqual({
+      rule: 'public-api',
+      file: 'packages/ui/README.md',
+      line: 7,
+      message: "@ho-dev/ui does not export 'Ghost' documented under Public API",
+    });
+
+    const paragraph = doc(
+      ['# ui', '', '## Public API', '', 'The package exports `Card` and `Ghost`.', ''].join('\n'),
+    );
+    expect(checkPublicApi([paragraph], exports)).toContainEqual({
+      rule: 'public-api',
+      file: 'packages/ui/README.md',
+      line: 5,
+      message: "@ho-dev/ui does not export 'Ghost' documented under Public API",
+    });
+  });
+
+  it('ignores a description after an en dash', () => {
+    const line = doc(
+      ['# ui', '', '## Public API', '', '- `Card` – renamed from `Ghost` internally', ''].join(
+        '\n',
+      ),
+    );
+    expect(checkPublicApi([line], exports)).toEqual([]);
   });
 
   it('requires a public api section for a runtime package', () => {
@@ -208,6 +285,15 @@ describe('readme rules', () => {
         message: "states a hard-coded count: 'Ships 12 exports today.'",
       },
     ]);
+    for (const statement of [
+      'This package ships ten components.',
+      'exports: 12',
+      '## Public API (3)',
+    ]) {
+      const fixture = doc(`# ui\n\n${statement}\n`);
+      expect(checkCounts([fixture]), statement).toHaveLength(1);
+    }
+    expect(checkCounts([doc('# ui\n\nButtons come in 3 sizes.\n')])).toEqual([]);
   });
 
   it('rejects a second public api heading', () => {
@@ -238,6 +324,28 @@ describe('readme rules', () => {
         message: "cited path 'docs/does-not-exist.md' does not exist",
       },
     ]);
+
+    const outside = doc(
+      ['# ui', '', 'Cites `commitlint/nope.mjs` and `tsconfig.nope.json`.', ''].join('\n'),
+    );
+    const found = checkPaths([outside], ROOT).map((finding) => finding.message);
+    expect(found).toContain("cited path 'commitlint/nope.mjs' does not exist");
+    expect(found).toContain("cited path 'tsconfig.nope.json' does not exist");
+
+    // A package asset name is not a repository-root claim.
+    expect(checkPaths([doc('# ui\n\nSee `theme.css`.\n')], ROOT)).toEqual([]);
+  });
+
+  it('requires a contract public api to document a name', () => {
+    const contract = parseMarkdown(
+      'docs/architecture/contracts/ui.md',
+      ['# Package Contract: @ho-dev/ui', '', '## Public API', '', 'See the source.', ''].join('\n'),
+      { kind: 'contract', packageName: '@ho-dev/ui' },
+    );
+    const findings = checkPublicApi([contract], exports);
+    expect(findings).toHaveLength(1);
+    expect(findings[0].rule).toBe('missing-api');
+    expect(findings[0].message).toContain('documents no identifier');
   });
 
   it('reports every finding in one run', () => {

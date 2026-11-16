@@ -138,7 +138,7 @@ function main(): number {
   }
 
   const contractCount = docs.filter((doc) => doc.kind === 'contract').length;
-  const summary = `${selected.length} packages, ${contractCount} contracts, ${findings.length} findings`;
+  const summary = `${selected.length} packages, ${contractCount} contracts, ${blockCount} blocks, ${findings.length} findings`;
 
   if (VERBOSE) {
     for (const doc of docs) console.log(`  ok  ${doc.file}`);

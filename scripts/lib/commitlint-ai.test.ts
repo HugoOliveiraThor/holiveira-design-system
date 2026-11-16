@@ -29,7 +29,16 @@ describe('commitlint ai rule', () => {
     expect(message).toContain(FAILURE_MESSAGE);
     expect(message).toContain('Claude');
 
-    for (const vendor of ['DeepSeek', 'ChatGPT', 'Copilot', 'Anthropic', 'OpenAI']) {
+    for (const vendor of [
+      'DeepSeek',
+      'ChatGPT',
+      'Copilot',
+      'Anthropic',
+      'OpenAI',
+      'Gemini',
+      'Grok',
+      'Mistral',
+    ]) {
       expect(passes(`feat: ${vendor} wrote this`), vendor).toBe(false);
     }
     expect(

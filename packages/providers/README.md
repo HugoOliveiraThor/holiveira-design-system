@@ -76,4 +76,4 @@ MIT
 ## References
 
 - `@ho-dev/types` — shared type foundation
-- `docs/architecture/provider-composition-pattern.md` — composition pattern documentation
+- `docs/architecture/contracts/providers.md` — contract and provider ordering
