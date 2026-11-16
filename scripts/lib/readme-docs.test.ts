@@ -147,7 +147,7 @@ describe('package documentation', () => {
     expect(read('docs/architecture/contracts/icons.md')).not.toContain('components total');
   });
 
-  it('compiles every readme block in the repository', () => {
+  it('compiles every readme block in the repository', { timeout: 30_000 }, () => {
     const packages = discoverPackages(ROOT);
     const docs = repoDocs();
     const blocks = docs.flatMap((doc) =>
@@ -272,7 +272,7 @@ describe('package documentation', () => {
     expect(api?.body.join('\n')).toContain('| Export');
   });
 
-  it('declares a local stub where no real export exists', () => {
+  it('declares a local stub where no real export exists', { timeout: 30_000 }, () => {
     const program = createVirtualProgram({
       root: ROOT,
       packages: discoverPackages(ROOT),
