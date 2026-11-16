@@ -60,7 +60,7 @@ describe('export inventory', { timeout: 30_000 }, () => {
     exports = buildExports(program, root, '@ho-dev/demo');
   });
 
-  it('derives each kind from the declaration, not a name list', () => {
+  it('records every export with its kind', () => {
     expect(exports).toEqual([
       { name: 'doThing', kind: 'function' },
       { name: 'Plain', kind: 'component' },

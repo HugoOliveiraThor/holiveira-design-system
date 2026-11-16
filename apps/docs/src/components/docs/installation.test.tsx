@@ -50,7 +50,7 @@ describe('installation section', () => {
     expect(screen.queryByText(/workspace:\*/)).not.toBeInTheDocument();
   });
 
-  it('states when a package has no peer dependencies', () => {
+  it('states when a package has no peer dependency', () => {
     render(<Installation record={{ ...BASE, peers: {} }} />);
     expect(screen.getByText('No peer dependencies.')).toBeInTheDocument();
   });

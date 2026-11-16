@@ -155,7 +155,7 @@ describe('export coverage', () => {
 describe('target coverage', () => {
   const routes = ['/components/button/', '/guides/icons/', '/packages/alpha/'];
 
-  it('passes when every component export resolves to a served target', () => {
+  it('resolves one target per component export', () => {
     expect(() =>
       assertTargetCoverage({
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'Button' }],
@@ -165,7 +165,7 @@ describe('target coverage', () => {
     ).not.toThrow();
   });
 
-  it('fails naming an export with no target', () => {
+  it('fails when a component export has no target', () => {
     expect(() =>
       assertTargetCoverage({
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'Avatar' }],
@@ -175,7 +175,7 @@ describe('target coverage', () => {
     ).toThrow(/@ho-dev\/alpha exports Avatar, which has no documentation target/);
   });
 
-  it('fails naming the export and the route that is not served', () => {
+  it('fails when a target route is not served', () => {
     expect(() =>
       assertTargetCoverage({
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'AlertErrorIcon' }],
@@ -237,6 +237,13 @@ describe('coverage report', () => {
     });
     expect(describeCoverage({ registry }).targeted).toBe(0);
   });
+
+  it('lists the storybook fallback without failing', () => {
+    const registry = [packageRecord({ componentExports: [component('avatar', 'Avatar')] })];
+    const report = describeCoverage({ registry });
+    expect(report.fallbacks).toContain('@ho-dev/alpha/Avatar');
+    expect(report.targeted).toBe(0);
+  });
 });
 
 describe('guide coverage', () => {
@@ -244,7 +251,7 @@ describe('guide coverage', () => {
     expect(() => assertGuideCoverage({ guides: [GUIDE], ...GUIDE_INPUT })).not.toThrow();
   });
 
-  it('fails naming a guide that names a missing snippet', () => {
+  it('fails when a guide names a missing snippet', () => {
     expect(() =>
       assertGuideCoverage({
         guides: [{ ...GUIDE, snippets: ['apps/docs/src/examples/guides/missing.tsx'] }],
@@ -255,7 +262,7 @@ describe('guide coverage', () => {
     );
   });
 
-  it('fails naming a snippet that no guide references', () => {
+  it('fails when a snippet belongs to no guide', () => {
     expect(() =>
       assertGuideCoverage({
         ...GUIDE_INPUT,
@@ -265,7 +272,7 @@ describe('guide coverage', () => {
     ).toThrow(/snippet apps\/docs\/src\/examples\/guides\/orphan.tsx is referenced by no guide/);
   });
 
-  it('fails naming a guide with an empty field', () => {
+  it('fails when a guide field is empty', () => {
     expect(() =>
       assertGuideCoverage({ guides: [{ ...GUIDE, summary: '' }], ...GUIDE_INPUT }),
     ).toThrow(/guide guides\/icons has an empty summary/);
@@ -282,7 +289,7 @@ describe('guide coverage', () => {
     ).toThrow(/guide guides\/icons has an empty prose in section usage/);
   });
 
-  it('fails naming a guide that relates to an unknown package', () => {
+  it('fails when a guide links to an unknown page', () => {
     expect(() =>
       assertGuideCoverage({
         guides: [{ ...GUIDE, related: { packages: ['@ho-dev/ghost'], components: [] } }],
@@ -291,7 +298,7 @@ describe('guide coverage', () => {
     ).toThrow(/guide guides\/icons relates to package @ho-dev\/ghost, which does not exist/);
   });
 
-  it('fails naming a guide that relates to an unknown component', () => {
+  it('fails when a relation names an unknown page', () => {
     expect(() =>
       assertGuideCoverage({
         guides: [{ ...GUIDE, related: { packages: [], components: ['Ghost'] } }],

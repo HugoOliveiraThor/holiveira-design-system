@@ -13,6 +13,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { assertExportCoverage } from '../src/lib/docs-metadata/coverage';
+
 const CLI = join(process.cwd(), 'apps', 'docs', 'scripts', 'generate-docs-metadata.ts');
 const execFileAsync = promisify(execFile);
 
@@ -252,10 +254,61 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     expect(result.output).toContain('docs metadata current');
   });
 
-  it('reports package and component counts', async () => {
+  it('produces identical artifacts on a second run', async () => {
+    const root = createFixture();
+    const directory = join(root, 'apps', 'docs', 'src', 'generated');
+    expect((await run(root)).status).toBe(0);
+    const first = GENERATED.map((file) => readFileSync(join(directory, file), 'utf8'));
+    expect((await run(root)).status).toBe(0);
+    const second = GENERATED.map((file) => readFileSync(join(directory, file), 'utf8'));
+    expect(second).toEqual(first);
+    expect((await run(root, ['--check'])).status).toBe(0);
+  });
+
+  it('fails when a barrel export is missing from the registry', () => {
+    expect(() =>
+      assertExportCoverage({
+        registry: [
+          {
+            name: '@ho-dev/alpha',
+            version: '0.2.0',
+            description: '',
+            private: false,
+            installState: 'pre-release',
+            exports: [],
+            componentExports: [],
+            category: 'Components',
+            peers: {},
+          },
+        ],
+        barrelExports: { '@ho-dev/alpha': ['Button'] },
+      }),
+    ).toThrow(/@ho-dev\/alpha exports Button, which is missing from registry.json/);
+  });
+
+  it('fails when a package has no readme or contract', async () => {
+    const readme = createFixture();
+    rmSync(join(readme, 'packages', 'ui', 'README.md'));
+    const noReadme = await run(readme);
+    expect(noReadme.status).not.toBe(0);
+    expect(noReadme.output).toContain('@ho-dev/ui has no README');
+
+    const contract = createFixture();
+    rmSync(join(contract, 'docs', 'architecture', 'contracts', 'ui.md'));
+    const noContract = await run(contract);
+    expect(noContract.status).not.toBe(0);
+    expect(noContract.output).toContain('@ho-dev/ui has no architecture contract');
+  });
+
+  it('reports package, export, target and fallback counts', async () => {
     const root = createFixture();
     expect((await run(root)).status).toBe(0);
-    expect((await run(root, ['--check'])).output).toContain('6 packages, 13 components');
+    const result = await run(root, ['--check']);
+    expect(result.status).toBe(0);
+    expect(result.output).toContain('6 packages, 13 components');
+    expect(result.output).toContain('component exports');
+    expect(result.output).toContain('targeted');
+    expect(result.output).toContain('storybook fallbacks');
   });
 
   it('fails when a committed artifact is out of date', async () => {
