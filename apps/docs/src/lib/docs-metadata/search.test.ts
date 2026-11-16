@@ -42,6 +42,9 @@ describe('search index', () => {
         type: 'component',
         title: 'Button',
         package: '@ho-dev/primitives',
+        category: 'Components',
+        summary: '',
+        keywords: ['@ho-dev/primitives', 'button', 'components'],
         path: '/components/button/',
       },
       {
@@ -49,6 +52,9 @@ describe('search index', () => {
         type: 'package',
         title: '@ho-dev/primitives',
         package: '@ho-dev/primitives',
+        category: 'Components',
+        summary: '',
+        keywords: ['@ho-dev/primitives', 'components', 'primitives'],
         path: '/packages/primitives/',
       },
       {
@@ -56,8 +62,27 @@ describe('search index', () => {
         type: 'package',
         title: '@ho-dev/ui',
         package: '@ho-dev/ui',
+        category: 'Components',
+        summary: '',
+        keywords: ['@ho-dev/ui', 'components', 'ui'],
         path: '/packages/ui/',
       },
     ]);
+  });
+
+  it('adds category and keywords to every record', () => {
+    const records = buildSearch(REGISTRY, COMPONENTS);
+    expect(records).toHaveLength(3);
+    for (const record of records) {
+      expect(record.category).toBe('Components');
+      expect(record.summary).toBe('');
+      expect(record.keywords.length).toBeGreaterThan(0);
+      expect(record.keywords).toEqual([...record.keywords].sort());
+      expect(new Set(record.keywords).size).toBe(record.keywords.length);
+      for (const keyword of record.keywords) expect(keyword).toBe(keyword.toLowerCase());
+    }
+    const button = records[0];
+    expect(button.keywords).toContain('button');
+    expect(button.keywords).toContain('@ho-dev/primitives');
   });
 });
