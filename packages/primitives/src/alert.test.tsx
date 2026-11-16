@@ -43,6 +43,19 @@ describe('Alert', () => {
     expect(link).toHaveTextContent('Learn more');
   });
 
+  it('renders the description and link with the accessible text colour', () => {
+    const { getByText, getByRole } = render(
+      <Alert
+        variant="error"
+        title="Payment failed"
+        description="The card was declined."
+        link={{ label: 'Update card', href: '/cards' }}
+      />,
+    );
+    expect(getByText('The card was declined.')).toHaveClass('text-gray-700');
+    expect(getByRole('link')).toHaveClass('text-gray-700');
+  });
+
   it('does not render link when absent', () => {
     const { queryByRole } = render(<Alert title="Title" description="Description" />);
     expect(queryByRole('link')).not.toBeInTheDocument();

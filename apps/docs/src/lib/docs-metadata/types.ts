@@ -13,6 +13,7 @@ export interface PackageRecord {
   installState: 'pre-release' | 'published';
   exports: string[];
   category: string;
+  peers: Record<string, string>;
 }
 
 export interface PropRecord {
@@ -29,12 +30,53 @@ export interface VariantRecord {
   default: string | null;
 }
 
+/** The Playground screens a component page may link. */
+export const PLAYGROUND_SCREENS = ['dashboard', 'login', 'forms', 'orders', 'settings'] as const;
+
+export type PlaygroundScreen = (typeof PLAYGROUND_SCREENS)[number];
+
+export interface ComponentAccessibility {
+  keyboard: string;
+  aria: string;
+  focus: string;
+}
+
+/** Editorial content for one component page. Facts are generated, never stored here. */
+export interface ComponentDoc {
+  id: string;
+  summary: string;
+  whenToUse: string;
+  whenNotToUse: string;
+  accessibility: ComponentAccessibility;
+  related: string[];
+  playground?: PlaygroundScreen;
+}
+
+/** The example directories the portal promises per core component. */
+export const EXAMPLES_DIR = ['apps', 'docs', 'src', 'examples'] as const;
+
+export type ExampleKind = 'minimal' | 'realistic';
+
+export interface ExampleRecord {
+  id: string;
+  kind: ExampleKind;
+  path: string;
+  source: string;
+}
+
+export interface StoryRecord {
+  title: string;
+  id: string;
+}
+
 export interface ComponentRecord {
   id: string;
   package: string;
   exportName: string;
   props: PropRecord[];
   variants: Record<string, VariantRecord>;
+  story: StoryRecord;
+  sourceFile: string;
 }
 
 export interface SearchRecord {
@@ -74,6 +116,7 @@ export const CORE_COMPONENTS = [
   'Dropdown',
   'Card',
   'PageHeader',
+  'Form',
   'Field',
   'AreaChart',
   'Sidebar',

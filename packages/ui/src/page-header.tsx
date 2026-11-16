@@ -33,7 +33,9 @@ const PageHeader = ({ title, breadcrumb, className, ...props }: PageHeaderProps)
                 {!isLast && ' /'}
               </a>
             ) : (
-              <span className="text-primary font-medium">{item.label}</span>
+              <span className="text-primary dark:text-blue-light-400 font-medium">
+                {item.label}
+              </span>
             );
 
             return (

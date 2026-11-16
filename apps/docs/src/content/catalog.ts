@@ -70,7 +70,7 @@ export const catalog: Catalog = {
       category: 'Components',
       components: [
         { exportName: 'Field', id: 'field', core: true },
-        { exportName: 'Form', id: 'form' },
+        { exportName: 'Form', id: 'form', core: true },
       ],
     },
     {

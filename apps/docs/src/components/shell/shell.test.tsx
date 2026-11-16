@@ -21,10 +21,13 @@ describe('shell', () => {
   it('renders the header links', () => {
     renderWithTheme(<SiteHeader />);
     expect(screen.getByRole('link', { name: /holiveira docs/i })).toHaveAttribute('href', '/');
-    expect(screen.getByRole('link', { name: /storybook/i })).toHaveAttribute('href', '/');
+    expect(screen.getByRole('link', { name: /storybook/i })).toHaveAttribute(
+      'href',
+      'https://hugoliveirathor.github.io/holiveira-design-system/',
+    );
     expect(screen.getByRole('link', { name: /playground/i })).toHaveAttribute(
       'href',
-      '/playground/',
+      'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
     );
     expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute(
       'href',

@@ -1,5 +1,5 @@
 import { userEvent } from '@storybook/test';
-import { cleanup } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import React from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { axe } from 'vitest-axe';
@@ -117,6 +117,18 @@ describe('Dropdown — keyboard', () => {
     trigger.focus();
     await userEvent.keyboard('{Enter}');
     expect(trigger).toBeVisible();
+  });
+
+  it('closes on Escape and returns focus to the trigger', async () => {
+    const { getByRole, queryByRole } = render(<TestDropdown />);
+    const trigger = getByRole('button', { name: /menu/i });
+    trigger.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(getByRole('menu')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(queryByRole('menu')).not.toBeInTheDocument());
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it('opens on Space', async () => {

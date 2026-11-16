@@ -1,0 +1,158 @@
+[
+  {
+    "id": "alert",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/alert/minimal.tsx",
+    "source": "import { Alert } from '@ho-dev/primitives';\n\nexport function AlertMinimal() {\n  return (\n    <Alert\n      variant=\"info\"\n      title=\"Scheduled maintenance\"\n      description=\"Deployments pause on Saturday from 02:00 to 04:00 UTC.\"\n    />\n  );\n}\n"
+  },
+  {
+    "id": "alert",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/alert/realistic.tsx",
+    "source": "import { Alert } from '@ho-dev/primitives';\n\nexport function AlertRealistic() {\n  return (\n    <div className=\"space-y-4\">\n      <Alert\n        variant=\"error\"\n        title=\"Payment failed\"\n        description=\"The card ending in 4242 was declined by the issuer. Retry with another payment method.\"\n        link={{ label: 'Update payment method', href: '#payment-methods' }}\n      />\n      <Alert\n        variant=\"success\"\n        title=\"Import finished\"\n        description=\"1,284 rows were imported and 6 were skipped because the email was missing.\"\n      />\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "area-chart",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/area-chart/minimal.tsx",
+    "source": "import { AreaChart } from '@ho-dev/charts';\n\nexport function AreaChartMinimal() {\n  return (\n    <AreaChart\n      label=\"Weekly revenue\"\n      height={260}\n      series={[\n        {\n          name: 'Revenue',\n          data: [\n            { x: 'Mon', y: 12 },\n            { x: 'Tue', y: 18 },\n            { x: 'Wed', y: 15 },\n            { x: 'Thu', y: 24 },\n            { x: 'Fri', y: 21 },\n          ],\n        },\n      ]}\n    />\n  );\n}\n"
+  },
+  {
+    "id": "area-chart",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/area-chart/realistic.tsx",
+    "source": "'use client';\n\nimport { AreaChart, ChartSkeleton } from '@ho-dev/charts';\n\nimport { useEffect, useState } from 'react';\n\nconst series = [\n  {\n    name: 'This month',\n    data: [\n      { x: 'Week 1', y: 4200 },\n      { x: 'Week 2', y: 5100 },\n      { x: 'Week 3', y: 4750 },\n      { x: 'Week 4', y: 6300 },\n    ],\n  },\n  {\n    name: 'Last month',\n    data: [\n      { x: 'Week 1', y: 3800 },\n      { x: 'Week 2', y: 4400 },\n      { x: 'Week 3', y: 4600 },\n      { x: 'Week 4', y: 5200 },\n    ],\n  },\n];\n\nexport function AreaChartRealistic() {\n  const [mounted, setMounted] = useState(false);\n\n  useEffect(() => {\n    setMounted(true);\n  }, []);\n\n  if (!mounted) {\n    return <ChartSkeleton height={300} />;\n  }\n\n  return (\n    <AreaChart\n      label=\"Revenue by week, this month compared with last month\"\n      description=\"Revenue grew in every week and closed the month 21% above the previous one.\"\n      height={300}\n      series={series}\n    />\n  );\n}\n"
+  },
+  {
+    "id": "badge",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/badge/minimal.tsx",
+    "source": "import { Badge } from '@ho-dev/primitives';\n\nexport function BadgeMinimal() {\n  return <Badge>Draft</Badge>;\n}\n"
+  },
+  {
+    "id": "badge",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/badge/realistic.tsx",
+    "source": "import { Badge } from '@ho-dev/primitives';\n\nconst statuses = [\n  { label: 'Paid', variant: 'success' as const, fill: 'solid' as const },\n  { label: 'Pending', variant: 'warning' as const, fill: 'light' as const },\n  { label: 'Refunded', variant: 'info' as const, fill: 'light' as const },\n  { label: 'Failed', variant: 'error' as const, fill: 'solid' as const },\n];\n\nexport function BadgeRealistic() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      {statuses.map((status) => (\n        <Badge key={status.label} variant={status.variant} fill={status.fill}>\n          {status.label}\n        </Badge>\n      ))}\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "button",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/button/minimal.tsx",
+    "source": "import { Button } from '@ho-dev/primitives';\n\nexport function ButtonMinimal() {\n  return <Button>Save changes</Button>;\n}\n"
+  },
+  {
+    "id": "button",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/button/realistic.tsx",
+    "source": "import { Button } from '@ho-dev/primitives';\n\nexport function ButtonRealistic() {\n  return (\n    <div className=\"flex flex-wrap items-center justify-end gap-3\">\n      <Button variant=\"outline\">Save draft</Button>\n      <Button variant=\"outline\" shape=\"rounded\">\n        Preview\n      </Button>\n      <Button>Publish release</Button>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "card",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/card/minimal.tsx",
+    "source": "import { Card } from '@ho-dev/ui';\n\nexport function CardMinimal() {\n  return <Card>Monthly revenue is up 12% compared with last month.</Card>;\n}\n"
+  },
+  {
+    "id": "card",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/card/realistic.tsx",
+    "source": "import { Card } from '@ho-dev/ui';\n\nconst metrics = [\n  { label: 'Open orders', value: '128', hint: '+12 this week' },\n  { label: 'Revenue', value: '$48.2k', hint: '+8.4% month over month' },\n  { label: 'Refund rate', value: '1.2%', hint: 'Within the target' },\n];\n\nexport function CardRealistic() {\n  return (\n    <div className=\"grid gap-4 sm:grid-cols-3\">\n      {metrics.map((metric) => (\n        <Card key={metric.label} variant=\"bordered\">\n          <p className=\"text-dark-4 dark:text-dark-6 text-sm\">{metric.label}</p>\n          <p className=\"text-dark mt-1 text-2xl font-semibold dark:text-white\">{metric.value}</p>\n          <p className=\"text-dark-4 dark:text-dark-6 mt-1 text-xs\">{metric.hint}</p>\n        </Card>\n      ))}\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "dropdown",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/dropdown/minimal.tsx",
+    "source": "'use client';\n\nimport { Dropdown, DropdownClose, DropdownContent, DropdownTrigger } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\nexport function DropdownMinimal() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>\n      <DropdownTrigger\n        chevron\n        className=\"border-stroke dark:border-dark-3 rounded-lg border px-4 py-2 text-sm font-medium\"\n      >\n        Actions\n      </DropdownTrigger>\n      <DropdownContent align=\"start\">\n        <DropdownClose>\n          <span className=\"block rounded px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-white/5\">\n            Edit order\n          </span>\n        </DropdownClose>\n      </DropdownContent>\n    </Dropdown>\n  );\n}\n"
+  },
+  {
+    "id": "dropdown",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/dropdown/realistic.tsx",
+    "source": "'use client';\n\nimport { Dropdown, DropdownClose, DropdownContent, DropdownTrigger } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\nconst actions = [\n  { label: 'Open order', hint: 'View the full timeline' },\n  { label: 'Duplicate', hint: 'Start from this order' },\n  { label: 'Archive', hint: 'Hide it from the open list' },\n];\n\nexport function DropdownRealistic() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <div className=\"flex justify-end\">\n      <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>\n        <DropdownTrigger\n          chevron\n          className=\"border-stroke dark:border-dark-3 rounded-lg border px-4 py-2 text-sm font-medium\"\n        >\n          Order actions\n        </DropdownTrigger>\n        <DropdownContent align=\"end\">\n          {actions.map((action) => (\n            <DropdownClose key={action.label}>\n              <span className=\"block rounded px-3 py-2 hover:bg-gray-50 dark:hover:bg-white/5\">\n                <span className=\"text-dark block text-sm font-medium dark:text-white\">\n                  {action.label}\n                </span>\n                <span className=\"text-dark-4 dark:text-dark-6 block text-xs\">{action.hint}</span>\n              </span>\n            </DropdownClose>\n          ))}\n        </DropdownContent>\n      </Dropdown>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "field",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/field/minimal.tsx",
+    "source": "import { Field } from '@ho-dev/forms';\n\nexport function FieldMinimal() {\n  return (\n    <Field label=\"Email address\">\n      <input\n        type=\"email\"\n        placeholder=\"you@example.com\"\n        className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n      />\n    </Field>\n  );\n}\n"
+  },
+  {
+    "id": "field",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/field/realistic.tsx",
+    "source": "import { Field } from '@ho-dev/forms';\n\nexport function FieldRealistic() {\n  return (\n    <div className=\"grid gap-4\">\n      <Field label=\"Company name\" description=\"Shown on invoices and receipts.\">\n        <input\n          type=\"text\"\n          placeholder=\"Acme Corp\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n        />\n      </Field>\n      <Field\n        label=\"Work email\"\n        description=\"We only use it for order updates.\"\n        error=\"Enter an email address on the company domain.\"\n      >\n        <input\n          type=\"email\"\n          placeholder=\"you@example.com\"\n          className=\"border-stroke dark:border-dark-3 dark:bg-dark-2 border-red focus:border-red w-full rounded-lg border px-5 py-3 outline-none\"\n        />\n      </Field>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "form",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/form/minimal.tsx",
+    "source": "'use client';\n\nimport { Field, Form } from '@ho-dev/forms';\nimport { Button } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\nexport function FormMinimal() {\n  const [sent, setSent] = useState(false);\n\n  return (\n    <Form\n      onSubmit={() => {\n        setSent(true);\n      }}\n    >\n      <Field label=\"Email address\">\n        <input\n          type=\"email\"\n          name=\"email\"\n          required\n          placeholder=\"you@example.com\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n        />\n      </Field>\n      <div className=\"flex flex-wrap items-center gap-3\">\n        <Button type=\"submit\">Subscribe</Button>\n        {sent && (\n          <p role=\"status\" className=\"text-dark-4 dark:text-dark-6 text-sm\">\n            Thanks — check your inbox.\n          </p>\n        )}\n      </div>\n    </Form>\n  );\n}\n"
+  },
+  {
+    "id": "form",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/form/realistic.tsx",
+    "source": "'use client';\n\nimport { Field, Form, useForm } from '@ho-dev/forms';\nimport { Button } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\ninterface ProfileValues {\n  email: string;\n  company: string;\n}\n\nexport function FormRealistic() {\n  const {\n    register,\n    handleSubmit,\n    reset,\n    formState: { errors },\n  } = useForm<ProfileValues>({ defaultValues: { email: '', company: '' } });\n  const [saved, setSaved] = useState(false);\n\n  return (\n    <Form\n      onSubmit={handleSubmit(() => {\n        setSaved(true);\n        reset();\n      })}\n    >\n      <Field\n        label=\"Work email\"\n        description=\"Used for invoices and receipts.\"\n        error={errors.email?.message}\n      >\n        <input\n          type=\"email\"\n          placeholder=\"you@example.com\"\n          aria-required=\"true\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n          {...register('email', { required: 'Enter your work email.' })}\n        />\n      </Field>\n      <Field label=\"Company\" error={errors.company?.message}>\n        <input\n          type=\"text\"\n          placeholder=\"Acme Corp\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n          {...register('company', { required: 'Tell us which company you work for.' })}\n        />\n      </Field>\n      <div className=\"flex flex-wrap items-center gap-3\">\n        <Button type=\"submit\">Save profile</Button>\n        {saved && (\n          <p role=\"status\" className=\"text-dark-4 dark:text-dark-6 text-sm\">\n            Profile saved.\n          </p>\n        )}\n      </div>\n    </Form>\n  );\n}\n"
+  },
+  {
+    "id": "header",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/header/minimal.tsx",
+    "source": "import { Header } from '@ho-dev/layouts';\n\nexport function HeaderMinimal() {\n  return (\n    <Header>\n      <span className=\"text-sm font-medium\">Dashboard</span>\n    </Header>\n  );\n}\n"
+  },
+  {
+    "id": "header",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/header/realistic.tsx",
+    "source": "import { Header, HeaderActions, HeaderToggle, SidebarProvider } from '@ho-dev/layouts';\n\nexport function HeaderRealistic() {\n  return (\n    <SidebarProvider>\n      <Header>\n        <HeaderToggle />\n        <nav aria-label=\"Example navigation\" className=\"flex items-center gap-4 text-sm\">\n          <a href=\"#orders\">Orders</a>\n          <a href=\"#customers\">Customers</a>\n        </nav>\n        <HeaderActions>\n          <span className=\"text-dark-4 dark:text-dark-6 text-sm\">jane@acme.com</span>\n        </HeaderActions>\n      </Header>\n    </SidebarProvider>\n  );\n}\n"
+  },
+  {
+    "id": "input-group",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/input-group/minimal.tsx",
+    "source": "import { InputGroup } from '@ho-dev/primitives';\n\nexport function InputGroupMinimal() {\n  return <InputGroup label=\"Email address\" type=\"email\" placeholder=\"you@example.com\" />;\n}\n"
+  },
+  {
+    "id": "input-group",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/input-group/realistic.tsx",
+    "source": "import { InputGroup } from '@ho-dev/primitives';\n\nexport function InputGroupRealistic() {\n  return (\n    <div className=\"grid gap-4 sm:grid-cols-2\">\n      <InputGroup\n        label=\"Search orders\"\n        placeholder=\"Order number or email\"\n        icon={<span aria-hidden=\"true\">⌕</span>}\n        iconPosition=\"left\"\n      />\n      <InputGroup\n        label=\"Work email\"\n        type=\"email\"\n        placeholder=\"you@example.com\"\n        required\n        error=\"Enter an email address on the company domain.\"\n      />\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "page-header",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/page-header/minimal.tsx",
+    "source": "import { PageHeader } from '@ho-dev/ui';\n\nexport function PageHeaderMinimal() {\n  return <PageHeader title=\"Orders\" />;\n}\n"
+  },
+  {
+    "id": "page-header",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/page-header/realistic.tsx",
+    "source": "import { PageHeader } from '@ho-dev/ui';\n\nexport function PageHeaderRealistic() {\n  return (\n    <PageHeader\n      title=\"Open orders\"\n      breadcrumb={[\n        { label: 'Dashboard', href: '/' },\n        { label: 'Orders', href: '/orders' },\n        { label: 'Open orders' },\n      ]}\n    />\n  );\n}\n"
+  },
+  {
+    "id": "sidebar",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/sidebar/minimal.tsx",
+    "source": "import { Sidebar, SidebarProvider } from '@ho-dev/layouts';\n\nexport function SidebarMinimal() {\n  return (\n    <div className=\"border-stroke dark:border-dark-3 h-[360px] overflow-hidden rounded-lg border\">\n      <SidebarProvider>\n        <Sidebar className=\"h-full\" logo={<span className=\"text-sm font-bold\">HQ</span>}>\n          <nav aria-label=\"Example navigation\" className=\"space-y-1\">\n            <a href=\"#dashboard\" className=\"block rounded-lg px-3 py-2 text-sm font-medium\">\n              Dashboard\n            </a>\n            <a href=\"#orders\" className=\"block rounded-lg px-3 py-2 text-sm font-medium\">\n              Orders\n            </a>\n          </nav>\n        </Sidebar>\n      </SidebarProvider>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "sidebar",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/sidebar/realistic.tsx",
+    "source": "import { Sidebar, SidebarProvider } from '@ho-dev/layouts';\n\nconst sections = [\n  { title: 'Overview', items: ['Dashboard', 'Analytics'] },\n  { title: 'Sales', items: ['Orders', 'Customers', 'Refunds'] },\n  { title: 'Workspace', items: ['Team', 'Settings'] },\n];\n\nexport function SidebarRealistic() {\n  return (\n    <div className=\"border-stroke dark:border-dark-3 flex h-[420px] overflow-hidden rounded-lg border\">\n      <SidebarProvider>\n        <Sidebar className=\"h-full\" logo={<span className=\"text-sm font-bold\">Holiveira Ops</span>}>\n          <nav aria-label=\"Example navigation\" className=\"space-y-6\">\n            {sections.map((section) => (\n              <div key={section.title}>\n                <p className=\"text-dark-4 dark:text-dark-6 px-3 pb-2 text-xs font-semibold uppercase\">\n                  {section.title}\n                </p>\n                <ul className=\"space-y-1\">\n                  {section.items.map((item) => (\n                    <li key={item}>\n                      <a\n                        href={`#${item.toLowerCase()}`}\n                        className=\"block rounded-lg px-3 py-2 text-sm font-medium\"\n                      >\n                        {item}\n                      </a>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n            ))}\n          </nav>\n        </Sidebar>\n      </SidebarProvider>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "table",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/table/minimal.tsx",
+    "source": "import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ho-dev/primitives';\n\nexport function TableMinimal() {\n  return (\n    <Table>\n      <caption className=\"sr-only\">Team members</caption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Name</TableHead>\n          <TableHead>Role</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow>\n          <TableCell>Ada Lovelace</TableCell>\n          <TableCell>Engineer</TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell>Grace Hopper</TableCell>\n          <TableCell>Compiler engineer</TableCell>\n        </TableRow>\n      </TableBody>\n    </Table>\n  );\n}\n"
+  },
+  {
+    "id": "table",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/table/realistic.tsx",
+    "source": "import {\n  Table,\n  TableBody,\n  TableCell,\n  TableFooter,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from '@ho-dev/primitives';\n\nconst orders = [\n  { id: 'ORD-1042', customer: 'Acme Corp', total: '$1,240.00' },\n  { id: 'ORD-1043', customer: 'Globex', total: '$320.00' },\n  { id: 'ORD-1044', customer: 'Initech', total: '$845.50' },\n];\n\nexport function TableRealistic() {\n  return (\n    <Table>\n      <caption className=\"sr-only\">Open orders with their totals</caption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Order</TableHead>\n          <TableHead>Customer</TableHead>\n          <TableHead>Total</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        {orders.map((order) => (\n          <TableRow key={order.id}>\n            <TableCell>{order.id}</TableCell>\n            <TableCell>{order.customer}</TableCell>\n            <TableCell>{order.total}</TableCell>\n          </TableRow>\n        ))}\n      </TableBody>\n      <TableFooter>\n        <TableRow>\n          <TableCell>3 open orders</TableCell>\n          <TableCell />\n          <TableCell>$2,405.50</TableCell>\n        </TableRow>\n      </TableFooter>\n    </Table>\n  );\n}\n"
+  }
+]

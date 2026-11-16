@@ -1,10 +1,10 @@
 /**
  * Generate the documentation metadata.
  *
- * Reads public manifests, barrels, TypeScript types, `cva` definitions, and the
- * curated catalog, then writes `registry.json`, `api.json`, and
- * `search-index.json` under `apps/docs/src/generated/`. `--check` regenerates in
- * memory and compares bytes; it never writes.
+ * Reads public manifests, barrels, TypeScript types, `cva` definitions, stories,
+ * example files, and the curated catalog, then writes `registry.json`, `api.json`,
+ * `search-index.json`, and `examples.json` under `apps/docs/src/generated/`.
+ * `--check` regenerates in memory and compares bytes; it never writes.
  *
  * Usage:
  *   tsx apps/docs/scripts/generate-docs-metadata.ts
@@ -16,11 +16,17 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { buildApi, createProgram, exportNames } from '../src/lib/docs-metadata/api';
+import {
+  assertCoreCoverage,
+  loadComponentDocs,
+  validateComponentDocs,
+} from '../src/lib/docs-metadata/content';
+import { assertExampleImports, buildExamples } from '../src/lib/docs-metadata/examples';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import { renderJson } from '../src/lib/docs-metadata/render';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
 import { buildSearch } from '../src/lib/docs-metadata/search';
-import type { Catalog } from '../src/lib/docs-metadata/types';
+import { CORE_COMPONENTS, PLAYGROUND_SCREENS, type Catalog } from '../src/lib/docs-metadata/types';
 
 import { elapsedMs, nowIso, writeGateReport } from '../../../scripts/lib/gate-report';
 
@@ -39,7 +45,7 @@ const startedAt = nowIso();
 const OUTPUT_DIR = join(ROOT, 'apps', 'docs', 'src', 'generated');
 const CATALOG_PATH = join(ROOT, 'apps', 'docs', 'src', 'content', 'catalog.ts');
 
-const FILES = ['registry.json', 'api.json', 'search-index.json'] as const;
+const FILES = ['registry.json', 'api.json', 'search-index.json', 'examples.json'] as const;
 
 async function loadCatalog(): Promise<Catalog> {
   if (!existsSync(CATALOG_PATH)) {
@@ -72,13 +78,31 @@ async function main(): Promise<void> {
     publicPackages: publicNames,
     exportsByPackage,
   });
+  const catalogIds = new Set(
+    catalog.packages.flatMap((entry) => (entry.components ?? []).map((component) => component.id)),
+  );
+  const coreComponentIds = catalog.packages.flatMap((entry) =>
+    (entry.components ?? []).filter((component) => component.core === true).map((c) => c.id),
+  );
+  const docs = validateComponentDocs(await loadComponentDocs(ROOT), {
+    catalogIds,
+    coreIds: CORE_COMPONENTS,
+    playgroundScreens: PLAYGROUND_SCREENS,
+  });
   const registry = buildRegistry({ manifests, catalog, exportsByPackage });
   const components = buildApi(program, ROOT, catalog);
   const search = buildSearch(registry, components);
+  const examples = buildExamples(ROOT);
+  assertCoreCoverage({ coreIds: coreComponentIds, docs, examples, components });
+  const privateNames = new Set(
+    manifests.filter((manifest) => manifest.private === true).map((manifest) => manifest.name),
+  );
+  assertExampleImports(examples, privateNames);
   const rendered: Record<(typeof FILES)[number], string> = {
     'registry.json': renderJson(registry),
     'api.json': renderJson(components),
     'search-index.json': renderJson(search),
+    'examples.json': renderJson(examples),
   };
 
   if (CHECK) {
@@ -122,7 +146,7 @@ async function main(): Promise<void> {
       });
     }
     console.log(
-      `✓ docs metadata current: ${registry.length} packages, ${components.length} components`,
+      `✓ docs metadata current: ${registry.length} packages, ${components.length} components, ${examples.length} examples`,
     );
     process.exit(0);
   }

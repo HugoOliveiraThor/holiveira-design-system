@@ -63,6 +63,21 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     }
   });
 
+  it('adds peers to the registry and the story to the api', () => {
+    const registry =
+      generated<Array<{ name: string; peers: Record<string, string> }>>('registry.json');
+    const primitives = registry.find((record) => record.name === '@ho-dev/primitives');
+    expect(primitives?.peers).toMatchObject({ react: '^19.0.0' });
+
+    const api =
+      generated<Array<{ id: string; story: { title: string; id: string }; sourceFile: string }>>(
+        'api.json',
+      );
+    const button = api.find((record) => record.id === 'button');
+    expect(button?.story).toEqual({ title: 'Primitives/Button', id: 'primitives-button' });
+    expect(button?.sourceFile).toBe('packages/primitives/src/button.tsx');
+  });
+
   it('records the real components in the api', () => {
     const api = generated<
       Array<{
@@ -129,9 +144,9 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
     );
   });
 
-  it('documents the three artifacts in the README', () => {
+  it('documents the generated artifacts in the README', () => {
     const readme = readFileSync(join(ROOT, 'apps', 'docs', 'README.md'), 'utf8');
-    for (const name of ['registry.json', 'api.json', 'search-index.json']) {
+    for (const name of ['registry.json', 'api.json', 'search-index.json', 'examples.json']) {
       expect(readme).toContain(name);
     }
     for (const field of [
@@ -197,6 +212,8 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
       'a11y.spec.ts',
       'drawer.spec.ts',
       'navigation.spec.ts',
+      'pages-a11y.spec.ts',
+      'pages.spec.ts',
       'search.spec.ts',
       'smoke.spec.ts',
       'theme.spec.ts',

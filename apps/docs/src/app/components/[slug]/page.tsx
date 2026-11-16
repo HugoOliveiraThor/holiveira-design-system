@@ -1,15 +1,22 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { docsHref, docsSite } from '../../../../site.config';
+import { ComponentPage, type PageExample } from '../../../components/docs/component-page';
 import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
+import { exampleComponent } from '../../../examples/registry';
 import {
   breadcrumbsForComponent,
+  componentDoc,
   componentSlugs,
   components,
+  examplesFor,
   pager,
+  packages,
+  playgroundHref,
   slugOf,
+  storyHref,
 } from '../../../lib/docs-metadata-query';
 
 export function generateStaticParams() {
@@ -27,69 +34,65 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const record = findComponent(slug);
+  const doc = record === undefined ? undefined : componentDoc(record.id);
   return {
     title: record ? `${record.exportName} — Holiveira Docs` : 'Component — Holiveira Docs',
-    robots: { index: false },
+    ...(doc === undefined ? {} : { description: doc.summary }),
   };
 }
 
-export default async function ComponentPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ComponentRoute({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const record = findComponent(slug);
-  if (!record) notFound();
+  if (record === undefined) notFound();
+
+  const doc = componentDoc(record.id);
+  const packageRecord = packages.find((entry) => entry.name === record.package);
+  const Preview = exampleComponent(record.id, 'realistic');
+  const sources = examplesFor(record.id);
+  if (
+    doc === undefined ||
+    packageRecord === undefined ||
+    Preview === undefined ||
+    sources.length < 2
+  ) {
+    notFound();
+  }
+
+  const examples: PageExample[] = sources.map((example) => ({
+    kind: example.kind,
+    label: example.kind === 'minimal' ? 'Minimal example' : 'Realistic example',
+    source: example.source,
+  }));
 
   const list: PagerItem[] = components.map((component) => ({
     id: component.id,
     label: component.exportName,
     href: `/components/${component.id}/`,
   }));
-  const variantNames = Object.keys(record.variants);
+
+  const packageSlug = slugOf(record.package);
 
   return (
-    <article className="space-y-8">
+    <div className="space-y-8">
       <Breadcrumbs crumbs={breadcrumbsForComponent(slug)} />
-      <header className="space-y-2">
-        <h1 className="text-dark text-2xl font-semibold dark:text-white">{record.exportName}</h1>
-        <p className="text-dark-4 dark:text-dark-6 text-sm">
-          <Link
-            href={`/packages/${slugOf(record.package)}/`}
-            className="hover:text-primary dark:text-blue-light-400"
-          >
-            {record.package}
-          </Link>{' '}
-          · {record.props.length} props
-        </p>
-      </header>
-      <section>
-        <h2 className="text-dark mb-2 text-lg font-semibold dark:text-white">Variants</h2>
-        {variantNames.length > 0 ? (
-          <dl className="space-y-1 text-sm">
-            {variantNames.map((name) => (
-              <div key={name} className="flex gap-2">
-                <dt className="text-dark-4 dark:text-dark-6 font-mono text-xs">{name}</dt>
-                <dd className="text-dark-4 dark:text-dark-6">
-                  {record.variants[name].values.join(', ')}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        ) : (
-          <p className="text-dark-4 dark:text-dark-6 text-sm">No variants.</p>
-        )}
-      </section>
-      <section className="border-stroke dark:border-stroke-dark rounded-lg border border-dashed p-4 text-sm">
-        <p className="text-dark font-medium dark:text-white">Not documented yet</p>
-        <p className="text-dark-4 dark:text-dark-6 mt-1">
-          The full component page — preview, usage, props table, and accessibility notes — arrives
-          in a later milestone. For component states, see Storybook.
-        </p>
-      </section>
+      <ComponentPage
+        record={record}
+        doc={doc}
+        packageRecord={packageRecord}
+        preview={<Preview />}
+        previewKey={`${record.id}/realistic`}
+        examples={examples}
+        related={doc.related}
+        sourceHref={`${docsSite.repositoryUrl}/blob/main/${record.sourceFile}`}
+        contractHref={`${docsSite.repositoryUrl}/blob/main/docs/architecture/contracts/${packageSlug}.md`}
+        packageHref={docsHref(`/packages/${packageSlug}/`)}
+        storyHref={storyHref(record.id)}
+        {...(doc.playground === undefined
+          ? {}
+          : { playgroundHref: playgroundHref(doc.playground) })}
+      />
       <Pager pager={pager(list, slug)} />
-      <p className="text-dark-4 dark:text-dark-6 text-xs">
-        <Link href="/packages/" className="hover:text-primary dark:text-blue-light-400">
-          All packages
-        </Link>
-      </p>
-    </article>
+    </div>
   );
 }

@@ -35,6 +35,13 @@ describe('InputGroup', () => {
     expect(input.type).toBe('password');
   });
 
+  it('renders the error with the accessible text colour', () => {
+    const { getByText } = render(<InputGroup label="Email" error="Invalid email" />);
+    const error = getByText('Invalid email');
+    expect(error.className).toContain('text-red-700');
+    expect(error.className).toContain('dark:text-red-400');
+  });
+
   it('renders with error message', () => {
     const { getByText } = render(
       <InputGroup type="text" label="Field" placeholder="test" error="This field is required" />,

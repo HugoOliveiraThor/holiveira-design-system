@@ -22,6 +22,7 @@ export interface PackageManifest {
   version: string;
   description?: string;
   private?: boolean;
+  peerDependencies?: Record<string, string>;
 }
 
 /** Read every `packages/<dir>/package.json`, sorted by name. */
@@ -45,6 +46,7 @@ export function readManifests(root: string): PackageManifest[] {
       version: parsed.version,
       description: parsed.description ?? '',
       private: parsed.private === true,
+      peerDependencies: sortedPeers(parsed.peerDependencies),
     });
   }
   return manifests.sort((a, b) => a.name.localeCompare(b.name));
@@ -53,6 +55,18 @@ export function readManifests(root: string): PackageManifest[] {
 /** Pre-release while the package is `0.x`; the catalogue never claims otherwise. */
 export function installStateFor(version: string): 'pre-release' | 'published' {
   return version.startsWith('0.') ? 'pre-release' : 'published';
+}
+
+/** Peer ranges as sorted key/value pairs; a package without peers records an empty map. */
+function sortedPeers(peers: unknown): Record<string, string> {
+  if (peers === null || typeof peers !== 'object' || Array.isArray(peers)) return {};
+  const source = peers as Record<string, unknown>;
+  const sorted: Record<string, string> = {};
+  for (const name of Object.keys(source).sort()) {
+    const range = source[name];
+    if (typeof range === 'string') sorted[name] = range;
+  }
+  return sorted;
 }
 
 export interface BuildRegistryInput {
@@ -86,6 +100,7 @@ export function buildRegistry({
         installState: installStateFor(manifest.version),
         exports: [...exportsList].sort(),
         category,
+        peers: sortedPeers(manifest.peerDependencies),
       };
     });
 }

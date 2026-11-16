@@ -8,13 +8,18 @@ import {
   componentSlugs,
   components,
   coversEveryCatalogueEntry,
+  examplesForSlug,
+  findComponentDoc,
   packages,
   packageSections,
+  playgroundHref,
   packageSlugs,
   pager,
   slugOf,
+  storyHref,
   unbuiltSections,
 } from './docs-metadata-query';
+import type { ComponentDoc, ExampleRecord } from './docs-metadata/types';
 
 describe('docs metadata query', () => {
   it('groups packages by category', () => {
@@ -106,6 +111,57 @@ describe('docs metadata query', () => {
     expect(coverage.missingPackages).toEqual([]);
     expect(coverage.missingComponents).toEqual([]);
     expect(components).toHaveLength(13);
+  });
+
+  it('returns the content record for a slug', () => {
+    const docs: ComponentDoc[] = [
+      {
+        id: 'button',
+        summary: 'Triggers an action.',
+        whenToUse: 'Use it for the primary action.',
+        whenNotToUse: 'Do not use it for navigation.',
+        accessibility: { keyboard: 'Enter and Space.', aria: 'Native button.', focus: 'Ring.' },
+        related: [],
+      },
+    ];
+    expect(findComponentDoc(docs, 'button')?.summary).toBe('Triggers an action.');
+    expect(findComponentDoc(docs, 'card')).toBeUndefined();
+  });
+
+  it('returns the examples for a slug in kind order', () => {
+    const examples: ExampleRecord[] = [
+      {
+        id: 'button',
+        kind: 'minimal',
+        path: 'apps/docs/src/examples/button/minimal.tsx',
+        source: 'a',
+      },
+      {
+        id: 'button',
+        kind: 'realistic',
+        path: 'apps/docs/src/examples/button/realistic.tsx',
+        source: 'b',
+      },
+      { id: 'card', kind: 'minimal', path: 'apps/docs/src/examples/card/minimal.tsx', source: 'c' },
+    ];
+    expect(examplesForSlug(examples, 'button').map((example) => example.kind)).toEqual([
+      'minimal',
+      'realistic',
+    ]);
+    expect(examplesForSlug(examples, 'alert')).toEqual([]);
+  });
+
+  it('builds absolute story and playground links', () => {
+    expect(storyHref('button')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/?path=/docs/primitives-button--docs',
+    );
+    expect(playgroundHref('forms')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/playground/forms/',
+    );
+    expect(playgroundHref('dashboard')).toBe(
+      'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
+    );
+    expect(storyHref('ghost')).toBe('');
   });
 
   it('lists unbuilt sections as disabled', () => {

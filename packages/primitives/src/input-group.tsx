@@ -89,7 +89,7 @@ const InputGroup = forwardRef<
         </div>
 
         {error && (
-          <p id={errorId} className="text-body-xs text-red mt-1">
+          <p id={errorId} className="text-body-xs mt-1 text-red-700 dark:text-red-400">
             {error}
           </p>
         )}

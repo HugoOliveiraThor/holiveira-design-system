@@ -41,19 +41,20 @@ function Dropdown({ children, isOpen, setIsOpen }: DropdownProps) {
   const { save, restore } = useFocusRestore();
 
   useEffect(() => {
-    if (isOpen) {
-      save();
-    } else if (wasOpen.current) {
+    if (!isOpen && wasOpen.current) {
       restore();
     }
     wasOpen.current = isOpen;
-  }, [isOpen, save, restore]);
+  }, [isOpen, restore]);
 
   function handleClose() {
     setIsOpen(false);
   }
 
   function handleOpen() {
+    // Save before the menu mounts: its focus trap moves focus into the menu, so a
+    // later read would restore the unmounted item instead of the trigger.
+    save();
     setIsOpen(true);
   }
 
