@@ -32,29 +32,30 @@ function MyHeader() {
 
 ## Public API
 
-| Export             | Kind      | Description                                                    |
-| ------------------ | --------- | -------------------------------------------------------------- |
-| `SearchIcon`       | component | Magnifying glass icon                                          |
-| `CloseIcon`        | component | X dismiss icon                                                 |
-| `BellIcon`         | component | Notification bell icon                                         |
-| `CalendarIcon`     | component | Calendar icon                                                  |
-| `CheckIcon`        | component | Checkmark icon                                                 |
-| `ChevronUpIcon`    | component | Chevron up arrow icon                                          |
-| `MenuIcon`         | component | Hamburger menu icon                                            |
-| `MoonIcon`         | component | Moon icon (dark mode)                                          |
-| `SunIcon`          | component | Sun icon (light mode)                                          |
-| `UserIcon`         | component | User avatar icon                                               |
-|                    |           | _…and 28 more icon components (38 total, see full list below)_ |
-| `IconWrapper`      | component | Utility for building new icons with a11y defaults              |
-| `IconProps`        | type      | Props type for all icon components (`size`, `title`)           |
-| `IconWrapperProps` | type      | Props type for IconWrapper utility                             |
+| Export             | Kind      | Description                                          |
+| ------------------ | --------- | ---------------------------------------------------- |
+| `SearchIcon`       | component | Magnifying glass icon                                |
+| `CloseIcon`        | component | X dismiss icon                                       |
+| `BellIcon`         | component | Notification bell icon                               |
+| `CalendarIcon`     | component | Calendar icon                                        |
+| `CheckIcon`        | component | Checkmark icon                                       |
+| `ChevronUpIcon`    | component | Chevron up arrow icon                                |
+| `MenuIcon`         | component | Hamburger menu icon                                  |
+| `MoonIcon`         | component | Moon icon (dark mode)                                |
+| `SunIcon`          | component | Sun icon (light mode)                                |
+| `UserIcon`         | component | User avatar icon                                     |
+| `IconWrapper`      | component | Utility for building new icons with a11y defaults    |
+| `IconProps`        | type      | Props type for all icon components (`size`, `title`) |
+| `IconWrapperProps` | type      | Props type for IconWrapper utility                   |
 
-**Full icon list:** `AlertErrorIcon`, `AlertSuccessIcon`, `AlertWarningIcon`, `ArrowDownIcon`,
-`ArrowLeftIcon`, `ArrowUpIcon`, `AuthenticationIcon`, `CallIcon`, `CameraIcon`, `DotIcon`,
-`DownloadIcon`, `EmailIcon`, `FourCircleIcon`, `GlobeIcon`, `HomeIcon`, `LogOutIcon`,
-`MessageOutlineIcon`, `PasswordIcon`, `PencilSquareIcon`, `PieChartIcon`, `PreviewIcon`,
-`SettingsIcon`, `TableIcon`, `TrashIcon`, `TrendingUpIcon`, `UploadIcon`, `XIcon`, plus the 10
-listed above — **40 exports total** (38 components + 2 types).
+**Full icon list:** `AlertErrorIcon`, `AlertInfoIcon`, `AlertSuccessIcon`, `AlertWarningIcon`,
+`ArrowDownIcon`, `ArrowLeftIcon`, `ArrowRightIcon`, `ArrowUpIcon`, `AuthenticationIcon`, `BellIcon`,
+`CalendarIcon`, `CallIcon`, `CameraIcon`, `CheckIcon`, `ChevronDownIcon`, `ChevronRightIcon`,
+`ChevronUpIcon`, `CloseIcon`, `DotIcon`, `DownloadIcon`, `EmailIcon`, `EyeCloseIcon`, `EyeIcon`,
+`FilterIcon`, `FourCircleIcon`, `GlobeIcon`, `GoogleIcon`, `HomeIcon`, `IconWrapper`, `LogOutIcon`,
+`MenuIcon`, `MessageOutlineIcon`, `MoonIcon`, `MoreIcon`, `PasswordIcon`, `PencilSquareIcon`,
+`PieChartIcon`, `PreviewIcon`, `SearchIcon`, `SettingsIcon`, `SunIcon`, `TableIcon`, `TrashIcon`,
+`TrendingUpIcon`, `UploadIcon`, `UserIcon`, `XIcon`.
 
 All icons accept standard SVG props plus `className`. Icons inherit `currentColor` by default.
 

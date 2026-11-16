@@ -13,6 +13,22 @@ single source of truth for cross-package constant values.
 pnpm add @ho-dev/constants
 ```
 
+## Public API
+
+| Export                | Kind     | Description                            |
+| --------------------- | -------- | -------------------------------------- |
+| `ROUTES`              | object   | Route path tree                        |
+| `ROUTE_PATTERNS`      | object   | Path matching patterns                 |
+| `queryKeyFactory`     | function | TanStack Query key factory             |
+| `STORAGE_KEYS`        | object   | Storage key constants                  |
+| `EVENTS`              | object   | Custom event name constants            |
+| `PAGE_SIZE`           | number   | Default pagination page size           |
+| `DEBOUNCE_MS`         | number   | Default debounce delay in milliseconds |
+| `TOAST_DURATION`      | number   | Default toast display duration in ms   |
+| `MOBILE_BREAKPOINT`   | number   | Mobile breakpoint in pixels            |
+| `MAX_FILE_SIZE`       | number   | Maximum upload size in bytes           |
+| `MIN_PASSWORD_LENGTH` | number   | Minimum password length                |
+
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation. **Owns:** Shared constant definitions, route path tree, query

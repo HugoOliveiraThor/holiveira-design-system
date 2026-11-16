@@ -4,8 +4,8 @@ Composite UI components built on primitives for ready-to-use patterns.
 
 ## Purpose
 
-Breadcrumb navigation, ShowcaseSection display, and Card component with variants. Architectural
-role: high-level composed components built on `@ho-dev/primitives`.
+PageHeader, ShowcaseSection, the Card parts and ButtonGroup. Architectural role: high-level composed
+components built on `@ho-dev/primitives`.
 
 ## Installation
 
@@ -16,31 +16,43 @@ pnpm add @ho-dev/ui
 ## Usage
 
 ```tsx
-import { Breadcrumb, Card } from '@ho-dev/ui';
+import { Breadcrumb } from '@ho-dev/primitives';
+import { Card, CardContent, CardTitle, ShowcaseSection } from '@ho-dev/ui';
 
 function MyPage() {
   return (
-    <div>
+    <ShowcaseSection title="Settings">
       <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Settings' }]} />
-      <Card variant="outlined">
-        <p>Card content</p>
+      <Card variant="bordered">
+        <CardTitle>Card title</CardTitle>
+        <CardContent>
+          <p>Card content</p>
+        </CardContent>
       </Card>
-    </div>
+    </ShowcaseSection>
   );
 }
 ```
 
 ## Public API
 
-| Export                 | Kind      | Description                            |
-| ---------------------- | --------- | -------------------------------------- |
-| `Breadcrumb`           | component | Navigation breadcrumb trail            |
-| `BreadcrumbProps`      | type      | Breadcrumb component props             |
-| `ShowcaseSection`      | component | Section container for showcase layouts |
-| `ShowcaseSectionProps` | type      | ShowcaseSection props                  |
-| `Card`                 | component | Card container with cva variants       |
-| `cardVariants`         | function  | CVA variant definitions for Card       |
-| `CardProps`            | type      | Card component props                   |
+| Export                 | Kind      | Description                                     |
+| ---------------------- | --------- | ----------------------------------------------- |
+| `PageHeader`           | component | Page header with a title and breadcrumb trail   |
+| `PageHeaderProps`      | type      | PageHeader component props                      |
+| `ShowcaseSection`      | component | Section container for showcase layouts          |
+| `ShowcaseSectionProps` | type      | ShowcaseSection props                           |
+| `Card`                 | component | Card container with cva variants                |
+| `cardVariants`         | function  | CVA variant definitions for Card                |
+| `CardProps`            | type      | Card component props                            |
+| `CardImage`            | component | Card image with top or left orientation         |
+| `CardImageProps`       | type      | CardImage component props                       |
+| `CardTitle`            | component | Card title heading (h2, h3 or h4)               |
+| `CardTitleProps`       | type      | CardTitle component props                       |
+| `CardContent`          | component | Neutral card content container                  |
+| `CardContentProps`     | type      | CardContent component props                     |
+| `ButtonGroup`          | component | Joined button group composing primitive Buttons |
+| `ButtonGroupProps`     | type      | ButtonGroup component props                     |
 
 ## Peer Dependencies
 
@@ -64,8 +76,12 @@ Contract: `docs/architecture/contracts/ui.md`
 
 ## Documentation
 
-- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-breadcrumb--docs)
-  — Breadcrumb
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/primitives-breadcrumb--docs)
+  — Breadcrumb (`@ho-dev/primitives`)
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-pageheader--docs)
+  — PageHeader
+- [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-buttongroup--docs)
+  — ButtonGroup
 - [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-card--docs)
   — Card
 - [Storybook](https://HugoOliveiraThor.github.io/holiveira-design-system/?path=/docs/ui-showcasesection--docs)

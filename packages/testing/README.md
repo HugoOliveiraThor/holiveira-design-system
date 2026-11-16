@@ -16,16 +16,27 @@ pnpm add @ho-dev/testing
 ## Usage
 
 ```tsx
-import { renderWithProviders, mockRouter } from '@ho-dev/testing';
-import { MyComponent } from './MyComponent';
+import { mockRouter, renderWithProviders } from '@ho-dev/testing';
 
-it('renders with providers', () => {
-  renderWithProviders(<MyComponent />);
-});
+import { describe, expect, it } from 'vitest';
 
-it('works with mocked router', () => {
-  mockRouter('/dashboard');
-  renderWithProviders(<MyComponent />);
+function MyComponent() {
+  return <span>content</span>;
+}
+
+describe('MyComponent', () => {
+  it('renders inside the configured providers', () => {
+    const { getByText } = renderWithProviders(<MyComponent />, { providers: [] });
+
+    expect(getByText('content')).toBeTruthy();
+  });
+
+  it('works with a mocked router', () => {
+    const router = mockRouter({ pathname: '/dashboard' });
+
+    expect(router.pathname).toBe('/dashboard');
+    renderWithProviders(<MyComponent />, { providers: [] });
+  });
 });
 ```
 

@@ -112,6 +112,5 @@ None — new utility. The monolith's `src/app/providers.tsx` stays in the applic
 
 ## See Also
 
-- `docs/architecture/provider-ownership.md` — ownership registry with third-party providers
-- `docs/architecture/dependency-rules.json` — machine-readable dependency validation
-- `docs/superpowers/specs/2026-07-19-monorepo-architecture-design.md` — architecture principles
+- `packages/providers/README.md` — usage, provider ordering and examples
+- `docs/architecture/contracts/theme.md` — the theme provider composed first

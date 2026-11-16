@@ -62,8 +62,6 @@ All icons follow the naming convention `PascalCaseIconName`:
 `AlertErrorIcon`, `AlertInfoIcon`, `FourCircleIcon`, `AuthenticationIcon`, `UploadIcon`, `EyeIcon`,
 `EyeCloseIcon`, `GoogleIcon`, `FilterIcon`, `MoreIcon`
 
-(47 components total at v0.1.0)
-
 ## Internal API
 
 None. Each icon lives in its own file under `src/icons/`. No sprite sheet, no registry.

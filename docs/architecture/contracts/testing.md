@@ -55,7 +55,7 @@ Single entry: `@ho-dev/testing`
 - No sub-path exports (`/jest`, `/playwright`, `/shared` are NOT created)
 - Sub-paths may be added later as non-breaking additive changes when justified
 
-## Public API (26 exports)
+## Public API
 
 ### Environment
 

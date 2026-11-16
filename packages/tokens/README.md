@@ -14,6 +14,23 @@ Architectural role: single source of truth for visual primitives. CSS tokens ava
 pnpm add @ho-dev/tokens
 ```
 
+## Public API
+
+| Export        | Kind   | Description                        |
+| ------------- | ------ | ---------------------------------- |
+| `colors`      | object | Colour palette keyed by CSS suffix |
+| `containers`  | object | Container width scale              |
+| `breakpoints` | object | Responsive breakpoints             |
+| `fontFamily`  | object | Font stacks                        |
+| `text`        | object | Typography scale                   |
+| `shadows`     | object | Shadow scale                       |
+| `minWidth`    | object | Minimum width scale                |
+| `aspectRatio` | object | Aspect ratio scale                 |
+| `animate`     | object | Animation scale                    |
+| `TokenValue`  | type   | Token value union                  |
+| `ColorKey`    | type   | Colour key union                   |
+| `Breakpoint`  | type   | Breakpoint key union               |
+
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation. **Owns:** Raw token definitions, CSS custom property

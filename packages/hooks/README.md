@@ -21,7 +21,8 @@ import { useClickOutside, useFocusTrap, useIsMobile } from '@ho-dev/hooks';
 function MyComponent() {
   const ref = useClickOutside<HTMLDivElement>(() => console.log('clicked outside'));
   const isMobile = useIsMobile();
-  useFocusTrap(ref);
+
+  useFocusTrap(true, ref);
 
   return <div ref={ref}>{isMobile ? 'Mobile' : 'Desktop'}</div>;
 }

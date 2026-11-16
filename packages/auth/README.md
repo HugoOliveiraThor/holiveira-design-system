@@ -18,17 +18,24 @@ Requires `next`, `react`, and a configured `@ho-dev/db` instance.
 ## Usage
 
 ```ts
-// Server-side
-import { auth } from '@ho-dev/auth';
-const session = await auth.api.getSession({ headers });
+import { auth, authClient, createProxy, useSession } from '@ho-dev/auth';
 
-// Client-side
-import { authClient, useSession } from '@ho-dev/auth';
-const { data: session } = useSession();
+// Server-side: read the session from the incoming request headers.
+export async function currentSession(headers: Headers) {
+  return auth.api.getSession({ headers });
+}
 
-// Middleware protection
-import { createProxy } from '@ho-dev/auth';
-export default createProxy({ auth, config: { publicRoutes: ['/sign-in'] } });
+// Client-side: the React binding.
+export function useCurrentSession() {
+  const { data: session } = useSession();
+
+  return session;
+}
+
+// Middleware protection.
+export const proxy = createProxy({ auth, signInPath: '/sign-in' });
+
+export const client = authClient;
 ```
 
 ## Public API
