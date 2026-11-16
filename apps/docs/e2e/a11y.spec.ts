@@ -18,8 +18,8 @@ test('axe finds no violations on the landing page in dark mode', async ({ page }
   expect(await axeViolations(page)).toEqual([]);
 });
 
-test('axe finds no violations on a component stub', async ({ page }) => {
-  await page.goto('./components/button/');
+test('axe finds no violations on a package page', async ({ page }) => {
+  await page.goto('./packages/primitives/');
   expect(await axeViolations(page)).toEqual([]);
 });
 

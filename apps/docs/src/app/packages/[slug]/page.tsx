@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { ComponentInventory } from '../../../components/docs/component-inventory';
+import { ExportsTable } from '../../../components/docs/exports-table';
+import { Installation } from '../../../components/docs/installation';
+import { PackageHeader } from '../../../components/docs/package-header';
+import { RelatedPackages, RelatedPages } from '../../../components/docs/related-links';
 import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
 import {
@@ -29,10 +34,15 @@ export async function generateMetadata({
   const record = findPackage(slug);
   return {
     title: record ? `${record.name} — Holiveira Docs` : 'Package — Holiveira Docs',
-    robots: { index: false },
   };
 }
 
+/**
+ * The package page contract (ADS-011 §5.7): header, installation, exports,
+ * components, related pages and related packages, in that order. Every fact
+ * comes from the generated registry; the page is indexable, like the component
+ * pages.
+ */
 export default async function PackagePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const record = findPackage(slug);
@@ -45,39 +55,14 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
   }));
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-10">
       <Breadcrumbs crumbs={breadcrumbsForPackage(slug)} />
-      <header className="space-y-2">
-        <h1 className="text-dark text-2xl font-semibold dark:text-white">{record.name}</h1>
-        <p className="text-dark-4 dark:text-dark-6 text-sm">
-          {record.version} · {record.installState} · {record.category}
-        </p>
-        <p className="text-dark-4 dark:text-dark-6 text-base">{record.description}</p>
-      </header>
-      <section>
-        <h2 className="text-dark mb-2 text-lg font-semibold dark:text-white">Exports</h2>
-        {record.exports.length > 0 ? (
-          <ul className="grid gap-1 text-sm sm:grid-cols-2">
-            {record.exports.map((entry) => (
-              <li
-                key={entry.name}
-                className="bg-gray-2 dark:bg-dark-2 rounded px-2 py-1 font-mono text-xs"
-              >
-                {entry.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-dark-4 dark:text-dark-6 text-sm">No runtime exports.</p>
-        )}
-      </section>
-      <section className="border-stroke dark:border-stroke-dark rounded-lg border border-dashed p-4 text-sm">
-        <p className="text-dark font-medium dark:text-white">Not documented yet</p>
-        <p className="text-dark-4 dark:text-dark-6 mt-1">
-          This package page will be completed in a later milestone. For component states, see
-          Storybook.
-        </p>
-      </section>
+      <PackageHeader record={record} />
+      <Installation record={record} />
+      <ExportsTable record={record} />
+      <ComponentInventory record={record} />
+      <RelatedPages pages={[]} />
+      <RelatedPackages packages={[]} />
       <Pager pager={pager(list, slug)} />
       <p className="text-dark-4 dark:text-dark-6 text-xs">
         <Link href="/packages/" className="hover:text-primary dark:text-blue-light-400">
