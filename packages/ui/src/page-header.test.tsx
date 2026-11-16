@@ -1,4 +1,4 @@
-import { cleanup } from '@testing-library/react';
+import { cleanup, within } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
 import { render } from './test-utils';
@@ -22,6 +22,18 @@ describe('PageHeader', () => {
     const { getByRole, getAllByText } = render(<PageHeader title="Profile" />);
     expect(getByRole('link', { name: /dashboard/i })).toBeVisible();
     expect(getAllByText('Profile')).toHaveLength(2);
+  });
+
+  it('keeps the current crumb legible in dark mode', () => {
+    const { getByRole } = render(
+      <PageHeader
+        title="Analytics"
+        breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Analytics' }]}
+      />,
+    );
+    const current = within(getByRole('navigation', { name: /breadcrumb/i })).getByText('Analytics');
+    expect(current.className).toContain('text-primary');
+    expect(current.className).toContain('dark:text-blue-light-400');
   });
 
   it('renders provided breadcrumb items', () => {
