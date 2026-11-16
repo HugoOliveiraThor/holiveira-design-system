@@ -212,6 +212,8 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
       'a11y.spec.ts',
       'drawer.spec.ts',
       'navigation.spec.ts',
+      'pages-a11y.spec.ts',
+      'pages.spec.ts',
       'search.spec.ts',
       'smoke.spec.ts',
       'theme.spec.ts',
