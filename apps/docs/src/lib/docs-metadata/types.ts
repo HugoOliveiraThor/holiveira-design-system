@@ -30,6 +30,28 @@ export interface VariantRecord {
   default: string | null;
 }
 
+/** The Playground screens a component page may link. */
+export const PLAYGROUND_SCREENS = ['login', 'forms', 'orders', 'settings'] as const;
+
+export type PlaygroundScreen = (typeof PLAYGROUND_SCREENS)[number];
+
+export interface ComponentAccessibility {
+  keyboard: string;
+  aria: string;
+  focus: string;
+}
+
+/** Editorial content for one component page. Facts are generated, never stored here. */
+export interface ComponentDoc {
+  id: string;
+  summary: string;
+  whenToUse: string;
+  whenNotToUse: string;
+  accessibility: ComponentAccessibility;
+  related: string[];
+  playground?: PlaygroundScreen;
+}
+
 /** The example directories the portal promises per core component. */
 export const EXAMPLES_DIR = ['apps', 'docs', 'src', 'examples'] as const;
 

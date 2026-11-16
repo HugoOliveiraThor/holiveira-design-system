@@ -16,12 +16,13 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { buildApi, createProgram, exportNames } from '../src/lib/docs-metadata/api';
+import { loadComponentDocs, validateComponentDocs } from '../src/lib/docs-metadata/content';
 import { assertExampleImports, buildExamples } from '../src/lib/docs-metadata/examples';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import { renderJson } from '../src/lib/docs-metadata/render';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
 import { buildSearch } from '../src/lib/docs-metadata/search';
-import type { Catalog } from '../src/lib/docs-metadata/types';
+import { CORE_COMPONENTS, PLAYGROUND_SCREENS, type Catalog } from '../src/lib/docs-metadata/types';
 
 import { elapsedMs, nowIso, writeGateReport } from '../../../scripts/lib/gate-report';
 
@@ -72,6 +73,14 @@ async function main(): Promise<void> {
   const catalog = validateCatalog(await loadCatalog(), {
     publicPackages: publicNames,
     exportsByPackage,
+  });
+  const catalogIds = new Set(
+    catalog.packages.flatMap((entry) => (entry.components ?? []).map((component) => component.id)),
+  );
+  validateComponentDocs(await loadComponentDocs(ROOT), {
+    catalogIds,
+    coreIds: CORE_COMPONENTS,
+    playgroundScreens: PLAYGROUND_SCREENS,
   });
   const registry = buildRegistry({ manifests, catalog, exportsByPackage });
   const components = buildApi(program, ROOT, catalog);

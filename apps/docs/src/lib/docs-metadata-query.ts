@@ -6,15 +6,60 @@
  * knows.
  */
 import apiData from '../generated/api.json';
+import examplesData from '../generated/examples.json';
 import registryData from '../generated/registry.json';
 import searchData from '../generated/search-index.json';
+import { docsSite } from '../../site.config';
 import { catalog } from '../content/catalog';
+import { componentDocs } from '../content/components';
 import { UNBUILT_SECTIONS, type UnbuiltSection } from '../content/navigation';
-import type { ComponentRecord, PackageRecord, SearchRecord } from './docs-metadata/types';
+import type {
+  ComponentDoc,
+  ComponentRecord,
+  ExampleRecord,
+  PackageRecord,
+  PlaygroundScreen,
+  SearchRecord,
+} from './docs-metadata/types';
 
-export const packages = registryData as PackageRecord[];
+export const packages = registryData as unknown as PackageRecord[];
 export const components = apiData as ComponentRecord[];
 export const searchRecords = searchData as SearchRecord[];
+export const examples = examplesData as ExampleRecord[];
+
+export function findComponentDoc(
+  docs: readonly ComponentDoc[],
+  id: string,
+): ComponentDoc | undefined {
+  return docs.find((doc) => doc.id === id);
+}
+
+export function examplesForSlug(list: readonly ExampleRecord[], id: string): ExampleRecord[] {
+  return list.filter((example) => example.id === id);
+}
+
+/** The editorial record for a component, when one exists. */
+export function componentDoc(id: string): ComponentDoc | undefined {
+  return findComponentDoc(componentDocs, id);
+}
+
+/** The generated examples for a component, in kind order. */
+export function examplesFor(id: string): ExampleRecord[] {
+  return examplesForSlug(examples, id);
+}
+
+/** The Storybook docs page of a component, from its generated story id. */
+export function storyHref(id: string): string {
+  const record = components.find((component) => component.id === id);
+  return record === undefined
+    ? ''
+    : `${docsSite.storybookPath}?path=/docs/${record.story.id}--docs`;
+}
+
+/** The Playground screen linked by a component page, when one exists. */
+export function playgroundHref(screen: PlaygroundScreen): string {
+  return `${docsSite.playgroundPath}${screen}/`;
+}
 
 export function slugOf(packageName: string): string {
   return packageName.replace(/^@[^/]+\//, '');

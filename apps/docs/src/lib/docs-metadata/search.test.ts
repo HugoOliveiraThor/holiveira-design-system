@@ -12,6 +12,7 @@ const REGISTRY: PackageRecord[] = [
     installState: 'pre-release',
     exports: ['Button'],
     category: 'Components',
+    peers: {},
   },
   {
     name: '@ho-dev/ui',
@@ -21,6 +22,7 @@ const REGISTRY: PackageRecord[] = [
     installState: 'pre-release',
     exports: ['Card'],
     category: 'Components',
+    peers: {},
   },
 ];
 
@@ -31,6 +33,8 @@ const COMPONENTS: ComponentRecord[] = [
     exportName: 'Button',
     props: [],
     variants: {},
+    story: { title: 'Primitives/Button', id: 'primitives-button' },
+    sourceFile: 'packages/primitives/src/button.tsx',
   },
 ];
 
