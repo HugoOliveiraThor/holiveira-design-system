@@ -16,6 +16,13 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/charts",
+    "peers": {
+      "apexcharts": "^4.0.0",
+      "next": "^16.4.1",
+      "react": "^19.0.0",
+      "react-apexcharts": "^1.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -42,6 +49,9 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/config",
+    "peers": {
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -63,6 +73,9 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/constants",
+    "peers": {
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -75,6 +88,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/eslint",
+    "peers": {
+      "eslint": ">=9.0.0 <10",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -110,6 +127,13 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/forms",
+    "peers": {
+      "flatpickr": "^4.0.0",
+      "react": "^19.0.0",
+      "react-hook-form": "^7.0.0",
+      "typescript": "^5.0.0",
+      "zod": "^3.0.0 || ^4.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -125,6 +149,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/hooks",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -143,6 +171,9 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/i18n",
+    "peers": {
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -202,6 +233,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/icons",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -233,6 +268,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/layouts",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -331,6 +370,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/primitives",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -345,6 +388,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/providers",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -358,6 +405,11 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/theme",
+    "peers": {
+      "next-themes": "^0.4.0",
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -380,6 +432,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/tokens",
+    "peers": {
+      "tailwindcss": "^4.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.1"
   },
@@ -399,6 +455,9 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/types",
+    "peers": {
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -424,6 +483,10 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/ui",
+    "peers": {
+      "react": "^19.0.0",
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   },
@@ -448,6 +511,9 @@
     ],
     "installState": "pre-release",
     "name": "@ho-dev/utils",
+    "peers": {
+      "typescript": "^5.0.0"
+    },
     "private": false,
     "version": "0.2.0"
   }

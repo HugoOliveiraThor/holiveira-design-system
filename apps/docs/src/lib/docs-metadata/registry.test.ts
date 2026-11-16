@@ -13,6 +13,7 @@ function fixturePackages(
     version: string;
     description?: string;
     private?: boolean;
+    peerDependencies?: Record<string, string>;
   }>,
 ): string {
   const root = mkdtempSync(join(tmpdir(), 'docs-registry-'));
@@ -27,6 +28,7 @@ function fixturePackages(
           version: pkg.version,
           description: pkg.description,
           private: pkg.private,
+          peerDependencies: pkg.peerDependencies,
         },
         null,
         2,
@@ -76,7 +78,26 @@ describe('package registry', () => {
       installState: 'pre-release',
       exports: ['Alpha', 'Zeta'],
       category: 'Components',
+      peers: {},
     });
+  });
+
+  it('records peer dependencies sorted by name', () => {
+    const root = fixturePackages([
+      {
+        dir: 'alpha',
+        name: '@ho-dev/alpha',
+        version: '0.2.1',
+        peerDependencies: { typescript: '^5.0.0', react: '^19.0.0' },
+      },
+    ]);
+    const registry = buildRegistry({
+      manifests: readManifests(root),
+      catalog: CATALOG,
+      exportsByPackage: EXPORTS,
+    });
+    expect(registry[0].peers).toEqual({ react: '^19.0.0', typescript: '^5.0.0' });
+    expect(Object.keys(registry[0].peers)).toEqual(['react', 'typescript']);
   });
 
   it('excludes private packages', () => {

@@ -13,6 +13,7 @@ export interface PackageRecord {
   installState: 'pre-release' | 'published';
   exports: string[];
   category: string;
+  peers: Record<string, string>;
 }
 
 export interface PropRecord {
