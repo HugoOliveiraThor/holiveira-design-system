@@ -51,6 +51,17 @@
     "generate:tokens:snapshot": "pnpm exec tsx scripts/update-tokens-snapshot.ts",
     "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,json,md,yml,yaml,css}": [
+      "prettier --write"
+    ],
+    "pnpm-lock.yaml": [],
+    "prisma/**": []
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/cli": "^2.31.1",
