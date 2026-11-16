@@ -10,7 +10,7 @@ import { join } from 'node:path';
 import ts from 'typescript';
 
 import { MetadataError } from './registry';
-import type { PropRecord, VariantRecord } from './types';
+import type { Catalog, ComponentRecord, PropRecord, VariantRecord } from './types';
 
 export function packageDir(packageName: string): string {
   return packageName.replace(/^@[^/]+\//, '');
@@ -193,4 +193,23 @@ export function extractVariants(
   }
 
   return { variants, defaults };
+}
+
+/** One API record per catalog component, sorted by id. */
+export function buildApi(program: ts.Program, root: string, catalog: Catalog): ComponentRecord[] {
+  const records: ComponentRecord[] = [];
+  for (const pkg of catalog.packages) {
+    for (const component of pkg.components ?? []) {
+      const { variants, defaults } = extractVariants(program, root, pkg.name, component.exportName);
+      const props = extractProps(program, root, pkg.name, component.exportName, defaults);
+      records.push({
+        id: component.id,
+        package: pkg.name,
+        exportName: component.exportName,
+        props,
+        variants,
+      });
+    }
+  }
+  return records.sort((a, b) => a.id.localeCompare(b.id));
 }

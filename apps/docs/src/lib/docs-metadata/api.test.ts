@@ -3,7 +3,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { createProgram, exportNames, extractProps, extractVariants } from './api';
+import { buildApi, createProgram, exportNames, extractProps, extractVariants } from './api';
+import type { Catalog } from './types';
 
 function write(root: string, relative: string, content: string): void {
   const file = join(root, relative);
@@ -172,5 +173,32 @@ describe('component api extraction', () => {
     const { variants } = extractVariants(program, root, '@ho-dev/primitives', 'Avatar');
     expect(Object.keys(variants)).toEqual(['size']);
     expect(variants.size.default).toBe('sm');
+  });
+
+  it('builds a component record with props and variants', () => {
+    const root = fixtureRoot();
+    const program = createProgram(root, PACKAGES);
+    const catalog: Catalog = {
+      packages: [
+        {
+          name: '@ho-dev/primitives',
+          category: 'Components',
+          components: [
+            { exportName: 'Button', id: 'button', core: true },
+            { exportName: 'Avatar', id: 'avatar' },
+          ],
+        },
+      ],
+    };
+    const api = buildApi(program, root, catalog);
+    expect(api.map((record) => record.id)).toEqual(['avatar', 'button']);
+    const button = api[1];
+    expect(button).toMatchObject({
+      id: 'button',
+      package: '@ho-dev/primitives',
+      exportName: 'Button',
+    });
+    expect(button.variants.variant.default).toBe('primary');
+    expect(button.props.find((prop) => prop.name === 'variant')?.default).toBe('primary');
   });
 });
