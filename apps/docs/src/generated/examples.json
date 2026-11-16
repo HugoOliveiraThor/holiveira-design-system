@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "id": "alert",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/alert/minimal.tsx",
+    "source": "import { Alert } from '@ho-dev/primitives';\n\nexport function AlertMinimal() {\n  return (\n    <Alert\n      variant=\"info\"\n      title=\"Scheduled maintenance\"\n      description=\"Deployments pause on Saturday from 02:00 to 04:00 UTC.\"\n    />\n  );\n}\n"
+  },
+  {
+    "id": "alert",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/alert/realistic.tsx",
+    "source": "import { Alert } from '@ho-dev/primitives';\n\nexport function AlertRealistic() {\n  return (\n    <div className=\"space-y-4\">\n      <Alert\n        variant=\"error\"\n        title=\"Payment failed\"\n        description=\"The card ending in 4242 was declined by the issuer. Retry with another payment method.\"\n        link={{ label: 'Update payment method', href: '#payment-methods' }}\n      />\n      <Alert\n        variant=\"success\"\n        title=\"Import finished\"\n        description=\"1,284 rows were imported and 6 were skipped because the email was missing.\"\n      />\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "badge",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/badge/minimal.tsx",
+    "source": "import { Badge } from '@ho-dev/primitives';\n\nexport function BadgeMinimal() {\n  return <Badge>Draft</Badge>;\n}\n"
+  },
+  {
+    "id": "badge",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/badge/realistic.tsx",
+    "source": "import { Badge } from '@ho-dev/primitives';\n\nconst statuses = [\n  { label: 'Paid', variant: 'success' as const, fill: 'solid' as const },\n  { label: 'Pending', variant: 'warning' as const, fill: 'light' as const },\n  { label: 'Refunded', variant: 'info' as const, fill: 'light' as const },\n  { label: 'Failed', variant: 'error' as const, fill: 'solid' as const },\n];\n\nexport function BadgeRealistic() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      {statuses.map((status) => (\n        <Badge key={status.label} variant={status.variant} fill={status.fill}>\n          {status.label}\n        </Badge>\n      ))}\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "button",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/button/minimal.tsx",
+    "source": "import { Button } from '@ho-dev/primitives';\n\nexport function ButtonMinimal() {\n  return <Button>Save changes</Button>;\n}\n"
+  },
+  {
+    "id": "button",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/button/realistic.tsx",
+    "source": "import { Button } from '@ho-dev/primitives';\n\nexport function ButtonRealistic() {\n  return (\n    <div className=\"flex flex-wrap items-center justify-end gap-3\">\n      <Button variant=\"outline\">Save draft</Button>\n      <Button variant=\"outline\" shape=\"rounded\">\n        Preview\n      </Button>\n      <Button>Publish release</Button>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "dropdown",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/dropdown/minimal.tsx",
+    "source": "'use client';\n\nimport { Dropdown, DropdownClose, DropdownContent, DropdownTrigger } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\nexport function DropdownMinimal() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>\n      <DropdownTrigger\n        chevron\n        className=\"border-stroke dark:border-dark-3 rounded-lg border px-4 py-2 text-sm font-medium\"\n      >\n        Actions\n      </DropdownTrigger>\n      <DropdownContent align=\"start\">\n        <DropdownClose>\n          <span className=\"block rounded px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-white/5\">\n            Edit order\n          </span>\n        </DropdownClose>\n      </DropdownContent>\n    </Dropdown>\n  );\n}\n"
+  },
+  {
+    "id": "dropdown",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/dropdown/realistic.tsx",
+    "source": "'use client';\n\nimport { Dropdown, DropdownClose, DropdownContent, DropdownTrigger } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\nconst actions = [\n  { label: 'Open order', hint: 'View the full timeline' },\n  { label: 'Duplicate', hint: 'Start from this order' },\n  { label: 'Archive', hint: 'Hide it from the open list' },\n];\n\nexport function DropdownRealistic() {\n  const [isOpen, setIsOpen] = useState(false);\n\n  return (\n    <div className=\"flex justify-end\">\n      <Dropdown isOpen={isOpen} setIsOpen={setIsOpen}>\n        <DropdownTrigger\n          chevron\n          className=\"border-stroke dark:border-dark-3 rounded-lg border px-4 py-2 text-sm font-medium\"\n        >\n          Order actions\n        </DropdownTrigger>\n        <DropdownContent align=\"end\">\n          {actions.map((action) => (\n            <DropdownClose key={action.label}>\n              <span className=\"block rounded px-3 py-2 hover:bg-gray-50 dark:hover:bg-white/5\">\n                <span className=\"text-dark block text-sm font-medium dark:text-white\">\n                  {action.label}\n                </span>\n                <span className=\"text-dark-4 dark:text-dark-6 block text-xs\">{action.hint}</span>\n              </span>\n            </DropdownClose>\n          ))}\n        </DropdownContent>\n      </Dropdown>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "input-group",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/input-group/minimal.tsx",
+    "source": "import { InputGroup } from '@ho-dev/primitives';\n\nexport function InputGroupMinimal() {\n  return <InputGroup label=\"Email address\" type=\"email\" placeholder=\"you@example.com\" />;\n}\n"
+  },
+  {
+    "id": "input-group",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/input-group/realistic.tsx",
+    "source": "import { InputGroup } from '@ho-dev/primitives';\n\nexport function InputGroupRealistic() {\n  return (\n    <div className=\"grid gap-4 sm:grid-cols-2\">\n      <InputGroup\n        label=\"Search orders\"\n        placeholder=\"Order number or email\"\n        icon={<span aria-hidden=\"true\">⌕</span>}\n        iconPosition=\"left\"\n      />\n      <InputGroup\n        label=\"Work email\"\n        type=\"email\"\n        placeholder=\"you@example.com\"\n        required\n        error=\"Enter an email address on the company domain.\"\n      />\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "table",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/table/minimal.tsx",
+    "source": "import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ho-dev/primitives';\n\nexport function TableMinimal() {\n  return (\n    <Table>\n      <caption className=\"sr-only\">Team members</caption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Name</TableHead>\n          <TableHead>Role</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow>\n          <TableCell>Ada Lovelace</TableCell>\n          <TableCell>Engineer</TableCell>\n        </TableRow>\n        <TableRow>\n          <TableCell>Grace Hopper</TableCell>\n          <TableCell>Compiler engineer</TableCell>\n        </TableRow>\n      </TableBody>\n    </Table>\n  );\n}\n"
+  },
+  {
+    "id": "table",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/table/realistic.tsx",
+    "source": "import {\n  Table,\n  TableBody,\n  TableCell,\n  TableFooter,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from '@ho-dev/primitives';\n\nconst orders = [\n  { id: 'ORD-1042', customer: 'Acme Corp', total: '$1,240.00' },\n  { id: 'ORD-1043', customer: 'Globex', total: '$320.00' },\n  { id: 'ORD-1044', customer: 'Initech', total: '$845.50' },\n];\n\nexport function TableRealistic() {\n  return (\n    <Table>\n      <caption className=\"sr-only\">Open orders with their totals</caption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Order</TableHead>\n          <TableHead>Customer</TableHead>\n          <TableHead>Total</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        {orders.map((order) => (\n          <TableRow key={order.id}>\n            <TableCell>{order.id}</TableCell>\n            <TableCell>{order.customer}</TableCell>\n            <TableCell>{order.total}</TableCell>\n          </TableRow>\n        ))}\n      </TableBody>\n      <TableFooter>\n        <TableRow>\n          <TableCell>3 open orders</TableCell>\n          <TableCell />\n          <TableCell>$2,405.50</TableCell>\n        </TableRow>\n      </TableFooter>\n    </Table>\n  );\n}\n"
+  }
+]

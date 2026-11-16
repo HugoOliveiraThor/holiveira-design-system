@@ -58,7 +58,7 @@ export function storyHref(id: string): string {
 
 /** The Playground screen linked by a component page, when one exists. */
 export function playgroundHref(screen: PlaygroundScreen): string {
-  return `${docsSite.playgroundPath}${screen}/`;
+  return screen === 'dashboard' ? docsSite.playgroundPath : `${docsSite.playgroundPath}${screen}/`;
 }
 
 export function slugOf(packageName: string): string {

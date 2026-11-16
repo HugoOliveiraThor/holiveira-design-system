@@ -31,7 +31,7 @@ export interface VariantRecord {
 }
 
 /** The Playground screens a component page may link. */
-export const PLAYGROUND_SCREENS = ['login', 'forms', 'orders', 'settings'] as const;
+export const PLAYGROUND_SCREENS = ['dashboard', 'login', 'forms', 'orders', 'settings'] as const;
 
 export type PlaygroundScreen = (typeof PLAYGROUND_SCREENS)[number];
 

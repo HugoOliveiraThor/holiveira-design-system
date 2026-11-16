@@ -7,4 +7,18 @@
  */
 import type { ComponentDoc } from '../../lib/docs-metadata/types';
 
-export const componentDocs: ComponentDoc[] = [];
+import { alertDoc } from './alert';
+import { badgeDoc } from './badge';
+import { buttonDoc } from './button';
+import { dropdownDoc } from './dropdown';
+import { inputGroupDoc } from './input-group';
+import { tableDoc } from './table';
+
+export const componentDocs: ComponentDoc[] = [
+  alertDoc,
+  badgeDoc,
+  buttonDoc,
+  dropdownDoc,
+  inputGroupDoc,
+  tableDoc,
+];

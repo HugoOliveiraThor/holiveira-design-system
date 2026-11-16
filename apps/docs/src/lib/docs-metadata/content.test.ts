@@ -6,7 +6,7 @@ import type { ComponentDoc } from './types';
 const CONTEXT: ContentContext = {
   catalogIds: new Set(['button', 'alert']),
   coreIds: ['button', 'alert'],
-  playgroundScreens: ['login', 'forms', 'orders', 'settings'],
+  playgroundScreens: ['dashboard', 'login', 'forms', 'orders', 'settings'],
 };
 
 function record(overrides: Partial<ComponentDoc> = {}): ComponentDoc {
@@ -64,10 +64,10 @@ describe('component content validation', () => {
   it('fails when a playground screen does not exist', () => {
     expect(() =>
       validateComponentDocs(
-        [record({ playground: 'dashboard' as ComponentDoc['playground'] })],
+        [record({ playground: 'billing' as ComponentDoc['playground'] })],
         CONTEXT,
       ),
-    ).toThrow(/content record button names playground dashboard, which does not exist/);
+    ).toThrow(/content record button names playground billing, which does not exist/);
   });
 
   it('fails when two records share an id', () => {

@@ -188,21 +188,51 @@ importers:
 
   apps/docs:
     dependencies:
+      '@ho-dev/charts':
+        specifier: workspace:*
+        version: link:../../packages/charts
+      '@ho-dev/forms':
+        specifier: workspace:*
+        version: link:../../packages/forms
+      '@ho-dev/layouts':
+        specifier: workspace:*
+        version: link:../../packages/layouts
+      '@ho-dev/primitives':
+        specifier: workspace:*
+        version: link:../../packages/primitives
       '@ho-dev/theme':
         specifier: workspace:*
         version: link:../../packages/theme
+      '@ho-dev/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@ho-dev/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      apexcharts:
+        specifier: ^4.5.0
+        version: 4.7.0
+      flatpickr:
+        specifier: ^4.6.13
+        version: 4.6.13
       next:
         specifier: ^16.4.5
         version: 16.4.5(@babel/core@7.29.7)(@playwright/test@1.62.1)(@types/node@22.20.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react:
         specifier: ^19.2.0
         version: 19.2.7
+      react-apexcharts:
+        specifier: ^1.7.0
+        version: 1.9.0(apexcharts@4.7.0)(react@19.2.7)
       react-dom:
         specifier: ^19.2.0
         version: 19.2.7(react@19.2.7)
+      react-hook-form:
+        specifier: ^7.82.0
+        version: 7.82.0(react@19.2.7)
+      zod:
+        specifier: ^4.3.6
+        version: 4.4.3
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.14.0
