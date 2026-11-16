@@ -46,6 +46,35 @@ export const ${name} = (props: ${name}Props) => null;
   return `${variants}${declarations}`;
 }
 
+function slugOf(exportName: string): string {
+  return exportName
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+const EXAMPLE_SOURCE = 'export function Example() {\n  return null;\n}\n';
+
+function contentRecord(id: string): string {
+  return `export const doc = {
+  id: '${id}',
+  summary: 'Example summary.',
+  whenToUse: 'Use it for the example.',
+  whenNotToUse: 'Do not use it for the example.',
+  accessibility: { keyboard: 'Keyboard behavior.', aria: 'ARIA behavior.', focus: 'Focus behavior.' },
+  related: [],
+};
+`;
+}
+
+function contentIndex(ids: string[]): string {
+  const imports = ids
+    .map((id, index) => `import { doc as doc${index} } from './${id}';`)
+    .join('\n');
+  const values = ids.map((_, index) => `doc${index}`).join(', ');
+  return `${imports}\n\nexport const componentDocs = [${values}];\n`;
+}
+
 function createFixture(): string {
   const root = mkdtempSync(join(tmpdir(), 'docs-metadata-cli-'));
   const packages: Array<[string, string, string[], boolean]> = [
@@ -68,6 +97,7 @@ function createFixture(): string {
     charts: 'Charts',
     layouts: 'Layouts',
   };
+  const componentIds: string[] = [];
   for (const [dir, name, components, withVariants] of packages) {
     write(root, `packages/${dir}/package.json`, manifest(name));
     if (components.length > 0) {
@@ -79,15 +109,16 @@ function createFixture(): string {
           '\n',
       );
       for (const component of components) {
-        const slug = component
-          .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-          .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-          .toLowerCase();
+        const slug = slugOf(component);
+        componentIds.push(slug);
         write(
           root,
           `packages/${dir}/src/${slug}.stories.tsx`,
           `export default { title: '${storyTitles[dir]}/${component}' };\n`,
         );
+        write(root, `apps/docs/src/content/components/${slug}.ts`, contentRecord(slug));
+        write(root, `apps/docs/src/examples/${slug}/minimal.tsx`, EXAMPLE_SOURCE);
+        write(root, `apps/docs/src/examples/${slug}/realistic.tsx`, EXAMPLE_SOURCE);
       }
     } else {
       write(
@@ -97,6 +128,7 @@ function createFixture(): string {
       );
     }
   }
+  write(root, 'apps/docs/src/content/components/index.ts', contentIndex(componentIds));
   write(
     root,
     'apps/docs/src/content/catalog.ts',
@@ -116,7 +148,7 @@ function createFixture(): string {
     ] },
     { name: '@ho-dev/forms', category: 'Components', components: [
       { exportName: 'Field', id: 'field', core: true },
-      { exportName: 'Form', id: 'form' },
+      { exportName: 'Form', id: 'form', core: true },
     ] },
     { name: '@ho-dev/charts', category: 'Components', components: [
       { exportName: 'AreaChart', id: 'area-chart', core: true },
@@ -210,7 +242,7 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     expect(run(root, ['--check']).output).toContain('6 packages, 13 components');
   });
 
-  it('lists each differing file', () => {
+  it('fails when a committed artifact is out of date', () => {
     const root = createFixture();
     expect(run(root).status).toBe(0);
     writeFileSync(join(root, 'apps', 'docs', 'src', 'generated', 'registry.json'), '{}\n');
@@ -262,6 +294,48 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     const fixtureGates = mkdtempSync(join(tmpdir(), 'docs-gates-'));
     expect(run(root, ['--check'], { HO_GATES_DIR: fixtureGates }).status).toBe(0);
     expect(readdirSync(fixtureGates)).toEqual([]);
+  });
+
+  it('fails when a core component has no record', () => {
+    const root = createFixture();
+    write(root, 'apps/docs/src/content/components/index.ts', 'export const componentDocs = [];\n');
+    const result = run(root);
+    expect(result.status).not.toBe(0);
+    expect(result.output).toContain('core component button has no content record');
+  });
+
+  it('fails when a core component is missing an example', () => {
+    const root = createFixture();
+    rmSync(join(root, 'apps', 'docs', 'src', 'examples', 'button', 'minimal.tsx'));
+    const result = run(root);
+    expect(result.status).not.toBe(0);
+    expect(result.output).toContain(
+      'core component button is missing the minimal example (expected apps/docs/src/examples/button/minimal.tsx)',
+    );
+  });
+
+  it('fails when an example imports a package source path', () => {
+    const root = createFixture();
+    write(
+      root,
+      'apps/docs/src/examples/button/minimal.tsx',
+      "import { Button } from '../../../packages/primitives/src/components';\n\nexport const Example = Button;\n",
+    );
+    const result = run(root);
+    expect(result.status).not.toBe(0);
+    expect(result.output).toContain('which is a package source path');
+  });
+
+  it('fails when two components share a story title', () => {
+    const root = createFixture();
+    write(
+      root,
+      'packages/primitives/src/badge.stories.tsx',
+      "export default { title: 'Primitives/Button' };\n",
+    );
+    const result = run(root);
+    expect(result.status).not.toBe(0);
+    expect(result.output).toContain('share the story title');
   });
 
   it('fails when the catalog is missing', () => {

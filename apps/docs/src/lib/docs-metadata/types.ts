@@ -116,6 +116,7 @@ export const CORE_COMPONENTS = [
   'Dropdown',
   'Card',
   'PageHeader',
+  'Form',
   'Field',
   'AreaChart',
   'Sidebar',

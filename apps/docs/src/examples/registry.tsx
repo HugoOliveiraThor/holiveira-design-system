@@ -36,7 +36,6 @@ import { SidebarRealistic } from './sidebar/realistic';
 import { TableMinimal } from './table/minimal';
 import { TableRealistic } from './table/realistic';
 
-
 type ExampleMap = Record<string, Partial<Record<ExampleKind, ComponentType>>>;
 
 const EXAMPLES: ExampleMap = {

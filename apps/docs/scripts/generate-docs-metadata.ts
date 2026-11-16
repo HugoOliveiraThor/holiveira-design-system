@@ -16,7 +16,11 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { buildApi, createProgram, exportNames } from '../src/lib/docs-metadata/api';
-import { loadComponentDocs, validateComponentDocs } from '../src/lib/docs-metadata/content';
+import {
+  assertCoreCoverage,
+  loadComponentDocs,
+  validateComponentDocs,
+} from '../src/lib/docs-metadata/content';
 import { assertExampleImports, buildExamples } from '../src/lib/docs-metadata/examples';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import { renderJson } from '../src/lib/docs-metadata/render';
@@ -77,7 +81,10 @@ async function main(): Promise<void> {
   const catalogIds = new Set(
     catalog.packages.flatMap((entry) => (entry.components ?? []).map((component) => component.id)),
   );
-  validateComponentDocs(await loadComponentDocs(ROOT), {
+  const coreComponentIds = catalog.packages.flatMap((entry) =>
+    (entry.components ?? []).filter((component) => component.core === true).map((c) => c.id),
+  );
+  const docs = validateComponentDocs(await loadComponentDocs(ROOT), {
     catalogIds,
     coreIds: CORE_COMPONENTS,
     playgroundScreens: PLAYGROUND_SCREENS,
@@ -86,6 +93,7 @@ async function main(): Promise<void> {
   const components = buildApi(program, ROOT, catalog);
   const search = buildSearch(registry, components);
   const examples = buildExamples(ROOT);
+  assertCoreCoverage({ coreIds: coreComponentIds, docs, examples, components });
   const privateNames = new Set(
     manifests.filter((manifest) => manifest.private === true).map((manifest) => manifest.name),
   );

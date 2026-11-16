@@ -14,8 +14,9 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+import { expectedExampleKinds } from './examples';
 import { MetadataError } from './registry';
-import type { ComponentDoc, PlaygroundScreen } from './types';
+import type { ComponentDoc, ExampleRecord, PlaygroundScreen, StoryRecord } from './types';
 import { PLAYGROUND_SCREENS } from './types';
 
 export interface ContentContext {
@@ -105,6 +106,43 @@ export function validateComponentDocs(value: unknown, context: ContentContext): 
   }
 
   return docs.sort((a, b) => a.id.localeCompare(b.id));
+}
+
+/**
+ * Every core component owes a record, a generated component, and both examples.
+ * The gate fails on the first missing piece and names it, so a half-written page
+ * never ships.
+ */
+export function assertCoreCoverage({
+  coreIds,
+  docs,
+  examples,
+  components,
+}: {
+  coreIds: readonly string[];
+  docs: readonly ComponentDoc[];
+  examples: readonly ExampleRecord[];
+  components: readonly { id: string; story: StoryRecord }[];
+}): void {
+  const docIds = new Set(docs.map((doc) => doc.id));
+  const componentIds = new Set(components.map((component) => component.id));
+  const exampleKeys = new Set(examples.map((example) => `${example.id}/${example.kind}`));
+
+  for (const id of coreIds) {
+    if (!docIds.has(id)) {
+      throw new MetadataError(`core component ${id} has no content record`);
+    }
+    if (!componentIds.has(id)) {
+      throw new MetadataError(`core component ${id} has no generated record`);
+    }
+    for (const kind of expectedExampleKinds()) {
+      if (!exampleKeys.has(`${id}/${kind}`)) {
+        throw new MetadataError(
+          `core component ${id} is missing the ${kind} example (expected apps/docs/src/examples/${id}/${kind}.tsx)`,
+        );
+      }
+    }
+  }
 }
 
 /** Load the editorial records the app imports, or an empty list before any exists. */

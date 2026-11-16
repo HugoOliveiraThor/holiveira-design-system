@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
+import { catalog } from '../../content/catalog';
+
 import { validateCatalog, type CatalogContext } from './catalog';
-import type { Catalog, CatalogPackage } from './types';
+import { CORE_COMPONENTS, type Catalog, type CatalogPackage } from './types';
 
 const CONTEXT: CatalogContext = {
   publicPackages: [
@@ -47,7 +49,7 @@ function packages(): CatalogPackage[] {
       category: 'Components',
       components: [
         { exportName: 'Field', id: 'field', core: true },
-        { exportName: 'Form', id: 'form' },
+        { exportName: 'Form', id: 'form', core: true },
       ],
     },
     {
@@ -71,6 +73,18 @@ function valid(): Catalog {
 }
 
 describe('catalog validation', () => {
+  it('marks all thirteen components as core', () => {
+    expect(CORE_COMPONENTS).toHaveLength(13);
+    const core = catalog.packages
+      .flatMap((entry) =>
+        (entry.components ?? [])
+          .filter((component) => component.core === true)
+          .map((component) => component.exportName),
+      )
+      .sort();
+    expect(core).toEqual([...CORE_COMPONENTS].sort());
+  });
+
   it('lists category, components and core flags', () => {
     const result = validateCatalog(valid(), CONTEXT);
     const primitives = result.packages.find((entry) => entry.name === '@ho-dev/primitives');
@@ -81,7 +95,7 @@ describe('catalog validation', () => {
       core: true,
     });
     const forms = result.packages.find((entry) => entry.name === '@ho-dev/forms');
-    expect(forms?.components).toContainEqual({ exportName: 'Form', id: 'form' });
+    expect(forms?.components).toContainEqual({ exportName: 'Form', id: 'form', core: true });
   });
 
   it('rejects a private package entry', () => {
@@ -100,7 +114,7 @@ describe('catalog validation', () => {
     );
   });
 
-  it('requires the twelve core components', () => {
+  it('requires the thirteen core components', () => {
     const catalog = valid();
     const primitives = catalog.packages[0];
     primitives.components = primitives.components?.filter(
