@@ -16,3 +16,4 @@ test-results
 playwright-report
 next-env.d.ts
 .specs
+/apps/docs/src/generated

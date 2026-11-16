@@ -12,6 +12,50 @@ import ts from 'typescript';
 import { MetadataError } from './registry';
 import type { Catalog, ComponentRecord, PropRecord, VariantRecord } from './types';
 
+/**
+ * Inherited native props worth documenting. React's HTML attribute types carry
+ * hundreds of props; the API page lists the common ones and the page contract
+ * links to the DOM for the rest.
+ */
+export const NATIVE_PROP_ALLOWLIST = new Set([
+  'children',
+  'className',
+  'id',
+  'style',
+  'role',
+  'title',
+  'tabIndex',
+  'aria-label',
+  'aria-describedby',
+  'aria-hidden',
+  'disabled',
+  'name',
+  'value',
+  'onClick',
+  'onChange',
+  'onBlur',
+  'onFocus',
+  'onKeyDown',
+  'placeholder',
+  'type',
+  'href',
+  'target',
+  'rel',
+  'alt',
+  'src',
+  'width',
+  'height',
+  'htmlFor',
+  'required',
+  'readOnly',
+  'checked',
+  'multiple',
+  'rows',
+  'cols',
+  'dir',
+  'lang',
+]);
+
 export function packageDir(packageName: string): string {
   return packageName.replace(/^@[^/]+\//, '');
 }
@@ -82,6 +126,7 @@ export function extractProps(
       const declaration = property.getDeclarations()?.[0];
       const fileName = declaration?.getSourceFile().fileName ?? '';
       const inherited = !fileName.startsWith(componentRoot);
+      if (inherited && !NATIVE_PROP_ALLOWLIST.has(property.name)) return null;
       return {
         name: property.name,
         type: checker.typeToString(checker.getTypeOfSymbolAtLocation(property, source)),
@@ -90,6 +135,7 @@ export function extractProps(
         origin: inherited ? ('inherited' as const) : ('component' as const),
       };
     })
+    .filter((prop): prop is PropRecord => prop !== null)
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 

@@ -17,7 +17,7 @@ function fixtureRoot(): string {
   write(
     root,
     'packages/types/src/index.ts',
-    'export interface NativeProps {\n  onClick?: () => void;\n  className?: string;\n}\n',
+    'export interface NativeProps {\n  onClick?: () => void;\n  className?: string;\n  dataFoo?: string;\n}\n',
   );
   write(
     root,
@@ -107,6 +107,7 @@ describe('component api extraction', () => {
     const onClick = props.find((prop) => prop.name === 'onClick');
     expect(onClick?.origin).toBe('inherited');
     expect(props.find((prop) => prop.name === 'disabled')?.origin).toBe('component');
+    expect(props.map((prop) => prop.name)).not.toContain('dataFoo');
   });
 
   it('fails when the props type cannot be resolved', () => {
