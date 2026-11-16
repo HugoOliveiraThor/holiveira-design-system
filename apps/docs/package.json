@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
+    "check:export": "tsx scripts/check-export.ts",
     "typecheck": "tsc --noEmit",
     "test:export": "next build && tsx scripts/check-export.ts",
     "generate:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts",
     "check:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts --check",
-    "test:e2e": "next build && playwright test"
+    "test:e2e": "next build && playwright test",
+    "test:e2e:built": "node scripts/require-export.mjs && playwright test"
   },
   "dependencies": {
     "@ho-dev/charts": "workspace:*",

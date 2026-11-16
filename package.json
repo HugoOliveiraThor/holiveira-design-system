@@ -19,6 +19,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:docs": "pnpm --filter @ho-dev/docs test:e2e",
+    "test:docs:built": "pnpm --filter @ho-dev/docs run test:e2e:built",
     "test:coverage": "vitest run --coverage",
     "test:visual": "pnpm run build:storybook && pnpm --filter @ho-dev/storybook run test:visual",
     "screenshots": "pnpm run build:storybook && node apps/storybook/scripts/capture-screenshots.mjs",
@@ -31,6 +32,7 @@
     "check:docs": "pnpm exec tsx scripts/check-docs.ts",
     "check:docs:metadata": "pnpm exec tsx apps/docs/scripts/generate-docs-metadata.ts --check",
     "check:docs:readme": "pnpm exec tsx scripts/check-readme-docs.ts",
+    "check:docs:export": "pnpm --filter @ho-dev/docs run check:export",
     "generate:docs:metadata": "pnpm exec tsx apps/docs/scripts/generate-docs-metadata.ts",
     "check:deps:peer": "pnpm peers check 2>&1 || true",
     "check:unused": "knip",
@@ -49,7 +51,10 @@
     "check:gates": "pnpm exec tsx scripts/check-gates.ts",
     "generate:tokens": "pnpm exec tsx scripts/generate-tokens.ts",
     "generate:tokens:snapshot": "pnpm exec tsx scripts/update-tokens-snapshot.ts",
-    "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts"
+    "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts",
+    "check:artifact": "pnpm exec tsx scripts/check-artifact.ts",
+    "check:clean": "pnpm exec tsx scripts/check-clean.ts",
+    "check:ci": "pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
