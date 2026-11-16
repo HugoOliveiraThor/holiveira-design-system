@@ -11,11 +11,11 @@ const registry = JSON.parse(
   description: string;
   category: string;
   installState: string;
-  exports: string[];
+  exports: Array<{ name: string; kind: string }>;
 }>;
 
 const slugs = registry.map((record) => record.name.split('/')[1]);
-const stubPaths = slugs.map((slug) => `packages/${slug}/`);
+const packagePath = (slug: string) => `packages/${slug}/`;
 
 test('landing renders the hero and package groups', async ({ page }) => {
   await page.goto('./');
@@ -59,18 +59,18 @@ test('package index links every package', async ({ page }) => {
   expect([...linked].sort()).toEqual([...slugs].sort());
 });
 
-test('package stub shows version, install state and exports', async ({ page }) => {
-  const record = registry.find((entry) => entry.name === '@ho-dev/primitives');
-  expect(record).toBeDefined();
-  await page.goto('./packages/primitives/');
-  const main = page.locator('main');
-  await expect(page.getByRole('heading', { level: 1, name: '@ho-dev/primitives' })).toBeVisible();
-  await expect(main.getByText(record!.version, { exact: false })).toBeVisible();
-  await expect(main.getByText(record!.installState, { exact: false }).first()).toBeVisible();
-  await expect(main.getByText(record!.category, { exact: false }).first()).toBeVisible();
-  await expect(main.getByText(record!.description)).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Exports' })).toBeVisible();
-  await expect(main.getByText(record!.exports[0], { exact: true })).toBeVisible();
+test('every package page shows its real install state', async ({ page }) => {
+  for (const record of registry) {
+    const slug = record.name.split('/')[1];
+    await page.goto(`./${packagePath(slug)}`);
+    const main = page.locator('main');
+    await expect(main, slug).toContainText(record.version);
+    await expect(main, slug).toContainText(record.installState);
+    if (record.installState === 'pre-release') {
+      await expect(main, slug).not.toContainText(`pnpm add ${record.name}`);
+      await expect(main, slug).toContainText('workspace:*');
+    }
+  }
 });
 
 test('component page renders the contract', async ({ page }) => {
@@ -90,25 +90,6 @@ test('component page renders the contract', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 2, name: section })).toBeVisible();
   }
   await expect(page.getByText('Not documented yet')).toHaveCount(0);
-});
-
-test('package stub pages state they are not documented', async ({ page }) => {
-  const base = test.info().project.use.baseURL as string;
-  for (const path of stubPaths) {
-    const response = await page.request.get(new URL(path, base).toString());
-    expect(response.status(), path).toBe(200);
-    expect(await response.text(), path).toContain('Not documented yet');
-  }
-});
-
-test('package stub pages make no completeness claim', async ({ page }) => {
-  const base = test.info().project.use.baseURL as string;
-  for (const path of stubPaths) {
-    const body = await (await page.request.get(new URL(path, base).toString())).text();
-    expect(body, path).not.toMatch(
-      /complete documentation|fully documented|available on npm|\bpublished\b/i,
-    );
-  }
 });
 
 test('every catalogue link resolves', async ({ page, request }) => {

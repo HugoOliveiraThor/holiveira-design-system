@@ -133,7 +133,8 @@ export function DocsSearch({ records }: DocsSearchProps) {
                   >
                     <span className="text-dark dark:text-white">{record.title}</span>
                     <span className="text-dark-4 dark:text-dark-6 text-xs">
-                      {record.type} · {record.package}
+                      {record.type}
+                      {record.package === undefined ? '' : ` · ${record.package}`}
                     </span>
                   </Link>
                 </li>

@@ -1,22 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+
+import { axeViolations } from './axe';
 
 const api = JSON.parse(
   readFileSync(join(process.cwd(), 'src', 'generated', 'api.json'), 'utf8'),
 ) as Array<{ id: string; exportName: string }>;
-
-async function axeViolations(page: import('@playwright/test').Page) {
-  // Settled state only: the theme toggle and the previews transition their colours,
-  // and axe samples computed styles in between frames.
-  await page.addStyleTag({
-    content: '*, *::before, *::after { transition: none !important; animation: none !important; }',
-  });
-  const results = await new AxeBuilder({ page }).analyze();
-  return results.violations;
-}
 
 async function focusedControl(page: import('@playwright/test').Page) {
   return page.evaluate(() => {

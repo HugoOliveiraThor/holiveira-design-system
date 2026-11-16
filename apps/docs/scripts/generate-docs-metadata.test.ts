@@ -13,6 +13,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { assertExportCoverage } from '../src/lib/docs-metadata/coverage';
+
 const CLI = join(process.cwd(), 'apps', 'docs', 'scripts', 'generate-docs-metadata.ts');
 const execFileAsync = promisify(execFile);
 
@@ -102,8 +104,10 @@ function createFixture(): string {
   const componentIds: string[] = [];
   for (const [dir, name, components, withVariants] of packages) {
     write(root, `packages/${dir}/package.json`, manifest(name));
+    write(root, `packages/${dir}/README.md`, `# ${name}\n`);
+    write(root, `docs/architecture/contracts/${dir}.md`, `# ${name}\n`);
     if (components.length > 0) {
-      write(root, `packages/${dir}/src/components.ts`, componentsFile(components, withVariants));
+      write(root, `packages/${dir}/src/components.tsx`, componentsFile(components, withVariants));
       write(
         root,
         `packages/${dir}/src/index.ts`,
@@ -130,6 +134,14 @@ function createFixture(): string {
       );
     }
   }
+  // A component the package ships without a story: the coverage report must
+  // count it as a Storybook fallback, not as an error.
+  write(root, 'packages/primitives/src/extra.tsx', 'export const Extra = () => null;\n');
+  const primitivesBarrel = join(root, 'packages', 'primitives', 'src', 'index.ts');
+  writeFileSync(
+    primitivesBarrel,
+    `${readFileSync(primitivesBarrel, 'utf8')}export { Extra } from './extra';\n`,
+  );
   write(
     root,
     'packages/db/package.json',
@@ -218,7 +230,13 @@ function walk(directory: string, prefix = ''): string[] {
   );
 }
 
-const GENERATED = ['api.json', 'examples.json', 'registry.json', 'search-index.json'];
+const GENERATED = [
+  'api.json',
+  'examples.json',
+  'guide-examples.json',
+  'registry.json',
+  'search-index.json',
+];
 
 describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
   it('writes only the generated directory', async () => {
@@ -244,10 +262,95 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     expect(result.output).toContain('docs metadata current');
   });
 
-  it('reports package and component counts', async () => {
+  it('produces identical artifacts on a second run', async () => {
+    const root = createFixture();
+    const directory = join(root, 'apps', 'docs', 'src', 'generated');
+    expect((await run(root)).status).toBe(0);
+    const first = GENERATED.map((file) => readFileSync(join(directory, file), 'utf8'));
+    expect((await run(root)).status).toBe(0);
+    const second = GENERATED.map((file) => readFileSync(join(directory, file), 'utf8'));
+    expect(second).toEqual(first);
+    expect((await run(root, ['--check'])).status).toBe(0);
+  });
+
+  it('names the package and export when the recorded set is short', () => {
+    expect(() =>
+      assertExportCoverage({
+        registry: [
+          {
+            name: '@ho-dev/alpha',
+            version: '0.2.0',
+            description: '',
+            private: false,
+            installState: 'pre-release',
+            exports: [],
+            componentExports: [],
+            category: 'Components',
+            peers: {},
+          },
+        ],
+        barrelExports: { '@ho-dev/alpha': ['Button'] },
+      }),
+    ).toThrow(/@ho-dev\/alpha exports Button, which is missing from registry.json/);
+  });
+
+  it('fails when a barrel export is missing from the registry', async () => {
     const root = createFixture();
     expect((await run(root)).status).toBe(0);
-    expect((await run(root, ['--check'])).output).toContain('6 packages, 13 components');
+    const path = join(root, 'apps', 'docs', 'src', 'generated', 'registry.json');
+    const committed = JSON.parse(readFileSync(path, 'utf8')) as Array<{
+      name: string;
+      exports: Array<{ name: string }>;
+    }>;
+    const primitives = committed.find((record) => record.name === '@ho-dev/primitives');
+    expect(primitives).toBeDefined();
+    primitives!.exports = primitives!.exports.filter((entry) => entry.name !== 'Badge');
+    writeFileSync(path, `${JSON.stringify(committed, null, 2)}\n`);
+
+    const result = await run(root, ['--check']);
+    expect(result.status).not.toBe(0);
+    expect(result.output).toContain(
+      '@ho-dev/primitives exports Badge, which is missing from registry.json',
+    );
+  });
+
+  it('fails when a package has no readme or contract', async () => {
+    const readme = createFixture();
+    rmSync(join(readme, 'packages', 'ui', 'README.md'));
+    const noReadme = await run(readme);
+    expect(noReadme.status).not.toBe(0);
+    expect(noReadme.output).toContain('@ho-dev/ui has no README');
+
+    const contract = createFixture();
+    rmSync(join(contract, 'docs', 'architecture', 'contracts', 'ui.md'));
+    const noContract = await run(contract);
+    expect(noContract.status).not.toBe(0);
+    expect(noContract.output).toContain('@ho-dev/ui has no architecture contract');
+  });
+
+  it('reports package, export, target and fallback counts', async () => {
+    const root = createFixture();
+    expect((await run(root)).status).toBe(0);
+    const registry = JSON.parse(
+      readFileSync(join(root, 'apps', 'docs', 'src', 'generated', 'registry.json'), 'utf8'),
+    ) as Array<{ componentExports: Array<{ story?: unknown }> }>;
+    const componentExports = registry.reduce(
+      (total, record) => total + record.componentExports.length,
+      0,
+    );
+    const fallbacks = registry.reduce(
+      (total, record) =>
+        total + record.componentExports.filter((component) => component.story === undefined).length,
+      0,
+    );
+    expect(componentExports).toBeGreaterThan(0);
+
+    const result = await run(root, ['--check']);
+    expect(result.status).toBe(0);
+    expect(result.output).toContain('6 packages, 13 components');
+    expect(result.output).toContain(
+      `${componentExports} component exports, 0 targeted, ${fallbacks} storybook fallbacks`,
+    );
   });
 
   it('fails when a committed artifact is out of date', async () => {

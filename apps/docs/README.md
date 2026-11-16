@@ -25,16 +25,22 @@ because the renderer owns those bytes.
 
 One record per public package, sorted by name:
 
-| Field          | Meaning                                                                |
-| -------------- | ---------------------------------------------------------------------- |
-| `name`         | Package name (`@ho-dev/<name>`)                                        |
-| `version`      | Version from the package manifest                                      |
-| `description`  | Manifest description                                                   |
-| `private`      | Always `false`; private packages are excluded                          |
-| `installState` | `pre-release` while the version is `0.x`, otherwise `published`        |
-| `exports`      | Runtime export names from the public barrel, sorted                    |
-| `category`     | Catalogue section (`Foundation`, `Utilities`, `Components`, `Tooling`) |
-| `peers`        | Declared peer dependencies as a name→range map, sorted                 |
+| Field              | Meaning                                                                                     |
+| ------------------ | ------------------------------------------------------------------------------------------- |
+| `name`             | Package name (`@ho-dev/<name>`)                                                             |
+| `version`          | Version from the package manifest                                                           |
+| `description`      | Manifest description                                                                        |
+| `private`          | Always `false`; private packages are excluded                                               |
+| `installState`     | `pre-release` while the version is `0.x`, otherwise `published`                             |
+| `exports`          | Every public barrel export, sorted by name, with the kind derived from its declaration      |
+| `componentExports` | Component exports, sorted by id: inventory slug, source file, and the story when one exists |
+| `category`         | Catalogue section (`Foundation`, `Utilities`, `Components`, `Tooling`)                      |
+| `peers`            | Declared peer dependencies as a name→range map, sorted                                      |
+
+`exports[].kind` is one of `component`, `hook`, `function`, `constant` or `type`, derived from the
+TypeScript checker: a PascalCase value declared in a `.tsx` file is a component, a `use`-prefixed
+export is a hook, and a value whose type has a call signature is a function.
+`componentExports[].story` is omitted when the package ships no story for that export.
 
 ### `api.json`
 
@@ -66,6 +72,14 @@ and then by kind (`minimal`, `realistic`):
 | `source` | File contents, verbatim; the code block shows this |
 
 The generator rejects an example that imports a private package or a path into `packages/`.
+
+### `guide-examples.json`
+
+One record per guide snippet under `apps/docs/src/examples/guides/`, sorted by path: `path` is the
+repo-relative file and `source` its verbatim contents, which the guide code block renders. A snippet
+is a public consumer: the generator rejects one that imports a private package or a path into
+`packages/`. A missing directory records an empty list; the guide gate fails on an orphan snippet
+once the guide records exist.
 
 ### `search-index.json`
 

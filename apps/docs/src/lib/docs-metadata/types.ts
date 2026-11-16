@@ -5,13 +5,30 @@
  * classification. `render.ts` turns these records into the committed bytes.
  */
 
+export type ExportKind = 'component' | 'hook' | 'function' | 'constant' | 'type';
+
+/** One public export of a package barrel, with the kind the checker derived. */
+export interface ExportRecord {
+  name: string;
+  kind: ExportKind;
+}
+
+/** One component export, anchored in its package page inventory. */
+export interface ComponentExportRecord {
+  id: string;
+  exportName: string;
+  sourceFile: string;
+  story?: StoryRecord;
+}
+
 export interface PackageRecord {
   name: string;
   version: string;
   description: string;
   private: false;
   installState: 'pre-release' | 'published';
-  exports: string[];
+  exports: ExportRecord[];
+  componentExports: ComponentExportRecord[];
   category: string;
   peers: Record<string, string>;
 }
@@ -64,6 +81,18 @@ export interface ExampleRecord {
   source: string;
 }
 
+/** One guide snippet file, read verbatim for a guide code block. */
+export interface GuideExampleRecord {
+  path: string;
+  source: string;
+}
+
+/** Where a component export is documented: a page, a guide, or a package anchor. */
+export type Target =
+  | { kind: 'page'; id: string }
+  | { kind: 'guide'; slug: string }
+  | { kind: 'anchor'; package: string; anchor: string };
+
 export interface StoryRecord {
   title: string;
   id: string;
@@ -81,9 +110,10 @@ export interface ComponentRecord {
 
 export interface SearchRecord {
   id: string;
-  type: 'package' | 'component';
+  type: 'package' | 'component' | 'guide';
   title: string;
-  package: string;
+  /** The owning package; a guide belongs to a section, not to a package. */
+  package?: string;
   category: string;
   summary: string;
   keywords: string[];

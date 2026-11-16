@@ -14,9 +14,12 @@
   "dependencies": {
     "@ho-dev/charts": "workspace:*",
     "@ho-dev/forms": "workspace:*",
+    "@ho-dev/icons": "workspace:*",
     "@ho-dev/layouts": "workspace:*",
     "@ho-dev/primitives": "workspace:*",
+    "@ho-dev/providers": "workspace:*",
     "@ho-dev/theme": "workspace:*",
+    "@ho-dev/tokens": "workspace:*",
     "@ho-dev/ui": "workspace:*",
     "@ho-dev/utils": "workspace:*"
   },

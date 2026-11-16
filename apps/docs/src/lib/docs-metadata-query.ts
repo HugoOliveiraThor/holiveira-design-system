@@ -7,25 +7,32 @@
  */
 import apiData from '../generated/api.json';
 import examplesData from '../generated/examples.json';
+import guideExamplesData from '../generated/guide-examples.json';
 import registryData from '../generated/registry.json';
 import searchData from '../generated/search-index.json';
-import { docsSite } from '../../site.config';
+import { docsHref, docsSite } from '../../site.config';
 import { catalog } from '../content/catalog';
 import { componentDocs } from '../content/components';
-import { UNBUILT_SECTIONS, type UnbuiltSection } from '../content/navigation';
+import { guideDocs as contentGuides } from '../content/guides';
+import { resolveTarget } from '../content/targets';
+import { GUIDE_SECTIONS, type GuideDoc } from './docs-metadata/guides';
+import { guideRouteSegments } from './docs-metadata/routes';
 import type {
   ComponentDoc,
   ComponentRecord,
   ExampleRecord,
+  GuideExampleRecord,
   PackageRecord,
   PlaygroundScreen,
   SearchRecord,
+  Target,
 } from './docs-metadata/types';
 
 export const packages = registryData as unknown as PackageRecord[];
 export const components = apiData as ComponentRecord[];
 export const searchRecords = searchData as SearchRecord[];
 export const examples = examplesData as ExampleRecord[];
+export const guideExamples = guideExamplesData as GuideExampleRecord[];
 
 export function findComponentDoc(
   docs: readonly ComponentDoc[],
@@ -46,6 +53,25 @@ export function componentDoc(id: string): ComponentDoc | undefined {
 /** The generated examples for a component, in kind order. */
 export function examplesFor(id: string): ExampleRecord[] {
   return examplesForSlug(examples, id);
+}
+
+/** The source of a guide snippet, read from the committed guide artifact. */
+export function snippetSource(path: string): string | undefined {
+  return guideExamples.find((example) => example.path === path)?.source;
+}
+
+/** The editorial record served on a guide route, when one exists. */
+export function guideBySlug(slug: string): GuideDoc | undefined {
+  return contentGuides.find((guide) => guide.slug === slug);
+}
+
+/**
+ * The route segments of a guide family, for `generateStaticParams`. The routes
+ * are fixed by ADS-011, so the export has a path for every one even before its
+ * content lands; the page resolves the record and calls `notFound()` without it.
+ */
+export function guideSlugs(family: string): string[] {
+  return guideRouteSegments(family);
 }
 
 /** The Storybook docs page of a component, from its generated story id. */
@@ -124,8 +150,66 @@ export function componentSections(): NavigationSection[] {
   );
 }
 
-export function unbuiltSections(): UnbuiltSection[] {
-  return UNBUILT_SECTIONS;
+/** The guide sections in ADS order, each item linking to its guide route. */
+export function guideSections(): NavigationSection[] {
+  return GUIDE_SECTIONS.flatMap((section) => {
+    const items = contentGuides
+      .filter((guide) => guide.section === section)
+      .map((guide) => ({ id: guide.slug, label: guide.title, href: `/${guide.slug}/` }));
+    return items.length === 0 ? [] : [{ category: section, items }];
+  });
+}
+
+/** A component the catalogue can document, resolved to where it lands. */
+export interface ComponentRelation {
+  id: string;
+  label: string;
+  target?: Target;
+}
+
+/** The guide's related packages, resolved against the registry. */
+export function relatedPackageLinks(names: readonly string[]): NavigationItem[] {
+  return names.flatMap((name) => {
+    const record = packages.find((entry) => entry.name === name);
+    return record === undefined
+      ? []
+      : [{ id: name, label: name, href: docsHref(`/packages/${slugOf(name)}/`) }];
+  });
+}
+
+/**
+ * The guide's related component exports, resolved to the page, guide or package
+ * anchor that documents them. A component the catalogue does not target keeps
+ * no target and is dropped by the caller.
+ */
+export function relatedComponentRelations(names: readonly string[]): ComponentRelation[] {
+  return names.flatMap((name) => {
+    const owner = packages.find((record) =>
+      record.componentExports.some((component) => component.exportName === name),
+    );
+    if (owner === undefined) return [];
+    return [{ id: name, label: name, target: resolveTarget(owner.name, name) }];
+  });
+}
+
+/** The guides whose editorial relations name this package. */
+export function relatedGuideLinks(packageName: string): NavigationItem[] {
+  return contentGuides
+    .filter((guide) => guide.related.packages.includes(packageName))
+    .map((guide) => ({ id: guide.slug, label: guide.title, href: docsHref(`/${guide.slug}/`) }));
+}
+
+/** The other packages that share this package's category. */
+export function sameCategoryPackageLinks(packageName: string): NavigationItem[] {
+  const record = packages.find((entry) => entry.name === packageName);
+  if (record === undefined) return [];
+  return packages
+    .filter((entry) => entry.category === record.category && entry.name !== record.name)
+    .map((entry) => ({
+      id: entry.name,
+      label: entry.name,
+      href: docsHref(`/packages/${slugOf(entry.name)}/`),
+    }));
 }
 
 export interface Crumb {
@@ -153,6 +237,12 @@ export function breadcrumbsForComponent(id: string): Crumb[] {
   ];
 }
 
+export function breadcrumbsForGuide(slug: string): Crumb[] {
+  const guide = guideBySlug(slug);
+  if (!guide) return [];
+  return [{ label: 'Home', href: '/' }, { label: guide.section }, { label: guide.title }];
+}
+
 export interface Pager<T> {
   previous: T | null;
   next: T | null;
@@ -165,6 +255,18 @@ export function pager<T extends { id: string }>(list: readonly T[], id: string):
     previous: index > 0 ? list[index - 1] : null,
     next: index < list.length - 1 ? list[index + 1] : null,
   };
+}
+
+/** The guide siblings in the record order the sidebar reads, for the pager. */
+export function guideNeighbours(slug: string): Pager<NavigationItem> {
+  return pager(
+    contentGuides.map((guide) => ({
+      id: guide.slug,
+      label: guide.title,
+      href: `/${guide.slug}/`,
+    })),
+    slug,
+  );
 }
 
 export interface CatalogueCoverage {

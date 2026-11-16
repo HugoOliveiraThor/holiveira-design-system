@@ -16,8 +16,11 @@ test('filters by title and keywords', async ({ page }) => {
   await page.goto('./');
   await page.keyboard.press('/');
   await page.getByRole('combobox').fill('butt');
-  await expect(page.getByRole('status')).toHaveText('1 results');
-  await expect(page.getByRole('option')).toContainText('Button');
+  const options = page.getByRole('option');
+  await expect(options).toHaveCount(3);
+  await expect(options.nth(0)).toContainText('Button');
+  await expect(options.nth(1)).toContainText('@ho-dev/primitives');
+  await expect(options.nth(2)).toContainText('@ho-dev/ui');
 });
 
 test('arrow keys move the active option', async ({ page }) => {
@@ -49,7 +52,7 @@ test('enter opens the active result at the docs base path', async ({ page }) => 
   expect(activeId).toMatch(/^docs-search-option-/);
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(
-    /\/holiveira-design-system\/docs\/(packages|components)\/[a-z0-9-]+\/$/,
+    /\/holiveira-design-system\/docs\/(packages|components|getting-started|foundations|guides|architecture)(\/[a-z0-9-]+)*\/$/,
   );
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
@@ -72,4 +75,16 @@ test('shows the no-results state', async ({ page }) => {
     'href',
     /\/holiveira-design-system\/docs\/packages\/$/,
   );
+});
+
+test('finds the theming guide and opens it', async ({ page }) => {
+  await page.goto('./');
+  await page.keyboard.press('/');
+  const input = page.getByRole('combobox');
+  await input.fill('theming');
+  await expect(page.getByRole('status')).toHaveText('1 results');
+  await expect(page.getByRole('option')).toContainText('Theming');
+  await input.press('Enter');
+  await expect(page).toHaveURL(/\/holiveira-design-system\/docs\/getting-started\/theming\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Theming');
 });

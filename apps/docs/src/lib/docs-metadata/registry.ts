@@ -8,7 +8,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-import type { Catalog, PackageRecord } from './types';
+import type { Catalog, ComponentExportRecord, ExportRecord, PackageRecord } from './types';
 
 export class MetadataError extends Error {
   constructor(message: string) {
@@ -72,13 +72,15 @@ function sortedPeers(peers: unknown): Record<string, string> {
 export interface BuildRegistryInput {
   manifests: PackageManifest[];
   catalog: Catalog;
-  exportsByPackage: Record<string, string[]>;
+  exportsByPackage: Record<string, ExportRecord[]>;
+  componentExportsByPackage: Record<string, ComponentExportRecord[]>;
 }
 
 export function buildRegistry({
   manifests,
   catalog,
   exportsByPackage,
+  componentExportsByPackage,
 }: BuildRegistryInput): PackageRecord[] {
   const categories = new Map(catalog.packages.map((entry) => [entry.name, entry.category]));
   return manifests
@@ -92,13 +94,18 @@ export function buildRegistry({
       if (exportsList === undefined) {
         throw new MetadataError(`no barrel exports found for ${manifest.name}`);
       }
+      const componentExports = componentExportsByPackage[manifest.name];
+      if (componentExports === undefined) {
+        throw new MetadataError(`no component exports found for ${manifest.name}`);
+      }
       return {
         name: manifest.name,
         version: manifest.version,
         description: manifest.description ?? '',
         private: false as const,
         installState: installStateFor(manifest.version),
-        exports: [...exportsList].sort(),
+        exports: [...exportsList].sort((a, b) => a.name.localeCompare(b.name)),
+        componentExports: [...componentExports].sort((a, b) => a.id.localeCompare(b.id)),
         category,
         peers: sortedPeers(manifest.peerDependencies),
       };

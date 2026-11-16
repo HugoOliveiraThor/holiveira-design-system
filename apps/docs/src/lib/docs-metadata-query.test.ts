@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
+import { guideDocs } from '../content/guides';
+
 import {
   assertCatalogueCoverage,
   breadcrumbsForComponent,
+  breadcrumbsForGuide,
   breadcrumbsForPackage,
   componentSections,
   componentSlugs,
@@ -10,14 +13,19 @@ import {
   coversEveryCatalogueEntry,
   examplesForSlug,
   findComponentDoc,
+  guideNeighbours,
+  guideSections,
   packages,
   packageSections,
   playgroundHref,
   packageSlugs,
   pager,
+  relatedComponentRelations,
+  relatedGuideLinks,
+  relatedPackageLinks,
+  sameCategoryPackageLinks,
   slugOf,
   storyHref,
-  unbuiltSections,
 } from './docs-metadata-query';
 import type { ComponentDoc, ExampleRecord } from './docs-metadata/types';
 
@@ -164,14 +172,146 @@ describe('docs metadata query', () => {
     expect(storyHref('ghost')).toBe('');
   });
 
-  it('lists unbuilt sections as disabled', () => {
-    const sections = unbuiltSections();
-    expect(sections.map((section) => section.title)).toEqual([
+  it('lists the guides whose relations name a package', () => {
+    const themes = relatedGuideLinks('@ho-dev/theme');
+    const slugs = themes.map((link) => link.id);
+    expect(slugs).toContain('getting-started/theming');
+    expect(slugs).toContain('guides/charts');
+    for (const link of themes) {
+      expect(link.href).toBe(`/holiveira-design-system/docs/${link.id}/`);
+      expect(link.label.length).toBeGreaterThan(0);
+    }
+    for (const guide of guideDocs) {
+      for (const name of guide.related.packages) {
+        expect(relatedGuideLinks(name).map((link) => link.id)).toContain(guide.slug);
+      }
+    }
+    expect(relatedGuideLinks('@ho-dev/config')).toEqual([]);
+    expect(relatedGuideLinks('@ho-dev/ghost')).toEqual([]);
+  });
+
+  it('lists the packages of the same category', () => {
+    expect(
+      sameCategoryPackageLinks('@ho-dev/primitives')
+        .map((link) => link.id)
+        .sort(),
+    ).toEqual([
+      '@ho-dev/charts',
+      '@ho-dev/forms',
+      '@ho-dev/icons',
+      '@ho-dev/layouts',
+      '@ho-dev/ui',
+    ]);
+    for (const link of sameCategoryPackageLinks('@ho-dev/primitives')) {
+      expect(link.href).toBe(`/holiveira-design-system/docs/packages/${link.id.split('/')[1]}/`);
+    }
+    expect(sameCategoryPackageLinks('@ho-dev/tokens').map((link) => link.id)).toEqual([
+      '@ho-dev/theme',
+    ]);
+    expect(sameCategoryPackageLinks('@ho-dev/config').map((link) => link.id)).toEqual([
+      '@ho-dev/eslint',
+    ]);
+    expect(sameCategoryPackageLinks('@ho-dev/ghost')).toEqual([]);
+    for (const record of packages) {
+      const others = sameCategoryPackageLinks(record.name).map((link) => link.id);
+      expect(others).not.toContain(record.name);
+    }
+  });
+
+  it('resolves related components through the target map', () => {
+    expect(relatedComponentRelations(['Button'])).toEqual([
+      { id: 'Button', label: 'Button', target: { kind: 'page', id: 'button' } },
+    ]);
+    expect(relatedComponentRelations(['ThemeProvider'])).toEqual([
+      {
+        id: 'ThemeProvider',
+        label: 'ThemeProvider',
+        target: { kind: 'guide', slug: 'getting-started/theming' },
+      },
+    ]);
+    expect(relatedComponentRelations(['Avatar'])).toEqual([
+      {
+        id: 'Avatar',
+        label: 'Avatar',
+        target: { kind: 'anchor', package: '@ho-dev/primitives', anchor: 'avatar' },
+      },
+    ]);
+    expect(relatedComponentRelations(['GhostWidget'])).toEqual([]);
+  });
+
+  it('links only the related packages that exist', () => {
+    expect(relatedPackageLinks(['@ho-dev/theme', '@ho-dev/ghost'])).toEqual([
+      {
+        id: '@ho-dev/theme',
+        label: '@ho-dev/theme',
+        href: '/holiveira-design-system/docs/packages/theme/',
+      },
+    ]);
+    expect(relatedPackageLinks(['@ho-dev/ghost'])).toEqual([]);
+  });
+
+  it('groups the twelve guides into the four ADS sections', () => {
+    const sections = guideSections();
+    expect(sections.map((section) => section.category)).toEqual([
       'Getting Started',
       'Foundations',
       'Guides',
       'Architecture',
     ]);
-    for (const section of sections) expect(section.items.length).toBeGreaterThan(0);
+    expect(sections.map((section) => section.items.length)).toEqual([3, 3, 5, 1]);
+    const items = sections.flatMap((section) => section.items);
+    expect(items).toHaveLength(12);
+    for (const item of items) {
+      expect(item.href).toBe(`/${item.id}/`);
+      expect(item.label.length).toBeGreaterThan(0);
+    }
+    expect(items.map((item) => item.id)).toEqual([
+      'getting-started',
+      'getting-started/installation',
+      'getting-started/theming',
+      'foundations/tokens',
+      'foundations/styling',
+      'foundations/accessibility',
+      'guides/providers',
+      'guides/forms',
+      'guides/charts',
+      'guides/layouts',
+      'guides/icons',
+      'architecture',
+    ]);
+  });
+
+  it('builds a breadcrumb trail with the section and the guide', () => {
+    expect(breadcrumbsForGuide('getting-started/installation')).toEqual([
+      { label: 'Home', href: '/' },
+      { label: 'Getting Started' },
+      { label: 'Installation' },
+    ]);
+    expect(breadcrumbsForGuide('architecture')).toEqual([
+      { label: 'Home', href: '/' },
+      { label: 'Architecture' },
+      { label: 'Architecture' },
+    ]);
+    expect(breadcrumbsForGuide('ghost/guide')).toEqual([]);
+  });
+
+  it('walks the guide order with the previous and next neighbour', () => {
+    const first = guideNeighbours('getting-started');
+    expect(first.previous).toBeNull();
+    expect(first.next).toEqual({
+      id: 'getting-started/installation',
+      label: 'Installation',
+      href: '/getting-started/installation/',
+    });
+
+    const middle = guideNeighbours('foundations/accessibility');
+    expect(middle.previous?.id).toBe('foundations/styling');
+    expect(middle.next?.id).toBe('guides/providers');
+
+    const last = guideNeighbours('architecture');
+    expect(last.previous?.id).toBe('guides/icons');
+    expect(last.next).toBeNull();
+
+    expect(guideNeighbours('ghost')).toEqual({ previous: null, next: null });
   });
 });

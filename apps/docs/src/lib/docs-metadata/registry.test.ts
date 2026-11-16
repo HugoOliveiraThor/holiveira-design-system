@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { buildRegistry, readManifests } from './registry';
-import type { Catalog } from './types';
+import type { Catalog, ComponentExportRecord, ExportRecord } from './types';
 
 function fixturePackages(
   packages: Array<{
@@ -45,7 +45,18 @@ const CATALOG: Catalog = {
   ],
 };
 
-const EXPORTS = { '@ho-dev/alpha': ['Zeta', 'Alpha'], '@ho-dev/beta': [] };
+const EXPORTS: Record<string, ExportRecord[]> = {
+  '@ho-dev/alpha': [
+    { name: 'Zeta', kind: 'type' },
+    { name: 'Alpha', kind: 'function' },
+  ],
+  '@ho-dev/beta': [],
+};
+
+const COMPONENTS: Record<string, ComponentExportRecord[]> = {
+  '@ho-dev/alpha': [],
+  '@ho-dev/beta': [],
+};
 
 describe('package registry', () => {
   it('derives registry from the public manifests', () => {
@@ -57,6 +68,7 @@ describe('package registry', () => {
       manifests: readManifests(root),
       catalog: CATALOG,
       exportsByPackage: EXPORTS,
+      componentExportsByPackage: COMPONENTS,
     });
     expect(registry.map((record) => record.name)).toEqual(['@ho-dev/alpha', '@ho-dev/beta']);
   });
@@ -69,6 +81,7 @@ describe('package registry', () => {
       manifests: readManifests(root),
       catalog: CATALOG,
       exportsByPackage: EXPORTS,
+      componentExportsByPackage: COMPONENTS,
     });
     expect(registry[0]).toEqual({
       name: '@ho-dev/alpha',
@@ -76,7 +89,11 @@ describe('package registry', () => {
       description: 'Alpha package',
       private: false,
       installState: 'pre-release',
-      exports: ['Alpha', 'Zeta'],
+      exports: [
+        { name: 'Alpha', kind: 'function' },
+        { name: 'Zeta', kind: 'type' },
+      ],
+      componentExports: [],
       category: 'Components',
       peers: {},
     });
@@ -95,6 +112,7 @@ describe('package registry', () => {
       manifests: readManifests(root),
       catalog: CATALOG,
       exportsByPackage: EXPORTS,
+      componentExportsByPackage: COMPONENTS,
     });
     expect(registry[0].peers).toEqual({ react: '^19.0.0', typescript: '^5.0.0' });
     expect(Object.keys(registry[0].peers)).toEqual(['react', 'typescript']);
@@ -108,7 +126,8 @@ describe('package registry', () => {
     const registry = buildRegistry({
       manifests: readManifests(root),
       catalog: { packages: [{ name: '@ho-dev/alpha', category: 'Components' }] },
-      exportsByPackage: { '@ho-dev/alpha': ['Alpha'] },
+      exportsByPackage: { '@ho-dev/alpha': [{ name: 'Alpha', kind: 'function' }] },
+      componentExportsByPackage: { '@ho-dev/alpha': [] },
     });
     expect(registry.map((record) => record.name)).toEqual(['@ho-dev/alpha']);
   });
@@ -119,6 +138,7 @@ describe('package registry', () => {
       manifests: readManifests(root),
       catalog: { packages: [{ name: '@ho-dev/beta', category: 'Foundation' }] },
       exportsByPackage: { '@ho-dev/beta': [] },
+      componentExportsByPackage: { '@ho-dev/beta': [] },
     });
     expect(registry).toHaveLength(1);
   });
@@ -130,6 +150,7 @@ describe('package registry', () => {
         manifests: readManifests(root),
         catalog: { packages: [] },
         exportsByPackage: { '@ho-dev/alpha': [] },
+        componentExportsByPackage: { '@ho-dev/alpha': [] },
       }),
     ).toThrow(/catalog has no entry for public package @ho-dev\/alpha/);
   });

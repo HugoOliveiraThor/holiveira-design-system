@@ -65,12 +65,20 @@ function indexStories(root: string, packageName: string): Map<string, string> {
   return bySlug;
 }
 
+/** The colocated story file of a component export, when the package ships one. */
+export function storyFileFor(
+  root: string,
+  packageName: string,
+  exportName: string,
+): string | undefined {
+  return indexStories(root, packageName).get(storySlug(exportName));
+}
+
 /** The story of a component export, read from its colocated story file. */
 export function resolveStory(root: string, packageName: string, exportName: string): StoryRecord {
   const directory = join(root, 'packages', packageName.replace(/^@[^/]+\//, ''), 'src');
-  const slug = storySlug(exportName);
-  const expected = join(directory, `${slug}.stories.tsx`);
-  const file = indexStories(root, packageName).get(slug);
+  const expected = join(directory, `${storySlug(exportName)}.stories.tsx`);
+  const file = storyFileFor(root, packageName, exportName);
   if (file === undefined) {
     throw new MetadataError(`${packageName} has no story for ${exportName} (expected ${expected})`);
   }
