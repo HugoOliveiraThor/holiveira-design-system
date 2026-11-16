@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
+import { guideDocs } from '../content/guides';
+
 import {
   assertCatalogueCoverage,
   breadcrumbsForComponent,
@@ -18,6 +20,10 @@ import {
   playgroundHref,
   packageSlugs,
   pager,
+  relatedComponentRelations,
+  relatedGuideLinks,
+  relatedPackageLinks,
+  sameCategoryPackageLinks,
   slugOf,
   storyHref,
 } from './docs-metadata-query';
@@ -164,6 +170,84 @@ describe('docs metadata query', () => {
       'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
     );
     expect(storyHref('ghost')).toBe('');
+  });
+
+  it('lists the guides whose relations name a package', () => {
+    const themes = relatedGuideLinks('@ho-dev/theme');
+    const slugs = themes.map((link) => link.id);
+    expect(slugs).toContain('getting-started/theming');
+    expect(slugs).toContain('guides/charts');
+    for (const link of themes) {
+      expect(link.href).toBe(`/holiveira-design-system/docs/${link.id}/`);
+      expect(link.label.length).toBeGreaterThan(0);
+    }
+    for (const guide of guideDocs) {
+      for (const name of guide.related.packages) {
+        expect(relatedGuideLinks(name).map((link) => link.id)).toContain(guide.slug);
+      }
+    }
+    expect(relatedGuideLinks('@ho-dev/config')).toEqual([]);
+    expect(relatedGuideLinks('@ho-dev/ghost')).toEqual([]);
+  });
+
+  it('lists the packages of the same category', () => {
+    expect(
+      sameCategoryPackageLinks('@ho-dev/primitives')
+        .map((link) => link.id)
+        .sort(),
+    ).toEqual([
+      '@ho-dev/charts',
+      '@ho-dev/forms',
+      '@ho-dev/icons',
+      '@ho-dev/layouts',
+      '@ho-dev/ui',
+    ]);
+    for (const link of sameCategoryPackageLinks('@ho-dev/primitives')) {
+      expect(link.href).toBe(`/holiveira-design-system/docs/packages/${link.id.split('/')[1]}/`);
+    }
+    expect(sameCategoryPackageLinks('@ho-dev/tokens').map((link) => link.id)).toEqual([
+      '@ho-dev/theme',
+    ]);
+    expect(sameCategoryPackageLinks('@ho-dev/config').map((link) => link.id)).toEqual([
+      '@ho-dev/eslint',
+    ]);
+    expect(sameCategoryPackageLinks('@ho-dev/ghost')).toEqual([]);
+    for (const record of packages) {
+      const others = sameCategoryPackageLinks(record.name).map((link) => link.id);
+      expect(others).not.toContain(record.name);
+    }
+  });
+
+  it('resolves related components through the target map', () => {
+    expect(relatedComponentRelations(['Button'])).toEqual([
+      { id: 'Button', label: 'Button', target: { kind: 'page', id: 'button' } },
+    ]);
+    expect(relatedComponentRelations(['ThemeProvider'])).toEqual([
+      {
+        id: 'ThemeProvider',
+        label: 'ThemeProvider',
+        target: { kind: 'guide', slug: 'getting-started/theming' },
+      },
+    ]);
+    expect(relatedComponentRelations(['Avatar'])).toEqual([
+      {
+        id: 'Avatar',
+        label: 'Avatar',
+        target: { kind: 'anchor', package: '@ho-dev/primitives', anchor: 'avatar' },
+      },
+    ]);
+    expect(relatedComponentRelations(['GhostWidget'])).toEqual([]);
+  });
+
+  it('links only the related packages that exist', () => {
+    expect(relatedPackageLinks(['@ho-dev/theme', '@ho-dev/ghost'])).toEqual([
+      {
+        id: '@ho-dev/theme',
+        label: '@ho-dev/theme',
+        href: '/holiveira-design-system/docs/packages/theme/',
+      },
+    ]);
+    expect(relatedPackageLinks(['@ho-dev/ghost'])).toEqual([]);
   });
 
   it('groups the twelve guides into the four ADS sections', () => {

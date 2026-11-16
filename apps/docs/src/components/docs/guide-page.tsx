@@ -1,18 +1,17 @@
-import { docsHref } from '../../../site.config';
-import { resolveTarget } from '../../content/targets';
 import type { GuideDoc } from '../../lib/docs-metadata/guides';
 import {
   breadcrumbsForGuide,
   guideNeighbours,
   packages,
+  relatedComponentRelations,
+  relatedPackageLinks,
   snippetSource,
-  slugOf,
 } from '../../lib/docs-metadata-query';
 import { Breadcrumbs } from '../shell/breadcrumbs';
 import { Pager } from '../shell/pager';
 
 import { CodeBlock } from './code-block';
-import { targetHref, type RelatedLink } from './related-links';
+import { relatedLinks, type RelatedLink } from './related-links';
 import { DocSection } from './section';
 
 /** The one package whose exported categories the tokens guide tabulates. */
@@ -25,29 +24,12 @@ function tokenCategories(): string[] {
     .map((entry) => entry.name);
 }
 
-/** The guide's related packages, resolved against the registry. */
-export function relatedPackageLinks(names: readonly string[]): RelatedLink[] {
-  return names.flatMap((name) => {
-    const record = packages.find((entry) => entry.name === name);
-    return record === undefined
-      ? []
-      : [{ id: name, label: name, href: docsHref(`/packages/${slugOf(name)}/`) }];
-  });
-}
-
 /**
- * The guide's related component exports, resolved to the page, guide or anchor
- * that documents them. A component the catalogue does not target is dropped.
+ * The guide's related components, resolved through the target map: a page, a
+ * guide or a package anchor. A component with no target is dropped.
  */
-export function relatedComponentLinks(names: readonly string[]): RelatedLink[] {
-  return names.flatMap((name) => {
-    const owner = packages.find((record) =>
-      record.componentExports.some((component) => component.exportName === name),
-    );
-    if (owner === undefined) return [];
-    const target = resolveTarget(owner.name, name);
-    return target === undefined ? [] : [{ id: name, label: name, href: targetHref(target) }];
-  });
+function relatedComponentLinks(names: readonly string[]): RelatedLink[] {
+  return relatedLinks(relatedComponentRelations(names));
 }
 
 function LinkPills({ links }: { links: readonly RelatedLink[] }) {

@@ -10,10 +10,11 @@ import examplesData from '../generated/examples.json';
 import guideExamplesData from '../generated/guide-examples.json';
 import registryData from '../generated/registry.json';
 import searchData from '../generated/search-index.json';
-import { docsSite } from '../../site.config';
+import { docsHref, docsSite } from '../../site.config';
 import { catalog } from '../content/catalog';
 import { componentDocs } from '../content/components';
 import { guideDocs as contentGuides } from '../content/guides';
+import { resolveTarget } from '../content/targets';
 import { GUIDE_SECTIONS, type GuideDoc } from './docs-metadata/guides';
 import { guideRouteSegments } from './docs-metadata/routes';
 import type {
@@ -24,6 +25,7 @@ import type {
   PackageRecord,
   PlaygroundScreen,
   SearchRecord,
+  Target,
 } from './docs-metadata/types';
 
 export const packages = registryData as unknown as PackageRecord[];
@@ -156,6 +158,58 @@ export function guideSections(): NavigationSection[] {
       .map((guide) => ({ id: guide.slug, label: guide.title, href: `/${guide.slug}/` }));
     return items.length === 0 ? [] : [{ category: section, items }];
   });
+}
+
+/** A component the catalogue can document, resolved to where it lands. */
+export interface ComponentRelation {
+  id: string;
+  label: string;
+  target?: Target;
+}
+
+/** The guide's related packages, resolved against the registry. */
+export function relatedPackageLinks(names: readonly string[]): NavigationItem[] {
+  return names.flatMap((name) => {
+    const record = packages.find((entry) => entry.name === name);
+    return record === undefined
+      ? []
+      : [{ id: name, label: name, href: docsHref(`/packages/${slugOf(name)}/`) }];
+  });
+}
+
+/**
+ * The guide's related component exports, resolved to the page, guide or package
+ * anchor that documents them. A component the catalogue does not target keeps
+ * no target and is dropped by the caller.
+ */
+export function relatedComponentRelations(names: readonly string[]): ComponentRelation[] {
+  return names.flatMap((name) => {
+    const owner = packages.find((record) =>
+      record.componentExports.some((component) => component.exportName === name),
+    );
+    if (owner === undefined) return [];
+    return [{ id: name, label: name, target: resolveTarget(owner.name, name) }];
+  });
+}
+
+/** The guides whose editorial relations name this package. */
+export function relatedGuideLinks(packageName: string): NavigationItem[] {
+  return contentGuides
+    .filter((guide) => guide.related.packages.includes(packageName))
+    .map((guide) => ({ id: guide.slug, label: guide.title, href: docsHref(`/${guide.slug}/`) }));
+}
+
+/** The other packages that share this package's category. */
+export function sameCategoryPackageLinks(packageName: string): NavigationItem[] {
+  const record = packages.find((entry) => entry.name === packageName);
+  if (record === undefined) return [];
+  return packages
+    .filter((entry) => entry.category === record.category && entry.name !== record.name)
+    .map((entry) => ({
+      id: entry.name,
+      label: entry.name,
+      href: docsHref(`/packages/${slugOf(entry.name)}/`),
+    }));
 }
 
 export interface Crumb {

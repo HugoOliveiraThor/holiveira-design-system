@@ -14,6 +14,8 @@ import {
   packageSlugs,
   packages,
   pager,
+  relatedGuideLinks,
+  sameCategoryPackageLinks,
   slugOf,
 } from '../../../lib/docs-metadata-query';
 
@@ -61,8 +63,8 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
       <Installation record={record} />
       <ExportsTable record={record} />
       <ComponentInventory record={record} />
-      <RelatedPages pages={[]} />
-      <RelatedPackages packages={[]} />
+      <RelatedPages pages={relatedGuideLinks(record.name)} />
+      <RelatedPackages packages={sameCategoryPackageLinks(record.name)} />
       <Pager pager={pager(list, slug)} />
       <p className="text-dark-4 dark:text-dark-6 text-xs">
         <Link href="/packages/" className="hover:text-primary dark:text-blue-light-400">
