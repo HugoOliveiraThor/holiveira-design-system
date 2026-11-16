@@ -11,23 +11,11 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { MetadataError } from './registry';
+import { GUIDE_ROUTES } from './routes';
 import type { PackageRecord, Target } from './types';
 
 /** The guide routes ADS-011 §5.7/§5.8 fixes. A target naming another fails the gate. */
-export const GUIDE_ROUTES = [
-  'getting-started',
-  'getting-started/installation',
-  'getting-started/theming',
-  'foundations/tokens',
-  'foundations/styling',
-  'foundations/accessibility',
-  'guides/providers',
-  'guides/forms',
-  'guides/charts',
-  'guides/layouts',
-  'guides/icons',
-  'architecture',
-] as const;
+export { GUIDE_ROUTES } from './routes';
 
 function packageDir(packageName: string): string {
   return packageName.replace(/^@[^/]+\//, '');

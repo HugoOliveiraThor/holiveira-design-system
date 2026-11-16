@@ -13,7 +13,10 @@ import searchData from '../generated/search-index.json';
 import { docsSite } from '../../site.config';
 import { catalog } from '../content/catalog';
 import { componentDocs } from '../content/components';
+import { guideDocs as contentGuides } from '../content/guides';
 import { UNBUILT_SECTIONS, type UnbuiltSection } from '../content/navigation';
+import type { GuideDoc } from './docs-metadata/guides';
+import { guideRouteSegments } from './docs-metadata/routes';
 import type {
   ComponentDoc,
   ComponentRecord,
@@ -54,6 +57,20 @@ export function examplesFor(id: string): ExampleRecord[] {
 /** The source of a guide snippet, read from the committed guide artifact. */
 export function snippetSource(path: string): string | undefined {
   return guideExamples.find((example) => example.path === path)?.source;
+}
+
+/** The editorial record served on a guide route, when one exists. */
+export function guideBySlug(slug: string): GuideDoc | undefined {
+  return contentGuides.find((guide) => guide.slug === slug);
+}
+
+/**
+ * The route segments of a guide family, for `generateStaticParams`. The routes
+ * are fixed by ADS-011, so the export has a path for every one even before its
+ * content lands; the page resolves the record and calls `notFound()` without it.
+ */
+export function guideSlugs(family: string): string[] {
+  return guideRouteSegments(family);
 }
 
 /** The Storybook docs page of a component, from its generated story id. */
