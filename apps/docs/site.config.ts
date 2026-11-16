@@ -6,4 +6,5 @@ export const docsSite = {
   status: 'pre-release' as const,
   storybookPath: '/',
   playgroundPath: '/playground/',
+  repositoryUrl: 'https://github.com/HugoOliveiraThor/holiveira-design-system',
 };
