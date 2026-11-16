@@ -199,11 +199,13 @@ export function assertGuideCoverage({
   snippets,
   packages,
   componentExports,
+  enforceOrphans = true,
 }: {
   guides: readonly GuideCoverageRecord[];
   snippets: readonly string[];
   packages: readonly string[];
   componentExports: readonly ComponentExportRef[];
+  enforceOrphans?: boolean;
 }): void {
   const snippetPaths = new Set(snippets);
   const packageNames = new Set(packages);
@@ -251,6 +253,7 @@ export function assertGuideCoverage({
     }
   }
 
+  if (!enforceOrphans) return;
   for (const path of snippets) {
     if (!referenced.has(path)) {
       throw new MetadataError(`snippet ${path} is referenced by no guide`);

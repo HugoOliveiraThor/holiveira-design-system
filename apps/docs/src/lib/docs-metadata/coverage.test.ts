@@ -272,6 +272,17 @@ describe('guide coverage', () => {
     ).toThrow(/snippet apps\/docs\/src\/examples\/guides\/orphan.tsx is referenced by no guide/);
   });
 
+  it('defers orphan enforcement while the guide set is incomplete', () => {
+    expect(() =>
+      assertGuideCoverage({
+        ...GUIDE_INPUT,
+        guides: [GUIDE],
+        snippets: [...GUIDE_INPUT.snippets, 'apps/docs/src/examples/guides/pending.tsx'],
+        enforceOrphans: false,
+      }),
+    ).not.toThrow();
+  });
+
   it('fails when a guide field is empty', () => {
     expect(() =>
       assertGuideCoverage({ guides: [{ ...GUIDE, summary: '' }], ...GUIDE_INPUT }),

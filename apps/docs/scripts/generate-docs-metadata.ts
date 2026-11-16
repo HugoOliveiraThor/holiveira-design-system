@@ -34,6 +34,7 @@ import {
   assertPackageCoverage,
   assertTargetCoverage,
   describeCoverage,
+  GUIDE_ROUTES,
   portalRoutes,
   type ComponentExportRef,
   type GuideCoverageRecord,
@@ -186,6 +187,9 @@ async function main(): Promise<void> {
       snippets: guideExamples.map((example) => example.path),
       packages: registry.map((record) => record.name),
       componentExports: componentExportRefs,
+      // The guide content lands in more than one task; an orphan is only
+      // provable once every route has its record.
+      enforceOrphans: guides.length >= GUIDE_ROUTES.length,
     });
   }
   const coverage = describeCoverage({ registry, resolve: resolveTarget });
