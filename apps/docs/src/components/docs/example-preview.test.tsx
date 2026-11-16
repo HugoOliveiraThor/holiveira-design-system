@@ -65,7 +65,7 @@ describe('example preview', () => {
         <div>example</div>
       </ExamplePreview>,
     );
-    expect(frame().className).not.toContain('dark');
+    expect(frame().classList.contains('dark')).toBe(false);
     expect(frame().closest('[data-theme]')).toBeNull();
   });
 

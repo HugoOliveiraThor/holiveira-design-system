@@ -5,7 +5,7 @@ import type { Crumb } from '../../lib/docs-metadata-query';
 export function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
   if (crumbs.length === 0) return null;
   return (
-    <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+    <nav aria-label="Breadcrumb trail" className="mb-6 text-sm">
       <ol className="flex flex-wrap items-center gap-2">
         {crumbs.map((crumb, index) => {
           const last = index === crumbs.length - 1;

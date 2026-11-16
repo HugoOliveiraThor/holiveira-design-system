@@ -83,7 +83,7 @@ export function ExamplePreview({ label, children }: { label: string; children: R
         <div
           data-preview-frame
           style={{ width: width === 'full' ? '100%' : `${width}px` }}
-          className="mx-auto max-w-full"
+          className="mx-auto max-w-full bg-white p-4 dark:bg-[#020D1A]"
         >
           <PreviewErrorBoundary>{children}</PreviewErrorBoundary>
         </div>

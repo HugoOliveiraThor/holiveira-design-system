@@ -57,7 +57,7 @@ export function ComponentPage({
     <article className="space-y-10">
       <header className="space-y-2">
         <p className="text-dark-4 dark:text-dark-6 text-sm">
-          <a href={packageHref} className="text-primary dark:text-blue-light-400 hover:underline">
+          <a href={packageHref} className="text-primary dark:text-blue-light-400 underline">
             {record.package}
           </a>{' '}
           · {record.exportName}
@@ -65,10 +65,10 @@ export function ComponentPage({
         <h1 className="text-dark text-3xl font-semibold dark:text-white">{record.exportName}</h1>
         <p className="text-dark-4 dark:text-dark-6 text-base">{doc.summary}</p>
         <nav aria-label="Component links" className="flex flex-wrap gap-4 text-sm">
-          <a href={sourceHref} className="text-primary dark:text-blue-light-400 hover:underline">
+          <a href={sourceHref} className="text-primary dark:text-blue-light-400 underline">
             Source
           </a>
-          <a href={storyHref} className="text-primary dark:text-blue-light-400 hover:underline">
+          <a href={storyHref} className="text-primary dark:text-blue-light-400 underline">
             Storybook
           </a>
         </nav>
@@ -90,6 +90,7 @@ export function ComponentPage({
       <Installation record={packageRecord} />
 
       <DocSection id="preview" title="Preview">
+        <h3 className="text-dark mb-2 text-sm font-medium dark:text-white">Live example</h3>
         <ExamplePreview label={record.exportName}>{preview}</ExamplePreview>
       </DocSection>
 
