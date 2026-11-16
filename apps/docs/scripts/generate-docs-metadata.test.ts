@@ -218,7 +218,13 @@ function walk(directory: string, prefix = ''): string[] {
   );
 }
 
-const GENERATED = ['api.json', 'examples.json', 'registry.json', 'search-index.json'];
+const GENERATED = [
+  'api.json',
+  'examples.json',
+  'guide-examples.json',
+  'registry.json',
+  'search-index.json',
+];
 
 describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
   it('writes only the generated directory', async () => {

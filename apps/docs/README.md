@@ -73,6 +73,14 @@ and then by kind (`minimal`, `realistic`):
 
 The generator rejects an example that imports a private package or a path into `packages/`.
 
+### `guide-examples.json`
+
+One record per guide snippet under `apps/docs/src/examples/guides/`, sorted by path: `path` is the
+repo-relative file and `source` its verbatim contents, which the guide code block renders. A snippet
+is a public consumer: the generator rejects one that imports a private package or a path into
+`packages/`. A missing directory records an empty list; the guide gate fails on an orphan snippet
+once the guide records exist.
+
 ### `search-index.json`
 
 One record per public package and per catalogue component, sorted by id: `id`, `type` (`package` or

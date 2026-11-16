@@ -81,6 +81,12 @@ export interface ExampleRecord {
   source: string;
 }
 
+/** One guide snippet file, read verbatim for a guide code block. */
+export interface GuideExampleRecord {
+  path: string;
+  source: string;
+}
+
 export interface StoryRecord {
   title: string;
   id: string;

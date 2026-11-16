@@ -52,33 +52,40 @@ export function buildExamples(root: string): ExampleRecord[] {
   return records;
 }
 
-const IMPORT_PATTERN = /from\s*['"]([^'"]+)['"]|import\s*\(?\s*['"]([^'"]+)['"]/g;
+export const IMPORT_PATTERN = /from\s*['"]([^'"]+)['"]|import\s*\(?\s*['"]([^'"]+)['"]/g;
 
 /**
  * Examples are public consumers: they may import a public `@ho-dev/*` barrel and
  * third-party packages, never a private package or a path into `packages/`.
  */
+export function assertSourceImports(
+  label: string,
+  source: string,
+  privatePackages: ReadonlySet<string>,
+): void {
+  for (const match of source.matchAll(IMPORT_PATTERN)) {
+    const specifier = match[1] ?? match[2];
+    const privateImport = [...privatePackages].some(
+      (name) => specifier === name || specifier.startsWith(`${name}/`),
+    );
+    if (privateImport) {
+      throw new MetadataError(`example ${label} imports ${specifier}, which is a private package`);
+    }
+    if (specifier.includes('packages/')) {
+      throw new MetadataError(
+        `example ${label} imports ${specifier}, which is a package source path`,
+      );
+    }
+  }
+}
+
+/** The import boundary for the component examples. */
 export function assertExampleImports(
   examples: ExampleRecord[],
   privatePackages: ReadonlySet<string>,
 ): void {
   for (const example of examples) {
-    for (const match of example.source.matchAll(IMPORT_PATTERN)) {
-      const specifier = match[1] ?? match[2];
-      const privateImport = [...privatePackages].some(
-        (name) => specifier === name || specifier.startsWith(`${name}/`),
-      );
-      if (privateImport) {
-        throw new MetadataError(
-          `example ${example.id}/${example.kind} imports ${specifier}, which is a private package`,
-        );
-      }
-      if (specifier.includes('packages/')) {
-        throw new MetadataError(
-          `example ${example.id}/${example.kind} imports ${specifier}, which is a package source path`,
-        );
-      }
-    }
+    assertSourceImports(`${example.id}/${example.kind}`, example.source, privatePackages);
   }
 }
 

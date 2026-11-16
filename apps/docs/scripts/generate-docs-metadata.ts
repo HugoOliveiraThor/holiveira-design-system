@@ -22,6 +22,10 @@ import {
   validateComponentDocs,
 } from '../src/lib/docs-metadata/content';
 import { assertExampleImports, buildExamples } from '../src/lib/docs-metadata/examples';
+import {
+  assertGuideExampleImports,
+  buildGuideExamples,
+} from '../src/lib/docs-metadata/guide-examples';
 import { buildComponentExports, buildExports } from '../src/lib/docs-metadata/inventory';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import { renderJson } from '../src/lib/docs-metadata/render';
@@ -52,7 +56,13 @@ const startedAt = nowIso();
 const OUTPUT_DIR = join(ROOT, 'apps', 'docs', 'src', 'generated');
 const CATALOG_PATH = join(ROOT, 'apps', 'docs', 'src', 'content', 'catalog.ts');
 
-const FILES = ['registry.json', 'api.json', 'search-index.json', 'examples.json'] as const;
+const FILES = [
+  'registry.json',
+  'api.json',
+  'search-index.json',
+  'examples.json',
+  'guide-examples.json',
+] as const;
 
 async function loadCatalog(): Promise<Catalog> {
   if (!existsSync(CATALOG_PATH)) {
@@ -110,16 +120,19 @@ async function main(): Promise<void> {
   const components = buildApi(program, ROOT, catalog);
   const search = buildSearch(registry, components);
   const examples = buildExamples(ROOT);
+  const guideExamples = buildGuideExamples(ROOT);
   assertCoreCoverage({ coreIds: coreComponentIds, docs, examples, components });
   const privateNames = new Set(
     manifests.filter((manifest) => manifest.private === true).map((manifest) => manifest.name),
   );
   assertExampleImports(examples, privateNames);
+  assertGuideExampleImports(guideExamples, privateNames);
   const rendered: Record<(typeof FILES)[number], string> = {
     'registry.json': renderJson(registry),
     'api.json': renderJson(components),
     'search-index.json': renderJson(search),
     'examples.json': renderJson(examples),
+    'guide-examples.json': renderJson(guideExamples),
   };
 
   if (CHECK) {
