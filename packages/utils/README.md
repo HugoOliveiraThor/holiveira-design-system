@@ -19,6 +19,8 @@ pnpm add @ho-dev/utils
 ```tsx
 import { cn, cva, debounce } from '@ho-dev/utils';
 
+const isActive = true;
+
 // Class name merging
 cn('px-4 py-2', isActive && 'bg-primary');
 
@@ -28,7 +30,8 @@ const button = cva(['px-4 py-2'], {
 });
 
 // Debounced handler
-const handleSearch = debounce((query: string) => fetchResults(query), 300);
+const logQuery = (query: unknown) => console.log(String(query));
+const handleSearch = debounce((query) => logQuery(query), 300);
 ```
 
 ## Public API

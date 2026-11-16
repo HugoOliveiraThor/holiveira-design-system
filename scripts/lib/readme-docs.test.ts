@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -19,6 +19,19 @@ function read(relative: string): string {
 
 function parse(relative: string): MarkdownDoc {
   return parseMarkdown(relative, read(relative));
+}
+
+function repoDocs(): MarkdownDoc[] {
+  const packages = discoverPackages(ROOT);
+  const docs: MarkdownDoc[] = [];
+  for (const source of packages) {
+    for (const file of [source.readme, source.contract]) {
+      if (file === undefined) continue;
+      const relativePath = relative(ROOT, file).split(sep).join('/');
+      docs.push(parseMarkdown(relativePath, readFileSync(file, 'utf8')));
+    }
+  }
+  return docs;
 }
 
 function codeBlocks(doc: MarkdownDoc): string[] {
@@ -130,6 +143,58 @@ describe('package documentation', () => {
     expect(readme).not.toMatch(/\b\d+\s+(?:icon\s+)?components?\b/i);
     expect(readme).not.toMatch(/\b\d+\s+exports?\b/i);
     expect(read('docs/architecture/contracts/icons.md')).not.toContain('components total');
+  });
+
+  it('compiles every readme block in the repository', () => {
+    const packages = discoverPackages(ROOT);
+    const docs = repoDocs();
+    const blocks = docs.flatMap((doc) =>
+      doc.blocks
+        .filter((block) => CODE_LANGUAGES.has(block.lang))
+        .map((block) => ({ file: doc.file, block })),
+    );
+    expect(blocks.length).toBeGreaterThanOrEqual(15);
+    const program = createVirtualProgram({ root: ROOT, blocks, packages });
+    expect(checkCompiles(program)).toEqual([]);
+  });
+
+  it('declares the session headers and drops the unknown config key', () => {
+    const [usage] = codeBlocks(parse('packages/auth/README.md'));
+    expect(usage).toContain('headers: Headers');
+    expect(usage).toContain('createProxy');
+    expect(usage).not.toContain('config:');
+  });
+
+  it('declares the id before querying a unique record', () => {
+    const [usage] = codeBlocks(parse('packages/db/README.md'));
+    expect(usage).toMatch(/const id = /);
+    expect(usage).toContain('findUnique');
+  });
+
+  it('imports the test runner and stubs the rendered component', () => {
+    const [usage] = codeBlocks(parse('packages/testing/README.md'));
+    expect(usage).toMatch(/import \{[^}]*\bit\b[^}]*\} from 'vitest'/);
+    expect(usage).toContain('function MyComponent()');
+    expect(usage).not.toContain("from './MyComponent'");
+    expect(usage).toContain('{ providers: [] }');
+    expect(usage).toContain("pathname: '/dashboard'");
+  });
+
+  it('compiles a real signature for every hook', () => {
+    const [usage] = codeBlocks(parse('packages/hooks/README.md'));
+    expect(usage).toContain('useFocusTrap(true, ref)');
+  });
+
+  it('declares the application slot locally in the layouts example', () => {
+    const [usage] = codeBlocks(parse('packages/layouts/README.md'));
+    expect(usage).toContain('function UserMenu()');
+    expect(usage).not.toContain('import { UserMenu }');
+  });
+
+  it('declares the values the utils example uses', () => {
+    const [usage] = codeBlocks(parse('packages/utils/README.md'));
+    expect(usage).toContain('const isActive = true;');
+    expect(usage).toContain('const logQuery =');
   });
 
   it('declares a local stub where no real export exists', () => {

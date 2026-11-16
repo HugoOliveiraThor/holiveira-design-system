@@ -16,7 +16,12 @@ pnpm add @ho-dev/layouts
 ## Usage
 
 ```tsx
-import { SidebarProvider, Sidebar, Header, HeaderToggle, HeaderActions } from '@ho-dev/layouts';
+import { Header, HeaderActions, HeaderToggle, Sidebar, SidebarProvider } from '@ho-dev/layouts';
+
+// Application-level component: the layout owns the slot, not the content.
+function UserMenu() {
+  return <span>Account</span>;
+}
 
 function AppLayout() {
   return (

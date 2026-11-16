@@ -20,6 +20,8 @@ Requires a configured `DATABASE_URL` environment variable and PostgreSQL instanc
 ```ts
 import { db } from '@ho-dev/db';
 
+const id = 'user_01';
+
 const users = await db.user.findMany();
 const user = await db.user.findUnique({ where: { id } });
 ```
