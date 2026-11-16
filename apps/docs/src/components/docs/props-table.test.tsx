@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import type { PropRecord, VariantRecord } from '../../lib/docs-metadata/types';
@@ -68,7 +68,11 @@ describe('props and variants tables', () => {
     const disclosure = screen.getByText(/inherited native props/i).closest('details');
     expect(disclosure).not.toBeNull();
     expect(disclosure).not.toHaveAttribute('open');
-    expect(screen.getByText('onClick')).toBeInTheDocument();
+    expect(within(disclosure as HTMLElement).getByText('onClick')).toBeInTheDocument();
+
+    const ownTable = screen.getAllByRole('table')[0];
+    expect(within(ownTable).getByText('variant')).toBeInTheDocument();
+    expect(within(ownTable).queryByText('onClick')).not.toBeInTheDocument();
   });
 
   it('states when a component has no variants', () => {

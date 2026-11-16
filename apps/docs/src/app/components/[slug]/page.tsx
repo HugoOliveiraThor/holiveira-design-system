@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { docsSite } from '../../../../site.config';
+import { docsHref, docsSite } from '../../../../site.config';
 import { ComponentPage, type PageExample } from '../../../components/docs/component-page';
 import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
@@ -81,11 +81,12 @@ export default async function ComponentRoute({ params }: { params: Promise<{ slu
         doc={doc}
         packageRecord={packageRecord}
         preview={<Preview />}
+        previewKey={`${record.id}/realistic`}
         examples={examples}
         related={doc.related}
         sourceHref={`${docsSite.repositoryUrl}/blob/main/${record.sourceFile}`}
         contractHref={`${docsSite.repositoryUrl}/blob/main/docs/architecture/contracts/${packageSlug}.md`}
-        packageHref={`/packages/${packageSlug}/`}
+        packageHref={docsHref(`/packages/${packageSlug}/`)}
         storyHref={storyHref(record.id)}
         {...(doc.playground === undefined
           ? {}

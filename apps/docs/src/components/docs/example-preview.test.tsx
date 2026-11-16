@@ -29,7 +29,7 @@ function frame(): HTMLElement {
 describe('example preview', () => {
   it('applies the selected viewport width', () => {
     renderPreview(
-      <ExamplePreview label="Button">
+      <ExamplePreview label="Button" exampleKey="button/realistic">
         <div>example</div>
       </ExamplePreview>,
     );
@@ -48,7 +48,7 @@ describe('example preview', () => {
 
   it('drives the page theme', () => {
     renderPreview(
-      <ExamplePreview label="Button">
+      <ExamplePreview label="Button" exampleKey="button/realistic">
         <div>example</div>
       </ExamplePreview>,
     );
@@ -61,12 +61,17 @@ describe('example preview', () => {
 
   it('previews inherit the site theme', () => {
     renderPreview(
-      <ExamplePreview label="Button">
+      <ExamplePreview label="Button" exampleKey="button/realistic">
         <div>example</div>
       </ExamplePreview>,
     );
-    expect(frame().classList.contains('dark')).toBe(false);
-    expect(frame().closest('[data-theme]')).toBeNull();
+    const surface = frame();
+    // The surface follows the site's dark variant instead of opening a nested scope.
+    expect(surface.className).toContain('bg-white');
+    expect(surface.className).toContain('dark:bg-[#020D1A]');
+    expect(surface.classList.contains('dark')).toBe(false);
+    expect(surface.closest('[data-theme]')).toBeNull();
+    expect(surface.closest('.dark')).toBeNull();
   });
 
   it('shows an error message when the example throws', () => {
@@ -77,7 +82,7 @@ describe('example preview', () => {
     }
 
     renderPreview(
-      <ExamplePreview label="Button">
+      <ExamplePreview label="Button" exampleKey="button/realistic">
         <Broken />
       </ExamplePreview>,
     );

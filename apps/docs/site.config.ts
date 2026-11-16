@@ -13,3 +13,8 @@ export const docsSite = {
   playgroundUrl: `${SITE_ORIGIN}${PROJECT_PATH}/playground/`,
   repositoryUrl: 'https://github.com/HugoOliveiraThor/holiveira-design-system',
 };
+
+/** An app route as a browser href under the docs base path. */
+export function docsHref(path: string): string {
+  return `${DOCS_BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`;
+}

@@ -52,7 +52,7 @@ export function buildExamples(root: string): ExampleRecord[] {
   return records;
 }
 
-const IMPORT_PATTERN = /(?:from\s*|import\s*\()\s*['"]([^'"]+)['"]/g;
+const IMPORT_PATTERN = /from\s*['"]([^'"]+)['"]|import\s*\(?\s*['"]([^'"]+)['"]/g;
 
 /**
  * Examples are public consumers: they may import a public `@ho-dev/*` barrel and
@@ -64,8 +64,11 @@ export function assertExampleImports(
 ): void {
   for (const example of examples) {
     for (const match of example.source.matchAll(IMPORT_PATTERN)) {
-      const specifier = match[1];
-      if (privatePackages.has(specifier)) {
+      const specifier = match[1] ?? match[2];
+      const privateImport = [...privatePackages].some(
+        (name) => specifier === name || specifier.startsWith(`${name}/`),
+      );
+      if (privateImport) {
         throw new MetadataError(
           `example ${example.id}/${example.kind} imports ${specifier}, which is a private package`,
         );

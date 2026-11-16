@@ -128,6 +128,11 @@ function createFixture(): string {
       );
     }
   }
+  write(
+    root,
+    'packages/db/package.json',
+    `${JSON.stringify({ name: '@ho-dev/db', version: '0.1.0', private: true }, null, 2)}\n`,
+  );
   write(root, 'apps/docs/src/content/components/index.ts', contentIndex(componentIds));
   write(
     root,
@@ -314,16 +319,36 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     );
   });
 
-  it('fails when an example imports a package source path', () => {
-    const root = createFixture();
+  it('fails when an example imports a private package or a package source path', () => {
+    const sourcePath = createFixture();
     write(
-      root,
+      sourcePath,
       'apps/docs/src/examples/button/minimal.tsx',
       "import { Button } from '../../../packages/primitives/src/components';\n\nexport const Example = Button;\n",
     );
-    const result = run(root);
-    expect(result.status).not.toBe(0);
-    expect(result.output).toContain('which is a package source path');
+    const sourceResult = run(sourcePath);
+    expect(sourceResult.status).not.toBe(0);
+    expect(sourceResult.output).toContain('which is a package source path');
+
+    const named = createFixture();
+    write(
+      named,
+      'apps/docs/src/examples/button/minimal.tsx',
+      "import { db } from '@ho-dev/db';\n\nexport const Example = db;\n",
+    );
+    const namedResult = run(named);
+    expect(namedResult.status).not.toBe(0);
+    expect(namedResult.output).toContain('imports @ho-dev/db, which is a private package');
+
+    const bare = createFixture();
+    write(
+      bare,
+      'apps/docs/src/examples/button/minimal.tsx',
+      "import '@ho-dev/db';\n\nexport const Example = null;\n",
+    );
+    const bareResult = run(bare);
+    expect(bareResult.status).not.toBe(0);
+    expect(bareResult.output).toContain('imports @ho-dev/db, which is a private package');
   });
 
   it('fails when two components share a story title', () => {
@@ -335,7 +360,7 @@ describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
     );
     const result = run(root);
     expect(result.status).not.toBe(0);
-    expect(result.output).toContain('share the story title');
+    expect(result.output).toContain('Badge and Button share the story title "Primitives/Button"');
   });
 
   it('fails when the catalog is missing', () => {

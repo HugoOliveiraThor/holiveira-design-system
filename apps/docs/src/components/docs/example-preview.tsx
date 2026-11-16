@@ -38,7 +38,15 @@ class PreviewErrorBoundary extends Component<{ children: ReactNode }, { failed: 
  * provider as the header toggle, so the preview is always rendered in the
  * reader's theme instead of a nested one.
  */
-export function ExamplePreview({ label, children }: { label: string; children: ReactNode }) {
+export function ExamplePreview({
+  label,
+  exampleKey,
+  children,
+}: {
+  label: string;
+  exampleKey: string;
+  children: ReactNode;
+}) {
   const { theme, setTheme } = useTheme();
   const [width, setWidth] = useState<PreviewWidth>('full');
 
@@ -82,6 +90,7 @@ export function ExamplePreview({ label, children }: { label: string; children: R
       <div className="overflow-x-auto p-4">
         <div
           data-preview-frame
+          data-example={exampleKey}
           style={{ width: width === 'full' ? '100%' : `${width}px` }}
           className="mx-auto max-w-full bg-white p-4 dark:bg-[#020D1A]"
         >

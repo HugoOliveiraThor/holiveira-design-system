@@ -71,6 +71,22 @@ describe('example extraction', () => {
     );
   });
 
+  it('rejects bare and subpath imports of a private package', () => {
+    const bare = fixture({
+      'apps/docs/src/examples/button/minimal.tsx': "import '@ho-dev/db';\n",
+    });
+    expect(() => assertExampleImports(buildExamples(bare), new Set(['@ho-dev/db']))).toThrow(
+      /imports @ho-dev\/db, which is a private package/,
+    );
+
+    const subpath = fixture({
+      'apps/docs/src/examples/button/minimal.tsx': "import { client } from '@ho-dev/db/client';\n",
+    });
+    expect(() => assertExampleImports(buildExamples(subpath), new Set(['@ho-dev/db']))).toThrow(
+      /imports @ho-dev\/db\/client, which is a private package/,
+    );
+  });
+
   it('fails when an example imports a package source path', () => {
     const root = fixture({
       'apps/docs/src/examples/button/minimal.tsx':

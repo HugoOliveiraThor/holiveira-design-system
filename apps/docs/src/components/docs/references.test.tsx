@@ -12,7 +12,7 @@ afterEach(cleanup);
 const HREFS = {
   sourceHref: 'https://github.com/example/blob/main/packages/primitives/src/button.tsx',
   contractHref: 'https://github.com/example/blob/main/docs/architecture/contracts/primitives.md',
-  packageHref: '/packages/primitives/',
+  packageHref: '/holiveira-design-system/docs/packages/primitives/',
   storyHref: storyHref('button'),
 };
 
@@ -29,7 +29,7 @@ describe('references section', () => {
     );
     expect(screen.getByRole('link', { name: 'Package page' })).toHaveAttribute(
       'href',
-      '/packages/primitives/',
+      '/holiveira-design-system/docs/packages/primitives/',
     );
     expect(screen.getByRole('link', { name: 'Storybook story' })).toHaveAttribute(
       'href',
@@ -62,7 +62,7 @@ describe('references section', () => {
     render(<RelatedComponents related={['alert', 'ghost']} />);
     expect(screen.getByRole('link', { name: 'Alert' })).toHaveAttribute(
       'href',
-      '/components/alert/',
+      '/holiveira-design-system/docs/components/alert/',
     );
     expect(screen.queryByText(/ghost/i)).not.toBeInTheDocument();
   });

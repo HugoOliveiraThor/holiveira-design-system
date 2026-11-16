@@ -26,6 +26,7 @@ export interface ComponentPageProps {
   doc: ComponentDoc;
   packageRecord: PackageRecord;
   preview: ReactNode;
+  previewKey: string;
   examples: PageExample[];
   related: string[];
   sourceHref: string;
@@ -45,6 +46,7 @@ export function ComponentPage({
   doc,
   packageRecord,
   preview,
+  previewKey,
   examples,
   related,
   sourceHref,
@@ -91,7 +93,9 @@ export function ComponentPage({
 
       <DocSection id="preview" title="Preview">
         <h3 className="text-dark mb-2 text-sm font-medium dark:text-white">Live example</h3>
-        <ExamplePreview label={record.exportName}>{preview}</ExamplePreview>
+        <ExamplePreview label={record.exportName} exampleKey={previewKey}>
+          {preview}
+        </ExamplePreview>
       </DocSection>
 
       <DocSection id="variants" title="Variants and states">

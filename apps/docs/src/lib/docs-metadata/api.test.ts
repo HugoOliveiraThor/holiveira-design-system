@@ -290,7 +290,7 @@ describe('component api extraction', { timeout: 30_000 }, () => {
       ],
     };
     expect(() => buildApi(duplicateProgram, duplicateRoot, catalog)).toThrow(
-      /share the story title "Primitives\/Button"/,
+      /Avatar and Button share the story title "Primitives\/Button"/,
     );
   });
 

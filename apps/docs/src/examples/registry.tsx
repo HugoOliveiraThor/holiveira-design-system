@@ -58,11 +58,4 @@ export function exampleComponent(id: string, kind: ExampleKind): ComponentType |
   return EXAMPLES[id]?.[kind];
 }
 
-/** Every `id/kind` pair the registry can render, sorted, for the wiring test. */
-export function exampleKeys(): string[] {
-  return Object.entries(EXAMPLES)
-    .flatMap(([id, kinds]) => Object.keys(kinds).map((kind) => `${id}/${kind}` as const))
-    .sort();
-}
-
 export { EXAMPLES };

@@ -1,3 +1,4 @@
+import { docsHref } from '../../../site.config';
 import { components } from '../../lib/docs-metadata-query';
 
 import { DocSection } from './section';
@@ -62,7 +63,7 @@ export function RelatedComponents({ related }: { related: string[] }) {
           {entries.map((entry) => (
             <li key={entry.id}>
               <a
-                href={`/components/${entry.id}/`}
+                href={docsHref(`/components/${entry.id}/`)}
                 className="border-stroke dark:border-dark-3 rounded-full border px-3 py-1"
               >
                 {entry.label}

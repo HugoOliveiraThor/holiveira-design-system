@@ -60,6 +60,7 @@ const PROPS: ComponentPageProps = {
   doc: DOC,
   packageRecord: PACKAGE,
   preview: <div>preview child</div>,
+  previewKey: 'button/realistic',
   examples: [
     { kind: 'minimal', label: 'Minimal example', source: '<Button>Save</Button>' },
     { kind: 'realistic', label: 'Realistic example', source: '<Button>Publish</Button>' },
@@ -67,7 +68,7 @@ const PROPS: ComponentPageProps = {
   related: ['alert'],
   sourceHref: 'https://github.com/example/blob/main/packages/primitives/src/button.tsx',
   contractHref: 'https://github.com/example/blob/main/docs/architecture/contracts/primitives.md',
-  packageHref: '/packages/primitives/',
+  packageHref: '/holiveira-design-system/docs/packages/primitives/',
   storyHref: 'https://example.test/?path=/docs/primitives-button--docs',
 };
 
@@ -82,10 +83,11 @@ function renderPage(overrides: Partial<ComponentPageProps> = {}) {
 describe('component page', () => {
   it('renders the ten contract sections in order', () => {
     renderPage();
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Button');
-    expect(
-      screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent),
-    ).toEqual([
+    const headings = screen
+      .getAllByRole('heading')
+      .filter((heading) => ['H1', 'H2'].includes(heading.tagName));
+    expect(headings.map((heading) => heading.textContent)).toEqual([
+      'Button',
       'Description',
       'Installation',
       'Preview',

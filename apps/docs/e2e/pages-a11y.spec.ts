@@ -89,16 +89,18 @@ test('the dropdown opens with the keyboard and closes with escape', async ({ pag
   await page.goto('./components/dropdown/');
   const frame = page.locator('[data-preview-frame]');
   const trigger = frame.getByRole('button', { name: 'Order actions' });
-
-  await trigger.focus();
-  await expect(trigger).toBeFocused();
-  await page.keyboard.press('Enter');
-
   const menu = frame.getByRole('menu');
-  await expect(menu).toBeVisible();
-  await expect(menu.getByText('Open order')).toBeVisible();
 
-  await page.keyboard.press('Escape');
-  await expect(menu).toBeHidden();
-  await expect(trigger).toBeFocused();
+  for (const key of ['Enter', 'Space']) {
+    await trigger.focus();
+    await expect(trigger).toBeFocused();
+    await page.keyboard.press(key);
+
+    await expect(menu, key).toBeVisible();
+    await expect(menu.getByText('Open order'), key).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(menu, key).toBeHidden();
+    await expect(trigger, key).toBeFocused();
+  }
 });

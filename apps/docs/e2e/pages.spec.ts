@@ -129,6 +129,10 @@ test('every code block matches its generated source', async ({ page }) => {
       await expect(block, `${record.id}/${kind}`).toHaveCount(1);
       await expect(block.locator('pre > code'), `${record.id}/${kind}`).toHaveText(source);
     }
+    await expect(page.locator('[data-preview-frame]'), record.id).toHaveAttribute(
+      'data-example',
+      `${record.id}/realistic`,
+    );
   }
 });
 
@@ -146,10 +150,23 @@ test('the toolbar applies the selected viewport width', async ({ page }) => {
 
 test('the toolbar switches the page theme', async ({ page }) => {
   await page.goto(pathFor('button'));
-  await page.getByRole('button', { name: 'dark', exact: true }).click();
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.evaluate(() => {
+    Object.defineProperty(window, '__stable', { value: true, configurable: true });
+  });
+
+  await page.getByRole('button', { name: 'system', exact: true }).click();
   await expect(page.locator('html')).toHaveClass(/dark/);
+
   await page.getByRole('button', { name: 'light', exact: true }).click();
   await expect(page.locator('html')).not.toHaveClass(/dark/);
+
+  await page.getByRole('button', { name: 'dark', exact: true }).click();
+  await expect(page.locator('html')).toHaveClass(/dark/);
+
+  expect(await page.evaluate(() => Object.prototype.hasOwnProperty.call(window, '__stable'))).toBe(
+    true,
+  );
 });
 
 test('the layout previews render inside a bounded frame', async ({ page }) => {
@@ -183,6 +200,7 @@ test('the area chart shows a placeholder before the chart', async ({ page }) => 
   await expect(page.locator('[role="img"][aria-label*="Revenue by week"]')).toBeVisible({
     timeout: 20_000,
   });
+  await expect(page.locator('[aria-label="Chart loading"]')).toHaveCount(0);
 });
 
 test('the page fits at 390px without horizontal scroll', async ({ page }) => {
@@ -209,10 +227,63 @@ test('pages render without JavaScript', async ({ browser }) => {
   await page.goto(pathFor('table'));
   await expect(page.getByRole('heading', { level: 1, name: 'Table' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: 'Description' })).toBeVisible();
+  await expect(page.getByText(/Displays rows of comparable data/)).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Installation' })).toBeVisible();
+  await expect(page.getByText('@ho-dev/primitives').first()).toBeVisible();
+  await expect(page.getByText(/pre-release/).first()).toBeVisible();
+  await expect(page.getByText('Peer dependencies')).toBeVisible();
+  await expect(page.getByText('react').first()).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: 'Props / API' })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'aria-label' })).toBeVisible();
   await expect(page.locator('[data-code-block] pre > code').first()).toBeVisible();
   await expect(page.locator('[data-code-block] pre > code').first()).not.toBeEmpty();
   await context.close();
+});
+
+test('every internal link resolves under the docs base path', async ({ page }) => {
+  const origin = new URL(test.info().project.use.baseURL as string).origin;
+  for (const record of api) {
+    await page.goto(pathFor(record.id));
+    const links = [
+      page.locator('article > header a[href*="/packages/"]').first(),
+      page.locator('#references').getByRole('link', { name: 'Package page' }),
+      page.locator('#related a').first(),
+    ];
+    for (const [index, link] of links.entries()) {
+      const href = await link.getAttribute('href');
+      expect(href, `${record.id} link ${index}`).toMatch(/^\/holiveira-design-system\/docs\//);
+      const response = await page.request.get(`${origin}${href}`);
+      expect(response.status(), `${record.id} link ${index} -> ${href}`).toBe(200);
+    }
+  }
+});
+
+test('the button page lists the real variants and their defaults', async ({ page }) => {
+  await page.goto(pathFor('button'));
+  const variants = page.locator('#variants');
+  await expect(variants).toContainText(
+    'primary, green, dark, outlinePrimary, outlineGreen, outline',
+  );
+  await expect(variants).toContainText('sm, md');
+  await expect(variants).toContainText('default, rounded');
+  const variantRow = variants.locator('tbody tr').filter({ hasText: /^variant/ });
+  await expect(variantRow).toHaveCount(1);
+  await expect(variantRow).toContainText('primary');
+});
+
+test('the button page lists the generated props', async ({ page }) => {
+  await page.goto(pathFor('button'));
+  const api = page.locator('#api');
+  const ownTable = api.locator('table').first();
+  const labelRow = ownTable.locator('tbody tr').filter({ hasText: /^label/ });
+  await expect(labelRow).toHaveCount(1);
+  await expect(labelRow).toContainText('string');
+  await expect(labelRow).toContainText('No');
+  const iconRow = ownTable.locator('tbody tr').filter({ hasText: /^icon/ });
+  await expect(iconRow).toContainText('ReactNode');
+  const details = api.locator('details');
+  await expect(details).not.toHaveAttribute('open');
+  await expect(details).toContainText('onClick');
 });
 
 test('the preview follows a theme change', async ({ page }: { page: Page }) => {
