@@ -1,11 +1,16 @@
 /**
  * The assembled guide records.
  *
- * Each route's editorial content lives in a record file beside this one; this
+ * Each section's editorial content lives in a record file beside this one; this
  * module is the single place the app and the gate import the set from. The
- * routes arrive before the content, so the set starts empty and every route
- * resolves it through `guideBySlug`.
+ * routes arrive before the content, so the set grows one section at a time and
+ * is always sorted by the order the sidebar and the pager read.
  */
 import type { GuideDoc } from '../../lib/docs-metadata/guides';
 
-export const guideDocs: GuideDoc[] = [];
+import { foundationGuides } from './foundations';
+import { gettingStartedGuides } from './getting-started';
+
+export const guideDocs: GuideDoc[] = [...gettingStartedGuides, ...foundationGuides].sort(
+  (a, b) => a.order - b.order,
+);

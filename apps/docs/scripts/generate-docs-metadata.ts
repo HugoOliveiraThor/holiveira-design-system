@@ -26,6 +26,7 @@ import {
   assertGuideExampleImports,
   buildGuideExamples,
 } from '../src/lib/docs-metadata/guide-examples';
+import { validateGuideDocs } from '../src/lib/docs-metadata/guides';
 import { buildComponentExports, buildExports } from '../src/lib/docs-metadata/inventory';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import {
@@ -37,7 +38,6 @@ import {
   GUIDE_ROUTES,
   portalRoutes,
   type ComponentExportRef,
-  type GuideCoverageRecord,
 } from '../src/lib/docs-metadata/coverage';
 import { renderJson } from '../src/lib/docs-metadata/render';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
@@ -105,15 +105,15 @@ async function loadTargetResolver(): Promise<ResolveTarget | undefined> {
   return module.resolveTarget as ResolveTarget;
 }
 
-/** The guide records, once T12/T13 write them; before that the set is empty. */
-async function loadGuideDocs(): Promise<GuideCoverageRecord[]> {
+/** The guide records as the app imports them; before any exists the set is empty. */
+async function loadGuideDocs(): Promise<unknown[]> {
   const path = join(ROOT, 'apps', 'docs', 'src', 'content', 'guides', 'index.ts');
   if (!existsSync(path)) return [];
   const module = (await import(pathToFileURL(path).href)) as { guideDocs?: unknown };
   if (!Array.isArray(module.guideDocs)) {
     throw new MetadataError('guide content is malformed: no guideDocs array');
   }
-  return module.guideDocs as GuideCoverageRecord[];
+  return module.guideDocs;
 }
 
 async function main(): Promise<void> {
@@ -180,7 +180,10 @@ async function main(): Promise<void> {
       routes: portalRoutes({ packages: registry, components }),
     });
   }
-  const guides = await loadGuideDocs();
+  const guides = validateGuideDocs(await loadGuideDocs(), {
+    packages: registry.map((record) => record.name),
+    componentExports: componentExportRefs,
+  });
   if (guides.length > 0) {
     assertGuideCoverage({
       guides,
