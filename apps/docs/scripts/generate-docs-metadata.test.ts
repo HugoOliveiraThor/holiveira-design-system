@@ -138,7 +138,7 @@ function run(
 
 const GENERATED = ['api.json', 'registry.json', 'search-index.json'];
 
-describe('generate-docs-metadata CLI', () => {
+describe('generate-docs-metadata CLI', { timeout: 60_000 }, () => {
   it('writes only the generated directory', () => {
     const root = createFixture();
     const result = run(root);

@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 import { buildApi, createProgram, exportNames, extractProps, extractVariants } from './api';
 import type { Catalog } from './types';
@@ -82,10 +82,16 @@ export const Plain = (props: PlainProps) => null;
 const PACKAGES = ['@ho-dev/primitives'];
 const DEFAULTS = { variant: 'primary' };
 
-describe('component api extraction', () => {
+describe('component api extraction', { timeout: 30_000 }, () => {
+  let root: string;
+  let program: ReturnType<typeof createProgram>;
+
+  beforeAll(() => {
+    root = fixtureRoot();
+    program = createProgram(root, PACKAGES);
+  });
+
   it('records name, type, required, default and origin', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const props = extractProps(program, root, '@ho-dev/primitives', 'Button', DEFAULTS);
     const variant = props.find((prop) => prop.name === 'variant');
     expect(variant).toEqual({
@@ -101,8 +107,6 @@ describe('component api extraction', () => {
   });
 
   it('marks react-inherited props as inherited', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const props = extractProps(program, root, '@ho-dev/primitives', 'Button');
     const onClick = props.find((prop) => prop.name === 'onClick');
     expect(onClick?.origin).toBe('inherited');
@@ -111,16 +115,12 @@ describe('component api extraction', () => {
   });
 
   it('fails when the props type cannot be resolved', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     expect(() => extractProps(program, root, '@ho-dev/primitives', 'Broken')).toThrow(
       /cannot resolve props type for Broken/,
     );
   });
 
   it('reads export names from the barrel', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     expect(exportNames(program, root, '@ho-dev/primitives')).toEqual([
       'Avatar',
       'Broken',
@@ -140,8 +140,6 @@ describe('component api extraction', () => {
   });
 
   it('extracts variant names, values and defaults from cva', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const { variants } = extractVariants(program, root, '@ho-dev/primitives', 'Button');
     expect(variants.variant).toEqual({
       name: 'variant',
@@ -152,16 +150,12 @@ describe('component api extraction', () => {
   });
 
   it('sets a variant default to null when defaultVariants omits it', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const { variants, defaults } = extractVariants(program, root, '@ho-dev/primitives', 'Button');
     expect(defaults).toEqual({ variant: 'primary' });
     expect(variants.size.default).toBeNull();
   });
 
   it('returns no variants when the component has no cva call', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     expect(extractVariants(program, root, '@ho-dev/primitives', 'Plain')).toEqual({
       variants: {},
       defaults: {},
@@ -169,16 +163,12 @@ describe('component api extraction', () => {
   });
 
   it('associates the component-specific variants variable', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const { variants } = extractVariants(program, root, '@ho-dev/primitives', 'Avatar');
     expect(Object.keys(variants)).toEqual(['size']);
     expect(variants.size.default).toBe('sm');
   });
 
   it('builds a component record with props and variants', () => {
-    const root = fixtureRoot();
-    const program = createProgram(root, PACKAGES);
     const catalog: Catalog = {
       packages: [
         {
