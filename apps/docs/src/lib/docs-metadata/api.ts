@@ -122,7 +122,7 @@ export function extractProps(
 
   return checker
     .getPropertiesOfType(propsType)
-    .map((property) => {
+    .map((property): PropRecord | null => {
       const declaration = property.getDeclarations()?.[0];
       const fileName = declaration?.getSourceFile().fileName ?? '';
       const inherited = !fileName.startsWith(componentRoot);
@@ -179,9 +179,7 @@ export function extractVariants(
   const sourceFile = declaration.getSourceFile();
   const expected = `${exportName.charAt(0).toLowerCase()}${exportName.slice(1)}Variants`;
 
-  let call: ts.CallExpression | null = null;
-  const visit = (node: ts.Node): void => {
-    if (call !== null) return;
+  const findCall = (node: ts.Node): ts.CallExpression | null => {
     if (
       ts.isVariableDeclaration(node) &&
       ts.isIdentifier(node.name) &&
@@ -191,13 +189,17 @@ export function extractVariants(
       ts.isIdentifier(node.initializer.expression) &&
       node.initializer.expression.text === 'cva'
     ) {
-      call = node.initializer;
-      return;
+      return node.initializer;
     }
-    ts.forEachChild(node, visit);
+    let found: ts.CallExpression | null = null;
+    ts.forEachChild(node, (child) => {
+      if (found !== null) return;
+      found = findCall(child);
+    });
+    return found;
   };
-  visit(sourceFile);
 
+  const call = findCall(sourceFile);
   if (call === null) return { variants: {}, defaults: {} };
 
   const options = call.arguments[1];
