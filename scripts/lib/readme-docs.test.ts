@@ -2,7 +2,12 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-import { CODE_LANGUAGES, parseMarkdown, type MarkdownDoc } from './readme-markdown';
+import {
+  CODE_LANGUAGES,
+  countStatements,
+  parseMarkdown,
+  type MarkdownDoc,
+} from './readme-markdown';
 import { createVirtualProgram, discoverPackages } from './readme-program';
 import { checkCompiles } from './readme-rules';
 
@@ -82,6 +87,49 @@ describe('package documentation', () => {
     expect(row).toContain('label: string');
     expect(row).toContain('description?: string');
     expect(read('docs/architecture/contracts/charts.md')).not.toMatch(/\b\d+\s+public exports?\b/i);
+  });
+
+  it('imports Breadcrumb from primitives', () => {
+    const doc = parse('packages/ui/README.md');
+    const [usage] = codeBlocks(doc);
+    expect(usage).toMatch(/import \{[^}]*Breadcrumb[^}]*\} from '@ho-dev\/primitives'/);
+    expect(rowOf(doc, 'Breadcrumb')).toBeUndefined();
+    expect(rowOf(doc, 'BreadcrumbProps')).toBeUndefined();
+    expect(read('packages/ui/README.md')).not.toMatch(/\|\s*`Breadcrumb`/);
+  });
+
+  it('uses an existing Card variant', () => {
+    const [usage] = codeBlocks(parse('packages/ui/README.md'));
+    expect(usage).toMatch(/<Card variant="(?:default|bordered|ghost)"/);
+    expect(usage).not.toContain('variant="outlined"');
+  });
+
+  it('imports the Table parts and passes Alert its required props', () => {
+    const [usage] = codeBlocks(parse('packages/primitives/README.md'));
+    const importClause = usage.slice(0, usage.indexOf("from '@ho-dev/primitives'"));
+    for (const part of [
+      'Alert',
+      'Table',
+      'TableBody',
+      'TableCell',
+      'TableHead',
+      'TableHeader',
+      'TableRow',
+    ]) {
+      expect(importClause).toContain(part);
+    }
+    expect(usage).toMatch(/<Alert[^>]*\stitle="[^"]+"/);
+    expect(usage).toMatch(/<Alert[^>]*\sdescription="[^"]+"/);
+  });
+
+  it('states no export total in the icons readme', () => {
+    const readme = read('packages/icons/README.md');
+    expect(countStatements(parse('packages/icons/README.md'))).toEqual([]);
+    expect(countStatements(parse('docs/architecture/contracts/icons.md'))).toEqual([]);
+    expect(readme).toContain('**Full icon list:**');
+    expect(readme).not.toMatch(/\b\d+\s+(?:icon\s+)?components?\b/i);
+    expect(readme).not.toMatch(/\b\d+\s+exports?\b/i);
+    expect(read('docs/architecture/contracts/icons.md')).not.toContain('components total');
   });
 
   it('declares a local stub where no real export exists', () => {

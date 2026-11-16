@@ -17,19 +17,21 @@ pnpm add @ho-dev/primitives
 
 ```tsx
 import {
-  Button,
   Alert,
+  Button,
   Table,
-  Dropdown,
-  DropdownContent,
-  DropdownTrigger,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from '@ho-dev/primitives';
 
 function MyComponent() {
   return (
     <div>
       <Button variant="primary">Click me</Button>
-      <Alert variant="info">This is an informational message.</Alert>
+      <Alert variant="info" title="Heads up" description="This is an informational message." />
       <Table>
         <TableHeader>
           <TableRow>
@@ -51,9 +53,9 @@ function MyComponent() {
 
 | Export            | Kind      | Description                                     |
 | ----------------- | --------- | ----------------------------------------------- |
-| `Button`          | component | Button with 6 variants, 3 shapes, 2 sizes (cva) |
+| `Button`          | component | Button with cva variant, shape and size         |
 | `ButtonProps`     | type      | Button component props                          |
-| `Alert`           | component | Alert banner with 3 severity variants           |
+| `Alert`           | component | Banner with success, warning, error, info kinds |
 | `AlertProps`      | type      | Alert component props                           |
 | `Skeleton`        | component | Loading placeholder with pulse animation        |
 | `SkeletonProps`   | type      | Skeleton component props                        |
