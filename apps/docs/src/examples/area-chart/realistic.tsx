@@ -1,4 +1,8 @@
-import { AreaChart } from '@ho-dev/charts';
+'use client';
+
+import { AreaChart, ChartSkeleton } from '@ho-dev/charts';
+
+import { useEffect, useState } from 'react';
 
 const series = [
   {
@@ -22,6 +26,16 @@ const series = [
 ];
 
 export function AreaChartRealistic() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <ChartSkeleton height={300} />;
+  }
+
   return (
     <AreaChart
       label="Revenue by week, this month compared with last month"
