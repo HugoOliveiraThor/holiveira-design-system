@@ -151,4 +151,14 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
       expect(readme).toContain(field);
     }
   });
+
+  it('defines the docs e2e command', () => {
+    const docsManifest = JSON.parse(
+      readFileSync(join(ROOT, 'apps', 'docs', 'package.json'), 'utf8'),
+    ) as { scripts: Record<string, string>; devDependencies: Record<string, string> };
+    expect(docsManifest.scripts['test:e2e']).toBe('next build && playwright test');
+    expect(scripts()['test:docs']).toBe('pnpm --filter @ho-dev/docs test:e2e');
+    expect(docsManifest.devDependencies['@playwright/test']).toBeTruthy();
+    expect(docsManifest.devDependencies['@axe-core/playwright']).toBeTruthy();
+  });
 });
