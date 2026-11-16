@@ -30,7 +30,8 @@ const ALL_CHECKS =
 
 describe('check:ci', () => {
   it('runs the full parity set', () => {
-    expect(root['check:ci'].split(' && ')).toEqual(PARITY_STEPS);
+    expect(root['check:ci']).toBe('node scripts/heavy-guard.mjs check:ci:run');
+    expect(root['check:ci:run'].split(' && ')).toEqual(PARITY_STEPS);
     for (const step of PARITY_STEPS.filter((entry) => entry.startsWith('pnpm run '))) {
       const name = step.replace('pnpm run ', '');
       expect(root[name], name).toBeTypeOf('string');
@@ -42,7 +43,8 @@ describe('check:ci', () => {
   });
 
   it('keeps all-checks unchanged', () => {
-    expect(root['all-checks']).toBe(ALL_CHECKS);
+    expect(root['all-checks']).toBe('node scripts/heavy-guard.mjs all-checks:run');
+    expect(root['all-checks:run']).toBe(ALL_CHECKS);
   });
 
   it('keeps the self-contained portal e2e', () => {

@@ -147,7 +147,7 @@ describe('package documentation', () => {
     expect(read('docs/architecture/contracts/icons.md')).not.toContain('components total');
   });
 
-  it('compiles every readme block in the repository', { timeout: 30_000 }, () => {
+  it('compiles every readme block in the repository', { timeout: 90_000 }, () => {
     const packages = discoverPackages(ROOT);
     const docs = repoDocs();
     const blocks = docs.flatMap((doc) =>

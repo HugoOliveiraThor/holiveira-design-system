@@ -161,7 +161,7 @@ describe('readme gate CLI', () => {
     expect(result.stderr).toContain('check:docs:readme — 1 finding(s)');
   });
 
-  it('limits the run to the filtered packages', () => {
+  it('limits the run to the filtered packages', { timeout: 30_000 }, () => {
     const full = runGate(mixedRoot);
     const clean = runGate(mixedRoot, ['--filter', 'alpha']);
     const broken = runGate(mixedRoot, ['--filter', 'beta']);

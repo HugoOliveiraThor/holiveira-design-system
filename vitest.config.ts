@@ -1,5 +1,7 @@
-import { defineConfig } from 'vitest/config';
+import { cpus } from 'os';
 import { resolve } from 'path';
+
+import { defineConfig } from 'vitest/config';
 
 const coverageExclude = [
   '**/node_modules/**',
@@ -45,6 +47,8 @@ export default defineConfig({
     },
   },
   test: {
+    // Leave half the cores to the editor, the other agents and the OS.
+    maxWorkers: process.env.CI ? undefined : Math.max(1, Math.floor(cpus().length / 2)),
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     include: [

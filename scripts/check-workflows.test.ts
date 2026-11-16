@@ -76,6 +76,7 @@ describe('CI workflow', () => {
     expect(job).not.toContain('check:docs:export');
     expect(job).not.toContain('check:artifact');
     expect(WORKFLOW.match(/run: pnpm run all-checks/g)).toHaveLength(1);
-    expect(packageJson.scripts['all-checks']).toBe(ALL_CHECKS);
+    expect(packageJson.scripts['all-checks']).toBe('node scripts/heavy-guard.mjs all-checks:run');
+    expect(packageJson.scripts['all-checks:run']).toBe(ALL_CHECKS);
   });
 });

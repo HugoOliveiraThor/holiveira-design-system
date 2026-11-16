@@ -47,15 +47,18 @@
     "version": "changeset version",
     "release:publish": "turbo run build --filter='./packages/*' && changeset publish",
     "prepare": "husky",
-    "all-checks": "pnpm run format:check && pnpm run lint && pnpm run check:tokens && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:visual && pnpm --filter playground run test:visual && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:install && pnpm run check:license && pnpm run check:exports && pnpm run check:deps && pnpm run check:docs && pnpm run check:docs:metadata && pnpm run check:docs:readme && pnpm run check:gates",
+    "all-checks": "node scripts/heavy-guard.mjs all-checks:run",
     "check:gates": "pnpm exec tsx scripts/check-gates.ts",
     "generate:tokens": "pnpm exec tsx scripts/generate-tokens.ts",
     "generate:tokens:snapshot": "pnpm exec tsx scripts/update-tokens-snapshot.ts",
     "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts",
     "check:artifact": "pnpm exec tsx scripts/check-artifact.ts",
     "check:clean": "pnpm exec tsx scripts/check-clean.ts",
-    "check:ci": "pnpm run ensure:browser && pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact",
-    "ensure:browser": "pnpm --filter @ho-dev/docs exec node scripts/ensure-browser.mjs"
+    "check:ci": "node scripts/heavy-guard.mjs check:ci:run",
+    "ensure:browser": "pnpm --filter @ho-dev/docs exec node scripts/ensure-browser.mjs",
+    "all-checks:run": "pnpm run format:check && pnpm run lint && pnpm run check:tokens && pnpm run db:generate && turbo run typecheck && turbo run build && turbo run build:storybook && pnpm run test:visual && pnpm --filter playground run test:visual && pnpm run test:coverage && pnpm run check:size && pnpm run check:publish && pnpm run check:install && pnpm run check:license && pnpm run check:exports && pnpm run check:deps && pnpm run check:docs && pnpm run check:docs:metadata && pnpm run check:docs:readme && pnpm run check:gates",
+    "check:ci:run": "pnpm run ensure:browser && pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact",
+    "check:stop": "node scripts/check-stop.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
