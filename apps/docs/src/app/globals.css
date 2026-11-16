@@ -1,4 +1,4 @@
-@import '@ho-dev/theme/theme.css';
+@import '../../../../packages/theme/src/theme.css';
 
 @source '../../src/**/*.{ts,tsx}';
 

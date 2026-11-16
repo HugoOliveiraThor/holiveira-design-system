@@ -43,7 +43,7 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
       <Breadcrumbs crumbs={breadcrumbsForPackage(slug)} />
       <header className="space-y-2">
         <h1 className="text-dark text-2xl font-semibold dark:text-white">{record.name}</h1>
-        <p className="text-dark-5 text-sm">
+        <p className="text-dark-4 dark:text-dark-6 text-sm">
           {record.version} · {record.installState} · {record.category}
         </p>
         <p className="text-dark-4 dark:text-dark-6 text-base">{record.description}</p>
@@ -62,19 +62,19 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
             ))}
           </ul>
         ) : (
-          <p className="text-dark-5 text-sm">No runtime exports.</p>
+          <p className="text-dark-4 dark:text-dark-6 text-sm">No runtime exports.</p>
         )}
       </section>
       <section className="border-stroke dark:border-stroke-dark rounded-lg border border-dashed p-4 text-sm">
         <p className="text-dark font-medium dark:text-white">Not documented yet</p>
-        <p className="text-dark-5 mt-1">
+        <p className="text-dark-4 dark:text-dark-6 mt-1">
           This package page will be completed in a later milestone. For component states, see
           Storybook.
         </p>
       </section>
       <Pager pager={pager(list, slug)} />
-      <p className="text-dark-5 text-xs">
-        <Link href="/packages/" className="hover:text-primary">
+      <p className="text-dark-4 dark:text-dark-6 text-xs">
+        <Link href="/packages/" className="hover:text-primary dark:text-blue-light-400">
           All packages
         </Link>
       </p>

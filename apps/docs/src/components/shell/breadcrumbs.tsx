@@ -11,13 +11,19 @@ export function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
           const last = index === crumbs.length - 1;
           return (
             <li key={`${crumb.label}-${index}`} className="flex items-center gap-2">
-              {index > 0 && <span className="text-dark-5">/</span>}
+              {index > 0 && <span className="text-dark-4 dark:text-dark-6">/</span>}
               {crumb.href && !last ? (
-                <Link href={crumb.href} className="text-dark-4 hover:text-primary dark:text-dark-6">
+                <Link
+                  href={crumb.href}
+                  className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
+                >
                   {crumb.label}
                 </Link>
               ) : (
-                <span aria-current={last ? 'page' : undefined} className="text-dark-5">
+                <span
+                  aria-current={last ? 'page' : undefined}
+                  className="text-dark-4 dark:text-dark-6"
+                >
                   {crumb.label}
                 </span>
               )}

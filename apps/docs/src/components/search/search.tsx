@@ -81,7 +81,7 @@ export function DocsSearch({ records }: DocsSearchProps) {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="docs-search-dialog"
-        className="border-stroke dark:border-stroke-dark text-dark-5 flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm"
+        className="border-stroke dark:border-stroke-dark text-dark-4 dark:text-dark-6 flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm"
       >
         Search
         <kbd className="bg-gray-2 dark:bg-dark-3 rounded px-1 text-xs">/</kbd>
@@ -108,7 +108,7 @@ export function DocsSearch({ records }: DocsSearchProps) {
             placeholder="Search packages and components"
             className="border-stroke dark:border-stroke-dark dark:bg-dark-2 w-full rounded-md border px-3 py-2 text-sm"
           />
-          <p role="status" aria-live="polite" className="text-dark-5 mt-2 text-xs">
+          <p role="status" aria-live="polite" className="text-dark-4 dark:text-dark-6 mt-2 text-xs">
             {results.length} results
           </p>
           {results.length > 0 ? (
@@ -132,7 +132,7 @@ export function DocsSearch({ records }: DocsSearchProps) {
                     className="flex items-center justify-between gap-2"
                   >
                     <span className="text-dark dark:text-white">{record.title}</span>
-                    <span className="text-dark-5 text-xs">
+                    <span className="text-dark-4 dark:text-dark-6 text-xs">
                       {record.type} · {record.package}
                     </span>
                   </Link>
@@ -140,9 +140,9 @@ export function DocsSearch({ records }: DocsSearchProps) {
               ))}
             </ul>
           ) : (
-            <p className="text-dark-5 mt-2 text-sm">
+            <p className="text-dark-4 dark:text-dark-6 mt-2 text-sm">
               No results. Browse{' '}
-              <Link href="/packages/" className="text-primary">
+              <Link href="/packages/" className="text-primary dark:text-blue-light-400">
                 all packages
               </Link>
               .

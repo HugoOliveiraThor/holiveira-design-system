@@ -36,10 +36,12 @@ function SidebarContent({
     <nav aria-label="Documentation" className="space-y-6 text-sm">
       {packageSections.length > 0 && (
         <div>
-          <p className="text-dark-5 mb-2 text-xs font-semibold tracking-wide uppercase">Packages</p>
+          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
+            Packages
+          </p>
           {packageSections.map((section) => (
             <div key={section.category} className="mb-3">
-              <p className="text-dark-5 mb-1 text-xs">{section.category}</p>
+              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.category}</p>
               <ul className="space-y-1">
                 {section.items.map((item) => (
                   <li key={item.id}>
@@ -47,7 +49,7 @@ function SidebarContent({
                       href={item.href}
                       onClick={onNavigate}
                       aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                      className="text-dark-4 hover:text-primary aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
+                      className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:text-blue-light-400 dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
                     >
                       {item.label}
                     </Link>
@@ -60,7 +62,7 @@ function SidebarContent({
       )}
       {componentSections.length > 0 && (
         <div>
-          <p className="text-dark-5 mb-2 text-xs font-semibold tracking-wide uppercase">
+          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
             Components
           </p>
           <ul className="space-y-1">
@@ -71,7 +73,7 @@ function SidebarContent({
                     href={item.href}
                     onClick={onNavigate}
                     aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                    className="text-dark-4 hover:text-primary aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
+                    className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:text-blue-light-400 dark:text-dark-6 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium"
                   >
                     {item.label}
                   </Link>
@@ -83,13 +85,19 @@ function SidebarContent({
       )}
       {unbuiltSections.length > 0 && (
         <div>
-          <p className="text-dark-5 mb-2 text-xs font-semibold tracking-wide uppercase">Soon</p>
+          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
+            Soon
+          </p>
           {unbuiltSections.map((section) => (
             <div key={section.title} className="mb-3">
-              <p className="text-dark-5 mb-1 text-xs">{section.title}</p>
+              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.title}</p>
               <ul className="space-y-1">
                 {section.items.map((item) => (
-                  <li key={item} className="text-dark-5/70 px-2 py-1" aria-disabled="true">
+                  <li
+                    key={item}
+                    className="text-dark-4 dark:text-dark-6/70 px-2 py-1"
+                    aria-disabled="true"
+                  >
                     {item}
                   </li>
                 ))}

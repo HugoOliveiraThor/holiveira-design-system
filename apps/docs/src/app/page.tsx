@@ -24,7 +24,7 @@ export default function HomePage() {
           </Link>
           <Link
             href="/components/"
-            className="border-stroke text-dark-4 dark:border-stroke-dark dark:text-dark-6 rounded-md border px-4 py-2 font-medium"
+            className="border-stroke text-dark-4 dark:text-dark-6 dark:border-stroke-dark dark:text-dark-6 rounded-md border px-4 py-2 font-medium"
           >
             Browse components
           </Link>
@@ -43,7 +43,7 @@ export default function HomePage() {
                   <span className="text-dark block text-sm font-medium dark:text-white">
                     {item.label}
                   </span>
-                  <span className="text-dark-5 mt-1 block text-xs">
+                  <span className="text-dark-4 dark:text-dark-6 mt-1 block text-xs">
                     {packages.find((record) => record.name === item.label)?.installState}
                   </span>
                 </Link>

@@ -16,7 +16,7 @@ export default function PackagesIndex() {
               className="border-stroke hover:border-primary dark:border-stroke-dark dark:bg-dark-2 flex items-center justify-between rounded-md border bg-white px-4 py-3"
             >
               <span className="text-dark text-sm font-medium dark:text-white">{record.name}</span>
-              <span className="text-dark-5 text-xs">
+              <span className="text-dark-4 dark:text-dark-6 text-xs">
                 {record.version} · {record.installState} · {record.category}
               </span>
             </Link>

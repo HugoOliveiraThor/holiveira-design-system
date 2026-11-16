@@ -19,7 +19,7 @@ export function ThemeToggle() {
       aria-label={label}
       disabled={!mounted}
       onClick={() => setTheme(next)}
-      className="border-stroke text-dark-4 hover:bg-gray-2 dark:border-stroke-dark dark:text-dark-6 dark:hover:bg-dark-2 rounded-md border px-3 py-1.5 text-sm font-medium transition disabled:opacity-60"
+      className="border-stroke text-dark-4 dark:text-dark-6 hover:bg-gray-2 dark:border-stroke-dark dark:text-dark-6 dark:hover:bg-dark-2 rounded-md border px-3 py-1.5 text-sm font-medium transition disabled:opacity-60"
     >
       Theme
     </button>

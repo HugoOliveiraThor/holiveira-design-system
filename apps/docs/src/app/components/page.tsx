@@ -19,7 +19,7 @@ export default function ComponentsIndex() {
               <span className="text-dark block text-sm font-medium dark:text-white">
                 {component.exportName}
               </span>
-              <span className="text-dark-5 mt-1 block text-xs">
+              <span className="text-dark-4 dark:text-dark-6 mt-1 block text-xs">
                 {component.package} ·{' '}
                 {categories.get(component.package) ?? slugOf(component.package)}
               </span>

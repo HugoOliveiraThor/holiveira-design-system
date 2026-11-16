@@ -49,8 +49,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       <Breadcrumbs crumbs={breadcrumbsForComponent(slug)} />
       <header className="space-y-2">
         <h1 className="text-dark text-2xl font-semibold dark:text-white">{record.exportName}</h1>
-        <p className="text-dark-5 text-sm">
-          <Link href={`/packages/${slugOf(record.package)}/`} className="hover:text-primary">
+        <p className="text-dark-4 dark:text-dark-6 text-sm">
+          <Link
+            href={`/packages/${slugOf(record.package)}/`}
+            className="hover:text-primary dark:text-blue-light-400"
+          >
             {record.package}
           </Link>{' '}
           · {record.props.length} props
@@ -62,7 +65,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <dl className="space-y-1 text-sm">
             {variantNames.map((name) => (
               <div key={name} className="flex gap-2">
-                <dt className="text-dark-5 font-mono text-xs">{name}</dt>
+                <dt className="text-dark-4 dark:text-dark-6 font-mono text-xs">{name}</dt>
                 <dd className="text-dark-4 dark:text-dark-6">
                   {record.variants[name].values.join(', ')}
                 </dd>
@@ -70,19 +73,19 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             ))}
           </dl>
         ) : (
-          <p className="text-dark-5 text-sm">No variants.</p>
+          <p className="text-dark-4 dark:text-dark-6 text-sm">No variants.</p>
         )}
       </section>
       <section className="border-stroke dark:border-stroke-dark rounded-lg border border-dashed p-4 text-sm">
         <p className="text-dark font-medium dark:text-white">Not documented yet</p>
-        <p className="text-dark-5 mt-1">
+        <p className="text-dark-4 dark:text-dark-6 mt-1">
           The full component page — preview, usage, props table, and accessibility notes — arrives
           in a later milestone. For component states, see Storybook.
         </p>
       </section>
       <Pager pager={pager(list, slug)} />
-      <p className="text-dark-5 text-xs">
-        <Link href="/packages/" className="hover:text-primary">
+      <p className="text-dark-4 dark:text-dark-6 text-xs">
+        <Link href="/packages/" className="hover:text-primary dark:text-blue-light-400">
           All packages
         </Link>
       </p>
