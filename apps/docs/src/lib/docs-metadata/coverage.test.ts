@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
+import { resolveTarget } from '../../content/targets';
 import {
   assertExportCoverage,
   assertGuideCoverage,
@@ -161,8 +162,28 @@ describe('target coverage', () => {
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'Button' }],
         resolve: () => ({ kind: 'page', id: 'button' }),
         routes,
+        registry: [packageRecord()],
       }),
     ).not.toThrow();
+
+    // Two targets for one export is not "one target": the map refuses it.
+    expect(() =>
+      resolveTarget('@ho-dev/theme', 'ThemeProvider', {
+        entries: [
+          {
+            package: '@ho-dev/theme',
+            exportName: 'ThemeProvider',
+            target: { kind: 'guide', slug: 'getting-started/theming' },
+          },
+          {
+            package: '@ho-dev/theme',
+            exportName: 'ThemeProvider',
+            target: { kind: 'anchor', package: '@ho-dev/theme', anchor: 'theme-provider' },
+          },
+        ],
+        patterns: [],
+      }),
+    ).toThrow(/targets\.ts maps @ho-dev\/theme ThemeProvider more than once/);
   });
 
   it('fails when a component export has no target', () => {
@@ -171,6 +192,7 @@ describe('target coverage', () => {
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'Avatar' }],
         resolve: () => undefined,
         routes,
+        registry: [packageRecord()],
       }),
     ).toThrow(/@ho-dev\/alpha exports Avatar, which has no documentation target/);
   });
@@ -181,9 +203,36 @@ describe('target coverage', () => {
         componentExports: [{ package: '@ho-dev/alpha', exportName: 'AlertErrorIcon' }],
         resolve: () => ({ kind: 'guide', slug: 'guides/ghost' }),
         routes,
+        registry: [packageRecord()],
       }),
     ).toThrow(
       /@ho-dev\/alpha exports AlertErrorIcon, whose target names \/guides\/ghost\/, which the portal does not serve/,
+    );
+  });
+
+  it('fails when an anchor target has no inventory row', () => {
+    expect(() =>
+      assertTargetCoverage({
+        componentExports: [{ package: '@ho-dev/alpha', exportName: 'Avatar' }],
+        resolve: () => ({ kind: 'anchor', package: '@ho-dev/alpha', anchor: 'ghost' }),
+        routes,
+        registry: [packageRecord()],
+      }),
+    ).toThrow(
+      /@ho-dev\/alpha exports Avatar, whose target anchor "#ghost" has no inventory row in @ho-dev\/alpha/,
+    );
+  });
+
+  it('fails when an anchor target collides with a package page section', () => {
+    expect(() =>
+      assertTargetCoverage({
+        componentExports: [{ package: '@ho-dev/alpha', exportName: 'Avatar' }],
+        resolve: () => ({ kind: 'anchor', package: '@ho-dev/alpha', anchor: 'exports' }),
+        routes,
+        registry: [packageRecord()],
+      }),
+    ).toThrow(
+      /@ho-dev\/alpha exports Avatar, whose target anchor "exports" collides with a @ho-dev\/alpha page section/,
     );
   });
 

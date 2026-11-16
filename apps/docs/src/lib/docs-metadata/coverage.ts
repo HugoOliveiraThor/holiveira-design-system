@@ -127,17 +127,29 @@ export function assertExportCoverage({
   }
 }
 
+/** Section ids the package page already owns; an anchor reusing one would collide. */
+export const RESERVED_PACKAGE_ANCHORS = new Set([
+  'installation',
+  'exports',
+  'components',
+  'related-pages',
+  'related-packages',
+]);
+
 /** Every component export resolves to exactly one target the portal serves. */
 export function assertTargetCoverage({
   componentExports,
   resolve,
   routes,
+  registry,
 }: {
   componentExports: readonly ComponentExportRef[];
   resolve: (packageName: string, exportName: string) => Target | undefined;
   routes: readonly string[];
+  registry: readonly PackageRecord[];
 }): void {
   const served = new Set(routes);
+  const byPackage = new Map(registry.map((record) => [record.name, record]));
   for (const entry of componentExports) {
     const target = resolve(entry.package, entry.exportName);
     if (target === undefined) {
@@ -149,6 +161,23 @@ export function assertTargetCoverage({
     if (!served.has(route)) {
       throw new MetadataError(
         `${entry.package} exports ${entry.exportName}, whose target names ${route}, which the portal does not serve`,
+      );
+    }
+    if (target.kind !== 'anchor') continue;
+    const owner = byPackage.get(target.package);
+    if (owner === undefined) {
+      throw new MetadataError(
+        `${entry.package} exports ${entry.exportName}, whose target anchor names ${target.package}, which is not a public package`,
+      );
+    }
+    if (RESERVED_PACKAGE_ANCHORS.has(target.anchor)) {
+      throw new MetadataError(
+        `${entry.package} exports ${entry.exportName}, whose target anchor "${target.anchor}" collides with a ${target.package} page section`,
+      );
+    }
+    if (!owner.componentExports.some((component) => component.id === target.anchor)) {
+      throw new MetadataError(
+        `${entry.package} exports ${entry.exportName}, whose target anchor "#${target.anchor}" has no inventory row in ${target.package}`,
       );
     }
   }

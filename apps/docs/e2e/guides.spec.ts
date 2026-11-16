@@ -79,10 +79,17 @@ test('every guide renders its summary, sections, snippet and links', async ({ pa
     const ids = await page
       .locator('main article section[id]')
       .evaluateAll((nodes) => nodes.map((node) => node.id));
-    expect(ids, guide.route).toContain('snippets');
-    expect(ids, guide.route).toContain('related-links');
     expect(ids.at(-1), guide.route).toBe('related-links');
-    expect(ids.indexOf('snippets'), guide.route).toBeGreaterThan(0);
+    expect(ids.at(-2), guide.route).toBe('snippets');
+    const proseIds = ids.slice(0, -2);
+    expect(proseIds.length, guide.route).toBeGreaterThan(0);
+    for (const id of proseIds) {
+      const section = page.locator(`main article section[id="${id}"]`);
+      await expect(section.locator('h2'), `${guide.route} ${id}`).toBeVisible();
+      // A prose section renders paragraphs; the generated token section renders a
+      // table. Both must carry content, so the assertion reads the section text.
+      expect((await section.innerText()).trim().length, `${guide.route} ${id}`).toBeGreaterThan(0);
+    }
 
     const firstSection = page.locator('main article section[id]').first();
     await expect(firstSection.locator('h2'), guide.route).toBeVisible();
@@ -156,6 +163,13 @@ test('the sidebar links every guide', async ({ page }) => {
   await page.goto('./');
   const sidebar = page.getByRole('navigation', { name: 'Documentation' });
   await expect(sidebar.locator('[aria-disabled="true"]')).toHaveCount(0);
+  const groupLabels = await sidebar.locator('p').allInnerTexts();
+  for (const label of ['Getting Started', 'Foundations', 'Guides', 'Architecture']) {
+    expect(
+      groupLabels.filter((text) => text.trim() === label),
+      label,
+    ).toHaveLength(1);
+  }
   for (const guide of GUIDES) {
     await expect(
       sidebar.locator(`a[href="${DOCS_BASE_PATH}/${guide.route}/"]`),

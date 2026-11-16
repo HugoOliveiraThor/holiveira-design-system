@@ -40,6 +40,7 @@ import {
   type ComponentExportRef,
 } from '../src/lib/docs-metadata/coverage';
 import { renderJson } from '../src/lib/docs-metadata/render';
+import type { PackageRecord } from '../src/lib/docs-metadata/types';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
 import { buildSearch } from '../src/lib/docs-metadata/search';
 import {
@@ -177,6 +178,7 @@ async function main(): Promise<void> {
       componentExports: componentExportRefs,
       resolve: resolveTarget,
       routes: portalRoutes({ packages: registry, components }),
+      registry,
     });
   }
   const guides = validateGuideDocs(await loadGuideDocs(), {
@@ -212,6 +214,24 @@ async function main(): Promise<void> {
   };
 
   if (CHECK) {
+    // The registry the reader would get is the committed one: compare its export
+    // set against the barrels so a stale artifact names the package and export,
+    // not just "out of date".
+    const committedPath = join(OUTPUT_DIR, 'registry.json');
+    if (existsSync(committedPath)) {
+      let committed: unknown;
+      try {
+        committed = JSON.parse(readFileSync(committedPath, 'utf8'));
+      } catch {
+        committed = undefined; // the byte comparison reports the malformed artifact
+      }
+      if (Array.isArray(committed)) {
+        assertExportCoverage({
+          registry: committed as PackageRecord[],
+          barrelExports: exportsByPackage,
+        });
+      }
+    }
     const problems: string[] = [];
     for (const file of FILES) {
       const path = join(OUTPUT_DIR, file);
