@@ -16,7 +16,7 @@ const root = scripts('package.json');
 const docs = scripts(join('apps', 'docs', 'package.json'));
 
 const PARITY_STEPS = [
-  'pnpm --filter @ho-dev/docs exec playwright install chromium',
+  'pnpm run ensure:browser',
   'pnpm run all-checks',
   'pnpm run check:clean',
   'pnpm run check:docs:export',

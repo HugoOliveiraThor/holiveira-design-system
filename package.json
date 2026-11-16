@@ -54,7 +54,8 @@
     "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts",
     "check:artifact": "pnpm exec tsx scripts/check-artifact.ts",
     "check:clean": "pnpm exec tsx scripts/check-clean.ts",
-    "check:ci": "pnpm --filter @ho-dev/docs exec playwright install chromium && pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact"
+    "check:ci": "pnpm run ensure:browser && pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact",
+    "ensure:browser": "pnpm --filter @ho-dev/docs exec node scripts/ensure-browser.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
