@@ -4,14 +4,15 @@ Level: 3 Category: Composition
 
 ## Purpose
 
-Provide a form system integrating React Hook Form + Zod validation with themed form components.
+Provide form composition components, form widgets and the react-hook-form re-exports applications
+use to wire validation.
 
 ## Responsibilities
 
-- Provide `Form` wrapper with RHF integration
+- Provide `Form` wrapper: a plain `form` element that prevents the default submit
 - Provide form field components (`Field`, `Label`, `Description`, `ErrorMessage`, `Submit`)
 - Provide form widgets (`MultiSelect`, `DatePicker`)
-- Provide Zod schema validation integration
+- Re-export `zodResolver` for Zod-backed react-hook-form validation
 - Provide React Hook Form utilities (`useForm`, `useController`, `useFormContext`)
 
 ## Allowed Dependencies
@@ -32,7 +33,7 @@ Provide a form system integrating React Hook Form + Zod validation with themed f
 
 ### Components
 
-- `Form`, `FormProps` — Form wrapper with RHF integration
+- `Form`, `FormProps` — plain `form` wrapper that prevents the default submit
 - `Field`, `FieldProps` — Composes Label + input + Description + ErrorMessage
 - `Label`, `LabelProps` — Accessible label associated with a form input
 - `Description`, `DescriptionProps` — Descriptive text for a form field

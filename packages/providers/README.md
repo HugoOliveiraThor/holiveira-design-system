@@ -4,9 +4,10 @@ Provider composition utilities for flattening nested React context trees.
 
 ## Purpose
 
-`ProviderComposer` nests an array of providers without deep tree wrapping, enabling applications to
-define their provider stack as declarative data. Architectural role: provider composition
-infrastructure.
+`ProviderComposer` nests an ordered `ProviderTree` without deep tree wrapping, enabling applications
+to define their provider stack as declarative data. The providers themselves live in the package
+that owns their domain, such as `ThemeProvider` in `@ho-dev/theme` and `SidebarProvider` in
+`@ho-dev/layouts`. Architectural role: provider composition infrastructure.
 
 ## Installation
 
@@ -17,14 +18,19 @@ pnpm add @ho-dev/providers
 ## Usage
 
 ```tsx
-import { ProviderComposer } from '@ho-dev/providers';
+import { SidebarProvider } from '@ho-dev/layouts';
+import { ProviderComposer, type ProviderTree } from '@ho-dev/providers';
+import { ThemeProvider } from '@ho-dev/theme';
 
-function AppProviders({ children }: { children: React.ReactNode }) {
-  return (
-    <ProviderComposer providers={[<ThemeProvider />, <SidebarProvider />, <AuthProvider />]}>
-      {children}
-    </ProviderComposer>
-  );
+import type { ReactNode } from 'react';
+
+const tree: ProviderTree = [
+  [ThemeProvider, { defaultTheme: 'light' }],
+  [SidebarProvider, { defaultCollapsed: false }],
+];
+
+function AppProviders({ children }: { children: ReactNode }) {
+  return <ProviderComposer tree={tree}>{children}</ProviderComposer>;
 }
 ```
 
@@ -33,7 +39,7 @@ function AppProviders({ children }: { children: React.ReactNode }) {
 | Export                  | Kind      | Description                                            |
 | ----------------------- | --------- | ------------------------------------------------------ |
 | `ProviderComposer`      | component | Nests an array of providers without deep tree wrapping |
-| `ProviderComposerProps` | type      | Props for ProviderComposer (`{ providers, children }`) |
+| `ProviderComposerProps` | type      | Props for ProviderComposer (`{ tree, children }`)      |
 | `ProviderProps`         | type      | Standard `{ children }` interface for any provider     |
 | `ProviderTree`          | type      | Ordered configuration array type                       |
 

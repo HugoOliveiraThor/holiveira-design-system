@@ -30,26 +30,26 @@ Provide chart component primitives abstracting the underlying charting library (
 
 ### Stable
 
-| Export               | Type      | Description                                                                           |
-| -------------------- | --------- | ------------------------------------------------------------------------------------- |
-| `BarChart`           | Component | Bar chart. Supports single and stacked series.                                        |
-| `BarChartProps`      | Type      | `series: ChartSeries[]`, `height?: number`, `stacked?: boolean`, apexOptions override |
-| `AreaChart`          | Component | Area chart. Smooth curve. Supports multi-series. Responsive stroke width.             |
-| `AreaChartProps`     | Type      | `series: ChartSeries[]`, `height?: number`, apexOptions override                      |
-| `PieChart`           | Component | Donut chart. Labels + center label formatter.                                         |
-| `PieChartProps`      | Type      | `series: number[]`, `labels: string[]`, `height?: number`, apexOptions override       |
-| `ChartSeries`        | Type      | `{ name: string; data: ChartDataPoint[] }`                                            |
-| `ChartDataPoint`     | Type      | `{ x: string \| number; y: number }`                                                  |
-| `ChartSkeleton`      | Component | Skeleton placeholder for chart lazy loading.                                          |
-| `ChartSkeletonProps` | Type      | `height?: number`, `className?: string`                                               |
+| Export               | Type      | Description                                                                                               |
+| -------------------- | --------- | --------------------------------------------------------------------------------------------------------- |
+| `BarChart`           | Component | Bar chart. Supports single and stacked series.                                                            |
+| `BarChartProps`      | Type      | `series: ChartSeries[]`, `height?: number`, `stacked?: boolean`, apexOptions override                     |
+| `AreaChart`          | Component | Area chart. Smooth curve. Supports multi-series. Responsive stroke width.                                 |
+| `AreaChartProps`     | Type      | `series: ChartSeries[]`, `label: string`, `description?: string`, `height?: number`, apexOptions override |
+| `PieChart`           | Component | Donut chart. Labels + center label formatter.                                                             |
+| `PieChartProps`      | Type      | `series: number[]`, `labels: string[]`, `height?: number`, apexOptions override                           |
+| `ChartSeries`        | Type      | `{ name: string; data: ChartDataPoint[] }`                                                                |
+| `ChartDataPoint`     | Type      | `{ x: string \| number; y: number }`                                                                      |
+| `ChartSkeleton`      | Component | Skeleton placeholder for chart lazy loading.                                                              |
+| `ChartSkeletonProps` | Type      | `height?: number`, `className?: string`                                                                   |
 
-**Total: 4 components + 6 types = 10 public exports.**
+## Deferred and removed
 
 ### Deferred
 
 LineChart, RadarChart. No consumers yet.
 
-### Removed from original contract
+### Removed from the original contract
 
 - `ChartContainer` — YAGNI. Card from @ho-dev/ui + manual composition.
 - `useChartTheme` — Internal. Components handle theme automatically.

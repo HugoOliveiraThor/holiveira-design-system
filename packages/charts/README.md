@@ -30,6 +30,8 @@ const LazyChart = dynamic(() => import('@ho-dev/charts').then((m) => m.AreaChart
 function MyChart() {
   return (
     <LazyChart
+      label="Monthly revenue"
+      description="Revenue in US dollars for January and February."
       series={[
         {
           name: 'Revenue',

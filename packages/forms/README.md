@@ -4,9 +4,10 @@ Form components with validation integration.
 
 ## Purpose
 
-Form composition primitives (Form, Field, Label, Description, ErrorMessage, Submit) plus complex
-widgets (MultiSelect, DatePicker) integrated with react-hook-form and Zod. Architectural role:
-provides the official form composition contract for the framework.
+Form composition primitives (`Form`, `Field`, `Label`, `Description`, `ErrorMessage`, `Submit`) plus
+the `MultiSelect` and `DatePicker` widgets. `Form` is a plain `form` wrapper that prevents the
+default submit; validation wires through the re-exported react-hook-form hooks and `zodResolver`.
+Architectural role: provides the official form composition contract for the framework.
 
 ## Installation
 
@@ -19,21 +20,15 @@ Requires `react-hook-form`, `zod`, and `flatpickr`.
 ## Usage
 
 ```tsx
-import { z } from 'zod';
-
-import { Form, Field, Label, ErrorMessage, Submit, zodResolver } from '@ho-dev/forms';
-
-const schema = z.object({ email: z.string().email() });
+import { Field, Form, Submit } from '@ho-dev/forms';
 
 function MyForm() {
   return (
-    <Form schema={schema} onSubmit={(data) => console.log(data)}>
-      <Field name="email">
-        <Label>Email</Label>
-        <input />
-        <ErrorMessage />
+    <Form onSubmit={() => console.log('submitted')}>
+      <Field label="Email" description="We never share it." error="Enter a valid email">
+        <input type="email" />
       </Field>
-      <Submit />
+      <Submit>Send</Submit>
     </Form>
   );
 }
@@ -49,7 +44,7 @@ Import DatePicker styles:
 
 | Export              | Kind      | Description                                |
 | ------------------- | --------- | ------------------------------------------ |
-| `Form`              | component | Form wrapper with RHF integration          |
+| `Form`              | component | Plain `form` wrapper, submits prevented    |
 | `FormProps`         | type      | Form component props                       |
 | `Field`             | component | Field context provider                     |
 | `FieldProps`        | type      | Field component props                      |
@@ -74,6 +69,16 @@ Import DatePicker styles:
 | `FieldValues`       | type      | Field values generic type                  |
 | `SubmitHandler`     | type      | Submit handler function type               |
 | `zodResolver`       | function  | Zod resolver for react-hook-form           |
+
+### Field props
+
+| Prop          | Type      | Description                                       |
+| ------------- | --------- | ------------------------------------------------- |
+| `label`       | string    | Label above the control, associated with it       |
+| `description` | string    | Help text below the control                       |
+| `error`       | string    | Error text below the control, marks it invalid    |
+| `children`    | ReactNode | The control; receives `id` and `aria-describedby` |
+| `className`   | string    | Classes for the field container                   |
 
 **CSS:** `@ho-dev/forms/date-picker-styles.css` — DatePicker flatpickr theme overrides.
 
