@@ -1,0 +1,1830 @@
+[
+  {
+    "exportName": "Alert",
+    "id": "alert",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "description",
+        "origin": "component",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "link",
+        "origin": "component",
+        "required": false,
+        "type": "{ label: string; href: string; } | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "default": "info",
+        "name": "variant",
+        "origin": "component",
+        "required": false,
+        "type": "\"success\" | \"warning\" | \"error\" | \"info\" | undefined"
+      }
+    ],
+    "variants": {
+      "variant": {
+        "default": "info",
+        "name": "variant",
+        "values": [
+          "success",
+          "warning",
+          "error",
+          "info"
+        ]
+      }
+    }
+  },
+  {
+    "exportName": "AreaChart",
+    "id": "area-chart",
+    "package": "@ho-dev/charts",
+    "props": [
+      {
+        "default": null,
+        "name": "apexOptions",
+        "origin": "component",
+        "required": false,
+        "type": "Partial<ApexOptions> | undefined"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "description",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "height",
+        "origin": "component",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "label",
+        "origin": "component",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "default": null,
+        "name": "series",
+        "origin": "component",
+        "required": true,
+        "type": "ChartSeries[]"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Badge",
+    "id": "badge",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": "light",
+        "name": "fill",
+        "origin": "component",
+        "required": false,
+        "type": "\"light\" | \"solid\" | null | undefined"
+      },
+      {
+        "default": null,
+        "name": "icon",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "iconPosition",
+        "origin": "component",
+        "required": false,
+        "type": "\"left\" | \"right\" | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLSpanElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLSpanElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLSpanElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLSpanElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLSpanElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": "primary",
+        "name": "variant",
+        "origin": "component",
+        "required": false,
+        "type": "\"primary\" | \"dark\" | \"success\" | \"warning\" | \"error\" | \"info\" | \"light\" | null | undefined"
+      }
+    ],
+    "variants": {
+      "fill": {
+        "default": "light",
+        "name": "fill",
+        "values": [
+          "light",
+          "solid"
+        ]
+      },
+      "variant": {
+        "default": "primary",
+        "name": "variant",
+        "values": [
+          "primary",
+          "success",
+          "error",
+          "warning",
+          "info",
+          "light",
+          "dark"
+        ]
+      }
+    }
+  },
+  {
+    "exportName": "Button",
+    "id": "button",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "disabled",
+        "origin": "inherited",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "icon",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "label",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "name",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLButtonElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLButtonElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLButtonElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLButtonElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLButtonElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": "default",
+        "name": "shape",
+        "origin": "component",
+        "required": false,
+        "type": "\"default\" | \"rounded\" | null | undefined"
+      },
+      {
+        "default": "md",
+        "name": "size",
+        "origin": "component",
+        "required": false,
+        "type": "\"sm\" | \"md\" | null | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "type",
+        "origin": "inherited",
+        "required": false,
+        "type": "\"submit\" | \"reset\" | \"button\" | undefined"
+      },
+      {
+        "default": null,
+        "name": "value",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | number | readonly string[] | undefined"
+      },
+      {
+        "default": "primary",
+        "name": "variant",
+        "origin": "component",
+        "required": false,
+        "type": "\"primary\" | \"green\" | \"dark\" | \"outlinePrimary\" | \"outlineGreen\" | \"outline\" | null | undefined"
+      }
+    ],
+    "variants": {
+      "shape": {
+        "default": "default",
+        "name": "shape",
+        "values": [
+          "default",
+          "rounded"
+        ]
+      },
+      "size": {
+        "default": "md",
+        "name": "size",
+        "values": [
+          "sm",
+          "md"
+        ]
+      },
+      "variant": {
+        "default": "primary",
+        "name": "variant",
+        "values": [
+          "primary",
+          "green",
+          "dark",
+          "outlinePrimary",
+          "outlineGreen",
+          "outline"
+        ]
+      }
+    }
+  },
+  {
+    "exportName": "Card",
+    "id": "card",
+    "package": "@ho-dev/ui",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLDivElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": "default",
+        "name": "variant",
+        "origin": "component",
+        "required": false,
+        "type": "\"default\" | \"bordered\" | \"ghost\" | null | undefined"
+      }
+    ],
+    "variants": {
+      "variant": {
+        "default": "default",
+        "name": "variant",
+        "values": [
+          "default",
+          "bordered",
+          "ghost"
+        ]
+      }
+    }
+  },
+  {
+    "exportName": "Dropdown",
+    "id": "dropdown",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "children",
+        "origin": "component",
+        "required": true,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "isOpen",
+        "origin": "component",
+        "required": true,
+        "type": "boolean"
+      },
+      {
+        "default": null,
+        "name": "setIsOpen",
+        "origin": "component",
+        "required": true,
+        "type": "SetStateActionType<boolean>"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Field",
+    "id": "field",
+    "package": "@ho-dev/forms",
+    "props": [
+      {
+        "default": null,
+        "name": "children",
+        "origin": "component",
+        "required": true,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "description",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "error",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "label",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Form",
+    "id": "form",
+    "package": "@ho-dev/forms",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "name",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLFormElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLFormElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLFormElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLFormElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLFormElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onSubmit",
+        "origin": "component",
+        "required": false,
+        "type": "((e: FormEvent<HTMLFormElement>) => void) | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "target",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Header",
+    "id": "header",
+    "package": "@ho-dev/layouts",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "InputGroup",
+    "id": "input-group",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "active",
+        "origin": "component",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "alt",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "checked",
+        "origin": "inherited",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "defaultValue",
+        "origin": "component",
+        "required": false,
+        "type": "string | (string & readonly string[]) | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "disabled",
+        "origin": "component",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "error",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "fileStyleVariant",
+        "origin": "component",
+        "required": false,
+        "type": "\"style1\" | \"style2\" | undefined"
+      },
+      {
+        "default": null,
+        "name": "height",
+        "origin": "component",
+        "required": false,
+        "type": "\"default\" | \"sm\" | undefined"
+      },
+      {
+        "default": null,
+        "name": "icon",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "iconPosition",
+        "origin": "component",
+        "required": false,
+        "type": "\"left\" | \"right\" | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "label",
+        "origin": "component",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "multiple",
+        "origin": "inherited",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "name",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLInputElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "ChangeEventHandler<HTMLInputElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLInputElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLInputElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLInputElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "placeholder",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "readOnly",
+        "origin": "inherited",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "required",
+        "origin": "component",
+        "required": false,
+        "type": "boolean | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "src",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "type",
+        "origin": "component",
+        "required": false,
+        "type": "HTMLInputTypeAttribute | undefined"
+      },
+      {
+        "default": null,
+        "name": "value",
+        "origin": "component",
+        "required": false,
+        "type": "string | (string & readonly string[]) | undefined"
+      },
+      {
+        "default": null,
+        "name": "width",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | number | undefined"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "PageHeader",
+    "id": "page-header",
+    "package": "@ho-dev/ui",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "breadcrumb",
+        "origin": "component",
+        "required": false,
+        "type": "{ label: string; href?: string | undefined; }[] | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "component",
+        "required": true,
+        "type": "string"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Sidebar",
+    "id": "sidebar",
+    "package": "@ho-dev/layouts",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "component",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "logo",
+        "origin": "component",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      }
+    ],
+    "variants": {}
+  },
+  {
+    "exportName": "Table",
+    "id": "table",
+    "package": "@ho-dev/primitives",
+    "props": [
+      {
+        "default": null,
+        "name": "aria-describedby",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-hidden",
+        "origin": "inherited",
+        "required": false,
+        "type": "Booleanish | undefined"
+      },
+      {
+        "default": null,
+        "name": "aria-label",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "children",
+        "origin": "inherited",
+        "required": false,
+        "type": "ReactNode"
+      },
+      {
+        "default": null,
+        "name": "className",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "dir",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "id",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "lang",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "onBlur",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLTableElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onChange",
+        "origin": "inherited",
+        "required": false,
+        "type": "FormEventHandler<HTMLTableElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onClick",
+        "origin": "inherited",
+        "required": false,
+        "type": "MouseEventHandler<HTMLTableElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onFocus",
+        "origin": "inherited",
+        "required": false,
+        "type": "FocusEventHandler<HTMLTableElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "onKeyDown",
+        "origin": "inherited",
+        "required": false,
+        "type": "KeyboardEventHandler<HTMLTableElement> | undefined"
+      },
+      {
+        "default": null,
+        "name": "rel",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      },
+      {
+        "default": null,
+        "name": "role",
+        "origin": "inherited",
+        "required": false,
+        "type": "AriaRole | undefined"
+      },
+      {
+        "default": null,
+        "name": "style",
+        "origin": "inherited",
+        "required": false,
+        "type": "CSSProperties | undefined"
+      },
+      {
+        "default": null,
+        "name": "tabIndex",
+        "origin": "inherited",
+        "required": false,
+        "type": "number | undefined"
+      },
+      {
+        "default": null,
+        "name": "title",
+        "origin": "inherited",
+        "required": false,
+        "type": "string | undefined"
+      }
+    ],
+    "variants": {}
+  }
+]
