@@ -68,6 +68,8 @@ export interface ReadmeProgram {
   blocks: VirtualBlock[];
   diagnosticsFor(virtual: string): ts.Diagnostic[];
   importsOf(virtual: string): ImportedNames[];
+  /** Map a position in a virtual block back to its document line, 1-based. */
+  documentLineOf(virtual: string, position: number): number;
 }
 
 export class ReadmeProgramError extends Error {
@@ -237,10 +239,12 @@ export function createVirtualProgram(options: VirtualProgramOptions): ReadmeProg
     host,
   });
 
-  const lineOf = (entry: VirtualBlock, position: number): number => {
-    const source = program.getSourceFile(entry.virtual);
-    const offset = source === undefined ? 0 : source.getLineAndCharacterOfPosition(position).line;
-    return entry.block.line + offset;
+  const lineOf = (virtualFile: string, position: number): number => {
+    const entry = blocks.find((block) => block.virtual === virtualFile);
+    if (entry === undefined) return 1;
+    const source = program.getSourceFile(virtualFile);
+    if (source === undefined) return entry.block.line;
+    return entry.block.line + source.getLineAndCharacterOfPosition(position).line;
   };
 
   const resolves = (moduleName: string, containingFile: string): boolean => {
@@ -260,6 +264,7 @@ export function createVirtualProgram(options: VirtualProgramOptions): ReadmeProg
         ...program.getSemanticDiagnostics(source),
       ];
     },
+    documentLineOf: lineOf,
     importsOf(virtualFile) {
       const entry = blocks.find((block) => block.virtual === virtualFile);
       const source = program.getSourceFile(virtualFile);
@@ -277,7 +282,7 @@ export function createVirtualProgram(options: VirtualProgramOptions): ReadmeProg
         imports.push({
           module: moduleName,
           names: namespace ? [] : names,
-          line: lineOf(entry, node.getStart(source)),
+          line: lineOf(entry.virtual, node.getStart(source)),
           relative,
           resolved: resolves(moduleName, entry.virtual),
         });
