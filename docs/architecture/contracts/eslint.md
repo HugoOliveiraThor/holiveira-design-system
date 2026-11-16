@@ -8,17 +8,6 @@ Provide shared ESLint configuration presets for all @ho-dev/\* packages and exte
 the ESLint dependency domain — every ESLint plugin and parser required by its public presets is
 declared and versioned by this package.
 
-## Public API
-
-| Export         | Type               | Description                                                                                                   |
-| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `configBase`   | Flat config array  | TypeScript + import ordering + naming convention rules. Applies to `.ts`, `.mts`, `.cts` files.               |
-| `configReact`  | Flat config array  | Strict superset of `configBase`. Adds React + React Hooks + JSX accessibility rules. Applies to `.tsx` files. |
-| Future presets | Flat config arrays | Node, Vitest, Storybook, or technology-specific configs added over time via ADS amendment.                    |
-
-Only configuration presets are part of the stable public API. Internal rule modules and utilities
-are never exported.
-
 ## Responsibilities
 
 - Provide `configBase` preset: TypeScript parser (`@typescript-eslint/parser`), TypeScript plugin
@@ -68,7 +57,16 @@ Single entry: `@ho-dev/eslint`
 - No sub-path exports (`/rules`, `/configs`) are created
 - Sub-paths may be added later as non-breaking additive changes when justified
 
-## Public API (2 exports)
+## Public API
+
+| Export         | Type               | Description                                                                                                   |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `configBase`   | Flat config array  | TypeScript + import ordering + naming convention rules. Applies to `.ts`, `.mts`, `.cts` files.               |
+| `configReact`  | Flat config array  | Strict superset of `configBase`. Adds React + React Hooks + JSX accessibility rules. Applies to `.tsx` files. |
+| Future presets | Flat config arrays | Node, Vitest, Storybook, or technology-specific configs added over time via ADS amendment.                    |
+
+Only configuration presets are part of the stable public API. Internal rule modules and utilities
+are never exported.
 
 ### Base
 

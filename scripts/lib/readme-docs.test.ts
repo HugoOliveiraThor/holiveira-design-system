@@ -5,7 +5,9 @@ import { describe, expect, it } from 'vitest';
 import {
   CODE_LANGUAGES,
   countStatements,
+  isPublicApiHeading,
   parseMarkdown,
+  publicApiNames,
   type MarkdownDoc,
 } from './readme-markdown';
 import { createVirtualProgram, discoverPackages } from './readme-program';
@@ -195,6 +197,55 @@ describe('package documentation', () => {
     const [usage] = codeBlocks(parse('packages/utils/README.md'));
     expect(usage).toContain('const isActive = true;');
     expect(usage).toContain('const logQuery =');
+  });
+
+  it('adds a public api section to config, constants, eslint and tokens', () => {
+    const expected: Record<string, string> = {
+      config: 'isDev',
+      constants: 'ROUTES',
+      eslint: 'configBase',
+      tokens: 'colors',
+    };
+    for (const [name, known] of Object.entries(expected)) {
+      const doc = parse(`packages/${name}/README.md`);
+      expect(
+        doc.sections.find((section) => isPublicApiHeading(section.heading)),
+        name,
+      ).toBeDefined();
+      const names = publicApiNames(doc).map((entry) => entry.name);
+      expect(names, name).toContain(known);
+      expect(names.length, name).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it('keeps one public api heading in the eslint contract', () => {
+    const contract = parse('docs/architecture/contracts/eslint.md');
+    const headings = contract.sections.filter((section) => isPublicApiHeading(section.heading));
+    expect(headings).toHaveLength(1);
+    expect(headings[0].heading).toBe('Public API');
+    expect(
+      publicApiNames(contract)
+        .map((entry) => entry.name)
+        .sort(),
+    ).toEqual(['configBase', 'configReact']);
+  });
+
+  it('matches the corrected readme shape', () => {
+    const template = parse('packages/README.template.md');
+    expect(template.sections.map((section) => section.heading)).toEqual([
+      'Purpose',
+      'Installation',
+      'Usage',
+      'Public API',
+      'Peer Dependencies',
+      'Architecture Contract',
+      'Documentation',
+      'License',
+    ]);
+    const [usage] = codeBlocks(template);
+    expect(usage).toContain("from '@ho-dev/{name}'");
+    const api = template.sections.find((section) => section.heading === 'Public API');
+    expect(api?.body.join('\n')).toContain('| Export');
   });
 
   it('declares a local stub where no real export exists', () => {

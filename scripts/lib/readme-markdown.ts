@@ -67,6 +67,11 @@ export class MarkdownError extends Error {
   }
 }
 
+/** Whether a level-two heading names the Public API section, suffix or not. */
+export function isPublicApiHeading(heading: string): boolean {
+  return /^Public API\b/i.test(heading.trim());
+}
+
 /** `README.md` is a readme; every other parsed document is a contract. */
 export function inferKind(file: string): 'readme' | 'contract' {
   return /(?:^|\/)README\.md$/i.test(file.split('\\').join('/')) ? 'readme' : 'contract';
@@ -173,7 +178,7 @@ export function publicApiNames(doc: MarkdownDoc): Array<{ name: string; line: nu
   };
 
   for (const section of doc.sections) {
-    if (section.heading !== 'Public API') continue;
+    if (!isPublicApiHeading(section.heading)) continue;
     const lines = section.body;
     let inFence = false;
 

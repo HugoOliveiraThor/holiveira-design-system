@@ -10,7 +10,12 @@ import { join } from 'node:path';
 
 import ts from 'typescript';
 
-import { countStatements, publicApiNames, type MarkdownDoc } from './readme-markdown';
+import {
+  countStatements,
+  isPublicApiHeading,
+  publicApiNames,
+  type MarkdownDoc,
+} from './readme-markdown';
 import {
   hasRuntimeExport,
   subpathResolves,
@@ -136,7 +141,7 @@ export function checkPublicApi(docs: MarkdownDoc[], exports: ExportMap): Finding
     const packageExports = exports.get(doc.packageName);
     if (packageExports === undefined) continue;
     const documented = publicApiNames(doc);
-    const apiSection = doc.sections.find((section) => section.heading === 'Public API');
+    const apiSection = doc.sections.find((section) => isPublicApiHeading(section.heading));
     const runtime = hasRuntimeExport(exports, doc.packageName);
 
     if (doc.kind === 'readme' && runtime) {
@@ -194,7 +199,7 @@ export function checkCounts(docs: MarkdownDoc[]): Finding[] {
 export function checkDuplicateSections(docs: MarkdownDoc[]): Finding[] {
   const findings: Finding[] = [];
   for (const doc of docs) {
-    const sections = doc.sections.filter((section) => section.heading === 'Public API');
+    const sections = doc.sections.filter((section) => isPublicApiHeading(section.heading));
     if (sections.length < 2) continue;
     const lines = sections.map((section) => section.line).join(', ');
     findings.push({

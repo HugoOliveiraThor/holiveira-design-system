@@ -219,6 +219,14 @@ describe('readme rules', () => {
       line: 3,
     });
     expect(findings[0].message).toContain('3, 9');
+
+    const suffixed = parseMarkdown(
+      'docs/architecture/contracts/ui.md',
+      ['## Public API', '', '- `Card`', '', '## Public API (2 exports)', '', '- `Card`', ''].join(
+        '\n',
+      ),
+    );
+    expect(checkDuplicateSections([suffixed])).toHaveLength(1);
   });
 
   it('rejects a repository path that does not exist', () => {

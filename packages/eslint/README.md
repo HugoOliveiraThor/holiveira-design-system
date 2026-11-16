@@ -15,6 +15,13 @@ versioned by this package.
 pnpm add @ho-dev/eslint
 ```
 
+## Public API
+
+| Export        | Kind   | Description                                        |
+| ------------- | ------ | -------------------------------------------------- |
+| `configBase`  | preset | TypeScript, import ordering and naming conventions |
+| `configReact` | preset | `configBase` plus React, React Hooks and JSX a11y  |
+
 ## Architecture Contract
 
 **Dependency Level:** 1 — Foundation. **Owns:** ESLint presets and all plugin/parser dependencies,
