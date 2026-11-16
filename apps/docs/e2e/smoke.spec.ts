@@ -11,7 +11,7 @@ const registry = JSON.parse(
   description: string;
   category: string;
   installState: string;
-  exports: string[];
+  exports: Array<{ name: string; kind: string }>;
 }>;
 
 const slugs = registry.map((record) => record.name.split('/')[1]);
@@ -70,7 +70,7 @@ test('package stub shows version, install state and exports', async ({ page }) =
   await expect(main.getByText(record!.category, { exact: false }).first()).toBeVisible();
   await expect(main.getByText(record!.description)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Exports' })).toBeVisible();
-  await expect(main.getByText(record!.exports[0], { exact: true })).toBeVisible();
+  await expect(main.getByText(record!.exports[0].name, { exact: true })).toBeVisible();
 });
 
 test('component page renders the contract', async ({ page }) => {

@@ -50,7 +50,8 @@ const PACKAGE: PackageRecord = {
   description: '',
   private: false,
   installState: 'pre-release',
-  exports: ['Button'],
+  exports: [{ name: 'Button', kind: 'component' }],
+  componentExports: [],
   category: 'Components',
   peers: { react: '^19.0.0' },
 };

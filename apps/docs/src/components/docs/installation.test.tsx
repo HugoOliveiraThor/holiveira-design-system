@@ -15,7 +15,8 @@ const BASE: PackageRecord = {
   description: 'Primitive components.',
   private: false,
   installState: 'pre-release',
-  exports: ['Button'],
+  exports: [{ name: 'Button', kind: 'component' }],
+  componentExports: [],
   category: 'Components',
   peers: { react: '^19.0.0', typescript: '^5.0.0' },
 };

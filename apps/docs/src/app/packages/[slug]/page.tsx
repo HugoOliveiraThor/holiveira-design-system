@@ -58,12 +58,12 @@ export default async function PackagePage({ params }: { params: Promise<{ slug: 
         <h2 className="text-dark mb-2 text-lg font-semibold dark:text-white">Exports</h2>
         {record.exports.length > 0 ? (
           <ul className="grid gap-1 text-sm sm:grid-cols-2">
-            {record.exports.map((name) => (
+            {record.exports.map((entry) => (
               <li
-                key={name}
+                key={entry.name}
                 className="bg-gray-2 dark:bg-dark-2 rounded px-2 py-1 font-mono text-xs"
               >
-                {name}
+                {entry.name}
               </li>
             ))}
           </ul>

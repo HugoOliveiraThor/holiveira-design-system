@@ -15,18 +15,25 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import { buildApi, createProgram, exportNames } from '../src/lib/docs-metadata/api';
+import { buildApi, createProgram } from '../src/lib/docs-metadata/api';
 import {
   assertCoreCoverage,
   loadComponentDocs,
   validateComponentDocs,
 } from '../src/lib/docs-metadata/content';
 import { assertExampleImports, buildExamples } from '../src/lib/docs-metadata/examples';
+import { buildComponentExports, buildExports } from '../src/lib/docs-metadata/inventory';
 import { validateCatalog } from '../src/lib/docs-metadata/catalog';
 import { renderJson } from '../src/lib/docs-metadata/render';
 import { buildRegistry, MetadataError, readManifests } from '../src/lib/docs-metadata/registry';
 import { buildSearch } from '../src/lib/docs-metadata/search';
-import { CORE_COMPONENTS, PLAYGROUND_SCREENS, type Catalog } from '../src/lib/docs-metadata/types';
+import {
+  CORE_COMPONENTS,
+  PLAYGROUND_SCREENS,
+  type Catalog,
+  type ComponentExportRecord,
+  type ExportRecord,
+} from '../src/lib/docs-metadata/types';
 
 import { elapsedMs, nowIso, writeGateReport } from '../../../scripts/lib/gate-report';
 
@@ -69,9 +76,14 @@ async function main(): Promise<void> {
     .filter((manifest) => manifest.private !== true)
     .map((manifest) => manifest.name);
   const program = createProgram(ROOT, publicNames);
+  const exportRecordsByPackage: Record<string, ExportRecord[]> = {};
+  const componentExportsByPackage: Record<string, ComponentExportRecord[]> = {};
   const exportsByPackage: Record<string, string[]> = {};
   for (const name of publicNames) {
-    exportsByPackage[name] = exportNames(program, ROOT, name);
+    const records = buildExports(program, ROOT, name);
+    exportRecordsByPackage[name] = records;
+    exportsByPackage[name] = records.map((record) => record.name);
+    componentExportsByPackage[name] = buildComponentExports(program, ROOT, name, records);
   }
 
   const catalog = validateCatalog(await loadCatalog(), {
@@ -89,7 +101,12 @@ async function main(): Promise<void> {
     coreIds: CORE_COMPONENTS,
     playgroundScreens: PLAYGROUND_SCREENS,
   });
-  const registry = buildRegistry({ manifests, catalog, exportsByPackage });
+  const registry = buildRegistry({
+    manifests,
+    catalog,
+    exportsByPackage: exportRecordsByPackage,
+    componentExportsByPackage,
+  });
   const components = buildApi(program, ROOT, catalog);
   const search = buildSearch(registry, components);
   const examples = buildExamples(ROOT);

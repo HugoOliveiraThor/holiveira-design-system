@@ -5,13 +5,30 @@
  * classification. `render.ts` turns these records into the committed bytes.
  */
 
+export type ExportKind = 'component' | 'hook' | 'function' | 'constant' | 'type';
+
+/** One public export of a package barrel, with the kind the checker derived. */
+export interface ExportRecord {
+  name: string;
+  kind: ExportKind;
+}
+
+/** One component export, anchored in its package page inventory. */
+export interface ComponentExportRecord {
+  id: string;
+  exportName: string;
+  sourceFile: string;
+  story?: StoryRecord;
+}
+
 export interface PackageRecord {
   name: string;
   version: string;
   description: string;
   private: false;
   installState: 'pre-release' | 'published';
-  exports: string[];
+  exports: ExportRecord[];
+  componentExports: ComponentExportRecord[];
   category: string;
   peers: Record<string, string>;
 }

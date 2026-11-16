@@ -85,7 +85,7 @@ export function createProgram(root: string, packageNames: string[]): ts.Program 
   });
 }
 
-function barrelSymbol(program: ts.Program, root: string, packageName: string) {
+export function barrelSymbol(program: ts.Program, root: string, packageName: string) {
   const source = program.getSourceFile(barrelPath(root, packageName));
   if (!source) throw new MetadataError(`cannot read the barrel of ${packageName}`);
   const symbol = program.getTypeChecker().getSymbolAtLocation(source);
@@ -259,7 +259,7 @@ export function extractVariants(
 }
 
 /** The repo-relative source file that declares the exported component. */
-function componentSourceFile(
+export function componentSourceFile(
   program: ts.Program,
   root: string,
   packageName: string,
