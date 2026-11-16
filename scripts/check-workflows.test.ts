@@ -58,6 +58,11 @@ describe('CI workflow', () => {
     expect(job).toContain('DATABASE_URL: ${{ secrets.DATABASE_URL }}');
     expect(offsets.every((offset) => offset > -1)).toBe(true);
     expect([...offsets].sort((left, right) => left - right)).toEqual(offsets);
+
+    // The build needs the generated Prisma client; the runner starts clean.
+    const prisma = job.indexOf('pnpm run db:generate');
+    expect(prisma).toBeGreaterThan(-1);
+    expect(prisma).toBeLessThan(job.indexOf('pnpm run build'));
   });
 
   it('keeps all-checks unchanged', () => {
