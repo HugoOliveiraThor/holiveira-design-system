@@ -4,12 +4,13 @@ import { describe, expect, it } from 'vitest';
 
 const ROOT = process.cwd();
 
-interface PackageJson {
-  'lint-staged'?: Record<string, string[]>;
-  scripts: Record<string, string>;
+interface StagedConfig {
+  [glob: string]: string[];
 }
 
-const packageJson = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as PackageJson;
+const stagedConfig = JSON.parse(
+  readFileSync(join(ROOT, '.lintstagedrc.json'), 'utf8'),
+) as StagedConfig;
 
 interface StagedTask {
   glob: string;
@@ -17,7 +18,7 @@ interface StagedTask {
 }
 
 function stagedTasks(): StagedTask[] {
-  return Object.entries(packageJson['lint-staged'] ?? {}).map(([glob, commands]) => ({
+  return Object.entries(stagedConfig).map(([glob, commands]) => ({
     glob,
     commands,
   }));
@@ -63,6 +64,6 @@ describe('lint-staged', () => {
 
     expect(hook).toContain('lint-staged');
     expect(hook).toContain('--no-install');
-    expect(hook).toContain('--config package.json');
+    expect(hook).not.toContain('--config');
   });
 });

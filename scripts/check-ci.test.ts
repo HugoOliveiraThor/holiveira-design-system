@@ -16,6 +16,7 @@ const root = scripts('package.json');
 const docs = scripts(join('apps', 'docs', 'package.json'));
 
 const PARITY_STEPS = [
+  'pnpm --filter @ho-dev/docs exec playwright install chromium',
   'pnpm run all-checks',
   'pnpm run check:clean',
   'pnpm run check:docs:export',
@@ -30,7 +31,7 @@ const ALL_CHECKS =
 describe('check:ci', () => {
   it('runs the full parity set', () => {
     expect(root['check:ci'].split(' && ')).toEqual(PARITY_STEPS);
-    for (const step of PARITY_STEPS) {
+    for (const step of PARITY_STEPS.filter((entry) => entry.startsWith('pnpm run '))) {
       const name = step.replace('pnpm run ', '');
       expect(root[name], name).toBeTypeOf('string');
     }

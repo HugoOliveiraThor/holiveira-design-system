@@ -54,18 +54,7 @@
     "check:tokens": "pnpm exec tsx scripts/generate-tokens.ts --check && pnpm exec tsx scripts/check-tokens-compat.ts",
     "check:artifact": "pnpm exec tsx scripts/check-artifact.ts",
     "check:clean": "pnpm exec tsx scripts/check-clean.ts",
-    "check:ci": "pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{js,jsx,json,md,yml,yaml,css}": [
-      "prettier --write"
-    ],
-    "pnpm-lock.yaml": [],
-    "prisma/**": []
+    "check:ci": "pnpm --filter @ho-dev/docs exec playwright install chromium && pnpm run all-checks && pnpm run check:clean && pnpm run check:docs:export && pnpm run test:docs:built && pnpm run check:artifact"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
