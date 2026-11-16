@@ -119,14 +119,27 @@ describe('check-artifact', () => {
   });
 
   it('requires a route marker, not only a status', async () => {
-    const artifact = createArtifact();
-    writeFileSync(join(artifact, 'docs', 'index.html'), STORYBOOK_HTML);
+    const cases: Array<{ path: string; file: string; body: string; marker: string }> = [
+      { path: '/', file: 'index.html', body: DOCS_HTML, marker: '@storybook/core - Storybook' },
+      {
+        path: '/playground/',
+        file: 'playground/index.html',
+        body: DOCS_HTML,
+        marker: 'Playground',
+      },
+      { path: '/docs/', file: 'docs/index.html', body: STORYBOOK_HTML, marker: 'Holiveira' },
+    ];
 
-    const findings = await smokeArtifact(artifact);
+    for (const probe of cases) {
+      const artifact = createArtifact();
+      writeFileSync(join(artifact, probe.file), probe.body);
 
-    expect(findings).toHaveLength(1);
-    expect(findings[0]).toMatchObject({ path: '/docs/', problem: 'marker' });
-    expect(findings[0].detail).toContain('Holiveira');
+      const findings = await smokeArtifact(artifact);
+
+      expect(findings, probe.path).toHaveLength(1);
+      expect(findings[0], probe.path).toMatchObject({ path: probe.path, problem: 'marker' });
+      expect(findings[0].detail, probe.path).toContain(probe.marker);
+    }
   });
 
   it('names the path that is missing', async () => {

@@ -8,22 +8,36 @@
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 
 import { chromium } from '@playwright/test';
 
-const executable = chromium.executablePath();
+/**
+ * Run the presence check and, only when the browser is missing, the installer.
+ * Injected `exists`/`install` keep both branches testable.
+ */
+export function ensureBrowser({ executable, exists = existsSync, install, log = console }) {
+  if (exists(executable)) return 0;
 
-if (existsSync(executable)) {
-  process.exit(0);
+  log.error(`Chromium not found at ${executable}; installing it now.`);
+  const status = install();
+  if (status !== 0) {
+    log.error('Chromium install failed. Run it manually: pnpm exec playwright install chromium');
+  }
+  return status;
 }
 
-console.error(`Chromium not found at ${executable}; installing it now.`);
-const result = spawnSync('pnpm', ['exec', 'playwright', 'install', 'chromium'], {
-  stdio: 'inherit',
-  cwd: process.cwd(),
-});
+export function installChromium() {
+  const result = spawnSync('pnpm', ['exec', 'playwright', 'install', 'chromium'], {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+  });
+  return result.status ?? 1;
+}
 
-if (result.status !== 0) {
-  console.error('Chromium install failed. Run it manually: pnpm exec playwright install chromium');
-  process.exit(result.status ?? 1);
+const invokedDirectly =
+  process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (invokedDirectly) {
+  process.exit(ensureBrowser({ executable: chromium.executablePath(), install: installChromium }));
 }

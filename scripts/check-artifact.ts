@@ -45,7 +45,7 @@ export interface ArtifactRoute {
 }
 
 export const ROUTES: readonly ArtifactRoute[] = [
-  { path: '/', file: 'index.html', marker: 'storybook' },
+  { path: '/', file: 'index.html', marker: '@storybook/core - Storybook' },
   {
     path: '/playground/',
     file: 'playground/index.html',

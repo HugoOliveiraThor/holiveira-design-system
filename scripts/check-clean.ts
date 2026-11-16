@@ -142,9 +142,12 @@ export function runGates(
   for (const gate of gates) {
     const result = spawnSync(tsx, [join(exportRoot, gate.script), ...gate.args], {
       cwd: exportRoot,
-      stdio: 'inherit',
       env: process.env,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
+    if (result.stdout) process.stdout.write(result.stdout);
+    if (result.stderr) process.stderr.write(result.stderr);
     if (result.status !== 0) {
       console.error(`check:clean — ${gate.name} failed on the exported tree`);
       return result.status ?? 1;

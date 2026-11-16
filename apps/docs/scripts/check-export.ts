@@ -1,11 +1,11 @@
 import { DOCS_BASE_PATH } from '../site.config';
-import { exportChecks, formatExportChecks, summarizeExportChecks } from '../src/lib/export-check';
+import { exportChecks, formatExportChecks, summarizeExportChecks } from './lib/export-check';
 
 /**
  * Portal export check.
  *
  * Asserts the built export under `out/` and the sources that produce it; the
- * check list lives in `src/lib/export-check.ts` so the suite covers every
+ * check list lives in `scripts/lib/export-check.ts` so the suite covers every
  * assertion. Prints one line per check and exits non-zero when one fails.
  */
 

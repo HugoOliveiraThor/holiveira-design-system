@@ -4,7 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { GATES, exportHead, linkModules, removeExport, runCleanCheck } from './check-clean';
+import {
+  GATES,
+  exportHead,
+  linkModules,
+  removeExport,
+  runCleanCheck,
+  runGates,
+} from './check-clean';
 
 const ROOT = process.cwd();
 const created: string[] = [];
@@ -76,15 +83,20 @@ describe('check-clean', () => {
         `${readFileSync(readme, 'utf8')}\nSee \`docs/architecture/contracts/cited-file-does-not-exist.md\`.\n`,
       );
 
-      const result = spawnSync(
-        join(ROOT, 'node_modules', '.bin', 'tsx'),
-        [join(exportRoot, 'scripts', 'check-readme-docs.ts')],
-        { cwd: exportRoot, encoding: 'utf8', timeout: 300_000 },
-      );
-      const output = `${result.stdout ?? ''}${result.stderr ?? ''}`;
+      let captured = '';
+      vi.spyOn(process.stdout, 'write').mockImplementation((chunk) => {
+        captured += String(chunk);
+        return true;
+      });
+      vi.spyOn(process.stderr, 'write').mockImplementation((chunk) => {
+        captured += String(chunk);
+        return true;
+      });
 
-      expect(result.status).toBe(1);
-      expect(output).toContain('cited-file-does-not-exist.md');
+      const code = runGates(ROOT, exportRoot);
+
+      expect(code).toBe(1);
+      expect(captured).toContain('cited-file-does-not-exist.md');
       expect(
         existsSync(join(ROOT, 'docs', 'architecture', 'contracts', 'cited-file-does-not-exist.md')),
       ).toBe(false);
