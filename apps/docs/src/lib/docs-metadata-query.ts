@@ -7,6 +7,7 @@
  */
 import apiData from '../generated/api.json';
 import examplesData from '../generated/examples.json';
+import guideExamplesData from '../generated/guide-examples.json';
 import registryData from '../generated/registry.json';
 import searchData from '../generated/search-index.json';
 import { docsSite } from '../../site.config';
@@ -17,6 +18,7 @@ import type {
   ComponentDoc,
   ComponentRecord,
   ExampleRecord,
+  GuideExampleRecord,
   PackageRecord,
   PlaygroundScreen,
   SearchRecord,
@@ -26,6 +28,7 @@ export const packages = registryData as unknown as PackageRecord[];
 export const components = apiData as ComponentRecord[];
 export const searchRecords = searchData as SearchRecord[];
 export const examples = examplesData as ExampleRecord[];
+export const guideExamples = guideExamplesData as GuideExampleRecord[];
 
 export function findComponentDoc(
   docs: readonly ComponentDoc[],
@@ -46,6 +49,11 @@ export function componentDoc(id: string): ComponentDoc | undefined {
 /** The generated examples for a component, in kind order. */
 export function examplesFor(id: string): ExampleRecord[] {
   return examplesForSlug(examples, id);
+}
+
+/** The source of a guide snippet, read from the committed guide artifact. */
+export function snippetSource(path: string): string | undefined {
+  return guideExamples.find((example) => example.path === path)?.source;
 }
 
 /** The Storybook docs page of a component, from its generated story id. */
