@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit",
     "test:export": "next build && tsx scripts/check-export.ts",
     "generate:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts",
-    "check:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts --check"
+    "check:metadata": "pnpm exec tsx scripts/generate-docs-metadata.ts --check",
+    "test:e2e": "next build && playwright test"
   },
   "dependencies": {
     "@ho-dev/theme": "workspace:*",
@@ -18,5 +19,9 @@
     "next": "^16.4.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.62.1"
   }
 }

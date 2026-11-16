@@ -42,6 +42,9 @@ export interface SearchRecord {
   type: 'package' | 'component';
   title: string;
   package: string;
+  category: string;
+  summary: string;
+  keywords: string[];
   path: string;
 }
 

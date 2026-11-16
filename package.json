@@ -18,6 +18,7 @@
     "build:storybook": "turbo run build:storybook",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:docs": "pnpm --filter @ho-dev/docs test:e2e",
     "test:coverage": "vitest run --coverage",
     "test:visual": "pnpm run build:storybook && pnpm --filter @ho-dev/storybook run test:visual",
     "screenshots": "pnpm run build:storybook && node apps/storybook/scripts/capture-screenshots.mjs",

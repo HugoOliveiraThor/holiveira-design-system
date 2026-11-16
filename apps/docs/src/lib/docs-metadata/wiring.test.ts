@@ -151,4 +151,66 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
       expect(readme).toContain(field);
     }
   });
+
+  it('defines the docs e2e command', () => {
+    const docsManifest = JSON.parse(
+      readFileSync(join(ROOT, 'apps', 'docs', 'package.json'), 'utf8'),
+    ) as { scripts: Record<string, string>; devDependencies: Record<string, string> };
+    expect(docsManifest.scripts['test:e2e']).toBe('next build && playwright test');
+    expect(scripts()['test:docs']).toBe('pnpm --filter @ho-dev/docs test:e2e');
+    expect(docsManifest.devDependencies['@playwright/test']).toBeTruthy();
+    expect(docsManifest.devDependencies['@axe-core/playwright']).toBeTruthy();
+  });
+
+  it('adds category and keywords to the real search index', () => {
+    const search = generated<
+      Array<{
+        type: string;
+        package: string;
+        category: string;
+        summary: string;
+        keywords: string[];
+      }>
+    >('search-index.json');
+    expect(search).toHaveLength(29);
+    expect(search.filter((record) => record.type === 'package')).toHaveLength(16);
+    expect(search.filter((record) => record.type === 'component')).toHaveLength(13);
+    for (const record of search) {
+      expect(record.category.length).toBeGreaterThan(0);
+      expect(record.summary).toBe('');
+      expect(record.keywords.length).toBeGreaterThan(0);
+      expect(record.keywords).toEqual([...record.keywords].sort());
+      expect(new Set(record.keywords).size).toBe(record.keywords.length);
+      expect(record.keywords.every((keyword) => keyword === keyword.toLowerCase())).toBe(true);
+      expect(['@ho-dev/auth', '@ho-dev/api', '@ho-dev/db', '@ho-dev/testing']).not.toContain(
+        record.package,
+      );
+    }
+  });
+
+  it('ships the e2e specs the milestone requires', () => {
+    const directory = join(ROOT, 'apps', 'docs', 'e2e');
+    const files = readdirSync(directory)
+      .filter((file) => file.endsWith('.spec.ts'))
+      .sort();
+    expect(files).toEqual([
+      'a11y.spec.ts',
+      'drawer.spec.ts',
+      'navigation.spec.ts',
+      'search.spec.ts',
+      'smoke.spec.ts',
+      'theme.spec.ts',
+    ]);
+    const content = files.map((file) => readFileSync(join(directory, file), 'utf8')).join('\n');
+    for (const title of [
+      'slash opens search',
+      'drawer traps focus and locks scroll',
+      'axe finds no violations on the landing page',
+      'defaults to the system theme and persists a change',
+      'skip link moves focus to main',
+      'every catalogue link resolves',
+    ]) {
+      expect(content).toContain(title);
+    }
+  });
 });
