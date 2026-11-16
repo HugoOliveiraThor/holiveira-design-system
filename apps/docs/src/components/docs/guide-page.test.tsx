@@ -1,10 +1,14 @@
 import '@testing-library/jest-dom/vitest';
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { guideDocs } from '../../content/guides';
 import type { GuideDoc } from '../../lib/docs-metadata/guides';
-import { packages } from '../../lib/docs-metadata-query';
+import { packages, snippetSource } from '../../lib/docs-metadata-query';
 
 import { GuidePage } from './guide-page';
 
@@ -97,6 +101,18 @@ describe('guide page', () => {
     render(<GuidePage guide={GUIDE} snippets={snippetsWith(SOURCE)} />);
     expect(document.querySelector('pre > code')?.textContent).toBe(SOURCE);
     expect(screen.getByText('theming.tsx')).toBeInTheDocument();
+  });
+
+  it('reads guide snippets from real files', () => {
+    const guide = guideDocs.find((record) => record.slug === 'getting-started/theming');
+    expect(guide).toBeDefined();
+    const path = guide?.snippets[0];
+    expect(path).toBe('apps/docs/src/examples/guides/theming.tsx');
+    const source = readFileSync(join(process.cwd(), path as string), 'utf8');
+    expect(snippetSource(path as string)).toBe(source);
+
+    render(<GuidePage guide={guide as GuideDoc} />);
+    expect(document.querySelector('pre > code')?.textContent).toBe(source);
   });
 
   it('renders no code block for a snippet the artifact does not hold', () => {
