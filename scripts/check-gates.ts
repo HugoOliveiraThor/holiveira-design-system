@@ -21,6 +21,7 @@ const SUMMARY_FILE = join(GATES_DIR, 'summary.json');
 const EXPECTED_GATES = [
   'tokens',
   'docs-metadata',
+  'docs-readme',
   'size',
   'publish',
   'license',

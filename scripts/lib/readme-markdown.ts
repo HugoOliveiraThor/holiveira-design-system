@@ -47,9 +47,13 @@ const BULLET = /^\s*[-*]\s+(.+)$/;
 const TABLE_ROW = /^\s*\|/;
 const TABLE_SEPARATOR = /^\s*\|[\s:|-]*-[\s:|-]*$/;
 
-/** A declaration inside a fenced `## Public API` example. */
+/**
+ * A documented declaration inside a fenced `## Public API` block. Values are
+ * excluded on purpose: an example that declares a local variable documents the
+ * API by using it, not by naming it.
+ */
 const DECLARATION =
-  /^\s*(?:export\s+)?(?:declare\s+)?(?:type|interface|function|class|enum|const|let|var)\s+([A-Za-z_$][\w$]*)/;
+  /^\s*(?:export\s+)?(?:declare\s+)?(?:type|interface|function|class|enum)\s+([A-Za-z_$][\w$]*)/;
 
 export class MarkdownError extends Error {
   readonly file: string;

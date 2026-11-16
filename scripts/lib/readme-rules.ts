@@ -234,7 +234,8 @@ export function checkPaths(docs: MarkdownDoc[], root: string): Finding[] {
           .trim()
           .replace(/[.,;:]+$/, '')
           .replace(/#.*$/, '');
-        if (!PATH_PATTERN.test(token)) continue;
+        // A glob is a pattern, not a path claim, so it has nothing to resolve.
+        if (!PATH_PATTERN.test(token) || /[*?]/.test(token)) continue;
         for (const candidate of expandBraces(token)) {
           if (existsSync(join(root, candidate))) continue;
           findings.push({
