@@ -12,6 +12,18 @@
     "source": "import { Alert } from '@ho-dev/primitives';\n\nexport function AlertRealistic() {\n  return (\n    <div className=\"space-y-4\">\n      <Alert\n        variant=\"error\"\n        title=\"Payment failed\"\n        description=\"The card ending in 4242 was declined by the issuer. Retry with another payment method.\"\n        link={{ label: 'Update payment method', href: '#payment-methods' }}\n      />\n      <Alert\n        variant=\"success\"\n        title=\"Import finished\"\n        description=\"1,284 rows were imported and 6 were skipped because the email was missing.\"\n      />\n    </div>\n  );\n}\n"
   },
   {
+    "id": "area-chart",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/area-chart/minimal.tsx",
+    "source": "import { AreaChart } from '@ho-dev/charts';\n\nexport function AreaChartMinimal() {\n  return (\n    <AreaChart\n      label=\"Weekly revenue\"\n      height={260}\n      series={[\n        {\n          name: 'Revenue',\n          data: [\n            { x: 'Mon', y: 12 },\n            { x: 'Tue', y: 18 },\n            { x: 'Wed', y: 15 },\n            { x: 'Thu', y: 24 },\n            { x: 'Fri', y: 21 },\n          ],\n        },\n      ]}\n    />\n  );\n}\n"
+  },
+  {
+    "id": "area-chart",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/area-chart/realistic.tsx",
+    "source": "import { AreaChart } from '@ho-dev/charts';\n\nconst series = [\n  {\n    name: 'This month',\n    data: [\n      { x: 'Week 1', y: 4200 },\n      { x: 'Week 2', y: 5100 },\n      { x: 'Week 3', y: 4750 },\n      { x: 'Week 4', y: 6300 },\n    ],\n  },\n  {\n    name: 'Last month',\n    data: [\n      { x: 'Week 1', y: 3800 },\n      { x: 'Week 2', y: 4400 },\n      { x: 'Week 3', y: 4600 },\n      { x: 'Week 4', y: 5200 },\n    ],\n  },\n];\n\nexport function AreaChartRealistic() {\n  return (\n    <AreaChart\n      label=\"Revenue by week, this month compared with last month\"\n      description=\"Revenue grew in every week and closed the month 21% above the previous one.\"\n      height={300}\n      series={series}\n    />\n  );\n}\n"
+  },
+  {
     "id": "badge",
     "kind": "minimal",
     "path": "apps/docs/src/examples/badge/minimal.tsx",
@@ -84,6 +96,18 @@
     "source": "'use client';\n\nimport { Field, Form, useForm } from '@ho-dev/forms';\nimport { Button } from '@ho-dev/primitives';\n\nimport { useState } from 'react';\n\ninterface ProfileValues {\n  email: string;\n  company: string;\n}\n\nexport function FormRealistic() {\n  const {\n    register,\n    handleSubmit,\n    reset,\n    formState: { errors },\n  } = useForm<ProfileValues>({ defaultValues: { email: '', company: '' } });\n  const [saved, setSaved] = useState(false);\n\n  return (\n    <Form\n      onSubmit={handleSubmit(() => {\n        setSaved(true);\n        reset();\n      })}\n    >\n      <Field\n        label=\"Work email\"\n        description=\"Used for invoices and receipts.\"\n        error={errors.email?.message}\n      >\n        <input\n          type=\"email\"\n          placeholder=\"you@example.com\"\n          aria-required=\"true\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n          {...register('email', { required: 'Enter your work email.' })}\n        />\n      </Field>\n      <Field label=\"Company\" error={errors.company?.message}>\n        <input\n          type=\"text\"\n          placeholder=\"Acme Corp\"\n          className=\"border-stroke focus:border-primary dark:border-dark-3 dark:bg-dark-2 w-full rounded-lg border px-5 py-3 outline-none\"\n          {...register('company', { required: 'Tell us which company you work for.' })}\n        />\n      </Field>\n      <div className=\"flex flex-wrap items-center gap-3\">\n        <Button type=\"submit\">Save profile</Button>\n        {saved && (\n          <p role=\"status\" className=\"text-dark-4 dark:text-dark-6 text-sm\">\n            Profile saved.\n          </p>\n        )}\n      </div>\n    </Form>\n  );\n}\n"
   },
   {
+    "id": "header",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/header/minimal.tsx",
+    "source": "import { Header } from '@ho-dev/layouts';\n\nexport function HeaderMinimal() {\n  return (\n    <Header>\n      <span className=\"text-sm font-medium\">Dashboard</span>\n    </Header>\n  );\n}\n"
+  },
+  {
+    "id": "header",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/header/realistic.tsx",
+    "source": "import { Header, HeaderActions, HeaderToggle, SidebarProvider } from '@ho-dev/layouts';\n\nexport function HeaderRealistic() {\n  return (\n    <SidebarProvider>\n      <Header>\n        <HeaderToggle />\n        <nav aria-label=\"Example navigation\" className=\"flex items-center gap-4 text-sm\">\n          <a href=\"#orders\">Orders</a>\n          <a href=\"#customers\">Customers</a>\n        </nav>\n        <HeaderActions>\n          <span className=\"text-dark-4 dark:text-dark-6 text-sm\">jane@acme.com</span>\n        </HeaderActions>\n      </Header>\n    </SidebarProvider>\n  );\n}\n"
+  },
+  {
     "id": "input-group",
     "kind": "minimal",
     "path": "apps/docs/src/examples/input-group/minimal.tsx",
@@ -106,6 +130,18 @@
     "kind": "realistic",
     "path": "apps/docs/src/examples/page-header/realistic.tsx",
     "source": "import { PageHeader } from '@ho-dev/ui';\n\nexport function PageHeaderRealistic() {\n  return (\n    <PageHeader\n      title=\"Open orders\"\n      breadcrumb={[\n        { label: 'Dashboard', href: '/' },\n        { label: 'Orders', href: '/orders' },\n        { label: 'Open orders' },\n      ]}\n    />\n  );\n}\n"
+  },
+  {
+    "id": "sidebar",
+    "kind": "minimal",
+    "path": "apps/docs/src/examples/sidebar/minimal.tsx",
+    "source": "import { Sidebar, SidebarProvider } from '@ho-dev/layouts';\n\nexport function SidebarMinimal() {\n  return (\n    <div className=\"border-stroke dark:border-dark-3 h-[360px] overflow-hidden rounded-lg border\">\n      <SidebarProvider>\n        <Sidebar className=\"h-full\" logo={<span className=\"text-sm font-bold\">HQ</span>}>\n          <nav aria-label=\"Example navigation\" className=\"space-y-1\">\n            <a href=\"#dashboard\" className=\"block rounded-lg px-3 py-2 text-sm font-medium\">\n              Dashboard\n            </a>\n            <a href=\"#orders\" className=\"block rounded-lg px-3 py-2 text-sm font-medium\">\n              Orders\n            </a>\n          </nav>\n        </Sidebar>\n      </SidebarProvider>\n    </div>\n  );\n}\n"
+  },
+  {
+    "id": "sidebar",
+    "kind": "realistic",
+    "path": "apps/docs/src/examples/sidebar/realistic.tsx",
+    "source": "import { Sidebar, SidebarProvider } from '@ho-dev/layouts';\n\nconst sections = [\n  { title: 'Overview', items: ['Dashboard', 'Analytics'] },\n  { title: 'Sales', items: ['Orders', 'Customers', 'Refunds'] },\n  { title: 'Workspace', items: ['Team', 'Settings'] },\n];\n\nexport function SidebarRealistic() {\n  return (\n    <div className=\"border-stroke dark:border-dark-3 flex h-[420px] overflow-hidden rounded-lg border\">\n      <SidebarProvider>\n        <Sidebar className=\"h-full\" logo={<span className=\"text-sm font-bold\">Holiveira Ops</span>}>\n          <nav aria-label=\"Example navigation\" className=\"space-y-6\">\n            {sections.map((section) => (\n              <div key={section.title}>\n                <p className=\"text-dark-4 dark:text-dark-6 px-3 pb-2 text-xs font-semibold uppercase\">\n                  {section.title}\n                </p>\n                <ul className=\"space-y-1\">\n                  {section.items.map((item) => (\n                    <li key={item}>\n                      <a\n                        href={`#${item.toLowerCase()}`}\n                        className=\"block rounded-lg px-3 py-2 text-sm font-medium\"\n                      >\n                        {item}\n                      </a>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n            ))}\n          </nav>\n        </Sidebar>\n      </SidebarProvider>\n    </div>\n  );\n}\n"
   },
   {
     "id": "table",
