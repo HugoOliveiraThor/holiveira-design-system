@@ -78,16 +78,12 @@ async function probe(page, url) {
   await page.evaluate(() => document.fonts.ready);
   return page.evaluate((roles) => {
     const styles = getComputedStyle(document.documentElement);
-    const read = (theme) => {
-      const palette = {};
-      for (const role of roles) palette[role] = styles.getPropertyValue(role).trim();
-      return palette;
-    };
+    const palette = {};
+    for (const role of roles) palette[role] = styles.getPropertyValue(role).trim();
     return {
       theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
       fontFamily: getComputedStyle(document.body).fontFamily,
-      palette: read('current'),
-      headingCount: document.querySelectorAll('h1').length,
+      palette,
     };
   }, ROLES);
 }
