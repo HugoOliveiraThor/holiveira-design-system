@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 /** The chip the headers use for a category, a version or an install state. */
 export const PAGE_CHIP_CLASS =
-  'text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-2.5 py-0.5 font-medium text-[var(--portal-muted)]';
+  'text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-2.5 py-0.5 font-medium text-[var(--portal-body)]';
 
 /** The link treatment every header action and inline link shares. */
 export const PAGE_LINK_CLASS =

@@ -95,3 +95,52 @@ test('the dropdown opens with the keyboard and closes with escape', async ({ pag
     await expect(trigger, key).toBeFocused();
   }
 });
+
+/** The four page types the redesign touches, each with a route and a specimen. */
+const PAGE_TYPES = [
+  { name: 'landing', path: './', specimen: '' },
+  { name: 'component', path: './components/button/', specimen: 'Button' },
+  { name: 'package', path: './packages/primitives/', specimen: '@ho-dev/primitives' },
+  { name: 'guide', path: './getting-started/theming/', specimen: 'Theming' },
+] as const;
+
+test('axe passes on every page type in both themes', async ({ page }) => {
+  for (const pageType of PAGE_TYPES) {
+    await page.goto(pageType.path);
+    await expect(page.locator('html'), `${pageType.name} light`).not.toHaveClass(/dark/);
+    if (pageType.specimen !== '') {
+      expect(await page.getByRole('heading', { level: 1 }).textContent(), pageType.name).toContain(
+        pageType.specimen,
+      );
+    }
+    expect(await axeViolations(page), `${pageType.name} light`).toEqual([]);
+  }
+
+  await page.addInitScript(() => localStorage.setItem('ho-dev-docs-theme', 'dark'));
+  for (const pageType of PAGE_TYPES) {
+    await page.goto(pageType.path);
+    await expect(page.locator('html'), `${pageType.name} dark`).toHaveClass(/dark/);
+    expect(await axeViolations(page), `${pageType.name} dark`).toEqual([]);
+  }
+});
+
+test('no page scrolls sideways at 390', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const pageType of PAGE_TYPES) {
+    await page.goto(pageType.path);
+    const measurements = await page.evaluate(() => {
+      const root = document.documentElement;
+      const width = root.clientWidth;
+      const offenders = [...document.querySelectorAll('*')]
+        .filter((element) => element.getBoundingClientRect().right > width + 1)
+        .slice(0, 6)
+        .map((element) => `${element.tagName}.${String(element.className).slice(0, 80)}`);
+      return { overflow: root.scrollWidth - width, width, offenders };
+    });
+    expect(
+      measurements.overflow,
+      `${pageType.name} :: ${measurements.offenders.join(' | ')}`,
+    ).toBeLessThanOrEqual(0);
+    expect(measurements.overflow, pageType.name).toBe(0);
+  }
+});

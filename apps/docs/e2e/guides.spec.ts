@@ -7,7 +7,7 @@ import { DOCS_BASE_PATH } from '../site.config';
 
 import { axeViolations } from './axe';
 
-import { openSearch } from './keyboard';
+import { openSearch, palette } from './keyboard';
 
 interface GuideRoute {
   route: string;
@@ -165,10 +165,14 @@ test('the sidebar links every guide', async ({ page }) => {
   await page.goto('./');
   const sidebar = page.getByRole('navigation', { name: 'Documentation' });
   await expect(sidebar.locator('[aria-disabled="true"]')).toHaveCount(0);
-  const groupLabels = await sidebar.locator('p').allInnerTexts();
-  for (const label of ['Getting Started', 'Foundations', 'Guides', 'Architecture']) {
+  // The five groups the sidebar design fixes; the rendered labels are uppercased
+  // by CSS, so the comparison normalises the case.
+  const groupLabels = (await sidebar.locator('p[data-nav-group]').allInnerTexts()).map((text) =>
+    text.trim().toLowerCase(),
+  );
+  for (const label of ['Getting Started', 'Foundations', 'Guides', 'Packages', 'Components']) {
     expect(
-      groupLabels.filter((text) => text.trim() === label),
+      groupLabels.filter((text) => text === label.toLowerCase()),
       label,
     ).toHaveLength(1);
   }
@@ -201,7 +205,7 @@ test('a guide search result opens the guide', async ({ page }) => {
   await openSearch(page);
   const input = page.getByRole('combobox');
   await input.fill('theming');
-  await expect(page.getByRole('status')).toHaveText('1 results');
+  await expect(palette(page).getByRole('status')).toHaveText('1 results');
   await expect(page.getByRole('option')).toContainText('Theming');
   await input.press('Enter');
   await expect(page).toHaveURL(routePattern('getting-started/theming'));

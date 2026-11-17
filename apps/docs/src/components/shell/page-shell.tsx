@@ -28,7 +28,7 @@ export function PageShell({ breadcrumbs = [], toc = [], wide = false, children }
           {children}
         </div>
         {toc.length >= 2 && (
-          <aside className="hidden w-[220px] shrink-0 xl:block">
+          <aside aria-label="Table of contents" className="hidden w-[220px] shrink-0 xl:block">
             <PageToc items={toc} />
           </aside>
         )}

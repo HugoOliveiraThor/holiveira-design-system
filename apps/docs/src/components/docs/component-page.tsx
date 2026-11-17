@@ -111,11 +111,11 @@ export function ComponentPage({
 
         <DocSection id="description" title="Description">
           <div className="space-y-3">
-            <p className="text-body-2xlg text-[var(--portal-body)]">
+            <p className="text-body-2xlg break-words text-[var(--portal-body)]">
               <strong className="font-semibold text-[var(--portal-ink)]">When to use. </strong>
               {doc.whenToUse}
             </p>
-            <p className="text-body-2xlg text-[var(--portal-body)]">
+            <p className="text-body-2xlg break-words text-[var(--portal-body)]">
               <strong className="font-semibold text-[var(--portal-ink)]">When not to use. </strong>
               {doc.whenNotToUse}
             </p>

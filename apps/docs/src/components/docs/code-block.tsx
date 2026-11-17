@@ -31,7 +31,7 @@ export function CodeBlock({ source, label, componentName }: CodeBlockProps) {
       className="overflow-hidden rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)]"
     >
       <figcaption className="flex items-center justify-between gap-3 border-b border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-2">
-        <span className="text-body-xs font-semibold tracking-wide text-[var(--portal-muted)] uppercase">
+        <span className="text-body-xs font-semibold tracking-wide text-[var(--portal-body)] uppercase">
           {label}
         </span>
         <button
@@ -45,7 +45,7 @@ export function CodeBlock({ source, label, componentName }: CodeBlockProps) {
           Copy
         </button>
       </figcaption>
-      <pre className="overflow-x-auto bg-[var(--portal-code-bg)] p-3 text-xs">
+      <pre tabIndex={0} className="overflow-x-auto bg-[var(--portal-code-bg)] p-3 text-xs">
         <code>{source}</code>
       </pre>
       <p role="status" className="sr-only">

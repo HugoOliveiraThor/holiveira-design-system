@@ -28,7 +28,7 @@ export function EmptyState({ title, hint }: { title: string; hint?: ReactNode })
       <div>
         <p className="text-body-sm font-medium text-[var(--portal-ink)]">{title}</p>
         {hint !== undefined && (
-          <p className="text-body-xs mt-1 text-[var(--portal-muted)]">{hint}</p>
+          <p className="text-body-xs mt-1 text-[var(--portal-body)]">{hint}</p>
         )}
       </div>
     </div>

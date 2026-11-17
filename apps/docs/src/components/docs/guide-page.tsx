@@ -28,7 +28,7 @@ import {
 /** The one package whose exported categories the tokens guide tabulates. */
 const TOKENS_PACKAGE = '@ho-dev/tokens';
 
-const PROSE_CLASS = 'text-body-2xlg mb-3 text-[var(--portal-body)] last:mb-0';
+const PROSE_CLASS = 'text-body-2xlg mb-3 text-[var(--portal-body)] break-words last:mb-0';
 
 const PILL_CLASS =
   'text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-1 font-medium text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] hover:text-[var(--portal-primary-strong)]';

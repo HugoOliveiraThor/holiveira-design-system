@@ -36,7 +36,6 @@ export function HeroSearch({ records }: HeroSearchProps) {
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        aria-label="Open search from the hero"
         className="text-body-sm group flex w-full max-w-[680px] items-center gap-3 rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)] px-4 py-3 text-left shadow-[var(--shadow-1)] transition-colors hover:border-[var(--portal-primary-strong)]"
       >
         <svg
@@ -53,11 +52,8 @@ export function HeroSearch({ records }: HeroSearchProps) {
         </svg>
         <span className="flex-1 text-[var(--portal-muted)]">
           Search components, packages and guides
-        </span>
-        <kbd
-          aria-hidden="true"
-          className="text-body-xs rounded border border-[var(--portal-border)] bg-[var(--portal-code-bg)] px-1.5 py-0.5 text-[var(--portal-muted)]"
-        >
+        </span>{' '}
+        <kbd className="text-body-xs rounded border border-[var(--portal-border)] bg-[var(--portal-code-bg)] px-1.5 py-0.5 text-[var(--portal-body)]">
           ⌘K
         </kbd>
       </button>

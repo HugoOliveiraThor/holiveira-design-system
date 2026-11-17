@@ -135,7 +135,7 @@ export function CommandPalette({ open, onOpenChange, records }: CommandPalettePr
             placeholder="Search components, packages and guides"
             className="text-body-sm w-full bg-transparent text-[var(--portal-ink)] outline-none placeholder:text-[var(--portal-muted)]"
           />
-          <kbd className="text-body-xs rounded bg-[var(--portal-code-bg)] px-1.5 text-[var(--portal-muted)]">
+          <kbd className="text-body-xs rounded bg-[var(--portal-code-bg)] px-1.5 text-[var(--portal-body)]">
             Esc
           </kbd>
         </div>

@@ -45,7 +45,7 @@ afterEach(() => {
 describe('hero search', () => {
   it('opens the palette from the hero button', () => {
     render(<HeroSearch records={RECORDS} />);
-    const trigger = screen.getByRole('button', { name: 'Open search from the hero' });
+    const trigger = screen.getByRole('button', { name: /^Search components, packages and guides/ });
     expect(trigger.tagName).toBe('BUTTON');
     expect(screen.queryByRole('combobox')).toBeNull();
 
@@ -59,7 +59,7 @@ describe('hero search', () => {
 
   it('closes on escape and returns focus to the hero button', () => {
     render(<HeroSearch records={RECORDS} />);
-    const trigger = screen.getByRole('button', { name: 'Open search from the hero' });
+    const trigger = screen.getByRole('button', { name: /^Search components, packages and guides/ });
     fireEvent.click(trigger);
 
     fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Escape' });

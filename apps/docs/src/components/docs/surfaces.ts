@@ -20,7 +20,7 @@ export const TABLE_HEAD_CLASS =
   'border-b border-[var(--portal-border)] bg-[var(--portal-surface-2)]';
 
 export const TABLE_HEAD_CELL_CLASS =
-  'text-body-xs px-3 py-2 font-semibold tracking-wide text-[var(--portal-muted)] uppercase';
+  'text-body-xs px-3 py-2 font-semibold tracking-wide text-[var(--portal-body)] uppercase';
 
 export const TABLE_ROW_CLASS = 'border-b border-[var(--portal-border)] last:border-0';
 

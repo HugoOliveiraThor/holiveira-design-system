@@ -63,7 +63,7 @@ export function ExamplePreview({
     >
       <div className="flex flex-wrap items-center gap-4 border-b border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-2">
         <div role="group" aria-label="Preview width" className="flex items-center gap-1">
-          <span className="text-body-xs mr-1 text-[var(--portal-muted)]">Width</span>
+          <span className="text-body-xs mr-1 text-[var(--portal-body)]">Width</span>
           {WIDTHS.map((option) => (
             <button
               key={option.value}
@@ -79,7 +79,7 @@ export function ExamplePreview({
           ))}
         </div>
         <div role="group" aria-label="Preview theme" className="flex items-center gap-1">
-          <span className="text-body-xs mr-1 text-[var(--portal-muted)]">Theme</span>
+          <span className="text-body-xs mr-1 text-[var(--portal-body)]">Theme</span>
           {THEMES.map((option) => (
             <button
               key={option}

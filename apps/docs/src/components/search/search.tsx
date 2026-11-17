@@ -55,14 +55,10 @@ export function DocsSearch({ records }: DocsSearchProps) {
         aria-expanded={open}
         aria-controls="docs-search-dialog"
         aria-haspopup="dialog"
-        aria-label="Search documentation"
         className="text-body-sm flex items-center gap-2 rounded-md border border-[var(--portal-border)] px-3 py-1.5 text-[var(--portal-body)] hover:border-[var(--portal-primary-strong)]"
       >
-        Search
-        <kbd
-          aria-hidden="true"
-          className="text-body-xs hidden rounded bg-[var(--portal-code-bg)] px-1.5 text-[var(--portal-muted)] sm:inline-block"
-        >
+        Search{' '}
+        <kbd className="text-body-xs hidden rounded bg-[var(--portal-code-bg)] px-1.5 text-[var(--portal-body)] sm:inline-block">
           ⌘K
         </kbd>
       </button>
