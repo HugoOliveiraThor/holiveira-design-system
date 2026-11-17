@@ -2,12 +2,14 @@ import Link from 'next/link';
 
 import { docsSite } from '../../site.config';
 import { CodeBlock } from '../components/docs/code-block';
+import { HeroSearch } from '../components/search/hero-search';
 import {
   components,
   examples,
   guideDocs,
   packageSections,
   packages,
+  searchRecords,
 } from '../lib/docs-metadata-query';
 
 const INSTALL_SNIPPET = '"@ho-dev/primitives": "workspace:*"';
@@ -78,6 +80,7 @@ export default function HomePage() {
             Start with the guides
           </Link>
         </div>
+        <HeroSearch records={searchRecords} />
       </section>
 
       <section aria-label="Install and statistics" className="grid gap-4 lg:grid-cols-2">
