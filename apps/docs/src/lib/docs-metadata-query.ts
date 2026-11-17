@@ -34,6 +34,9 @@ export const searchRecords = searchData as SearchRecord[];
 export const examples = examplesData as ExampleRecord[];
 export const guideExamples = guideExamplesData as GuideExampleRecord[];
 
+/** The editorial guide records, for the pages that summarise the catalogue. */
+export const guideDocs = contentGuides;
+
 export function findComponentDoc(
   docs: readonly ComponentDoc[],
   id: string,
