@@ -108,6 +108,23 @@ describe('search', () => {
     expect(router.push).toHaveBeenCalledWith('/getting-started/theming/');
   });
 
+  it('opens from the keyboard and returns focus to the trigger when it closes', () => {
+    render(<DocsSearch records={RECORDS} />);
+    const trigger = screen.getByRole('button', { name: /search/i });
+    fireEvent.keyDown(document, { key: '/' });
+    expect(screen.getByRole('combobox')).toHaveFocus();
+
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Escape' });
+    expect(screen.queryByRole('combobox')).toBeNull();
+    expect(trigger).toHaveFocus();
+
+    fireEvent.keyDown(document, { key: 'k', metaKey: true });
+    expect(screen.getByRole('combobox')).toHaveFocus();
+    fireEvent.keyDown(document, { key: 'k', metaKey: true });
+    expect(screen.queryByRole('combobox')).toBeNull();
+    expect(trigger).toHaveFocus();
+  });
+
   it('shows the no-results state for an empty index', () => {
     render(<DocsSearch records={[]} />);
     fireEvent.click(screen.getByRole('button', { name: /search/i }));
