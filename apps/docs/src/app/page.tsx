@@ -54,17 +54,17 @@ export default function HomePage() {
     <article className="space-y-16">
       <section aria-labelledby="hero-heading" className="max-w-[820px] space-y-6">
         <p className="text-body-xs inline-block rounded-full border border-[var(--portal-border)] px-3 py-1 font-medium tracking-wide text-[var(--portal-muted)] uppercase">
-          {docsSite.status}
+          Holiveira Design System · {docsSite.status}
         </p>
         <h1
           id="hero-heading"
           className="text-heading-4 md:text-heading-2 font-bold text-[var(--portal-ink)]"
         >
-          Holiveira Design System
+          Build interfaces that feel native to your product.
         </h1>
         <p className="text-body-2xlg text-[var(--portal-body)]">
-          Tokens, primitives, forms, charts and layout shells for React and Tailwind v4, documented
-          with runnable examples, props and accessibility notes.
+          Sixteen packages, one design language — tokens, primitives, forms and layouts that compose
+          without friction.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link href="/components/" className={ACTION_CLASS}>

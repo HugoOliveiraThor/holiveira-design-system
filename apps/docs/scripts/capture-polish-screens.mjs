@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * The redesign evidence: six screenshots at 1440, 768 and 390 in both themes,
+ * The redesign evidence: twelve screenshots at 1440, 768 and 390 in both themes,
  * plus the computed style probe for the landing and one component page.
  *
  * Run it after `pnpm --filter @ho-dev/docs build`:
@@ -32,6 +32,10 @@ const COMPONENT = `${BASE_PATH}/components/button/`;
 
 const WIDTHS = [1440, 768, 390];
 const THEMES = ['light', 'dark'];
+const SHOTS = [
+  { name: 'landing', url: LANDING },
+  { name: 'component', url: COMPONENT },
+];
 
 /** The roles the visual layer declares; the probe reads every one of them. */
 const ROLES = [
@@ -121,21 +125,23 @@ async function main() {
     const shots = [];
     for (const theme of THEMES) {
       for (const width of WIDTHS) {
-        const context = await browser.newContext({
-          viewport: { width, height: 900 },
-          deviceScaleFactor: 1,
-          colorScheme: theme,
-        });
-        if (theme === 'dark') {
-          await context.addInitScript(() => localStorage.setItem('ho-dev-docs-theme', 'dark'));
+        for (const target of SHOTS) {
+          const context = await browser.newContext({
+            viewport: { width, height: 900 },
+            deviceScaleFactor: 1,
+            colorScheme: theme,
+          });
+          if (theme === 'dark') {
+            await context.addInitScript(() => localStorage.setItem('ho-dev-docs-theme', 'dark'));
+          }
+          const page = await context.newPage();
+          await page.goto(`${ORIGIN}${target.url}`, { waitUntil: 'networkidle' });
+          await page.evaluate(() => document.fonts.ready);
+          const file = join(SCREEN_DIR, `${target.name}-${width}-${theme}.png`);
+          await page.screenshot({ path: file, fullPage: true });
+          shots.push(file);
+          await context.close();
         }
-        const page = await context.newPage();
-        await page.goto(`${ORIGIN}${LANDING}`, { waitUntil: 'networkidle' });
-        await page.evaluate(() => document.fonts.ready);
-        const file = join(SCREEN_DIR, `landing-${width}-${theme}.png`);
-        await page.screenshot({ path: file, fullPage: true });
-        shots.push(file);
-        await context.close();
       }
     }
 

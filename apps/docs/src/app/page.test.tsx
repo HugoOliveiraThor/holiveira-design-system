@@ -29,8 +29,8 @@ describe('landing page', () => {
     render(<HomePage />);
     const headings = screen.getAllByRole('heading', { level: 1 });
     expect(headings).toHaveLength(1);
-    expect(headings[0]).toHaveTextContent('Holiveira Design System');
-    expect(screen.getByText(/tokens, primitives, forms, charts and layout shells/i)).toBeVisible();
+    expect(headings[0]).toHaveTextContent('Build interfaces that feel native to your product.');
+    expect(screen.getByText(/sixteen packages, one design language/i)).toBeVisible();
     expect(screen.getByRole('link', { name: /browse components/i }).getAttribute('href')).toMatch(
       /^\/components\/?$/,
     );

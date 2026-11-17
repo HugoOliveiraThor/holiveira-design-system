@@ -15,8 +15,12 @@ const CAPTURE_SCRIPT = join(ROOT, 'apps', 'docs', 'scripts', 'capture-polish-scr
 const WIDTHS = [1440, 768, 390] as const;
 const THEMES = ['light', 'dark'] as const;
 
-const SCREENS = WIDTHS.flatMap((width) =>
-  THEMES.map((theme) => ({ name: `landing-${width}-${theme}.png`, width, theme })),
+const PAGES = ['landing', 'component'] as const;
+
+const SCREENS = PAGES.flatMap((page) =>
+  WIDTHS.flatMap((width) =>
+    THEMES.map((theme) => ({ name: `${page}-${width}-${theme}.png`, width, theme })),
+  ),
 );
 
 /** The width a PNG declares in its IHDR chunk. */
@@ -34,7 +38,7 @@ function pngWidth(path: string): number {
  * The capture script itself is versioned and always checked.
  */
 describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
-  it('captures the six screens', () => {
+  it('captures the landing and component screens', () => {
     expect(existsSync(SCREEN_DIR), SCREEN_DIR).toBe(true);
     const files = readdirSync(SCREEN_DIR).filter((file) => file.endsWith('.png'));
     expect(files.sort()).toEqual(SCREENS.map((screen) => screen.name).sort());
@@ -106,7 +110,7 @@ describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
   it('ships the capture script that produces the evidence', () => {
     expect(existsSync(CAPTURE_SCRIPT), CAPTURE_SCRIPT).toBe(true);
     const script = readFileSync(CAPTURE_SCRIPT, 'utf8');
-    expect(script).toContain('landing-${width}-${theme}.png');
+    expect(script).toContain('${target.name}-${width}-${theme}.png');
     expect(script).toContain('probe.json');
     expect(script).toContain('document.fonts.ready');
   });
