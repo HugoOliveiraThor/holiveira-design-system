@@ -26,21 +26,26 @@ export function CodeBlock({ source, label, componentName }: CodeBlockProps) {
   }
 
   return (
-    <figure data-code-block className="border-stroke dark:border-dark-3 rounded-lg border">
-      <figcaption className="border-stroke dark:border-dark-3 flex items-center justify-between gap-3 border-b px-3 py-2">
-        <span className="text-dark-4 dark:text-dark-6 text-xs font-medium">{label}</span>
+    <figure
+      data-code-block
+      className="overflow-hidden rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)]"
+    >
+      <figcaption className="flex items-center justify-between gap-3 border-b border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-2">
+        <span className="text-body-xs font-semibold tracking-wide text-[var(--portal-muted)] uppercase">
+          {label}
+        </span>
         <button
           type="button"
           onClick={() => {
             void copy();
           }}
           aria-label={`Copy ${label} for ${componentName}`}
-          className="border-stroke dark:border-dark-3 rounded-md border px-2 py-1 text-xs"
+          className="text-body-xs rounded-md border border-[var(--portal-border)] px-2 py-1 text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] hover:text-[var(--portal-primary-strong)]"
         >
           Copy
         </button>
       </figcaption>
-      <pre className="bg-gray-2 dark:bg-dark-2 overflow-x-auto p-3 text-xs">
+      <pre className="overflow-x-auto bg-[var(--portal-code-bg)] p-3 text-xs">
         <code>{source}</code>
       </pre>
       <p role="status" className="sr-only">

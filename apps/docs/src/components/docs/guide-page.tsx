@@ -12,6 +12,7 @@ import type { TocItem } from '../shell/page-toc';
 import { Pager } from '../shell/pager';
 
 import { CodeBlock } from './code-block';
+import { EmptyState } from './empty-state';
 import { PageHeader } from './page-header';
 import { relatedLinks, type RelatedLink } from './related-links';
 import { DocSection } from './section';
@@ -175,7 +176,7 @@ export function GuidePage({ guide, snippets = snippetSource }: GuidePageProps) {
           <div>
             <h3 className="text-body-sm mb-2 font-semibold text-[var(--portal-ink)]">Packages</h3>
             {relatedPackageLinks(guide.related.packages).length === 0 ? (
-              <p className="text-body-2xlg text-[var(--portal-body)]">No related packages.</p>
+              <EmptyState title="No related packages." />
             ) : (
               <LinkPills links={relatedPackageLinks(guide.related.packages)} />
             )}
@@ -183,7 +184,7 @@ export function GuidePage({ guide, snippets = snippetSource }: GuidePageProps) {
           <div>
             <h3 className="text-body-sm mb-2 font-semibold text-[var(--portal-ink)]">Components</h3>
             {componentLinks.length === 0 ? (
-              <p className="text-body-2xlg text-[var(--portal-body)]">No related components.</p>
+              <EmptyState title="No related components." />
             ) : (
               <LinkPills links={componentLinks} />
             )}

@@ -14,6 +14,9 @@ const WIDTHS: Array<{ value: PreviewWidth; label: string }> = [
 
 const THEMES = ['system', 'light', 'dark'] as const;
 
+const TOOLBAR_BUTTON_CLASS =
+  'text-body-xs rounded-md border border-[var(--portal-border)] px-2 py-1 text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] aria-pressed:border-[var(--portal-primary)] aria-pressed:bg-[var(--portal-primary)] aria-pressed:text-white';
+
 class PreviewErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false };
 
@@ -24,7 +27,10 @@ class PreviewErrorBoundary extends Component<{ children: ReactNode }, { failed: 
   render() {
     if (this.state.failed) {
       return (
-        <p role="alert" className="text-error-500 p-4 text-sm">
+        <p
+          role="alert"
+          className="text-body-sm rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface-2)] p-4 text-[var(--portal-body)]"
+        >
           This example could not be rendered. Open the Storybook story to inspect it.
         </p>
       );
@@ -51,10 +57,13 @@ export function ExamplePreview({
   const [width, setWidth] = useState<PreviewWidth>('full');
 
   return (
-    <div data-preview className="border-stroke dark:border-dark-3 rounded-xl border">
-      <div className="border-stroke dark:border-dark-3 flex flex-wrap items-center gap-4 border-b px-3 py-2">
+    <div
+      data-preview
+      className="overflow-hidden rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)]"
+    >
+      <div className="flex flex-wrap items-center gap-4 border-b border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-2">
         <div role="group" aria-label="Preview width" className="flex items-center gap-1">
-          <span className="text-dark-4 dark:text-dark-6 mr-1 text-xs">Width</span>
+          <span className="text-body-xs mr-1 text-[var(--portal-muted)]">Width</span>
           {WIDTHS.map((option) => (
             <button
               key={option.value}
@@ -63,14 +72,14 @@ export function ExamplePreview({
               onClick={() => {
                 setWidth(option.value);
               }}
-              className="aria-pressed:bg-primary dark:border-dark-3 rounded-md border px-2 py-1 text-xs aria-pressed:text-white"
+              className={TOOLBAR_BUTTON_CLASS}
             >
               {option.label}
             </button>
           ))}
         </div>
         <div role="group" aria-label="Preview theme" className="flex items-center gap-1">
-          <span className="text-dark-4 dark:text-dark-6 mr-1 text-xs">Theme</span>
+          <span className="text-body-xs mr-1 text-[var(--portal-muted)]">Theme</span>
           {THEMES.map((option) => (
             <button
               key={option}
@@ -79,7 +88,7 @@ export function ExamplePreview({
               onClick={() => {
                 setTheme(option);
               }}
-              className="aria-pressed:bg-primary dark:border-dark-3 rounded-md border px-2 py-1 text-xs capitalize aria-pressed:text-white"
+              className={`${TOOLBAR_BUTTON_CLASS} capitalize`}
             >
               {option}
             </button>
@@ -92,7 +101,7 @@ export function ExamplePreview({
           data-preview-frame
           data-example={exampleKey}
           style={{ width: width === 'full' ? '100%' : `${width}px` }}
-          className="mx-auto max-w-full bg-white p-4 dark:bg-[var(--portal-canvas)]"
+          className="mx-auto max-w-full rounded-lg border border-[var(--portal-border)] bg-white p-4 dark:bg-[var(--portal-canvas)]"
         >
           <PreviewErrorBoundary>{children}</PreviewErrorBoundary>
         </div>

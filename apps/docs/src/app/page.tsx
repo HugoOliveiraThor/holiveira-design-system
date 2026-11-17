@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { docsSite } from '../../site.config';
 import { CodeBlock } from '../components/docs/code-block';
+import { CARD_CLASS } from '../components/docs/surfaces';
 import { HeroSearch } from '../components/search/hero-search';
 import {
   components,
@@ -42,9 +43,6 @@ function ArrowIcon() {
     </svg>
   );
 }
-
-const CARD_CLASS =
-  'group flex items-center justify-between gap-4 rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)] p-5 transition-colors hover:border-[var(--portal-primary-strong)]';
 
 const ACTION_CLASS =
   'text-body-sm inline-flex items-center gap-2 rounded-md bg-[var(--portal-primary)] px-4 py-2 font-medium text-white transition-colors hover:bg-[var(--portal-primary-strong)]';

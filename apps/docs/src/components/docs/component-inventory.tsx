@@ -1,6 +1,7 @@
 import { docsSite } from '../../../site.config';
 import type { PackageRecord } from '../../lib/docs-metadata/types';
 
+import { EmptyState } from './empty-state';
 import { PAGE_LINK_CLASS } from './page-header';
 import { DocSection } from './section';
 
@@ -21,9 +22,10 @@ export function ComponentInventory({ record }: { record: PackageRecord }) {
   return (
     <DocSection id="components" title="Components">
       {record.componentExports.length === 0 ? (
-        <p className="text-body-sm text-[var(--portal-body)]">
-          This package exports no components.
-        </p>
+        <EmptyState
+          title="This package exports no components."
+          hint="It ships utilities and types only; the exports section lists them."
+        />
       ) : (
         <ul className="space-y-2">
           {record.componentExports.map((component) => (

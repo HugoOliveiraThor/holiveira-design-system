@@ -1,5 +1,6 @@
 import type { ExportKind, PackageRecord } from '../../lib/docs-metadata/types';
 
+import { EmptyState } from './empty-state';
 import { DocSection } from './section';
 
 /** The order the page contract lists the kinds in; empty kinds are omitted. */
@@ -33,9 +34,10 @@ export function ExportsTable({ record }: { record: PackageRecord }) {
   return (
     <DocSection id="exports" title="Exports">
       {groups.length === 0 ? (
-        <p className="text-body-sm text-[var(--portal-body)]">
-          This package has no public exports.
-        </p>
+        <EmptyState
+          title="This package has no public exports."
+          hint="Its surface is empty for now; the contract lists what will ship."
+        />
       ) : (
         <div className="space-y-5">
           {groups.map((group) => (

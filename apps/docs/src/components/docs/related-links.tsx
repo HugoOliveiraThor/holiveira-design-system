@@ -1,6 +1,7 @@
 import { docsHref } from '../../../site.config';
 import type { Target } from '../../lib/docs-metadata/types';
 
+import { EmptyState } from './empty-state';
 import { DocSection } from './section';
 
 export interface RelatedLink {
@@ -51,14 +52,14 @@ function RelatedLinksSection({
   return (
     <DocSection id={id} title={title}>
       {links.length === 0 ? (
-        <p className="text-dark-4 dark:text-dark-6 text-sm">{empty}</p>
+        <EmptyState title={empty} />
       ) : (
         <ul className="flex flex-wrap gap-2 text-sm">
           {links.map((link) => (
             <li key={link.id}>
               <a
                 href={link.href}
-                className="border-stroke dark:border-dark-3 hover:border-primary rounded-full border px-3 py-1"
+                className="text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-1 font-medium text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] hover:text-[var(--portal-primary-strong)]"
               >
                 {link.label}
               </a>
