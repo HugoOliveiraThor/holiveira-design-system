@@ -136,7 +136,7 @@ describe('docs metadata wiring', { timeout: 30_000 }, () => {
 
   it('keeps check:docs:metadata in all-checks', () => {
     const steps = scripts()
-      ['all-checks'].split('&&')
+      ['all-checks:run'].split('&&')
       .map((step) => step.trim().replace(/^pnpm run /, ''));
     expect(scripts()['check:docs:metadata']).toBe(
       'pnpm exec tsx apps/docs/scripts/generate-docs-metadata.ts --check',

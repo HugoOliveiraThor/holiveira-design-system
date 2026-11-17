@@ -24,7 +24,7 @@ describe('token guard wiring', () => {
   });
 
   it('keeps check:tokens in all-checks', () => {
-    const steps = script('all-checks')
+    const steps = script('all-checks:run')
       .split('&&')
       .map((step) => step.trim().replace(/^pnpm run /, ''));
     expect(steps).toContain('check:tokens');

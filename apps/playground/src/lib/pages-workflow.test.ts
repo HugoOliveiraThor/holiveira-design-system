@@ -55,7 +55,7 @@ describe('Pages workflow', () => {
     const rootPackage = JSON.parse(readFileSync(join(REPO_ROOT, 'package.json'), 'utf8')) as {
       scripts: Record<string, string>;
     };
-    const allChecks = rootPackage.scripts['all-checks'];
+    const allChecks = rootPackage.scripts['all-checks:run'];
 
     expect(allChecks).toContain(
       'pnpm run test:visual && pnpm --filter playground run test:visual &&',
