@@ -20,7 +20,10 @@ const packagePath = (slug: string) => `packages/${slug}/`;
 test('landing renders the hero and the category grid', async ({ page }) => {
   await page.goto('./');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Holiveira Design System' }),
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Build interfaces that feel native to your product.',
+    }),
   ).toBeVisible();
   await expect(page.getByText(/pre-release/i).first()).toBeVisible();
   await expect(page.getByRole('heading', { level: 2, name: 'Browse the catalogue' })).toBeVisible();
