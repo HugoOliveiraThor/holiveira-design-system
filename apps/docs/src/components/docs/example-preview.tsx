@@ -92,7 +92,7 @@ export function ExamplePreview({
           data-preview-frame
           data-example={exampleKey}
           style={{ width: width === 'full' ? '100%' : `${width}px` }}
-          className="mx-auto max-w-full bg-white p-4 dark:bg-[#020D1A]"
+          className="mx-auto max-w-full bg-white p-4 dark:bg-[var(--portal-canvas)]"
         >
           <PreviewErrorBoundary>{children}</PreviewErrorBoundary>
         </div>

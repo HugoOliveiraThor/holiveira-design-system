@@ -19,6 +19,10 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
 }));
 
+vi.mock('../fonts/satoshi', () => ({
+  satoshi: { variable: 'font-satoshi-variable', className: 'font-satoshi-class' },
+}));
+
 import RootLayout from './layout';
 
 describe('root layout', () => {

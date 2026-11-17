@@ -68,7 +68,7 @@ describe('example preview', () => {
     const surface = frame();
     // The surface follows the site's dark variant instead of opening a nested scope.
     expect(surface.className).toContain('bg-white');
-    expect(surface.className).toContain('dark:bg-[#020D1A]');
+    expect(surface.className).toContain('dark:bg-[var(--portal-canvas)]');
     expect(surface.classList.contains('dark')).toBe(false);
     expect(surface.closest('[data-theme]')).toBeNull();
     expect(surface.closest('.dark')).toBeNull();

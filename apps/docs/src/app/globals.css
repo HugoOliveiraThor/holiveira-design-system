@@ -1,4 +1,5 @@
 @import '../../../../packages/theme/src/theme.css';
+@import '../styles/portal.css';
 
 @source '../../src/**/*.{ts,tsx}';
 
