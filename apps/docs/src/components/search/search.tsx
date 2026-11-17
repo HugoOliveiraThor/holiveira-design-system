@@ -81,10 +81,17 @@ export function DocsSearch({ records }: DocsSearchProps) {
         onClick={() => setOpen(true)}
         aria-expanded={open}
         aria-controls="docs-search-dialog"
-        className="border-stroke dark:border-stroke-dark text-dark-4 dark:text-dark-6 flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm"
+        aria-haspopup="dialog"
+        aria-label="Search documentation"
+        className="text-body-sm flex items-center gap-2 rounded-md border border-[var(--portal-border)] px-3 py-1.5 text-[var(--portal-body)] hover:border-[var(--portal-primary-strong)]"
       >
         Search
-        <kbd className="bg-gray-2 dark:bg-dark-3 rounded px-1 text-xs">/</kbd>
+        <kbd
+          aria-hidden="true"
+          className="text-body-xs hidden rounded bg-[var(--portal-code-bg)] px-1.5 text-[var(--portal-muted)] sm:inline-block"
+        >
+          ⌘K
+        </kbd>
       </button>
       {open && (
         <div

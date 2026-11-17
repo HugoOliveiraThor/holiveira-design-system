@@ -67,3 +67,10 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 }
+
+/* The sticky top bar: a translucent surface so content scrolls under it. */
+.portal-header {
+  border-bottom: 1px solid var(--portal-border);
+  background-color: color-mix(in srgb, var(--portal-surface) 92%, transparent);
+  backdrop-filter: blur(16px);
+}

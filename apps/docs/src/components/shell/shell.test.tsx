@@ -2,10 +2,17 @@ import '@testing-library/jest-dom/vitest';
 import { ThemeProvider } from '@ho-dev/theme';
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import { DocsSearch } from '../search/search';
 
 import { SiteHeader } from './site-header';
 import { SkipLink } from './skip-link';
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useRouter: () => ({ push: vi.fn() }),
+}));
 
 function renderWithTheme(ui: React.ReactNode) {
   return render(
@@ -43,6 +50,23 @@ describe('shell', () => {
     await waitFor(() => expect(toggle).toBeEnabled());
     fireEvent.click(toggle);
     await waitFor(() => expect(toggle.getAttribute('aria-label')).not.toBe(initial));
+  });
+
+  it('shows the search trigger with the shortcut', () => {
+    renderWithTheme(<SiteHeader search={<DocsSearch records={[]} />} />);
+    const trigger = screen.getByRole('button', { name: /search/i });
+    expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    expect(trigger.querySelector('kbd')?.textContent).toBe('⌘K');
+  });
+
+  it('keeps the brand at weight 600', () => {
+    renderWithTheme(<SiteHeader />);
+    expect(screen.getByRole('link', { name: /holiveira docs/i })).toHaveClass('font-semibold');
+  });
+
+  it('keeps the header visible while scrolling', () => {
+    renderWithTheme(<SiteHeader />);
+    expect(screen.getByRole('banner')).toHaveClass('sticky', 'top-0');
   });
 
   it('renders the skip link targeting main', () => {
