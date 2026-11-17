@@ -64,7 +64,7 @@ export function RelatedComponents({ related }: { related: string[] }) {
             <li key={entry.id}>
               <a
                 href={docsHref(`/components/${entry.id}/`)}
-                className="border-stroke dark:border-dark-3 rounded-full border px-3 py-1"
+                className="text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-1 font-medium text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] hover:text-[var(--portal-primary-strong)]"
               >
                 {entry.label}
               </a>

@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 
 import { docsHref, docsSite } from '../../../../site.config';
 import { ComponentPage, type PageExample } from '../../../components/docs/component-page';
-import { Breadcrumbs } from '../../../components/shell/breadcrumbs';
 import { Pager, type PagerItem } from '../../../components/shell/pager';
 import { exampleComponent } from '../../../examples/registry';
 import {
@@ -75,8 +74,8 @@ export default async function ComponentRoute({ params }: { params: Promise<{ slu
 
   return (
     <div className="space-y-8">
-      <Breadcrumbs crumbs={breadcrumbsForComponent(slug)} />
       <ComponentPage
+        breadcrumbs={breadcrumbsForComponent(slug)}
         record={record}
         doc={doc}
         packageRecord={packageRecord}
