@@ -50,6 +50,14 @@ jobs:
       - name: Smoke the assembled artifact
         run: pnpm exec tsx scripts/check-artifact.ts --artifact apps/storybook/storybook-static
 
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          # Create the site when it does not exist yet. A workflow-built site is
+          # not provisioned by deploying alone; without this the deployment
+          # reports success while the URL answers "Site not found".
+          enablement: true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/storybook/storybook-static
