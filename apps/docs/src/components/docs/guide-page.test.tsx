@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { guideDocs } from '../../content/guides';
@@ -196,5 +196,30 @@ describe('guide page', () => {
     expect(screen.queryByText('@ho-dev/ghost')).not.toBeInTheDocument();
     expect(screen.queryByText('GhostWidget')).not.toBeInTheDocument();
     expect(screen.queryByText('No related components.')).not.toBeInTheDocument();
+  });
+
+  it('caps the prose at the 820px measure with the token line height', () => {
+    render(<GuidePage guide={GUIDE} snippets={snippetsWith(SOURCE)} />);
+
+    const prose = screen.getByText('Wrap the application once.');
+    expect(prose.className).toContain('text-body-2xlg');
+    const measure = document.querySelector('.max-w-\\[820px\\]');
+    expect(measure).not.toBeNull();
+    expect(measure?.contains(prose)).toBe(true);
+
+    const toc = screen.getByRole('navigation', { name: 'On this page' });
+    expect(
+      within(toc)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('href')),
+    ).toEqual(['#provider', '#dark-class', '#snippets', '#related-links']);
+  });
+
+  it('scrolls a wide table inside its own container', () => {
+    render(<GuidePage guide={TOKENS_GUIDE} snippets={() => undefined} />);
+    const table = document.querySelector('[data-docs-table]');
+    expect(table).not.toBeNull();
+    const wrapper = table?.parentElement;
+    expect(wrapper?.className).toContain('overflow-x-auto');
   });
 });
