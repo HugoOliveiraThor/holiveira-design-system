@@ -1,6 +1,8 @@
 import { docsSite } from '../../../site.config';
 import type { PackageRecord } from '../../lib/docs-metadata/types';
 
+import { PAGE_CHIP_CLASS, PAGE_LINK_CLASS, PageHeader } from './page-header';
+
 function packageDir(packageName: string): string {
   return packageName.replace(/^@[^/]+\//, '');
 }
@@ -28,28 +30,31 @@ export function PackageHeader({ record }: { record: PackageRecord }) {
   const links = packageLinks(record);
 
   return (
-    <header className="space-y-2">
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="border-stroke dark:border-dark-3 rounded-full border px-3 py-1">
-          {record.category}
-        </span>
-        <span className="text-dark-4 dark:text-dark-6">
-          v{record.version} · {record.installState}
-        </span>
-      </div>
-      <h1 className="text-dark text-3xl font-semibold dark:text-white">{record.name}</h1>
-      <p className="text-dark-4 dark:text-dark-6 text-base">{record.description}</p>
-      <nav aria-label="Package links" className="flex flex-wrap gap-4 text-sm">
-        <a href={links.readme} className="text-primary dark:text-blue-light-400 underline">
-          README
-        </a>
-        <a href={links.contract} className="text-primary dark:text-blue-light-400 underline">
-          Contract
-        </a>
-        <a href={links.storybook} className="text-primary dark:text-blue-light-400 underline">
-          Storybook
-        </a>
-      </nav>
-    </header>
+    <PageHeader
+      title={record.name}
+      eyebrow={
+        <>
+          <span className={PAGE_CHIP_CLASS}>{record.category}</span>
+          <span>
+            v{record.version} · {record.installState}
+          </span>
+        </>
+      }
+      summary={record.description}
+      actionsLabel="Package links"
+      actions={
+        <>
+          <a href={links.readme} className={PAGE_LINK_CLASS}>
+            README
+          </a>
+          <a href={links.contract} className={PAGE_LINK_CLASS}>
+            Contract
+          </a>
+          <a href={links.storybook} className={PAGE_LINK_CLASS}>
+            Storybook
+          </a>
+        </>
+      }
+    />
   );
 }

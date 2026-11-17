@@ -33,18 +33,20 @@ export function ExportsTable({ record }: { record: PackageRecord }) {
   return (
     <DocSection id="exports" title="Exports">
       {groups.length === 0 ? (
-        <p className="text-dark-4 dark:text-dark-6 text-sm">This package has no public exports.</p>
+        <p className="text-body-sm text-[var(--portal-body)]">
+          This package has no public exports.
+        </p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {groups.map((group) => (
             <div key={group.kind}>
-              <h3 className="text-dark mb-2 text-sm font-semibold dark:text-white">
+              <h3 className="text-body-sm mb-2 font-semibold text-[var(--portal-ink)]">
                 {group.label}
               </h3>
               <ul className="flex flex-wrap gap-2 text-xs">
                 {group.entries.map((entry) => (
                   <li key={entry.name}>
-                    <code className="bg-gray-2 dark:bg-dark-2 rounded px-2 py-1 font-mono">
+                    <code className="inline-block rounded-md border border-[var(--portal-border)] bg-[var(--portal-code-bg)] px-2 py-1 text-[var(--portal-ink)]">
                       {entry.name}
                     </code>
                   </li>

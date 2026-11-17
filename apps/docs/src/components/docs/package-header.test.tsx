@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { docsSite } from '../../../site.config';
@@ -60,5 +60,19 @@ describe('package header', () => {
     expect(screen.getByText(/v0\.2\.0 · pre-release/)).toBeInTheDocument();
     expect(screen.getByText('Components')).toBeInTheDocument();
     expect(screen.getByText('Primitive components.')).toBeInTheDocument();
+  });
+
+  it('renders the shared page header with the package facts', () => {
+    const { container } = render(<PackageHeader record={RECORD} />);
+    const header = container.querySelector('[data-page-header]');
+    expect(header).not.toBeNull();
+    const scope = within(header as HTMLElement);
+
+    expect(scope.getByRole('heading', { level: 1 })).toHaveTextContent('@ho-dev/primitives');
+    expect(scope.getByText('Components')).toBeInTheDocument();
+    expect(scope.getByText('v0.2.0 · pre-release')).toBeInTheDocument();
+    expect(scope.getByText('Primitive components.')).toBeInTheDocument();
+    const actions = scope.getByRole('navigation', { name: 'Package links' });
+    expect(within(actions).getAllByRole('link')).toHaveLength(3);
   });
 });

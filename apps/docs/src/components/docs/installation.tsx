@@ -12,43 +12,45 @@ export function Installation({ record }: { record: PackageRecord }) {
 
   return (
     <DocSection id="installation" title="Installation">
-      <p className="text-dark-4 dark:text-dark-6 text-sm">
-        <code className="bg-gray-2 dark:bg-dark-2 rounded px-1.5 py-0.5 text-xs">
+      <p className="text-body-sm text-[var(--portal-body)]">
+        <code className="rounded border border-[var(--portal-border)] bg-[var(--portal-code-bg)] px-1.5 py-0.5 text-xs text-[var(--portal-ink)]">
           {record.name}
         </code>{' '}
         v{record.version} · {record.installState}
       </p>
 
       {record.installState === 'pre-release' ? (
-        <div className="border-stroke dark:border-dark-3 mt-4 space-y-3 rounded-lg border border-dashed p-4">
-          <p className="text-dark text-sm font-medium dark:text-white">
+        <div className="mt-4 space-y-3 rounded-xl border border-dashed border-[var(--portal-border)] bg-[var(--portal-surface-2)] p-4">
+          <p className="text-body-sm font-semibold text-[var(--portal-ink)]">
             This package is pre-release and not published to npm yet.
           </p>
-          <p className="text-dark-4 dark:text-dark-6 text-sm">
+          <p className="text-body-sm text-[var(--portal-body)]">
             Inside this workspace, depend on it with a workspace range:
           </p>
-          <pre className="bg-gray-2 dark:bg-dark-2 overflow-x-auto rounded p-3 text-xs">
+          <pre className="overflow-x-auto rounded-lg bg-[var(--portal-code-bg)] p-3 text-xs">
             <code>{`"${record.name}": "workspace:*"`}</code>
           </pre>
         </div>
       ) : (
-        <div className="border-stroke dark:border-dark-3 mt-4 space-y-3 rounded-lg border p-4">
-          <p className="text-dark-4 dark:text-dark-6 text-sm">Install it from npm:</p>
-          <pre className="bg-gray-2 dark:bg-dark-2 overflow-x-auto rounded p-3 text-xs">
+        <div className="mt-4 space-y-3 rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)] p-4">
+          <p className="text-body-sm text-[var(--portal-body)]">Install it from npm:</p>
+          <pre className="overflow-x-auto rounded-lg bg-[var(--portal-code-bg)] p-3 text-xs">
             <code>{`pnpm add ${record.name}`}</code>
           </pre>
         </div>
       )}
 
-      <div className="mt-4">
-        <h3 className="text-dark mb-1 text-sm font-semibold dark:text-white">Peer dependencies</h3>
+      <div className="mt-5">
+        <h3 className="text-body-sm mb-2 font-semibold text-[var(--portal-ink)]">
+          Peer dependencies
+        </h3>
         {peers.length === 0 ? (
-          <p className="text-dark-4 dark:text-dark-6 text-sm">No peer dependencies.</p>
+          <p className="text-body-sm text-[var(--portal-body)]">No peer dependencies.</p>
         ) : (
           <ul className="space-y-1 text-sm">
             {peers.map(([name, range]) => (
-              <li key={name} className="text-dark-4 dark:text-dark-6">
-                <code className="bg-gray-2 dark:bg-dark-2 rounded px-1.5 py-0.5 text-xs">
+              <li key={name} className="text-body-sm text-[var(--portal-body)]">
+                <code className="rounded border border-[var(--portal-border)] bg-[var(--portal-code-bg)] px-1.5 py-0.5 text-xs text-[var(--portal-ink)]">
                   {name}
                 </code>{' '}
                 {range}
