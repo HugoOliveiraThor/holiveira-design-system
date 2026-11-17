@@ -14,6 +14,8 @@
   <https://hugooliveirathor.github.io/holiveira-design-system/?path=/docs/getting-started--docs>
 - **Playground** — full product screens composed from the packages:
   <https://hugooliveirathor.github.io/holiveira-design-system/playground/>
+- **Docs** — guides, package reference and component API:
+  <https://hugooliveirathor.github.io/holiveira-design-system/docs/>
 
 ## What is HO Design System
 
@@ -226,6 +228,8 @@ workflow.
   documentation
 - [Playground](https://hugooliveirathor.github.io/holiveira-design-system/playground/) — Full
   product screens composed from the packages
+- [Docs](https://hugooliveirathor.github.io/holiveira-design-system/docs/) — Guides, package
+  reference and component API
 - [Changelog](CHANGELOG.md) — Release history
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md) — Reporting vulnerabilities

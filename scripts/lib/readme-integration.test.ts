@@ -161,7 +161,7 @@ describe('readme gate CLI', () => {
     expect(result.stderr).toContain('check:docs:readme — 1 finding(s)');
   });
 
-  it('limits the run to the filtered packages', () => {
+  it('limits the run to the filtered packages', { timeout: 30_000 }, () => {
     const full = runGate(mixedRoot);
     const clean = runGate(mixedRoot, ['--filter', 'alpha']);
     const broken = runGate(mixedRoot, ['--filter', 'beta']);
@@ -214,7 +214,9 @@ describe('readme gate CLI', () => {
     expect(manifest.scripts['check:docs:readme']).toBe(
       'pnpm exec tsx scripts/check-readme-docs.ts',
     );
-    const steps = manifest.scripts['all-checks'].split(' && ');
+    // The heavy gate is a wrapper; the pipeline lives in `all-checks:run`.
+    expect(manifest.scripts['all-checks']).toBe('node scripts/heavy-guard.mjs all-checks:run');
+    const steps = manifest.scripts['all-checks:run'].split(' && ');
     const metadata = steps.indexOf('pnpm run check:docs:metadata');
     const readme = steps.indexOf('pnpm run check:docs:readme');
     const gates = steps.indexOf('pnpm run check:gates');

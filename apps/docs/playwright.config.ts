@@ -6,7 +6,9 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 120_000,
   fullyParallel: true,
-  workers: process.env.CI ? 2 : 4,
+  // Two workers keep peak RAM bounded on a shared 16 GB machine; CI already
+  // runs two.
+  workers: 2,
   retries: process.env.CI ? 2 : 0,
   reporter: 'list',
   use: {

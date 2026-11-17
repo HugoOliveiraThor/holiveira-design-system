@@ -38,12 +38,17 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Build Storybook and playground
+      - name: Build Storybook, playground and portal
         run: |
           pnpm run build
           pnpm run build:storybook
           mkdir -p apps/storybook/storybook-static/playground
           cp -R apps/playground/out/. apps/storybook/storybook-static/playground/
+          mkdir -p apps/storybook/storybook-static/docs
+          cp -R apps/docs/out/. apps/storybook/storybook-static/docs/
+
+      - name: Smoke the assembled artifact
+        run: pnpm exec tsx scripts/check-artifact.ts --artifact apps/storybook/storybook-static
 
       - uses: actions/upload-pages-artifact@v3
         with:

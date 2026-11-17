@@ -7,6 +7,8 @@ import { DOCS_BASE_PATH } from '../site.config';
 
 import { axeViolations } from './axe';
 
+import { openSearch } from './keyboard';
+
 interface GuideRoute {
   route: string;
   title: string;
@@ -196,7 +198,7 @@ test('guide breadcrumbs name the section and the guide', async ({ page }) => {
 
 test('a guide search result opens the guide', async ({ page }) => {
   await page.goto('./');
-  await page.keyboard.press('/');
+  await openSearch(page);
   const input = page.getByRole('combobox');
   await input.fill('theming');
   await expect(page.getByRole('status')).toHaveText('1 results');
