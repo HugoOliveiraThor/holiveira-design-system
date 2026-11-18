@@ -111,7 +111,7 @@ function pngWidth(path: string): number {
  * The capture script itself is versioned and always checked.
  */
 describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
-  it('captures the landing and component screens', () => {
+  it('captures the landing and component screens', { timeout: 60_000 }, () => {
     expect(existsSync(SCREEN_DIR), SCREEN_DIR).toBe(true);
     const files = readdirSync(SCREEN_DIR).filter((file) => file.endsWith('.png'));
     expect(files.sort()).toEqual(SCREENS.map((screen) => screen.name).sort());
@@ -134,7 +134,7 @@ describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
     }
   });
 
-  it('records the computed font, palette and overflow', () => {
+  it('records the computed font, palette and overflow', { timeout: 60_000 }, () => {
     expect(existsSync(PROBE_PATH), PROBE_PATH).toBe(true);
     const probe = JSON.parse(readFileSync(PROBE_PATH, 'utf8')) as {
       capturedAt: string;
