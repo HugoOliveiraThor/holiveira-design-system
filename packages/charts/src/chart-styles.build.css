@@ -1,4 +1,0 @@
-@reference 'tailwindcss';
-@reference '../../tokens/src/tokens.css';
-@custom-variant dark (&:where(.dark, .dark *));
-@import './chart-styles.css';

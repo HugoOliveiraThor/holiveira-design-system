@@ -1,0 +1,4 @@
+:HL["/holiveira-design-system/docs/_next/static/chunks/1w2uusfybzz9m.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"/_not-found","h":64,"c":"$Q2"}]]
+0:{"b":"biIXxjhVPUEd_I-d3T06L","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

@@ -1,0 +1,26 @@
+1:"$Sreact.fragment"
+2:"/holiveira-design-system/playground/_next/static/chunks/1icfw_d41vvb2.js"
+3:I[87337,["$2"],"ThemeProvider"]
+4:I[951,["$2"],"default"]
+5:I[80523,["$2"],"default"]
+9:"/holiveira-design-system/playground/_next/static/chunks/3_-fd4yrhnr5p.js"
+a:"/holiveira-design-system/playground/_next/static/chunks/33pkkp1b_4p-p.js"
+b:"/holiveira-design-system/playground/_next/static/chunks/1vh13wl6fv3rc.js"
+c:I[97720,["$2","$9","$a","$b"],"AppShell"]
+d:I[36279,["$2","$9","$a","$b"],"FormView"]
+e:I[28093,["$2"],"OutletBoundary"]
+f:"$Sreact.suspense"
+11:"ViewportBoundary"
+12:I[28093,["$2"],"$11"]
+14:"MetadataBoundary"
+15:I[28093,["$2"],"$14"]
+17:I[85626,["$2"],"default",1]
+:HL["/holiveira-design-system/playground/_next/static/chunks/22i40sy9xkvog.css","style"]
+7:X
+8:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[["$","$Lc",null,{"title":"Forms","activePath":"/forms","children":["$","$Ld",null,{}]}],[["$","script","script-0",{"src":"/holiveira-design-system/playground/_next/static/chunks/3_-fd4yrhnr5p.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/holiveira-design-system/playground/_next/static/chunks/33pkkp1b_4p-p.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/holiveira-design-system/playground/_next/static/chunks/1vh13wl6fv3rc.js","async":true,"nonce":"$undefined"}]],["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":false,"v":null}}]]
+6:[["children",{"s":"forms","h":512,"d":{"r":["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],"p":false,"v":"$7"},"c":"$Q8"}]]
+0:{"P":null,"c":["","forms",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/holiveira-design-system/playground/_next/static/chunks/22i40sy9xkvog.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/holiveira-design-system/playground/_next/static/chunks/1icfw_d41vvb2.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"className":"bg-gray-2 text-dark dark:bg-dark dark:text-white","children":["$","$L3",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","main",null,{"className":"p-6","children":["$","div",null,{"ref":"$undefined","className":"rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]","children":[["$","h1",null,{"className":"text-dark text-xl font-semibold dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-2 text-sm","children":"This playground route does not exist."}],["$","a",null,{"className":"text-primary mt-4 inline-block text-sm font-medium","href":"/holiveira-design-system/playground/","children":"Back to the dashboard"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]}]}]]}],"p":false,"v":null},"c":"$Q6"},"h":{"r":["$","$1","h",{"children":[null,["$","$L12",null,{"children":"$L13"}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":"$L16"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$17",[["$","link","0",{"rel":"stylesheet","href":"/holiveira-design-system/playground/_next/static/chunks/22i40sy9xkvog.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Tc6oiQ9uCKXKuUTcYzf_E"}
+7:C
+13:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+10:null
+16:[["$","title","0",{"children":"Playground — HO Design System"}],["$","meta","1",{"name":"description","content":"Reference product screens composed from @ho-dev packages."}]]

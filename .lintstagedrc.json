@@ -1,6 +1,0 @@
-{
-  "*.{ts,tsx}": ["eslint --fix"],
-  "pnpm-lock.yaml": [],
-  "prisma/**": [],
-  "*.{ts,tsx,js,jsx,json,md,yml,yaml,css}": ["prettier --write"]
-}

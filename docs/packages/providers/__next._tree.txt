@@ -1,0 +1,6 @@
+:HL["/holiveira-design-system/docs/_next/static/chunks/1w2uusfybzz9m.css","style"]
+:HL["/holiveira-design-system/docs/_next/static/media/Satoshi_Variable-s.p.2ta4m073o532p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+3:[["children",{"s":"__PAGE__","h":160}]]
+2:[["children",{"s":{"n":"slug","t":"d","k":"providers","s":[]},"h":96,"c":"$Q3"}]]
+1:[["children",{"s":"packages","h":64,"c":"$Q2"}]]
+0:{"b":"biIXxjhVPUEd_I-d3T06L","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

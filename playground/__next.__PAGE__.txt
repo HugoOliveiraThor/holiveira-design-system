@@ -1,0 +1,27 @@
+1:"$Sreact.fragment"
+2:"/holiveira-design-system/playground/_next/static/chunks/1icfw_d41vvb2.js"
+3:I[87337,["$2"],"ThemeProvider"]
+4:I[951,["$2"],"default"]
+5:I[80523,["$2"],"default"]
+9:"/holiveira-design-system/playground/_next/static/chunks/25ysig68csgm7.js"
+a:"/holiveira-design-system/playground/_next/static/chunks/1vh13wl6fv3rc.js"
+b:I[97720,["$2","$9","$a"],"AppShell"]
+c:I[91269,["$2","$9","$a"],"DashboardView"]
+d:I[28093,["$2"],"OutletBoundary"]
+e:"$Sreact.suspense"
+11:"ViewportBoundary"
+12:I[28093,["$2"],"$11"]
+13:"MetadataBoundary"
+14:I[28093,["$2"],"$13"]
+:HL["/holiveira-design-system/playground/_next/static/chunks/22i40sy9xkvog.css","style"]
+7:X
+8:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","$Lb",null,{"title":"Dashboard","activePath":"/","children":["$","$Lc",null,{}]}],[["$","script","script-0",{"src":"/holiveira-design-system/playground/_next/static/chunks/25ysig68csgm7.js","async":true}],["$","script","script-1",{"src":"/holiveira-design-system/playground/_next/static/chunks/1vh13wl6fv3rc.js","async":true}]],["$","$Ld",null,{"children":["$","$e",null,{"name":"Next.MetadataOutlet","children":"$@f"}]}]]}],"p":"$@10","v":null,"s":"$7"}}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/holiveira-design-system/playground/_next/static/chunks/22i40sy9xkvog.css","precedence":"next"}],["$","script","script-0",{"src":"/holiveira-design-system/playground/_next/static/chunks/1icfw_d41vvb2.js","async":true}]],["$","html",null,{"lang":"en","suppressHydrationWarning":true,"children":["$","body",null,{"className":"bg-gray-2 text-dark dark:bg-dark dark:text-white","children":["$","$L3",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}],"notFound":[["$","main",null,{"className":"p-6","children":["$","div",null,{"className":"rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-white/[0.03]","children":[["$","h1",null,{"className":"text-dark text-xl font-semibold dark:text-white","children":"Page not found"}],["$","p",null,{"className":"mt-2 text-sm","children":"This playground route does not exist."}],["$","a",null,{"className":"text-primary mt-4 inline-block text-sm font-medium","href":"/holiveira-design-system/playground/","children":"Back to the dashboard"}]]}]}],[]]}]}]}]}]]}],"p":"$@6","v":null,"s":"$7"},"c":"$Q8"},"h":{"r":["$","$1","h",{"children":[null,["$","$L12",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L14",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$e",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Playground — HO Design System"}],["$","meta","1",{"name":"description","content":"Reference product screens composed from @ho-dev packages."}]]}]}],null]}],null]}],"p":"$@15","v":null,"s":"$7"}},"a":"$@16","u":"$@17","b":"Tc6oiQ9uCKXKuUTcYzf_E"}
+f:null
+7:300
+17:true
+7:C
+16:0
+6:"$undefined"
+15:"$undefined"
+10:"$undefined"
