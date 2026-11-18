@@ -17,26 +17,42 @@ const registry = JSON.parse(
 const slugs = registry.map((record) => record.name.split('/')[1]);
 const packagePath = (slug: string) => `packages/${slug}/`;
 
-test('landing renders the hero and package groups', async ({ page }) => {
+test('landing renders the hero and the category grid', async ({ page }) => {
   await page.goto('./');
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Holiveira Documentation Platform' }),
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Build interfaces that feel native to your product.',
+    }),
   ).toBeVisible();
   await expect(page.getByText(/pre-release/i).first()).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: 'Foundation' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Browse the catalogue' })).toBeVisible();
+
+  const counts = new Map<string, number>();
+  for (const record of registry) {
+    counts.set(record.category, (counts.get(record.category) ?? 0) + 1);
+  }
+  const categories = page.getByRole('list', { name: 'Package categories' });
+  await expect(categories.getByRole('link')).toHaveCount(counts.size);
+  for (const [category, count] of counts) {
+    const card = categories.getByRole('link').filter({ hasText: category });
+    await expect(card, category).toHaveCount(1);
+    await expect(card, category).toContainText(`${count} packages`);
+  }
 });
 
 test('header links to storybook, playground and the repository', async ({ page }) => {
   await page.goto('./');
-  await expect(page.getByRole('link', { name: 'Storybook' })).toHaveAttribute(
+  const header = page.getByRole('banner');
+  await expect(header.getByRole('link', { name: 'Storybook' })).toHaveAttribute(
     'href',
     'https://hugoliveirathor.github.io/holiveira-design-system/',
   );
-  await expect(page.getByRole('link', { name: 'Playground' })).toHaveAttribute(
+  await expect(header.getByRole('link', { name: 'Playground' })).toHaveAttribute(
     'href',
     'https://hugoliveirathor.github.io/holiveira-design-system/playground/',
   );
-  await expect(page.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', /github\.com/);
+  await expect(header.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', /github\.com/);
 });
 
 test('serves the export under the docs base path', async ({ page }) => {
@@ -93,7 +109,7 @@ test('component page renders the contract', async ({ page }) => {
 });
 
 test('every catalogue link resolves', async ({ page, request }) => {
-  await page.goto('./');
+  await page.goto('./packages/');
   const hrefs = await page
     .locator('main a[href*="/packages/"]')
     .evaluateAll((links) =>

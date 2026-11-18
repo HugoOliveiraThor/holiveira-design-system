@@ -1,6 +1,8 @@
 import { docsSite } from '../../../site.config';
 import type { PackageRecord } from '../../lib/docs-metadata/types';
 
+import { EmptyState } from './empty-state';
+import { PAGE_LINK_CLASS } from './page-header';
 import { DocSection } from './section';
 
 /** The Storybook docs page of one export, or the package root when it has no story. */
@@ -20,29 +22,27 @@ export function ComponentInventory({ record }: { record: PackageRecord }) {
   return (
     <DocSection id="components" title="Components">
       {record.componentExports.length === 0 ? (
-        <p className="text-dark-4 dark:text-dark-6 text-sm">This package exports no components.</p>
+        <EmptyState
+          title="This package exports no components."
+          hint="It ships utilities and types only; the exports section lists them."
+        />
       ) : (
         <ul className="space-y-2">
           {record.componentExports.map((component) => (
             <li
               key={component.id}
               id={component.id}
-              className="border-stroke dark:border-stroke-dark scroll-mt-24 rounded-md border p-3"
+              className="scroll-mt-24 rounded-xl border border-[var(--portal-border)] bg-[var(--portal-surface)] p-3"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <code className="text-dark font-mono text-sm dark:text-white">
+                <code className="text-body-sm font-medium text-[var(--portal-ink)]">
                   {component.exportName}
                 </code>
-                <a
-                  href={storybookHref(record, component.story?.id)}
-                  className="text-primary dark:text-blue-light-400 text-xs underline"
-                >
+                <a href={storybookHref(record, component.story?.id)} className={PAGE_LINK_CLASS}>
                   {component.story === undefined ? 'Storybook (package root)' : 'Storybook story'}
                 </a>
               </div>
-              <p className="text-dark-4 dark:text-dark-6 mt-1 font-mono text-xs">
-                {component.sourceFile}
-              </p>
+              <p className="text-body-xs mt-1 text-[var(--portal-muted)]">{component.sourceFile}</p>
             </li>
           ))}
         </ul>

@@ -8,6 +8,7 @@ import { DocsSearch } from '../components/search/search';
 import { DocsShell } from '../components/shell/docs-shell';
 import { SkipLink } from '../components/shell/skip-link';
 import { ThemeGuard } from '../components/shell/theme-guard';
+import { satoshi } from '../fonts/satoshi';
 import {
   componentSections,
   guideSections,
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="bg-gray-2 text-dark-4 dark:text-dark-6 dark:bg-[#020D1A]">
+    <html lang="en" className={satoshi.variable} suppressHydrationWarning>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

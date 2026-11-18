@@ -17,11 +17,43 @@ export interface DocsShellProps {
 }
 
 const ITEM_CLASS =
-  'text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 aria-[current=page]:bg-gray-2 aria-[current=page]:text-primary dark:aria-[current=page]:text-blue-light-400 dark:aria-[current=page]:bg-dark-3 block rounded px-2 py-1 aria-[current=page]:font-medium';
+  'text-body-sm block rounded-md px-2 py-1 text-[var(--portal-body)] hover:bg-[var(--portal-surface-2)] hover:text-[var(--portal-primary-strong)] aria-[current=page]:bg-[var(--portal-primary-soft)] aria-[current=page]:font-medium aria-[current=page]:text-[var(--portal-primary-strong)]';
+
+const GROUP_CLASS =
+  'text-body-xs mb-2 font-semibold tracking-wide text-[var(--portal-muted)] uppercase';
+
+const CATEGORY_CLASS = 'text-body-xs mb-1 text-[var(--portal-muted)]';
 
 function matches(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/' || pathname === '';
   return pathname === href || pathname === href.replace(/\/$/, '');
+}
+
+interface NavGroup {
+  label: string;
+  sections: NavigationSection[];
+  /** Catalog groups keep their category label; a guide group's label is the category. */
+  labels: boolean;
+}
+
+/** The five navigation groups, in reading order, with the architecture guides under Guides. */
+function navGroups(
+  guideSections: NavigationSection[],
+  packageSections: NavigationSection[],
+  componentSections: NavigationSection[],
+): NavGroup[] {
+  const guides = (label: string, categories: string[]): NavGroup => ({
+    label,
+    sections: guideSections.filter((section) => categories.includes(section.category)),
+    labels: false,
+  });
+  return [
+    guides('Getting Started', ['Getting Started']),
+    guides('Foundations', ['Foundations']),
+    guides('Guides', ['Guides', 'Architecture']),
+    { label: 'Packages', sections: packageSections, labels: true },
+    { label: 'Components', sections: componentSections, labels: false },
+  ].filter((group) => group.sections.some((section) => section.items.length > 0));
 }
 
 function SidebarContent({
@@ -35,15 +67,15 @@ function SidebarContent({
   onNavigate?: () => void;
 }) {
   return (
-    <nav aria-label="Documentation" className="space-y-6 text-sm">
-      {guideSections.length > 0 && (
-        <div>
-          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
-            Documentation
+    <nav aria-label="Documentation" className="space-y-6">
+      {navGroups(guideSections, packageSections, componentSections).map((group) => (
+        <div key={group.label}>
+          <p data-nav-group={group.label} className={GROUP_CLASS}>
+            {group.label}
           </p>
-          {guideSections.map((section) => (
-            <div key={section.category} className="mb-3">
-              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.category}</p>
+          {group.sections.map((section) => (
+            <div key={section.category}>
+              {group.labels && <p className={CATEGORY_CLASS}>{section.category}</p>}
               <ul className="space-y-1">
                 {section.items.map((item) => (
                   <li key={item.id}>
@@ -61,56 +93,7 @@ function SidebarContent({
             </div>
           ))}
         </div>
-      )}
-      {packageSections.length > 0 && (
-        <div>
-          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
-            Packages
-          </p>
-          {packageSections.map((section) => (
-            <div key={section.category} className="mb-3">
-              <p className="text-dark-4 dark:text-dark-6 mb-1 text-xs">{section.category}</p>
-              <ul className="space-y-1">
-                {section.items.map((item) => (
-                  <li key={item.id}>
-                    <Link
-                      href={item.href}
-                      onClick={onNavigate}
-                      aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                      className={ITEM_CLASS}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
-      {componentSections.length > 0 && (
-        <div>
-          <p className="text-dark-4 dark:text-dark-6 mb-2 text-xs font-semibold tracking-wide uppercase">
-            Components
-          </p>
-          <ul className="space-y-1">
-            {componentSections.flatMap((section) =>
-              section.items.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    onClick={onNavigate}
-                    aria-current={matches(pathname, item.href) ? 'page' : undefined}
-                    className={ITEM_CLASS}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              )),
-            )}
-          </ul>
-        </div>
-      )}
+      ))}
     </nav>
   );
 }
@@ -189,8 +172,8 @@ export function DocsShell({
         menuOpen={open}
         menuButtonRef={triggerRef}
       />
-      <div className="mx-auto flex w-full max-w-[1440px] gap-8 px-4 lg:px-6">
-        <aside className="hidden w-64 shrink-0 py-8 lg:block">
+      <div className="mx-auto flex w-full max-w-[1440px] gap-10 px-4 lg:px-6">
+        <aside className="hidden w-[280px] shrink-0 py-8 lg:block">
           <SidebarContent
             pathname={pathname}
             guideSections={guideSections}
@@ -219,7 +202,7 @@ export function DocsShell({
             role="dialog"
             aria-modal="true"
             aria-label="Documentation navigation"
-            className="shadow-theme-lg dark:bg-dark-2 relative h-full w-72 max-w-[80%] overflow-y-auto bg-white p-4"
+            className="shadow-theme-lg relative h-full w-72 max-w-[80%] overflow-y-auto bg-[var(--portal-surface)] p-4"
           >
             <SidebarContent
               pathname={pathname}

@@ -12,7 +12,10 @@ export function DocSection({
 }) {
   return (
     <section aria-labelledby={`${id}-heading`} id={id} className="scroll-mt-24">
-      <h2 id={`${id}-heading`} className="text-dark mb-3 text-lg font-semibold dark:text-white">
+      <h2
+        id={`${id}-heading`}
+        className="text-heading-6 mb-4 font-semibold text-[var(--portal-ink)]"
+      >
         {title}
       </h2>
       {children}

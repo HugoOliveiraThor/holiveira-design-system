@@ -1,0 +1,76 @@
+/**
+ * The portal's visual layer: the one place a colour is decided.
+ *
+ * Every role below maps a documentation surface or text role onto a value from
+ * @ho-dev/tokens through the theme variables, in light (:root) and dark (.dark).
+ * The two canvas literals are the ones the theme already uses for the dark page
+ * and the dark code surface; everything else is a token reference. Components
+ * consume the roles, never a raw colour, and `portal.test.ts` fails if one leaks
+ * a hex literal.
+ *
+ * Type scale stays in the token utilities (text-heading-*, text-body-*); this file
+ * only binds the self-hosted Satoshi to the sans stack and the system mono stack
+ * to code.
+ */
+
+:root {
+  --portal-canvas: var(--color-gray-1);
+  --portal-surface: var(--color-white);
+  --portal-surface-2: var(--color-gray-1);
+  --portal-border: var(--color-stroke);
+  --portal-ink: var(--color-dark);
+  --portal-body: var(--color-dark-4);
+  --portal-muted: var(--color-dark-5);
+  --portal-primary: var(--color-primary);
+  --portal-primary-strong: var(--color-brand-700);
+  --portal-primary-soft: var(--color-brand-50);
+  --portal-accent: var(--color-blue-light-700);
+  --portal-success: var(--color-green-light-1);
+  --portal-warning: var(--color-yellow-dark);
+  --portal-danger: var(--color-error-600);
+  --portal-code-bg: var(--color-gray-2);
+  --portal-ring: var(--color-primary);
+
+  --font-sans: var(--font-satoshi), 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+  --portal-canvas: #020d1a;
+  --portal-surface: var(--color-dark-2);
+  --portal-surface-2: var(--color-dark-3);
+  --portal-border: var(--color-stroke-dark);
+  --portal-ink: var(--color-white);
+  --portal-body: var(--color-dark-7);
+  --portal-muted: var(--color-dark-6);
+  --portal-primary: var(--color-primary);
+  --portal-primary-strong: var(--color-brand-400);
+  --portal-primary-soft: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  --portal-accent: var(--color-blue-light-400);
+  --portal-success: var(--color-green-light-1);
+  --portal-warning: var(--color-yellow-dark);
+  --portal-danger: var(--color-error-400);
+  --portal-code-bg: #0b1624;
+  --portal-ring: var(--color-blue-light-400);
+}
+
+@layer base {
+  body {
+    background-color: var(--portal-canvas);
+    color: var(--portal-body);
+    font-family: var(--font-sans);
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+}
+
+/* The sticky top bar: a translucent surface so content scrolls under it. */
+.portal-header {
+  border-bottom: 1px solid var(--portal-border);
+  background-color: color-mix(in srgb, var(--portal-surface) 92%, transparent);
+  backdrop-filter: blur(16px);
+}

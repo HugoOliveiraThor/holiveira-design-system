@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { ThemeProvider } from '@ho-dev/theme';
 
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import type { ComponentDoc, ComponentRecord, PackageRecord } from '../../lib/docs-metadata/types';
@@ -121,5 +121,48 @@ describe('component page', () => {
       'href',
       PROPS.storyHref,
     );
+  });
+  it('renders the page header with package and status', () => {
+    const { container } = renderPage();
+    const header = container.querySelector('[data-page-header]');
+    expect(header).not.toBeNull();
+    const scope = within(header as HTMLElement);
+
+    expect(scope.getByRole('heading', { level: 1 })).toHaveTextContent('Button');
+    expect(scope.getByRole('link', { name: '@ho-dev/primitives' })).toHaveAttribute(
+      'href',
+      PROPS.packageHref,
+    );
+    expect(scope.getByText('pre-release')).toBeInTheDocument();
+    expect(scope.getByText('v0.2.0')).toBeInTheDocument();
+    expect(scope.getByText('Triggers an action.')).toBeInTheDocument();
+    const actions = scope.getByRole('navigation', { name: 'Component links' });
+    expect(within(actions).getByRole('link', { name: 'Source' })).toHaveAttribute(
+      'href',
+      PROPS.sourceHref,
+    );
+    expect(within(actions).getByRole('link', { name: 'Storybook' })).toHaveAttribute(
+      'href',
+      PROPS.storyHref,
+    );
+  });
+
+  it('keeps the preview toolbar and code block', () => {
+    renderPage();
+
+    expect(screen.getByRole('group', { name: 'Preview width' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Preview theme' })).toBeInTheDocument();
+    for (const label of ['Full', '375', '768', 'system', 'light', 'dark']) {
+      expect(screen.getByRole('button', { name: label }), label).toBeInTheDocument();
+    }
+    expect(document.querySelector('[data-preview-frame]')).not.toBeNull();
+
+    expect(document.querySelectorAll('[data-code-block]')).toHaveLength(2);
+    expect(
+      screen.getByRole('button', { name: 'Copy Minimal example for Button' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Copy Realistic example for Button' }),
+    ).toBeInTheDocument();
   });
 });

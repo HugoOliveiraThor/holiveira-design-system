@@ -2,7 +2,8 @@ import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { guideSections, packageSections } from '../../lib/docs-metadata-query';
+import { componentSections, guideSections, packageSections } from '../../lib/docs-metadata-query';
+import type { NavigationSection } from '../../lib/docs-metadata-query';
 
 import { DocsShell } from './docs-shell';
 
@@ -12,13 +13,13 @@ vi.mock('next/navigation', () => ({
   usePathname: () => state.pathname,
 }));
 
-function renderShell(pathname = '/packages/primitives/') {
+function renderShell(pathname = '/packages/primitives/', components: NavigationSection[] = []) {
   state.pathname = pathname;
   return render(
     <DocsShell
       guideSections={guideSections()}
       packageSections={packageSections()}
-      componentSections={[]}
+      componentSections={components}
     >
       <p>Page</p>
     </DocsShell>,
@@ -82,6 +83,40 @@ describe('sidebar and drawer', () => {
     const drawer = screen.getByRole('dialog', { name: 'Documentation navigation' });
     expect(drawer.querySelectorAll('[aria-disabled="true"]')).toHaveLength(0);
     expect(screen.getAllByRole('link', { name: 'Design tokens' })).toHaveLength(2);
+  });
+
+  it('renders the five navigation groups', () => {
+    renderShell('/', componentSections());
+    const labels = [...sidebar().querySelectorAll('[data-nav-group]')].map(
+      (element) => element.textContent,
+    );
+    expect(labels).toEqual(['Getting Started', 'Foundations', 'Guides', 'Packages', 'Components']);
+  });
+
+  it('sizes the sidebar at 280px from the desktop breakpoint', () => {
+    renderShell();
+    expect(sidebar().closest('aside')).toHaveClass('hidden', 'w-[280px]', 'lg:block');
+  });
+
+  it('marks the current page in the sidebar', () => {
+    renderShell('/components/button/', componentSections());
+    const current = sidebar().querySelectorAll('a[aria-current="page"]');
+    expect(current).toHaveLength(1);
+    expect(current[0]).toHaveTextContent('Button');
+  });
+
+  it('returns focus to the menu button when the drawer closes', () => {
+    renderShell();
+    const trigger = screen.getByRole('button', { name: 'Menu' });
+    fireEvent.click(trigger);
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(trigger);
+
+    fireEvent.click(trigger);
+    fireEvent.click(screen.getByRole('button', { name: 'Close navigation' }));
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(trigger);
   });
 
   it('marks the active guide route with aria-current', () => {

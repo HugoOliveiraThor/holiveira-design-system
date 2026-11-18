@@ -12,10 +12,17 @@ export interface SiteHeaderProps {
   menuButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
+const LINK_CLASS = 'text-[var(--portal-body)] hover:text-[var(--portal-primary-strong)]';
+
+/**
+ * The sticky top bar: brand, the search trigger the page provides, the external
+ * surfaces and the theme toggle. The menu button only exists below the desktop
+ * breakpoint, where the sidebar becomes a drawer.
+ */
 export function SiteHeader({ search, onMenuClick, menuOpen, menuButtonRef }: SiteHeaderProps) {
   return (
-    <header className="border-stroke dark:border-stroke-dark dark:bg-dark-2 border-b bg-white">
-      <div className="mx-auto flex w-full max-w-[1440px] items-center gap-4 px-4 py-3 lg:px-6">
+    <header className="portal-header sticky top-0 z-40">
+      <div className="mx-auto flex w-full max-w-[1440px] items-center gap-3 px-4 py-3 lg:px-6">
         {onMenuClick && (
           <button
             ref={menuButtonRef}
@@ -23,35 +30,31 @@ export function SiteHeader({ search, onMenuClick, menuOpen, menuButtonRef }: Sit
             onClick={onMenuClick}
             aria-expanded={menuOpen ?? false}
             aria-controls="docs-mobile-navigation"
-            className="border-stroke dark:border-stroke-dark rounded-md border px-2 py-1 text-sm lg:hidden"
+            className="text-body-sm rounded-md border border-[var(--portal-border)] px-2 py-1 text-[var(--portal-body)] lg:hidden"
           >
             Menu
           </button>
         )}
-        <Link href="/" className="text-dark text-base font-semibold dark:text-white">
-          Holiveira <span className="text-primary dark:text-blue-light-400">Docs</span>
+        <Link href="/" className="text-base font-semibold text-[var(--portal-ink)]">
+          Holiveira <span className="text-[var(--portal-primary-strong)]">Docs</span>
         </Link>
-        <span className="text-dark-4 dark:text-dark-6 hidden text-xs sm:inline">pre-release</span>
+        <span className="text-body-xs hidden text-[var(--portal-muted)] sm:inline">
+          pre-release
+        </span>
         <div className="ml-auto flex items-center gap-3">
           {search}
-          <nav aria-label="External links" className="hidden items-center gap-3 text-sm md:flex">
-            <a
-              href={docsSite.storybookUrl}
-              className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
-            >
+          <nav aria-label="External links" className="hidden items-center gap-4 text-sm md:flex">
+            <a href={docsSite.storybookUrl} className={LINK_CLASS}>
               Storybook
             </a>
-            <a
-              href={docsSite.playgroundUrl}
-              className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
-            >
+            <a href={docsSite.playgroundUrl} className={LINK_CLASS}>
               Playground
             </a>
             <a
               href={docsSite.repositoryUrl}
               target="_blank"
               rel="noreferrer"
-              className="text-dark-4 dark:text-dark-6 hover:text-primary dark:text-blue-light-400 dark:text-dark-6"
+              className={LINK_CLASS}
             >
               GitHub
             </a>

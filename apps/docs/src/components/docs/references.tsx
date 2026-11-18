@@ -1,6 +1,7 @@
 import { docsHref } from '../../../site.config';
 import { components } from '../../lib/docs-metadata-query';
 
+import { EmptyState } from './empty-state';
 import { DocSection } from './section';
 
 export interface ReferencesProps {
@@ -55,16 +56,17 @@ export function RelatedComponents({ related }: { related: string[] }) {
   return (
     <DocSection id="related" title="Related components">
       {entries.length === 0 ? (
-        <p className="text-dark-4 dark:text-dark-6 text-sm">
-          No related components are documented yet.
-        </p>
+        <EmptyState
+          title="No related components are documented yet."
+          hint="The editorial map adds one when a neighbouring component ships."
+        />
       ) : (
         <ul className="flex flex-wrap gap-2 text-sm">
           {entries.map((entry) => (
             <li key={entry.id}>
               <a
                 href={docsHref(`/components/${entry.id}/`)}
-                className="border-stroke dark:border-dark-3 rounded-full border px-3 py-1"
+                className="text-body-xs inline-flex items-center rounded-full border border-[var(--portal-border)] bg-[var(--portal-surface-2)] px-3 py-1 font-medium text-[var(--portal-body)] transition-colors hover:border-[var(--portal-primary-strong)] hover:text-[var(--portal-primary-strong)]"
               >
                 {entry.label}
               </a>

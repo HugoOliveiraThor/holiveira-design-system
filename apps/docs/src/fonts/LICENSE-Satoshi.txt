@@ -1,0 +1,15 @@
+Satoshi font notice
+
+Font: Satoshi (variable, weights 300-900)
+Foundry: Indian Type Foundry (ITF)
+Distributor and license: Fontshare - https://www.fontshare.com/fonts/satoshi
+License text: ITF Free Font License (FFL) - https://www.fontshare.com/licenses/itf-ffl
+
+The file beside this notice (Satoshi-Variable.woff2) is redistributed under the
+ITF Free Font License published by Fontshare. The binding license text is
+maintained at the URL above and is not reproduced here, so this repository never
+ships a stale copy of it. Read that URL before redistributing the font outside
+this repository.
+
+Attribution: Satoshi by Indian Type Foundry, distributed by Fontshare
+(https://www.fontshare.com).

@@ -49,3 +49,14 @@ test('disables transitions under reduced motion', async ({ page }) => {
   expect(normal).not.toMatch(/^0s$/);
   expect(normal).not.toBe(reduced);
 });
+
+test('loads the Satoshi variable on the document element', async ({ page }) => {
+  await page.goto('./');
+  // next/font hashes the class name, so the contract is the CSS variable it sets.
+  const variable = await page.evaluate(() =>
+    getComputedStyle(document.documentElement).getPropertyValue('--font-satoshi').trim(),
+  );
+  expect(variable.length, '--font-satoshi is set').toBeGreaterThan(0);
+  const family = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
+  expect(family.toLowerCase().trim().startsWith('satoshi'), family).toBe(true);
+});

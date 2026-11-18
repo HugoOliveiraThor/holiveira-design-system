@@ -194,6 +194,9 @@ importers:
       '@ho-dev/forms':
         specifier: workspace:*
         version: link:../../packages/forms
+      '@ho-dev/hooks':
+        specifier: workspace:*
+        version: link:../../packages/hooks
       '@ho-dev/icons':
         specifier: workspace:*
         version: link:../../packages/icons
