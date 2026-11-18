@@ -32,6 +32,7 @@ const COMPONENT = `${BASE_PATH}/components/button/`;
 
 const WIDTHS = [1440, 768, 390];
 const THEMES = ['light', 'dark'];
+const PREFIX = process.env.POLISH_SCREEN_PREFIX ?? '';
 const SHOTS = [
   { name: 'landing', url: LANDING },
   { name: 'component', url: COMPONENT },
@@ -137,7 +138,7 @@ async function main() {
           const page = await context.newPage();
           await page.goto(`${ORIGIN}${target.url}`, { waitUntil: 'networkidle' });
           await page.evaluate(() => document.fonts.ready);
-          const file = join(SCREEN_DIR, `${target.name}-${width}-${theme}.png`);
+          const file = join(SCREEN_DIR, `${PREFIX}${target.name}-${width}-${theme}.png`);
           await page.screenshot({ path: file, fullPage: true });
           shots.push(file);
           await context.close();

@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 const ROOT = process.cwd();
 const PORTAL_CSS = join(ROOT, 'apps', 'docs', 'src', 'styles', 'portal.css');
 const TOKENS_CSS = join(ROOT, 'packages', 'tokens', 'src', 'tokens.css');
-const COMPONENTS_DIR = join(ROOT, 'apps', 'docs', 'src', 'components');
+const PORTAL_SRC = join(ROOT, 'apps', 'docs', 'src');
 
 /**
  * The roles the design fixes. Every one of them is declared in :root and in
@@ -153,11 +153,12 @@ describe('portal visual layer', () => {
     }
     expect(literals.sort()).toEqual(CANVAS_LITERALS);
 
-    const violations = filesUnder(COMPONENTS_DIR)
-      .filter((file) => /\.(ts|tsx)$/.test(file))
+    const literal = /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b|\brgba?\(|\bhsla?\(/g;
+    const violations = filesUnder(PORTAL_SRC)
+      .filter((file) => /\.(ts|tsx)$/.test(file) && !/\.test\.(ts|tsx)$/.test(file))
       .flatMap((file) => {
-        const matches = read(file).match(/#[0-9a-fA-F]{6}\b/g) ?? [];
-        return matches.map((hex) => `${relative(ROOT, file)}: ${hex}`);
+        const matches = read(file).match(literal) ?? [];
+        return matches.map((found) => `${relative(ROOT, file)}: ${found}`);
       });
     expect(violations).toEqual([]);
   });

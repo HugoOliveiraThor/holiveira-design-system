@@ -81,6 +81,10 @@ describe('landing page', () => {
     for (const [index, section] of sections.entries()) {
       expect(links[index]).toHaveTextContent(section.category);
       expect(links[index]).toHaveTextContent(`${section.items.length} packages`);
+      expect(
+        links[index].querySelector('svg[aria-hidden="true"]'),
+        section.category,
+      ).not.toBeNull();
     }
   });
 

@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { inflateSync } from 'node:zlib';
 import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
@@ -16,12 +17,84 @@ const WIDTHS = [1440, 768, 390] as const;
 const THEMES = ['light', 'dark'] as const;
 
 const PAGES = ['landing', 'component'] as const;
+const PREFIXES = ['', 'before-'] as const;
 
-const SCREENS = PAGES.flatMap((page) =>
-  WIDTHS.flatMap((width) =>
-    THEMES.map((theme) => ({ name: `${page}-${width}-${theme}.png`, width, theme })),
+const SCREENS = PREFIXES.flatMap((prefix) =>
+  PAGES.flatMap((page) =>
+    WIDTHS.flatMap((width) =>
+      THEMES.map((theme) => ({
+        name: `${prefix}${page}-${width}-${theme}.png`,
+        page,
+        width,
+        theme,
+      })),
+    ),
   ),
 );
+
+/**
+ * Mean RGB brightness of a PNG, 0-255. Playwright writes 8-bit RGBA, so an
+ * unfiltered scanline is a fixed stride; decoding here lets the test prove the
+ * dark capture is actually dark instead of trusting the filename.
+ */
+function meanBrightness(path: string): number {
+  const buffer = readFileSync(path);
+  const width = buffer.readUInt32BE(16);
+  const height = buffer.readUInt32BE(20);
+  const bitDepth = buffer[24];
+  const colorType = buffer[25];
+  expect(bitDepth, `${path} bit depth`).toBe(8);
+  const channels = colorType === 6 ? 4 : colorType === 2 ? 3 : 0;
+  expect(channels, `${path} color type`).toBeGreaterThan(0);
+
+  const chunks: Buffer[] = [];
+  let offset = 8;
+  while (offset < buffer.length) {
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.toString('latin1', offset + 4, offset + 8);
+    const start = offset + 8;
+    if (type === 'IDAT') chunks.push(buffer.subarray(start, start + length));
+    offset = start + length + 4;
+  }
+
+  const raw = inflateSync(Buffer.concat(chunks));
+  const stride = width * channels;
+  let previous = Buffer.alloc(stride);
+  let position = 0;
+  let sum = 0;
+  let samples = 0;
+
+  for (let row = 0; row < height; row += 1) {
+    const filter = raw[position];
+    position += 1;
+    const current = Buffer.from(raw.subarray(position, position + stride));
+    position += stride;
+    for (let index = 0; index < stride; index += 1) {
+      const left = index >= channels ? current[index - channels] : 0;
+      const up = previous[index];
+      const corner = index >= channels ? previous[index - channels] : 0;
+      if (filter === 1) current[index] = (current[index] + left) & 255;
+      else if (filter === 2) current[index] = (current[index] + up) & 255;
+      else if (filter === 3) current[index] = (current[index] + Math.floor((left + up) / 2)) & 255;
+      else if (filter === 4) {
+        const estimate = left + up - corner;
+        const dl = Math.abs(estimate - left);
+        const du = Math.abs(estimate - up);
+        const dc = Math.abs(estimate - corner);
+        const nearest = dl <= du && dl <= dc ? left : du <= dc ? up : corner;
+        current[index] = (current[index] + nearest) & 255;
+      }
+    }
+    for (let pixel = 0; pixel < width; pixel += 1) {
+      const base = pixel * channels;
+      sum += current[base] + current[base + 1] + current[base + 2];
+      samples += 3;
+    }
+    previous = current;
+  }
+
+  return sum / samples;
+}
 
 /** The width a PNG declares in its IHDR chunk. */
 function pngWidth(path: string): number {
@@ -48,6 +121,17 @@ describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
       expect(statSync(path).size, screen.name).toBeGreaterThan(0);
       expect(pngWidth(path), screen.name).toBe(screen.width);
     }
+
+    // A swapped or mis-themed pair must fail: dark is materially darker.
+    for (const prefix of PREFIXES) {
+      for (const page of PAGES) {
+        for (const width of WIDTHS) {
+          const light = meanBrightness(join(SCREEN_DIR, `${prefix}${page}-${width}-light.png`));
+          const dark = meanBrightness(join(SCREEN_DIR, `${prefix}${page}-${width}-dark.png`));
+          expect(dark, `${prefix}${page}-${width}`).toBeLessThan(light - 20);
+        }
+      }
+    }
   });
 
   it('records the computed font, palette and overflow', () => {
@@ -72,7 +156,7 @@ describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
     expect(Object.keys(probe.pages).sort()).toEqual(['component', 'landing']);
 
     for (const [name, page] of Object.entries(probe.pages)) {
-      expect(page.fontFamily, name).toMatch(/Satoshi/);
+      expect(page.fontFamily.split(',')[0].trim().toLowerCase(), name).toContain('satoshi');
       for (const role of [
         '--portal-canvas',
         '--portal-surface',
@@ -110,7 +194,7 @@ describe.runIf(existsSync(EVIDENCE_DIR))('docs ui polish evidence', () => {
   it('ships the capture script that produces the evidence', () => {
     expect(existsSync(CAPTURE_SCRIPT), CAPTURE_SCRIPT).toBe(true);
     const script = readFileSync(CAPTURE_SCRIPT, 'utf8');
-    expect(script).toContain('${target.name}-${width}-${theme}.png');
+    expect(script).toContain('${PREFIX}${target.name}-${width}-${theme}.png');
     expect(script).toContain('probe.json');
     expect(script).toContain('document.fonts.ready');
   });

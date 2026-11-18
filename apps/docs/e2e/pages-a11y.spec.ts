@@ -99,6 +99,8 @@ test('the dropdown opens with the keyboard and closes with escape', async ({ pag
 /** The four page types the redesign touches, each with a route and a specimen. */
 const PAGE_TYPES = [
   { name: 'landing', path: './', specimen: '' },
+  { name: 'components index', path: './components/', specimen: 'Components' },
+  { name: 'packages index', path: './packages/', specimen: 'Packages' },
   { name: 'component', path: './components/button/', specimen: 'Button' },
   { name: 'package', path: './packages/primitives/', specimen: '@ho-dev/primitives' },
   { name: 'guide', path: './getting-started/theming/', specimen: 'Theming' },

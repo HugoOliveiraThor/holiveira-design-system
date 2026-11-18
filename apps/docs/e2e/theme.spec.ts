@@ -49,3 +49,10 @@ test('disables transitions under reduced motion', async ({ page }) => {
   expect(normal).not.toMatch(/^0s$/);
   expect(normal).not.toBe(reduced);
 });
+
+test('loads the Satoshi variable on the document element', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.locator('html')).toHaveClass(/font-satoshi/);
+  const family = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
+  expect(family.toLowerCase().trim().startsWith('satoshi'), family).toBe(true);
+});
